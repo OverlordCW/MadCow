@@ -44,7 +44,7 @@ namespace MadCow
             }
             Console.WriteLine("Couldn't Find Diablo 3 Installation."
                 +"\nPlease install Diablo III and try running MadCow again.");
-            Console.ReadLine();
+            Console.ReadKey();
             Environment.Exit(0);
             return "";
         }

@@ -71,7 +71,7 @@ namespace MadCow
                 Console.WriteLine("Validating MPQ's MD5 Hash FAILED!"
                     + "\n Please reinstall your Diablo III client or"
                     + "\n try using D3 Launcher to fix them.");
-                Console.ReadLine();
+                Console.ReadKey();
                 Environment.Exit(0);
             }
         }

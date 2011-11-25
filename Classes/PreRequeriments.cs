@@ -30,7 +30,7 @@ namespace MadCow
         {
             //Boolean checkSqlite = LoadSQLLiteAssembly();
             String checkNet4 = Environment.Version.ToString();
-            
+
             /*if (checkSqlite == true)
             {
                 Console.WriteLine("Found System.Data.SQLite");
@@ -38,7 +38,7 @@ namespace MadCow
             else
             {
                 Console.WriteLine("System.Data.SQLite is missing!");
-                Console.Read();
+                Console.ReadKey();
                 Environment.Exit(0);
             }*/
 
@@ -51,7 +51,7 @@ namespace MadCow
             {
                 Console.WriteLine("Please update .NET Framework to"
                                  +" version 4!");
-                Console.Read();
+                Console.ReadKey();
                 Environment.Exit(0);
             }
         }
