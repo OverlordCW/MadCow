@@ -58,8 +58,6 @@ namespace MadCow
                     }
                     else
                     {
-                        FindDiablo3.FindDiabloLocation();
-                        PreRequeriments.CheckPrerequeriments();
                         DownloadRevision.DownloadLatest();
                         Uncompress.UncompressFiles();
                         Compile.ExecuteCommandSync(Compile.msbuildPath + " " + Compile.compileArgs);
