@@ -73,12 +73,29 @@ namespace MadCow
                     }
                 }
 
+                if (command == "!autoupdate")
+                {
+                    //  TODO: Implement a timer which will check for Mooege updates.
+                    //  !autoupdate <minutes>
+                    Console.WriteLine("Not implemented yet");
+                }
+
+                if (command == "!help")
+                {
+                    Console.WriteLine("Availavable commands:"
+                        +"\n!update - Download latest Mooege revision"
+                        +"\n!updatempq - Will refresh MadCow MPQ folder"
+                        +"\n!autoupdate <minutes> - Timer cycle"
+                        );
+                }
+
                 if (command != "!updatempq" && command != "!update" && command != "!help" && command != "!autoupdate")
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid command");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
+
             } while (command != "!exit");
         }
     }
