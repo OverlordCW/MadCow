@@ -24,6 +24,50 @@ namespace MadCow
 {
     class MPQprocedure
     {
+        //\base\ Folder MD5's.
+        public static String[] MD5ValidPool = {"39765d908accf4f37a4c2dfa99b8cd52"//7170
+                                           ,"7148ee45696c84796f3ca16729b9aadc"   //7200
+                                           ,"7ee326516f3da2c8f8b80eba6199deef"   //7318
+                                           ,"68c43ae976872a1fa7f5a929b7f21b58"   //7338
+                                           ,"751b8bf5c84220688048c192ab23f380"   //7447
+                                           ,"d5eba8a2324cdc815b2cd5b92104b7fa"   //7728
+                                           ,"5eb4983d4530e3b8bab0d6415d8251fa"   //7841
+                                           ,"3faf4efa2a96d501c9c47746cba5a7ad"}; //7841
+
+        public static void ValidateMD5()
+        {
+            String src = FindDiablo3.FindDiabloLocation() + "\\Data_D3\\PC\\MPQs\\base";
+            String[] filePaths = Directory.GetFiles(src, "*.*", SearchOption.TopDirectoryOnly);
+            int fileCount = Directory.GetFiles(src, "*.*", SearchOption.TopDirectoryOnly).Length;
+            int trueCounter = 0;
+
+            foreach (string dir in filePaths)
+            {
+                string md5Filecheck = Md5Validate.GetMD5HashFromFile(dir);
+
+                for (int i = 0; i < 7; i++)
+                {
+                    if (md5Filecheck.Contains(MD5ValidPool[i]) == true)
+                    {
+                        trueCounter += 1;
+                    }
+                }
+            }
+
+            if (fileCount == trueCounter)
+            {
+                Console.WriteLine("Validating MPQ's MD5 Hash Complete");
+            }
+            else
+            {
+                Console.WriteLine("Validating MPQ's MD5 Hash FAILED!"
+                    + "\n Please reinstall your Diablo III client or"
+                    + "\n try using D3 Launcher to fix them.");
+                Console.ReadLine();
+                Environment.Exit(0);
+            }
+        }
+
         public static void MpqTransfer()
         {
             Console.WriteLine("Copying MPQ files to MadCow Folders...");

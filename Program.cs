@@ -31,7 +31,7 @@ namespace MadCow
         static void Main()
         {
             Console.Title = "MadCow Wrapper/Compiler for Mooege (By Wesko)";
-            Console.ForegroundColor = ConsoleColor.White;           
+            Console.ForegroundColor = ConsoleColor.White;
 
             if (Directory.Exists(programPath+"/mooege-mooege-"+lastRevision)) 
             {
@@ -46,9 +46,9 @@ namespace MadCow
                     Compile.ExecuteCommandSync(Compile.msbuildPath + " " + Compile.compileArgs);
                     Compile.ModifyMooegeINI();
                     Compile.WriteVbsPath();
-                    if (File.Exists(desktopPath+"\\Mooege.lnk"))
+                    if (File.Exists(desktopPath + "\\Mooege.lnk"))
                     {
-                        File.Delete(desktopPath+"\\Mooege.lnk");
+                        File.Delete(desktopPath + "\\Mooege.lnk");
                         System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
                     }
                     else
@@ -64,6 +64,7 @@ namespace MadCow
                     Console.WriteLine("Creating MadCow MPQ folder...");
                     Directory.CreateDirectory(programPath + "/MPQ");
                     Console.WriteLine("Creating MadCow MPQ folder Complete");
+                    MPQprocedure.ValidateMD5();
                     MPQprocedure.MpqTransfer();
                 }
 

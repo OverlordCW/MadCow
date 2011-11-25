@@ -80,6 +80,7 @@
     <Compile Include="Classes\PreRequeriments.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\Md5Validate.cs" />
     <Compile Include="Tools\ZipStorer.cs" />
     <Compile Include="Classes\Uncompress.cs" />
   </ItemGroup>
