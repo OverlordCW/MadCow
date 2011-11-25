@@ -50,6 +50,31 @@ namespace MadCow
                     }
                 }
 
+                if (command == "!update")
+                {
+                    if (Directory.Exists(Program.programPath + "/mooege-mooege-" + Program.lastRevision))
+                    {
+                        Console.WriteLine("You have latest Mooege revision: " + Program.lastRevision);
+                    }
+                    else
+                    {
+                        FindDiablo3.FindDiabloLocation();
+                        PreRequeriments.CheckPrerequeriments();
+                        DownloadRevision.DownloadLatest();
+                        Uncompress.UncompressFiles();
+                        Compile.ExecuteCommandSync(Compile.msbuildPath + " " + Compile.compileArgs);
+                        Compile.ModifyMooegeINI();
+                        Compile.WriteVbsPath();
+                        if (File.Exists(Program.desktopPath + "\\Mooege.lnk"))
+                        {
+                            File.Delete(Program.desktopPath + "\\Mooege.lnk");
+                            System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
+                        }
+                        else
+                            System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
+                    }
+                }
+
                 if (command != "!updatempq" && command != "!update" && command != "!help" && command != "!autoupdate")
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
