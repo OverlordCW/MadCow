@@ -1,0 +1,5 @@
+Check if mooege process is running and terminate it if we are trying to do an operation that compromise files being used by mooege.
+Check for Mooege Process.
+Implement a way to know if assembly System.Data.SQLite is running.
+Implement !autoupdate <timer> command in order to call !update every "X" time given by the user.
+Fix compatibility with other versios of Windows, or even go Linux too?.
