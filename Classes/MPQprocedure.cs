@@ -45,7 +45,7 @@ namespace MadCow
             {
                 string md5Filecheck = Md5Validate.GetMD5HashFromFile(dir);
 
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < MD5ValidPool.Length; i++)
                 {
                     if (md5Filecheck.Contains(MD5ValidPool[i]) == true)
                     {
