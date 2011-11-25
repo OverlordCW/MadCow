@@ -19,6 +19,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Timers;
+using System.Threading.Tasks;
 
 namespace MadCow
 {
@@ -36,15 +38,17 @@ namespace MadCow
 
         public static void ValidateMD5()
         {
+            DateTime startTime = DateTime.Now;
+
             String src = FindDiablo3.FindDiabloLocation() + "\\Data_D3\\PC\\MPQs\\base";
             String[] filePaths = Directory.GetFiles(src, "*.*", SearchOption.TopDirectoryOnly);
             int fileCount = Directory.GetFiles(src, "*.*", SearchOption.TopDirectoryOnly).Length;
             int trueCounter = 0;
 
-            foreach (string dir in filePaths)
+            Parallel.ForEach(filePaths, dir =>  
             {
                 string md5Filecheck = Md5Validate.GetMD5HashFromFile(dir);
-
+                
                 for (int i = 0; i < MD5ValidPool.Length; i++)
                 {
                     if (md5Filecheck.Contains(MD5ValidPool[i]) == true)
@@ -52,11 +56,15 @@ namespace MadCow
                         trueCounter += 1;
                     }
                 }
-            }
+            });
 
             if (fileCount == trueCounter)
             {
-                Console.WriteLine("Validating MPQ's MD5 Hash Complete");
+                DateTime stopTime = DateTime.Now;
+                TimeSpan duration = stopTime - startTime;
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Validating MPQ's MD5 Hash Complete in: {0}ms",duration.Milliseconds);
+                Console.ForegroundColor = ConsoleColor.White;
             }
             else
             {
