@@ -1,3 +1,0 @@
-C:\Users\Iker\Documents\Visual Studio 2010\Projects\MadCow2011\MadCow2011\bin\Debug\MadCow2011.exe.config
-C:\Users\Iker\Documents\Visual Studio 2010\Projects\MadCow2011\MadCow2011\obj\x86\Debug\Interop.Shell32.dll
-C:\Users\Iker\Documents\Visual Studio 2010\Projects\MadCow2011\MadCow2011\obj\x86\Debug\MadCow2011.csproj.ResolveComReference.cache
