@@ -77,6 +77,9 @@ namespace MadCow
 
         public static void MpqTransfer()
         {
+            String Src = Diablo3._d3loc + "\\Data_D3\\PC\\MPQs";
+            String Dst = Program.programPath + "\\MPQ";
+
             if (Directory.Exists(Program.programPath + "/MPQ")) //Checks for MPQ Folder
             {
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -92,8 +95,6 @@ namespace MadCow
                 Console.ForegroundColor = ConsoleColor.White;
                 //Proceeds to copy data
                 Console.WriteLine("Copying MPQ files to MadCow Folders...");
-                String Src = Diablo3._d3loc + "\\Data_D3\\PC\\MPQs";
-                String Dst = Program.programPath + "\\MPQ";
                 copyDirectory(Src, Dst);
                 //When all the files has been copied then:
                 Console.ForegroundColor = ConsoleColor.Green;
