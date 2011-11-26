@@ -40,7 +40,7 @@ namespace MadCow
         {
             DateTime startTime = DateTime.Now;
 
-            String src = FindDiablo3.FindDiabloLocation() + "\\Data_D3\\PC\\MPQs\\base";
+            String src = Diablo3.FindDiabloLocation() + "\\Data_D3\\PC\\MPQs\\base";
             String[] filePaths = Directory.GetFiles(src, "*.*", SearchOption.TopDirectoryOnly);
             int fileCount = Directory.GetFiles(src, "*.*", SearchOption.TopDirectoryOnly).Length;
             int trueCounter = 0;
@@ -79,7 +79,7 @@ namespace MadCow
         public static void MpqTransfer()
         {
             Console.WriteLine("Copying MPQ files to MadCow Folders...");
-            String Src = FindDiablo3.FindDiabloLocation() + "\\Data_D3\\PC\\MPQs";
+            String Src = Diablo3.FindDiabloLocation() + "\\Data_D3\\PC\\MPQs";
             String Dst = Program.programPath +"\\MPQ";
             copyDirectory(Src, Dst);
             Console.ForegroundColor = ConsoleColor.Green;
@@ -107,24 +107,34 @@ namespace MadCow
                     || Element.Contains("Sound") || Element.Contains("Texture")
                     || Element.Contains("HLSLShaders"))
                 {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("Skipped: " + Path.GetFileName(Element));
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
 
                 //If not Filtered
                 else if (Directory.Exists(Element))
                 {
                     copyDirectory(Element, Dst + Path.GetFileName(Element));
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Created Directory: " + Path.GetFileName(Element));
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
                 //Copy the files from not filtered folders
                 else
                 {
                     Console.WriteLine("Copying: " + Path.GetFileName(Element) + "...");
                     File.Copy(Element, Dst + Path.GetFileName(Element), true);
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Copying: " + Path.GetFileName(Element) + " Complete");
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
 
-            }   Console.WriteLine("Copying MPQ files to MadCow Folders has completed.");
+            }
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Copying MPQ files to MadCow Folders has completed.");
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }

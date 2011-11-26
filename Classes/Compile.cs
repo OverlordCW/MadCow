@@ -48,7 +48,9 @@ namespace MadCow
                 Console.WriteLine("Compiling newest Mooege source...");
                 proc.Start();
                 proc.WaitForExit();
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Compiling newest Mooege source Complete");
+                Console.ForegroundColor = ConsoleColor.White;
             }
             catch (Exception objException)
             {
@@ -68,7 +70,9 @@ namespace MadCow
                     IConfig config = source.Configs["Storage"];
                     config.Set("MPQRoot", Program.programPath + @"\MPQ");
                     source.Save();
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Modifying Mooege MPQ storage folder Complete");
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
             }
             catch (Exception)

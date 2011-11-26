@@ -38,11 +38,14 @@ namespace MadCow
                     {
                         zip.ExtractFile(entry, Program.programPath + "/" + entry);
                     }
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Uncompressing Mooege Source Complete");
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
             }
             catch
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Unable to uncompress Mooege source");
             }
         }

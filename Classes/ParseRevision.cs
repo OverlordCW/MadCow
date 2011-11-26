@@ -40,7 +40,8 @@ namespace MadCow
                 Console.WriteLine(webEx.ToString());
                 if (webEx.Status == WebExceptionStatus.ConnectFailure)
                 {
-                    Console.WriteLine("Error: Couldn't retrieve latest source");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Error: Make sure your internet connection is working");
                 }
                 return "Fatal Exception";
             }

@@ -39,7 +39,7 @@ namespace MadCow
             }
                 else
                 {
-                    FindDiablo3.FindDiabloLocation();
+                    Diablo3.FindDiabloLocation();
                     PreRequeriments.CheckPrerequeriments();
                     DownloadRevision.DownloadLatest();
                     Uncompress.UncompressFiles();
@@ -50,13 +50,17 @@ namespace MadCow
 
             if (Directory.Exists(programPath + "/MPQ"))
             {
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Found default MadCow MPQ folder");
+                Console.ForegroundColor = ConsoleColor.White;
             }
                 else
                 {
                     Console.WriteLine("Creating MadCow MPQ folder...");
                     Directory.CreateDirectory(programPath + "/MPQ");
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Creating MadCow MPQ folder Complete");
+                    Console.ForegroundColor = ConsoleColor.White;
                     MPQprocedure.ValidateMD5();
                     MPQprocedure.MpqTransfer();
                 }
