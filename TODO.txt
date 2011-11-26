@@ -1,5 +1,9 @@
-Check if mooege process is running and terminate it if we are trying to do an operation that compromise files being used by mooege.
-Check for Mooege Process.
-Implement a way to know if assembly System.Data.SQLite is running.
-Implement !autoupdate <timer> command in order to call !update every "X" time given by the user.
-Fix compatibility with other versios of Windows, or even go Linux too?.
+1.When compiling, MadCow needs to be in a short path folder, otherwise command line wont be able
+to recieve the whole compiling argument: E.G: cmd C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe C:\Downloads\December\XXX\XXXXX\BLABLA\<mooege>\build\slnfile.
+That will fail because there are just too many characters, so I dont know a way to fix this.
+
+2.Check if mooege process is running and terminate it if we are trying to do an operation that 3.compromise files being used by mooege.
+4.Check for Mooege Process.
+5.Implement a way to know if assembly System.Data.SQLite is running.
+6.Implement !autoupdate <timer> command in order to call !update every "X" time given by the user.
+7.Fix compatibility with other versios of Windows, or even go Linux too?.
