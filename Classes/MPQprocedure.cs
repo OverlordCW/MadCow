@@ -39,10 +39,9 @@ namespace MadCow
         public static void ValidateMD5()
         {
             DateTime startTime = DateTime.Now;
-
-            String src = Diablo3.FindDiabloLocation() + "\\Data_D3\\PC\\MPQs\\base";
-            String[] filePaths = Directory.GetFiles(src, "*.*", SearchOption.TopDirectoryOnly);
-            int fileCount = Directory.GetFiles(src, "*.*", SearchOption.TopDirectoryOnly).Length;
+            String baseFolderPath = Diablo3._d3loc + "\\Data_D3\\PC\\MPQs\\base";
+            String[] filePaths = Directory.GetFiles(baseFolderPath, "*.*", SearchOption.TopDirectoryOnly);
+            int fileCount = Directory.GetFiles(baseFolderPath, "*.*", SearchOption.TopDirectoryOnly).Length;
             int trueCounter = 0;
 
             Parallel.ForEach(filePaths, dir =>  
@@ -78,14 +77,34 @@ namespace MadCow
 
         public static void MpqTransfer()
         {
-            Console.WriteLine("Copying MPQ files to MadCow Folders...");
-            String Src = Diablo3.FindDiabloLocation() + "\\Data_D3\\PC\\MPQs";
-            String Dst = Program.programPath +"\\MPQ";
-            copyDirectory(Src, Dst);
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Process has been completed successfully");
-            Console.WriteLine("Check your desktop for Mooege shortcut.");
-            Console.ForegroundColor = ConsoleColor.White;
+            if (Directory.Exists(Program.programPath + "/MPQ")) //Checks for MPQ Folder
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Found default MadCow MPQ folder");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else //If not found, creates it and proceed with copying.
+            {
+                Console.WriteLine("Creating MadCow MPQ folder...");
+                Directory.CreateDirectory(Program.programPath + "/MPQ");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Creating MadCow MPQ folder Complete");
+                Console.ForegroundColor = ConsoleColor.White;
+                //Proceeds to copy data
+                Console.WriteLine("Copying MPQ files to MadCow Folders...");
+                String Src = Diablo3._d3loc + "\\Data_D3\\PC\\MPQs";
+                String Dst = Program.programPath + "\\MPQ";
+                copyDirectory(Src, Dst);
+                //When all the files has been copied then:
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Copying MPQ files to MadCow Folders has completed.");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("\n _________________________________________"
+                                 +"\n| Process has been completed successfully |"
+                                 +"\n| Check your desktop for Mooege shortcut! |"
+                                 +"\n'-----------------------------------------'\n");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
         }
 
         private static void copyDirectory(String Src, String Dst)
@@ -116,9 +135,6 @@ namespace MadCow
                 else if (Directory.Exists(Element))
                 {
                     copyDirectory(Element, Dst + Path.GetFileName(Element));
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Created Directory: " + Path.GetFileName(Element));
-                    Console.ForegroundColor = ConsoleColor.White;
                 }
                 //Copy the files from not filtered folders
                 else
@@ -131,10 +147,6 @@ namespace MadCow
                 }
 
             }
-
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Copying MPQ files to MadCow Folders has completed.");
-            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }

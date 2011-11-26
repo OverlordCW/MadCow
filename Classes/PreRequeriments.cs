@@ -44,7 +44,9 @@ namespace MadCow
 
             if (checkNet4.StartsWith("4"))
             {
-                Console.WriteLine("Found .NET Framework 4.0.30319.239");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Found .NET Framework " + checkNet4);
+                Console.ForegroundColor = ConsoleColor.White;
             }
 
             else

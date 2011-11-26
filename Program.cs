@@ -33,39 +33,25 @@ namespace MadCow
             Console.Title = "MadCow Wrapper/Compiler for Mooege (By Wesko)";
             Console.ForegroundColor = ConsoleColor.White;
 
-            if (Directory.Exists(programPath+"/mooege-mooege-"+lastRevision)) 
+            if (Directory.Exists(programPath+"/mooege-mooege-" + lastRevision)) 
             {
                 Console.WriteLine("You have latest Mooege revision: " + lastRevision);
             }
                 else
                 {
-                    Diablo3.FindDiabloLocation();
                     PreRequeriments.CheckPrerequeriments();
+                    Diablo3.FindDiablo3();
+                    Diablo3.VerifyVersion();
                     DownloadRevision.DownloadLatest();
                     Uncompress.UncompressFiles();
                     Compile.ExecuteCommandSync(Compile.msbuildPath + " " + Compile.compileArgs);
                     Compile.ModifyMooegeINI();
                     Compile.WriteVbsPath();
-                }
-
-            if (Directory.Exists(programPath + "/MPQ"))
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Found default MadCow MPQ folder");
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-                else
-                {
-                    Console.WriteLine("Creating MadCow MPQ folder...");
-                    Directory.CreateDirectory(programPath + "/MPQ");
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Creating MadCow MPQ folder Complete");
-                    Console.ForegroundColor = ConsoleColor.White;
                     MPQprocedure.ValidateMD5();
                     MPQprocedure.MpqTransfer();
                 }
 
-            Commands.CommandReader();
+            Commands.CommandReader(); //Program loops here.
          }
     }
 }

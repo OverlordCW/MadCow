@@ -77,7 +77,17 @@ namespace MadCow
             }
             catch (Exception)
             {
-                Console.WriteLine("ERROR");
+                Console.ForegroundColor = ConsoleColor.Red;
+                //The problem is, while passing args to ExecuteCommandSync(String command)
+                //If the argument its too long due to the current mooege folder path (Program.programPath)
+                //msbuild.exe won't be able to recieve the complete arguments and compiling will fail.
+                Console.WriteLine("\nLONGPATHERROR: Couldn't compile Mooege Source,"
+                                  +"\nplease use a shorter folder path by moving"
+                                  +"\nMadCow files into (e.g C:/MadCow/)");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("\nPress any key to exit...");
+                Console.ReadKey();
+                Environment.Exit(0);
             }
         }
 
