@@ -89,6 +89,15 @@ namespace MadCow
             StreamWriter writer = new StreamWriter(vbsPath);
             writer.Write(content);
             writer.Close();
+
+            //Creates shortcut
+            if (File.Exists(Program.desktopPath + "\\Mooege.lnk"))
+            {
+                File.Delete(Program.desktopPath + "\\Mooege.lnk");
+                System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
+            }
+            else
+                System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
         }
     }
 }
