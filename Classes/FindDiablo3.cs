@@ -85,6 +85,9 @@ namespace MadCow
                         +"\nUpgrade or Downgrade to Diablo III version [" + MooegeD3needs + "]."
                         +"\nTry running MadCow again after getting the correct version");
                     Console.ForegroundColor = ConsoleColor.White;
+                    Console.ReadKey();
+                    Console.WriteLine("\nPress any key to exit...");
+                    Environment.Exit(0); //Been using this to kill MadCow (Not sure whats the correct way to end the program
                 }
             }
             catch (WebException webEx)
