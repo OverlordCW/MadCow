@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Classes\Commands.cs" />
     <Compile Include="Classes\Diablo3.cs" />
+    <Compile Include="Classes\MadCowRunProcedure.cs" />
     <Compile Include="Classes\MPQprocedure.cs" />
     <Compile Include="Classes\ParseRevision.cs" />
     <Compile Include="Classes\Compile.cs" />
@@ -116,6 +117,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="app.manifest" />
+    <Content Include="Tools\Settings.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Shell32">
