@@ -40,16 +40,13 @@ namespace MadCow
                 switch (input.ToLower())
                 {
                     case "yes":
+                       config.Set("d3installed", 1);
+                       config.Set("firstrun", 1);
+                       iniSource.Save();
+                       Console.ForegroundColor = ConsoleColor.Green;
+                       Console.WriteLine("Saving first run configuration file Complete");
+                       Console.ForegroundColor = ConsoleColor.White;
 
-                        if (getValues.Contains("0"))
-                        {
-                            config.Set("d3installed", 1);
-                            config.Set("firstrun", 1);
-                            iniSource.Save();
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine("Saving first run configuration file Complete");
-                            Console.ForegroundColor = ConsoleColor.White;
-                        }
                         MadCowRunProcedure.RunMadCow(1);//Run in D3 Installed Mode
                         break;
 
