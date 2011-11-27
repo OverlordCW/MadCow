@@ -27,7 +27,8 @@ namespace MadCow
         public static String programPath = System.IO.Directory.GetCurrentDirectory();
         public static String lastRevision = ParseRevision.GetRevision();
         public static String desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        
+
+
         static void Main()
         {
             Console.Title = "MadCow Wrapper/Compiler for Mooege (By Wesko)";
@@ -39,19 +40,10 @@ namespace MadCow
             }
                 else
                 {
-                    PreRequeriments.CheckPrerequeriments();
-                    Diablo3.FindDiablo3();
-                    Diablo3.VerifyVersion();
-                    DownloadRevision.DownloadLatest();
-                    Uncompress.UncompressFiles();
-                    Compile.ExecuteCommandSync(Compile.msbuildPath + " " + Compile.compileArgs);
-                    Compile.ModifyMooegeINI();
-                    Compile.WriteVbsPath();
-                    MPQprocedure.ValidateMD5();
-                    MPQprocedure.MpqTransfer();
+                    PreRequeriments.FirstRunConfiguration();
                 }
 
-            Commands.CommandReader(); //Program loops here.
-         }
+            Commands.CommandReader(); //Program loops here.*/
+        }
     }
 }

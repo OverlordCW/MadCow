@@ -21,11 +21,60 @@ using System.Text;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using Nini.Config;
 
 namespace MadCow
 {
     class PreRequeriments
     {
+        public static void FirstRunConfiguration()
+        {
+            IConfigSource iniSource = new IniConfigSource(Compile.madcowINI);
+            string getValues = iniSource.Configs["Settings"].Get("firstrun");
+            IConfig config = iniSource.Configs["Settings"];
+
+            if (getValues.Contains("0"))
+            {
+                Console.WriteLine("¿Do you have Diablo 3 Installed on this computer? (yes/no)");
+                string input = Console.ReadLine();
+                switch (input.ToLower())
+                {
+                    case "yes":
+
+                        if (getValues.Contains("0"))
+                        {
+                            config.Set("d3installed", 1);
+                            config.Set("firstrun", 1);
+                            iniSource.Save();
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("Saving first run configuration file Complete");
+                            Console.ForegroundColor = ConsoleColor.White;
+                        }
+                        MadCowRunProcedure.RunMadCow(1);//Run in D3 Installed Mode
+                        break;
+
+                    case "no":
+                        config.Set("firstrun", 1);
+                        iniSource.Save();
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Saving first run configuration file Complete");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        MadCowRunProcedure.RunMadCow(0);//Run without D3 Installed Mode
+                        break;
+
+                    default:
+                        Console.WriteLine("Type yes or no");
+                        break;
+                }//End switch
+            }
+            else
+            {
+                string D3InstallStatus = iniSource.Configs["Settings"].Get("firstrun");
+                int StatusValue = Convert.ToInt32(D3InstallStatus);
+                MadCowRunProcedure.RunMadCow(StatusValue);
+            }
+        }
+
         public static void CheckPrerequeriments()
         {
             //Boolean checkSqlite = LoadSQLLiteAssembly();

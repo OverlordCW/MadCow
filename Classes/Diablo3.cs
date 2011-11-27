@@ -35,6 +35,7 @@ namespace MadCow
 
             if (d3Path == null) // If the RegistrySubKey doesn't exist -> (null)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Couldn't Find Diablo 3 Installation."
                 + "\nPlease install Diablo III and try running MadCow again.");
                 Console.ReadKey();

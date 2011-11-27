@@ -99,11 +99,6 @@ namespace MadCow
                 //When all the files has been copied then:
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Copying MPQ files to MadCow Folders has completed.");
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("\n _________________________________________"
-                                 +"\n| Process has been completed successfully |"
-                                 +"\n| Check your desktop for Mooege shortcut! |"
-                                 +"\n'-----------------------------------------'\n");
                 Console.ForegroundColor = ConsoleColor.White;
             }
         }

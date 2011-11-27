@@ -27,8 +27,9 @@ namespace MadCow
     class Compile
     {
         public static String currentMooegeExePath = Program.programPath + @"\mooege-mooege-" + Program.lastRevision + @"\src\Mooege\bin\Debug\Mooege.exe";
-        public static String currentMooegeDebudFolderPath = Program.programPath + @"\mooege-mooege-" + Program.lastRevision + @"\src\Mooege\bin\Debug\";
+        public static String currentMooegeDebugFolderPath = Program.programPath + @"\mooege-mooege-" + Program.lastRevision + @"\src\Mooege\bin\Debug\";
         public static String mooegeINI = Program.programPath + @"\mooege-mooege-" + Program.lastRevision + @"\src\Mooege\bin\Debug\config.ini";
+        public static String madcowINI = Program.programPath + @"\Tools\\Settings.ini";
         public static String compileArgs = Program.programPath + @"\mooege-mooege-" + Program.lastRevision + @"\build\Mooege-VS2010.sln";
         public static String msbuildPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.System) + @"\..\Microsoft.NET\Framework\v4.0.30319\msbuild.exe";
 
@@ -52,9 +53,20 @@ namespace MadCow
                 Console.WriteLine("Compiling newest Mooege source Complete");
                 Console.ForegroundColor = ConsoleColor.White;
             }
-            catch (Exception objException)
+            catch (Exception e)
             {
-                Console.WriteLine(objException);
+                Console.WriteLine(e);
+                Console.ForegroundColor = ConsoleColor.Red;
+                //The problem is, while passing args to ExecuteCommandSync(String command)
+                //If the argument its too long due to the current mooege folder path (Program.programPath)
+                //msbuild.exe won't be able to recieve the complete arguments and compiling will fail.
+                Console.WriteLine("\nLONGPATHERROR: Couldn't compile Mooege Source,"
+                                  + "\nplease use a shorter folder path by moving"
+                                  + "\nMadCow files into (e.g C:/MadCow/)");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("\nPress any key to exit...");
+                Console.ReadKey();
+                Environment.Exit(0);
             }
         }
 
@@ -62,32 +74,35 @@ namespace MadCow
         {
             try
             {
+                //First we modify the Mooege INI storage path.
                 IConfigSource source = new IniConfigSource(Compile.mooegeINI);
                 string fileName = source.Configs["Storage"].Get("MPQRoot");
                 if (fileName.Contains("${Root}"))
                 {
                     Console.WriteLine("Modifying Mooege MPQ storage folder...");
                     IConfig config = source.Configs["Storage"];
-                    config.Set("MPQRoot", Program.programPath + @"\MPQ");
+                    config.Set("MPQRoot", Program.programPath + "\\MPQ");
                     source.Save();
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Modifying Mooege MPQ storage folder Complete");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
+
+                //Then we create the MPQ folder in MadCow Root Folder.
+                if (Directory.Exists(Program.programPath + "\\MPQ"))
+                {
+                    Directory.Delete(Program.programPath + "\\MPQ", true);
+                    Console.WriteLine("Deleted current MPQ MadCow folder succeedeed");
+                    Directory.CreateDirectory(Program.programPath + "\\MPQ");
+                    Console.WriteLine("Creating new MPQ MadCow folder succeedeed");
+                }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                //The problem is, while passing args to ExecuteCommandSync(String command)
-                //If the argument its too long due to the current mooege folder path (Program.programPath)
-                //msbuild.exe won't be able to recieve the complete arguments and compiling will fail.
-                Console.WriteLine("\nLONGPATHERROR: Couldn't compile Mooege Source,"
-                                  +"\nplease use a shorter folder path by moving"
-                                  +"\nMadCow files into (e.g C:/MadCow/)");
+                Console.WriteLine("Could not modify Mooege INI FILE");
+                Console.WriteLine(e);
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("\nPress any key to exit...");
-                Console.ReadKey();
-                Environment.Exit(0);
             }
         }
 
@@ -99,7 +114,7 @@ namespace MadCow
             reader.Close();
  
             content = Regex.Replace(content, "MODIFY", Compile.currentMooegeExePath);
-            content = Regex.Replace(content, "WESKO", Compile.currentMooegeDebudFolderPath);
+            content = Regex.Replace(content, "WESKO", Compile.currentMooegeDebugFolderPath);
             StreamWriter writer = new StreamWriter(vbsPath);
             writer.Write(content);
             writer.Close();
