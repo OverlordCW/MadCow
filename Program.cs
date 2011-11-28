@@ -16,6 +16,30 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
+
+namespace MadCow
+{
+    class Program
+    {
+        //Global used variables.
+        public static String programPath = System.IO.Directory.GetCurrentDirectory();
+        public static String lastRevision = ParseRevision.GetRevision();
+        public static String desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Form1());
+        }
+    }
+}
+
+/* using System;
+using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
@@ -43,7 +67,8 @@ namespace MadCow
                     PreRequeriments.FirstRunConfiguration();
                 }
 
-            Commands.CommandReader(); //Program loops here.*/
+            Commands.CommandReader(); //Program loops here./
         }
     }
 }
+*/
