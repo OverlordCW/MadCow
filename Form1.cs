@@ -24,12 +24,13 @@ namespace MadCow
         private void button1_Click(object sender, EventArgs e)
         {
             //Update Mooege - does not start Diablo
-            //!Update
+            Commands.RunUpdate(1);
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             //enable and disable Auto-Update
+            //Commands.AutoUpdate(1);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -93,7 +94,7 @@ namespace MadCow
         private void button2_Click(object sender, EventArgs e)
         {
             //Update MPQs if necessary
-            //Change !UpdateMPQ 
+            Commands.RunUpdateMPQ(1);
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
