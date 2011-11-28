@@ -56,8 +56,9 @@
   <PropertyGroup>
     <ApplicationIcon>mooege.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Nini">
