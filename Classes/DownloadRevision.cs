@@ -30,11 +30,11 @@ namespace MadCow
             try
             {
                 WebClient client = new WebClient();
-                Uri uri = new Uri("https://github.com/mooege/mooege/zipball/master");
-                Console.WriteLine("Downloading latest Mooege revision [" + Program.lastRevision + "]...");
+                Uri uri = new Uri(ParseRevision.revisionUrl + "/zipball/master");
+                Console.WriteLine("Downloading latest [" + ParseRevision.developerName + "] revision [" + ParseRevision.lastRevision + "]...");
                 client.DownloadFile(uri, Program.programPath + "/Mooege.zip");
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Downloading latest Mooege revision [" + Program.lastRevision + "] Complete");
+                Console.WriteLine("Downloading latest [" + ParseRevision.developerName + "] revision [" + ParseRevision.lastRevision + "] Complete");
                 Console.ForegroundColor = ConsoleColor.White;
             }
 

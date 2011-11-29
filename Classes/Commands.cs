@@ -25,18 +25,13 @@ namespace MadCow
 {
     class Commands
     {
-        public static void CommandReader()
+        public static void RunUpdateMPQ(int RunUpdateMPQ1)
         {
-            String command = "";
-            do
+            if (RunUpdateMPQ1 == 1)
             {
-                Console.Write("Type command: ");
-                command = Console.ReadLine();
-
-                if (command == "!updatempq")
-                {
                     if (Directory.Exists(Program.programPath + "/MPQ"))
                     {
+                        //does not delete directory
                         Directory.Delete(Program.programPath + "/MPQ", true);
                         Console.WriteLine("Deleted current MPQ MadCow folder succeedeed");
                         Directory.CreateDirectory(Program.programPath + "/MPQ");
@@ -48,55 +43,58 @@ namespace MadCow
                         Directory.CreateDirectory(Program.programPath + "/MPQ");
                         MPQprocedure.MpqTransfer();
                     }
-                }
-
-                if (command == "!update")
-                {
-                    if (Directory.Exists(Program.programPath + "/mooege-mooege-" + Program.lastRevision))
+            }
+        }
+        public static void RunUpdate()
+        {
+            if (Directory.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
                     {
-                        Console.WriteLine("You have latest Mooege revision: " + Program.lastRevision);
+                        Console.WriteLine("You have latest [" + ParseRevision.developerName + "] Mooege revision: " + ParseRevision.lastRevision);
                     }
                     else
                     {
+                        Compile.currentMooegeExePath = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\Mooege.exe";
+                        Compile.currentMooegeDebugFolderPath = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\";
+                        Compile.mooegeINI = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini";
+                        Compile.compileArgs = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\build\Mooege-VS2010.sln";
+
                         DownloadRevision.DownloadLatest();
                         Uncompress.UncompressFiles();
+                        Console.WriteLine(Compile.compileArgs);
                         Compile.ExecuteCommandSync(Compile.msbuildPath + " " + Compile.compileArgs);
                         Compile.ModifyMooegeINI();
                         Compile.WriteVbsPath();
-                        if (File.Exists(Program.desktopPath + "\\Mooege.lnk"))
-                        {
-                            File.Delete(Program.desktopPath + "\\Mooege.lnk");
-                            System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
-                        }
-                        else
-                            System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
                     }
-                }
 
-                if (command == "!autoupdate")
-                {
+                    if (File.Exists(Program.desktopPath + "\\Mooege.lnk"))
+                    {
+                        File.Delete(Program.desktopPath + "\\Mooege.lnk");
+                        System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
+                    }
+                    else
+                    {
+                    System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
+                    }
+      
+        }
+
+        public static void AutoUpdate(int AutoUpdate1)
+        {
+            if (AutoUpdate1 == 1)
+            {
                     //  TODO: Implement a timer which will check for Mooege updates.
                     //  !autoupdate <minutes>
                     Console.WriteLine("Not implemented yet");
                 }
-
-                if (command == "!help")
-                {
-                    Console.WriteLine("Availavable commands:"
-                        +"\n!update - Download latest Mooege revision"
-                        +"\n!updatempq - Will refresh MadCow MPQ folder"
-                        +"\n!autoupdate <minutes> - Timer cycle"
-                        );
-                }
-
-                if (command != "!updatempq" && command != "!update" && command != "!help" && command != "!autoupdate")
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid command");
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-
-            } while (command != "!exit");
         }
-    }
+
+        public static void Help(int Help1)
+        {
+                if (Help1 == 1)
+                {
+                    Console.WriteLine("You're So Silly");
+                }
+        }
+
+        }
 }

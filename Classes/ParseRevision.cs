@@ -25,14 +25,37 @@ namespace MadCow
 {
     class ParseRevision
     {
+        public static string revisionUrl = "";
+        public static string developerName = "";
+        public static string branchName = "";
+        public static String lastRevision = "";
+
+        public static void getDeveloperName()
+        {
+            Int32 FirstPointer = revisionUrl.IndexOf(".com/");
+            Int32 LastPointer = revisionUrl.LastIndexOf("/");
+            Int32 BetweenPointers = LastPointer - FirstPointer;
+            developerName = revisionUrl.Substring(FirstPointer+5, BetweenPointers-5);
+        }
+
+        public static void getBranchName() // /D3Sharp /Mooege /Mooege-1 , etc.
+        {
+            Int32 LastPointer = revisionUrl.Length;
+            Int32 FirstPointer = revisionUrl.IndexOf(developerName);
+            Int32 DeveloperNameLength = developerName.Length;
+            Int32 BranchNameLength = LastPointer-(FirstPointer+DeveloperNameLength)-1; //+1 or -1 are to fix missing "/" while parsing.
+            branchName = revisionUrl.Substring(FirstPointer + DeveloperNameLength + 1, BranchNameLength);
+        }
+
         public static String GetRevision()
         {
             try
             {
                 WebClient client = new WebClient();
-                String commitFile = client.DownloadString("https://github.com/mooege/mooege/commits/master.atom");
-                Int32 pos1 = commitFile.IndexOf("Commit/");
-                String revision = commitFile.Substring(pos1 + 7, 7);
+                String commitFile = client.DownloadString(revisionUrl + "/commits/master.atom");
+                Int32 pos2 = commitFile.IndexOf("Commit/");
+                String revision = commitFile.Substring(pos2 + 7, 7);
+                lastRevision = commitFile.Substring(pos2 + 7, 7);
                 return revision;
             }
             catch (WebException webEx)

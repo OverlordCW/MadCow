@@ -16,34 +16,25 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+//using System.Runtime.InteropServices;
 
 namespace MadCow
 {
+
     class Program
     {
         //Global used variables.
         public static String programPath = System.IO.Directory.GetCurrentDirectory();
-        public static String lastRevision = ParseRevision.GetRevision();
         public static String desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-
+        [STAThread]
         static void Main()
         {
-            Console.Title = "MadCow Wrapper/Compiler for Mooege (By Wesko)";
-            Console.ForegroundColor = ConsoleColor.White;
-
-            if (Directory.Exists(programPath+"/mooege-mooege-" + lastRevision)) 
-            {
-                Console.WriteLine("You have latest Mooege revision: " + lastRevision);
-            }
-                else
-                {
-                    PreRequeriments.FirstRunConfiguration();
-                }
-
-            Commands.CommandReader(); //Program loops here.*/
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Form1());
         }
     }
 }
