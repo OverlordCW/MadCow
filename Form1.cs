@@ -9,8 +9,12 @@ using System.Windows.Forms;
 
 namespace MadCow
 {
+
     public partial class Form1 : Form
     {
+        //Timing
+        private int tik;
+
         public Form1()
         {
             InitializeComponent();
@@ -29,8 +33,8 @@ namespace MadCow
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            //enable and disable Auto-Update
-            //Commands.AutoUpdate(1);
+            tik = (int)this.numericUpDown1.Value;
+            timer1.Start();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -82,7 +86,6 @@ namespace MadCow
         {
             //creates folders needed, copies over MPQs
             MadCowRunProcedure.RunMadCow(1);
-
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -99,7 +102,7 @@ namespace MadCow
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            //Auto-Update Time Determination
+            //No Coding Necessary
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -162,6 +165,20 @@ namespace MadCow
         {
             //Updates Mooege does not check for Diablo Client
             MadCowRunProcedure.RunMadCow(0);
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            tik--;
+            if (tik == 0)
+            {
+                label5.Text = "Checking..";
+                Commands.RunUpdate(1);
+                timer1.Stop();
+            }
+            else
+                label5.Text = "Check in " + tik.ToString();
+
         }
     }
 }
