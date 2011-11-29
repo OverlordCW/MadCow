@@ -26,11 +26,13 @@ namespace MadCow
 {
     class Compile
     {
-        public static String currentMooegeExePath = Program.programPath + @"\mooege-mooege-" + Program.lastRevision + @"\src\Mooege\bin\Debug\Mooege.exe";
-        public static String currentMooegeDebugFolderPath = Program.programPath + @"\mooege-mooege-" + Program.lastRevision + @"\src\Mooege\bin\Debug\";
-        public static String mooegeINI = Program.programPath + @"\mooege-mooege-" + Program.lastRevision + @"\src\Mooege\bin\Debug\config.ini";
+        //This paths may change depending on which repository ur trying to retrieve, they are set over ParseRevision.cs
+        public static String currentMooegeExePath = "";
+        public static String currentMooegeDebugFolderPath = "";
+        public static String mooegeINI = "";
+        public static String compileArgs = "";
+        //This paths dont change.
         public static String madcowINI = Program.programPath + @"\Tools\\Settings.ini";
-        public static String compileArgs = Program.programPath + @"\mooege-mooege-" + Program.lastRevision + @"\build\Mooege-VS2010.sln";
         public static String msbuildPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.System) + @"\..\Microsoft.NET\Framework\v4.0.30319\msbuild.exe";
 
         public static void ExecuteCommandSync(String command)
@@ -46,11 +48,11 @@ namespace MadCow
                 
                 System.Diagnostics.Process proc = new System.Diagnostics.Process();
                 proc.StartInfo = procStartInformation;
-                Console.WriteLine("Compiling newest Mooege source...");
+                Console.WriteLine("Compiling newest [" + ParseRevision.developerName + "] Mooege source...");
                 proc.Start();
                 proc.WaitForExit();
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Compiling newest Mooege source Complete");
+                Console.WriteLine("Compiling newest [" + ParseRevision.developerName + "] Mooege source Complete");
                 Console.ForegroundColor = ConsoleColor.White;
             }
             catch (Exception e)

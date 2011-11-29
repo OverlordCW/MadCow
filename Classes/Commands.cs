@@ -45,30 +45,37 @@ namespace MadCow
                     }
             }
         }
-        public static void RunUpdate(int RunUpdate1)
+        public static void RunUpdate()
         {
-            if (RunUpdate1 == 1)
-            {
-                    if (Directory.Exists(Program.programPath + "/mooege-mooege-" + Program.lastRevision))
+            if (Directory.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
                     {
-                        Console.WriteLine("You have latest Mooege revision: " + Program.lastRevision);
+                        Console.WriteLine("You have latest [" + ParseRevision.developerName + "] Mooege revision: " + ParseRevision.lastRevision);
                     }
                     else
                     {
+                        Compile.currentMooegeExePath = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\Mooege.exe";
+                        Compile.currentMooegeDebugFolderPath = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\";
+                        Compile.mooegeINI = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini";
+                        Compile.compileArgs = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\build\Mooege-VS2010.sln";
+
                         DownloadRevision.DownloadLatest();
                         Uncompress.UncompressFiles();
+                        Console.WriteLine(Compile.compileArgs);
                         Compile.ExecuteCommandSync(Compile.msbuildPath + " " + Compile.compileArgs);
                         Compile.ModifyMooegeINI();
                         Compile.WriteVbsPath();
-                        if (File.Exists(Program.desktopPath + "\\Mooege.lnk"))
-                        {
-                            File.Delete(Program.desktopPath + "\\Mooege.lnk");
-                            System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
-                        }
-                        else
-                            System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
                     }
-            }
+
+                    if (File.Exists(Program.desktopPath + "\\Mooege.lnk"))
+                    {
+                        File.Delete(Program.desktopPath + "\\Mooege.lnk");
+                        System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
+                    }
+                    else
+                    {
+                    System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
+                    }
+      
         }
 
         public static void AutoUpdate(int AutoUpdate1)

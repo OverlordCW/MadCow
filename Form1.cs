@@ -13,7 +13,7 @@ namespace MadCow
     public partial class Form1 : Form
     {
         //Timing
-        private int tik;
+        //private int tik;
 
         public Form1()
         {
@@ -28,18 +28,33 @@ namespace MadCow
         private void button1_Click(object sender, EventArgs e)
         {
             //Update Mooege - does not start Diablo
-            Commands.RunUpdate(1);
+            Commands.RunUpdate();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            tik = (int)this.numericUpDown1.Value;
-            timer1.Start();
+            //tik = (int)this.numericUpDown1.Value;
+            //timer1.Start();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            //Change Repository
+            ParseRevision.revisionUrl = textBox1.Text;
+            //ParseRevision.GetRevision();
+            ParseRevision.GetRevision();
+            ParseRevision.getDeveloperName();
+            ParseRevision.getBranchName();
+            //Testing purposes
+            Console.WriteLine(ParseRevision.revisionUrl);
+            Console.WriteLine(ParseRevision.developerName);
+            Console.WriteLine("Branch name: " + ParseRevision.branchName);
+            Console.WriteLine("Last Revision: " + ParseRevision.lastRevision);
+ 
+            
+            
+            //Console.WriteLine(ParseRevision.branchName);
+            //ParseRevision.revisionUrl = textBox1.Text;
+            //Console.WriteLine(ParseRevision.revisionUrl);
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -85,7 +100,7 @@ namespace MadCow
         private void button5_Click(object sender, EventArgs e)
         {
             //creates folders needed, copies over MPQs
-            MadCowRunProcedure.RunMadCow(1);
+            //MadCowRunProcedure.RunMadCow(1);
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -97,7 +112,7 @@ namespace MadCow
         private void button2_Click(object sender, EventArgs e)
         {
             //Update MPQs if necessary
-            Commands.RunUpdateMPQ(1);
+            //Commands.RunUpdateMPQ(1);
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
@@ -164,21 +179,20 @@ namespace MadCow
         private void button8_Click(object sender, EventArgs e)
         {
             //Updates Mooege does not check for Diablo Client
-            MadCowRunProcedure.RunMadCow(0);
+            //MadCowRunProcedure.RunMadCow(0);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            tik--;
+            /*tik--;
             if (tik == 0)
             {
                 label5.Text = "Checking..";
-                Commands.RunUpdate(1);
+                Commands.RunUpdate();
                 timer1.Stop();
             }
             else
-                label5.Text = "Check in " + tik.ToString();
-
+                label5.Text = "Check in " + tik.ToString();*/
         }
     }
 }
