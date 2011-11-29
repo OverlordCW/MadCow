@@ -45,7 +45,7 @@ namespace MadCow
                 procStartInformation.RedirectStandardOutput = false;
                 procStartInformation.UseShellExecute = true;
                 procStartInformation.CreateNoWindow = true;
-                
+
                 System.Diagnostics.Process proc = new System.Diagnostics.Process();
                 proc.StartInfo = procStartInformation;
                 Console.WriteLine("Compiling newest [" + ParseRevision.developerName + "] Mooege source...");

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace MadCow
 {
@@ -20,25 +21,32 @@ namespace MadCow
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            //No Coding Here
-        }
+//-------------------------//
+// Unused Items in Form //
+//-------------------------//
+        private void Form1_Load(object sender, EventArgs e) { }
+        private void tabPage1_Click(object sender, EventArgs e) { }
+        private void label2_Click(object sender, EventArgs e) { }
+        private void label10_Click(object sender, EventArgs e) { }
+        private void label9_Click(object sender, EventArgs e) { }
+        private void textBox6_TextChanged(object sender, EventArgs e) { }
+        private void textBox7_TextChanged(object sender, EventArgs e) { }
+        private void label12_Click(object sender, EventArgs e) { }
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e) { }
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e) { }
 
+//-------------------------//
+// Update Mooege //
+//-------------------------//
         private void button1_Click(object sender, EventArgs e)
         {
             //Update Mooege - does not start Diablo
             Commands.RunUpdate();
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            //tik = (int)this.numericUpDown1.Value;
-            //timer1.Start();
-        }
-
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+            //Need to have this load when MadCow loads, or wont work until you change the repo
             ParseRevision.revisionUrl = textBox1.Text;
             //ParseRevision.GetRevision();
             ParseRevision.GetRevision();
@@ -49,9 +57,6 @@ namespace MadCow
             Console.WriteLine(ParseRevision.developerName);
             Console.WriteLine("Branch name: " + ParseRevision.branchName);
             Console.WriteLine("Last Revision: " + ParseRevision.lastRevision);
- 
-            
-            
             //Console.WriteLine(ParseRevision.branchName);
             //ParseRevision.revisionUrl = textBox1.Text;
             //Console.WriteLine(ParseRevision.revisionUrl);
@@ -60,66 +65,39 @@ namespace MadCow
         private void button3_Click(object sender, EventArgs e)
         {
             //Delete Mooege Folder
+            SimpleFileDelete.Delete();
         }
 
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-            //No Coding Necessary Here
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-            //No Coding Necessary Here
-        }
-
-        private void label10_Click(object sender, EventArgs e)
-        {
-            //No Coding Necessary Here
-        }
-
-        private void label9_Click(object sender, EventArgs e)
-        {
-            //No Coding Necessary Here
-        }
-
-        private void textBox6_TextChanged(object sender, EventArgs e)
-        {
-            //No Coding Necessary Here
-        }
-
-        private void textBox7_TextChanged(object sender, EventArgs e)
-        {
-            //No Coding Necessary Here
-        }
-
-        private void label12_Click(object sender, EventArgs e)
-        {
-            //No Coding Necessary Here
-        }
-
+//-------------------------//
+// First Run Through Button //
+//-------------------------//
         private void button5_Click(object sender, EventArgs e)
         {
             //creates folders needed, copies over MPQs
             //MadCowRunProcedure.RunMadCow(1);
         }
 
+//-------------------------//
+// Play Diablo //
+//-------------------------//
         private void button4_Click(object sender, EventArgs e)
         {
             //Starts Mooege
             //Run Diablo - Local Host
         }
 
+//-------------------------//
+// Update MPQS //
+//-------------------------//
         private void button2_Click(object sender, EventArgs e)
         {
             //Update MPQs if necessary
             //Commands.RunUpdateMPQ(1);
         }
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-            //No Coding Necessary
-        }
-
+//-------------------------//
+// Remote Server Settings //
+//-------------------------//
         private void button7_Click(object sender, EventArgs e)
         {
             //Remote Server
@@ -136,6 +114,9 @@ namespace MadCow
             //Remote Server Host Port
         }
 
+//-------------------------//
+// Server Control Settings //
+//-------------------------//
         private void textBox13_TextChanged(object sender, EventArgs e)
         {
             //Bnet Server IP
@@ -182,9 +163,28 @@ namespace MadCow
             //MadCowRunProcedure.RunMadCow(0);
         }
 
+//-------------------------//
+// Timer Stuff //
+//-------------------------//
+/*
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            
+            if (checkBox1.Checked == true)
+            {
+                tik = (int)this.numericUpDown1.Value * 60;
+                timer1.Start();
+            }
+            else
+            {
+                timer1.Stop();
+                label5.Text = " ";
+            }
+        }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
-            /*tik--;
+            tik--;
             if (tik == 0)
             {
                 label5.Text = "Checking..";
@@ -192,7 +192,30 @@ namespace MadCow
                 timer1.Stop();
             }
             else
-                label5.Text = "Check in " + tik.ToString();*/
+                label5.Text = "Check in " + tik.ToString();
+        }
+*/
+//-------------------------//
+// Diablo 3 Path Stuff //
+//-------------------------//
+        private void button9_Click(object sender, EventArgs e)
+        {
+            //Opens path to find Diablo3
+            OpenFileDialog d3folder = new OpenFileDialog();
+            d3folder.Title = "Diablo 3.exe";
+            d3folder.InitialDirectory = @"C:\Program Files x86\Diablo III Beta\";
+            if (d3folder.ShowDialog() == DialogResult.OK) // Test result.
+            {
+                // Get the directory name.
+                string dirName = System.IO.Path.GetDirectoryName(d3folder.FileName);
+                // Output Name
+                textBox4.Text = d3folder.FileName;
+            }
+        }
+            
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+            //Diablo Path
         }
     }
 }
