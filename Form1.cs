@@ -21,13 +21,24 @@ namespace MadCow
             InitializeComponent();
             button2.Enabled = false;
             button3.Enabled = false;
-
         }
 
         //-------------------------//
         // Unused Items in Form //
         //-------------------------//
-        private void Form1_Load(object sender, EventArgs e) { }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            ToolTip toolTip1 = new ToolTip();
+            // Set up the delays for the ToolTip.
+            toolTip1.AutoPopDelay = 5000;
+            toolTip1.InitialDelay = 1000;
+            toolTip1.ReshowDelay = 500;
+            // Force the ToolTip text to be displayed whether or not the form is active.
+            toolTip1.ShowAlways = true;
+            // Set up the ToolTip text for the Buttons.
+            toolTip1.SetToolTip(this.button2, "This will update mooege to latest version");
+            toolTip1.SetToolTip(this.button3, "This will copy MPQ's if you have D3 installed");
+        }
         private void tabPage1_Click(object sender, EventArgs e) { }
         private void label2_Click(object sender, EventArgs e) { }
         private void label10_Click(object sender, EventArgs e) { }
@@ -364,6 +375,11 @@ namespace MadCow
             {
                 textBox1_Repository_Url.ForeColor = SystemColors.ControlText;
             }
+        }
+
+        private void toolTip1_Popup(object sender, PopupEventArgs e)
+        {
+
         }
     }
 }
