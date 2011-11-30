@@ -392,6 +392,7 @@ namespace MadCow
 
             if (checkBox1.Checked == true)
             {
+                tik = (int)this.numericUpDown1.Value;
                 timer1.Start();
                 label1.Text = "Update in " + tik + " minutes.";
             }
