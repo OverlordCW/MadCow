@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Diagnostics; //used with opening files, used for testing
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -16,7 +16,6 @@ namespace MadCow
     {
         //Timing
         private int tik;
-
         public Form1()
         {
             InitializeComponent();
@@ -40,7 +39,6 @@ namespace MadCow
             toolTip1.SetToolTip(this.button2, "This will update mooege to latest version");
             toolTip1.SetToolTip(this.button3, "This will copy MPQ's if you have D3 installed");
             toolTip1.SetToolTip(this.button8, "This will check pre-requirements and update Mooege Server");
-
             textBox4.Text = @"C:\Program Files (x86)\Diablo III Beta\Diablo III.exe";
         }
         private void tabPage1_Click(object sender, EventArgs e) { }
@@ -54,6 +52,8 @@ namespace MadCow
         private void numericUpDown1_ValueChanged(object sender, EventArgs e) { }
         private void toolTip1_Popup(object sender, PopupEventArgs e) { }
         private void openFileDialog1_FileOk_1(object sender, CancelEventArgs e) { }
+        private void textBox2_TextChanged(object sender, EventArgs e) { }
+        private void textBox3_TextChanged(object sender, EventArgs e) { }
 
         //-------------------------//
         // Update Mooege //
@@ -72,6 +72,7 @@ namespace MadCow
                         textBox1_Repository_Url.Text = ParseRevision.errorSender;
                         pictureBox1.Show();
                         button2.Enabled = false;
+                        label1.Text = "Internet Problems.";
                     }
 
                     else if (ParseRevision.commitFile == "Incorrect repository entry")
@@ -80,6 +81,7 @@ namespace MadCow
                         textBox1_Repository_Url.Text = ParseRevision.errorSender;
                         pictureBox1.Show();
                         button2.Enabled = false;
+                        label1.Text = "Please try a different Repo.";
                     }
                     
                     else if (ParseRevision.revisionUrl.EndsWith("/"))
@@ -88,6 +90,7 @@ namespace MadCow
                         textBox1_Repository_Url.Text = "Incorrect repository entry";
                         pictureBox1.Show();
                         button2.Enabled = false;
+                        label1.Text = "Delete the last '/' on the repo.";
                     }
                     else
 
@@ -98,6 +101,7 @@ namespace MadCow
                         ParseRevision.getDeveloperName();
                         ParseRevision.getBranchName();
                         button2.Enabled = true;
+                        label1.Text = "Repository Validated!";
                     }
                 }
                 catch (Exception)
@@ -112,51 +116,46 @@ namespace MadCow
         {
             if (Directory.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
             {
-                Console.WriteLine("You have latest [" + ParseRevision.developerName + "] Mooege revision: " + ParseRevision.lastRevision);
+                label1.Text = "You have latest [" + ParseRevision.developerName + "] Mooege revision: " + ParseRevision.lastRevision;
             }
 
             else if (Directory.Exists(Program.programPath + "/MPQ")) //Checks for MPQ Folder
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Found default MadCow MPQ folder");
-                Console.ForegroundColor = ConsoleColor.White;
+                label1.Text = "Found default MadCow MPQ folder";
                 button2.Enabled = false;
                 backgroundWorker1.RunWorkerAsync();
             }
 
             else
             {
-                Console.WriteLine("Creating MadCow MPQ folder...");
+                label1.Text = "Creating MadCow MPQ folder...";
                 Directory.CreateDirectory(Program.programPath + "/MPQ");
-                Console.ForegroundColor = ConsoleColor.Green;
                 button2.Enabled = false;
                 backgroundWorker1.RunWorkerAsync();
             }
         }
+
 
         //-------------------------//
         // Play Diablo Button      //
         //-------------------------//
         private void button4_Click(object sender, EventArgs e)
         {
-            /*
-             * TODO: use mooegepathexepath, not shortcut because people might not want or may delete the shortcut
-             * may need batch file for starting up diablo because of shortcut properties
-             * I cant figure out how they work.
-             */
+            //TODO: waiting time between mooege starting up and diablo?
 
             //Compile.currentMooegeExePath = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\Mooege.exe";
             //Process proc0 = new Process();
             //proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
             //proc0.Start();
-           // MessageBox.Show(Compile.currentMooegeExePath);
+            //MessageBox.Show(Compile.currentMooegeExePath);
             Process proc1 = new Process();
             proc1.StartInfo = new ProcessStartInfo(textBox4.Text);
             proc1.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
             proc1.Start();
-            //MessageBox.Show(textBox4.Text); //Debugging Purposes
+            label1.Text = "Starting Diablo..";
             
         }
+
 
         //-------------------------//
         // Update MPQS             //
@@ -167,72 +166,57 @@ namespace MadCow
             //Commands.RunUpdateMPQ();
         }
 
+
         //-------------------------//
-        // Remote Server Settings //
+        // Remote Server Settings  //
         //-------------------------//
         private void button7_Click(object sender, EventArgs e)
         {
             //Remote Server
             //Opens Diablo with extension to Remote Server
+            Process proc1 = new Process();
+            proc1.StartInfo = new ProcessStartInfo(textBox4.Text);
+            String HostIP = textBox2.Text;
+            String Port = textBox3.Text;
+            String ServerHost = HostIP + @":" + Port;
+            proc1.StartInfo.Arguments = @" -launch -auroraaddress " + ServerHost;
+            MessageBox.Show(proc1.StartInfo.Arguments);
+            //proc1.Start();
+            label1.Text = "Starting Diablo..";
+            
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-            //Remote Server Host IP
-        }
-
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-            //Remote Server Host Port
-        }
 
         //-------------------------//
         // Server Control Settings //
         //-------------------------//
-        private void textBox13_TextChanged(object sender, EventArgs e)
-        {
-            //Bnet Server IP
-        }
-
-        private void textBox12_TextChanged(object sender, EventArgs e)
-        {
-            //Bnet Server Port
-        }
-
-        private void textBox11_TextChanged(object sender, EventArgs e)
-        {
-            //Game Server IP
-        }
-
-        private void textBox10_TextChanged(object sender, EventArgs e)
-        {
-            //Game Server Port
-        }
-
-        private void textBox9_TextChanged(object sender, EventArgs e)
-        {
-            //Public Server IP
-        }
-
-        private void checkBox3_CheckedChanged(object sender, EventArgs e)
-        {
-            //enable or disable NAT
-        }
+        private void textBox13_TextChanged(object sender, EventArgs e) { /*Bnet Server IP*/ }
+        private void textBox12_TextChanged(object sender, EventArgs e) { /*Bnet Server Port*/ }
+        private void textBox11_TextChanged(object sender, EventArgs e) { /*Game Server IP*/ }
+        private void textBox10_TextChanged(object sender, EventArgs e) { /*Game Server Port*/ }
+        private void textBox9_TextChanged(object sender, EventArgs e) { /*Public Server IP*/ }
+        private void checkBox3_CheckedChanged(object sender, EventArgs e) { /*enable or disable NAT*/ }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            //restores default settings
+            //Restore Default Server Control Settings
+            textBox13.Text = "0.0.0.0";
+            textBox12.Text = "1345";
+            textBox11.Text = "0.0.0.0";
+            textBox10.Text = "1999";
+            textBox9.Text = "0.0.0.0";
+            checkBox3.Checked = false;
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            //only launch mooege (mostly for servers)
-            Compile.currentMooegeExePath = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\Mooege.exe";
+            //launches only mooege server
+            //Any changes made on Server Control -> need to change config.ini
             /*
             Process proc0 = new Process();
             proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
             proc0.Start();
-             */
+            */
             MessageBox.Show(Compile.currentMooegeExePath);
         }
 
@@ -270,11 +254,11 @@ namespace MadCow
                 timer1.Start();
            }
            else
-               label1.Text = "Update in " + tik.ToString();
+               label1.Text = "Updating in " + tik.ToString();
         }
         
         //-------------------------//
-        // Diablo 3 Path Stuff //
+        // Diablo 3 Path Stuff     //
         //-------------------------//
         private void button9_Click(object sender, EventArgs e)
         {
@@ -291,10 +275,7 @@ namespace MadCow
             }
         }
 
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-            //Diablo Path
-        }
+        private void textBox4_TextChanged(object sender, EventArgs e) { /*Diablo Path*/ }
 
         //DOWNLOAD SOURCE FROM REPOSITORY
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -384,6 +365,34 @@ namespace MadCow
                 textBox1_Repository_Url.ForeColor = SystemColors.ControlText;
             }
         }
+       //----------------------------------------------------------------------
+        /*private void Labels(object sender, EventArgs e)
+        {
 
+                if (Directory.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
+                {
+                    // This path is a file
+                    label1.Text = "Uncompress Done";
+                }
+                else if (Directory.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\"))
+                {
+                    // This path is a directory
+                    label1.Text = "Compile Complete";
+                }
+                else if (Directory.Exists(Program.programPath + "/MPQ"))
+                {
+                    label1.Text = "MPQ folder Created";
+                }
+                else if (Directory.Exists(Program.programPath + "/MPQ/base") && File.Exists(Program.programPath + "/MPQ/CoreData.mpq") && File.Exists(Program.programPath + "/MPQ/ClientData.mpq"))
+                {
+                    label1.Text = "Copying MPQs Complete";
+                }
+                else
+                {
+                    label1.Text = "";
+                }
+        }
+         */
     }
-}
+
+ }
