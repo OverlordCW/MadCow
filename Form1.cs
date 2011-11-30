@@ -146,13 +146,16 @@ namespace MadCow
                     label1.Text = "Updating...";
                     backgroundWorker1.RunWorkerAsync();
                 }
-                //else
-                //backgroundWorker1.RunWorkerAsync();
             }
 
             else
             {
-                label1.Text = "Creating MadCow MPQ folder...";
+                if (checkBox1.Checked == true)
+                {
+                    timer1.Stop();
+                    label1.Text = "Updating...";
+                }
+                Console.WriteLine("Creating MadCow MPQ folder...");
                 Directory.CreateDirectory(Program.programPath + "/MPQ");
                 button2.Enabled = false;
                 backgroundWorker1.RunWorkerAsync();
@@ -373,6 +376,7 @@ namespace MadCow
 
             if (checkBox1.Checked == true)
             {
+                tik = (int)this.numericUpDown1.Value;
                 timer1.Start();
                 label1.Text = "Update in " + tik + " minutes.";
             }
