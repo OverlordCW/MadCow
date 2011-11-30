@@ -356,7 +356,8 @@ namespace MadCow
                 {
                     textBox1_Repository_Url.ForeColor = Color.Black;
                     this.label4.BackColor = System.Drawing.Color.Transparent;
-                    pictureBox1.Hide();
+                    pictureBox1.Hide();//Error
+                    pictureBox2.Hide();//Correct
                 }
             }
             catch
