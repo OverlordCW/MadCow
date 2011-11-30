@@ -144,12 +144,15 @@ namespace MadCow
                     label1.Text = "Updating...";
                     backgroundWorker1.RunWorkerAsync();
                 }
-                //else
-                //backgroundWorker1.RunWorkerAsync();
             }
 
             else
             {
+                if (checkBox1.Checked == true)
+                {
+                    timer1.Stop();
+                    label1.Text = "Updating...";
+                }
                 Console.WriteLine("Creating MadCow MPQ folder...");
                 Directory.CreateDirectory(Program.programPath + "/MPQ");
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -424,6 +427,5 @@ namespace MadCow
                 textBox1_Repository_Url.ForeColor = SystemColors.ControlText;
             }
         }
-
     }
 }
