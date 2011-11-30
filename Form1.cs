@@ -265,6 +265,7 @@ namespace MadCow
                 label1.Text = "Checking..";
                 timer1.Stop();
                 Commands.RunUpdate();
+                tik = (int)this.numericUpDown1.Value * 60;
                 timer1.Start();
            }
            else
