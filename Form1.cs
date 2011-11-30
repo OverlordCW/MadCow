@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Diagnostics;
+//using System.Diagnostics; //used with opening files, used for testing
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
