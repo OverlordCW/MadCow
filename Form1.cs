@@ -350,12 +350,13 @@ namespace MadCow
                 if (textBox1_Repository_Url.Text == "Incorrect repository entry." || textBox1_Repository_Url.Text == "Check your internet connection.")
                 {
                     textBox1_Repository_Url.ForeColor = Color.Red;
-                    this.label4.BackColor = System.Drawing.Color.Red;
+                    //this.label4.BackColor = System.Drawing.Color.Red;
                 }
                 else
                 {
                     textBox1_Repository_Url.ForeColor = Color.Black;
                     this.label4.BackColor = System.Drawing.Color.Transparent;
+                    pictureBox1.Hide();
                 }
             }
             catch
