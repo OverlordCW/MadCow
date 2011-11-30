@@ -76,7 +76,7 @@ namespace MadCow
                         numericUpDown1.Enabled = false; //If validation fails we set Update and Autoupdate
                         checkBox1.Enabled = false;      //functions disabled!.
                         button2.Enabled = false;
-                        label1.Text = "Internet Problems.";
+                        label2.Text = "Internet Problems.";
                     }
 
                     else if (ParseRevision.commitFile == "Incorrect repository entry")
@@ -87,7 +87,7 @@ namespace MadCow
                         numericUpDown1.Enabled = false; //If validation fails we set Update and Autoupdate
                         checkBox1.Enabled = false;      //functions disabled!.
                         button2.Enabled = false;
-                        label1.Text = "Please try a different Repo.";
+                        label2.Text = "Please try a different Repo.";
                     }
                     
                     else if (ParseRevision.revisionUrl.EndsWith("/"))
@@ -98,7 +98,7 @@ namespace MadCow
                         numericUpDown1.Enabled = false;  //If validation fails we set Update and Autoupdate
                         checkBox1.Enabled = false;       //functions disabled!.
                         button2.Enabled = false;
-                        label1.Text = "Delete the last '/' on the repo.";
+                        label2.Text = "Delete the last '/' on the repo.";
                     }
                     else
 
@@ -111,7 +111,7 @@ namespace MadCow
                         button2.Enabled = true;
                         numericUpDown1.Enabled = true;
                         checkBox1.Enabled = true;
-                        label1.Text = "Repository Validated!";
+                        label2.Text = "Repository Validated!";
                     }
                 }
                 catch (Exception)
@@ -126,7 +126,7 @@ namespace MadCow
         {
             if (Directory.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
             {
-                label1.Text = "You have latest [" + ParseRevision.developerName + "] Mooege revision: " + ParseRevision.lastRevision;
+                label2.Text = "You have latest [" + ParseRevision.developerName + "] Mooege revision: " + ParseRevision.lastRevision;
                 
                 if (checkBox1.Checked == true)
                 {
@@ -137,13 +137,14 @@ namespace MadCow
 
             else if (Directory.Exists(Program.programPath + "/MPQ")) //Checks for MPQ Folder
             {
-                label1.Text = "Found default MadCow MPQ folder";
+                label2.Text = "Found default MadCow MPQ folder";
                 button2.Enabled = false;
                 
                 if (checkBox1.Checked == true)
                 {
                     timer1.Stop();
                     label1.Text = "Updating...";
+                    label2.Text = " ";
                     backgroundWorker1.RunWorkerAsync();
                 }
             }
@@ -154,6 +155,7 @@ namespace MadCow
                 {
                     timer1.Stop();
                     label1.Text = "Updating...";
+                    label2.Text = " ";
                 }
                 Console.WriteLine("Creating MadCow MPQ folder...");
                 Directory.CreateDirectory(Program.programPath + "/MPQ");
@@ -179,7 +181,7 @@ namespace MadCow
             proc1.StartInfo = new ProcessStartInfo(textBox4.Text);
             proc1.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
             proc1.Start();
-            label1.Text = "Starting Diablo..";
+            label2.Text = "Starting Diablo..";
             
         }
 
@@ -209,7 +211,7 @@ namespace MadCow
             proc1.StartInfo.Arguments = @" -launch -auroraaddress " + ServerHost;
             MessageBox.Show(proc1.StartInfo.Arguments);
             //proc1.Start();
-            label1.Text = "Starting Diablo..";
+            label2.Text = "Starting Diablo..";
             
         }
 
