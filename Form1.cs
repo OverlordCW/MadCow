@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+//using System.Diagnostics; //used with opening files, used for testing
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -14,20 +15,34 @@ namespace MadCow
     public partial class Form1 : Form
     {
         //Timing
-        //private int tik;
+        private int tik;
 
         public Form1()
         {
             InitializeComponent();
             button2.Enabled = false;
             button3.Enabled = false;
-
         }
 
         //-------------------------//
         // Unused Items in Form //
         //-------------------------//
-        private void Form1_Load(object sender, EventArgs e) { }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            ToolTip toolTip1 = new ToolTip();
+            // Set up the delays for the ToolTip.
+            toolTip1.AutoPopDelay = 5000;
+            toolTip1.InitialDelay = 1000;
+            toolTip1.ReshowDelay = 500;
+            // Force the ToolTip text to be displayed whether or not the form is active.
+            toolTip1.ShowAlways = true;
+            // Set up the ToolTip text for the Buttons.
+            toolTip1.SetToolTip(this.button2, "This will update mooege to latest version");
+            toolTip1.SetToolTip(this.button3, "This will copy MPQ's if you have D3 installed");
+            toolTip1.SetToolTip(this.button8, "This will check pre-requirements and update Mooege Server");
+
+            textBox4.Text = @"C:\Program Files (x86)\Diablo III Beta\Diablo III.exe";
+        }
         private void tabPage1_Click(object sender, EventArgs e) { }
         private void label2_Click(object sender, EventArgs e) { }
         private void label10_Click(object sender, EventArgs e) { }
@@ -37,6 +52,8 @@ namespace MadCow
         private void label12_Click(object sender, EventArgs e) { }
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e) { }
         private void numericUpDown1_ValueChanged(object sender, EventArgs e) { }
+        private void toolTip1_Popup(object sender, PopupEventArgs e) { }
+        private void openFileDialog1_FileOk_1(object sender, CancelEventArgs e) { }
 
         //-------------------------//
         // Update Mooege //
@@ -118,26 +135,36 @@ namespace MadCow
         }
 
         //-------------------------//
-        // First Run Through Button //
-        //-------------------------//
-        private void button5_Click(object sender, EventArgs e)
-        {
-            //creates folders needed, copies over MPQs
-            //MadCowRunProcedure.RunMadCow(1);
-        }
-
-        //-------------------------//
-        // Play Diablo //
+        // Play Diablo Button      //
         //-------------------------//
         private void button4_Click(object sender, EventArgs e)
         {
-            //Starts Mooege
-            //Run Diablo - Local Host
+            /*
+             * TODO: use mooegepathexepath, not shortcut because people might not want or may delete the shortcut
+             * may need batch file for starting up diablo because of shortcut properties
+             * I cant figure out how they work.
+             */
+
+            /*Compile.currentMooegeExePath = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\Mooege.exe";
+            Process proc0 = new Process();
+            proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
+            proc0.Start();
+            MessageBox.Show(Compile.currentMooegeExePath);
+            Process proc1 = new Process();
+            proc1.StartInfo = new ProcessStartInfo(textBox4.Text);
+            proc1.Start();
+            MessageBox.Show(textBox4.Text);
+             */
         }
 
         //-------------------------//
-        // Update MPQS //
+        // Update MPQS             //
         //-------------------------//
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            //Commands.RunUpdateMPQ();
+        }
 
         //-------------------------//
         // Remote Server Settings //
@@ -199,6 +226,13 @@ namespace MadCow
         private void button6_Click(object sender, EventArgs e)
         {
             //only launch mooege (mostly for servers)
+            Compile.currentMooegeExePath = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\Mooege.exe";
+            /*
+            Process proc0 = new Process();
+            proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
+            proc0.Start();
+             */
+            MessageBox.Show(Compile.currentMooegeExePath);
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -210,35 +244,33 @@ namespace MadCow
         //-------------------------//
         // Timer Stuff //
         //-------------------------//
-        /*
-                private void checkBox1_CheckedChanged(object sender, EventArgs e)
-                {
-            
-                    if (checkBox1.Checked == true)
-                    {
-                        tik = (int)this.numericUpDown1.Value * 60;
-                        timer1.Start();
-                    }
-                    else
-                    {
-                        timer1.Stop();
-                        label5.Text = " ";
-                    }
-                }
+        
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
 
-                private void timer1_Tick(object sender, EventArgs e)
-                {
-                    tik--;
-                    if (tik == 0)
-                    {
-                        label5.Text = "Checking..";
-                        Commands.RunUpdate();
-                        timer1.Stop();
-                    }
-                    else
-                        label5.Text = "Check in " + tik.ToString();
-                }
-        */
+            if (checkBox1.Checked == true)
+            {
+                tik = (int)this.numericUpDown1.Value * 60;
+                timer1.Start();
+            }
+            else
+                timer1.Stop();
+               label1.Text = " ";
+        }
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+           tik--;
+           if (tik == 0)
+           {
+                label1.Text = "Checking..";
+                timer1.Stop();
+                Commands.RunUpdate();
+                timer1.Start();
+           }
+           else
+               label1.Text = "Update in " + tik.ToString();
+        }
+        
         //-------------------------//
         // Diablo 3 Path Stuff //
         //-------------------------//
@@ -247,7 +279,7 @@ namespace MadCow
             //Opens path to find Diablo3
             OpenFileDialog d3folder = new OpenFileDialog();
             d3folder.Title = "Diablo 3.exe";
-            d3folder.InitialDirectory = @"C:\Program Files x86\Diablo III Beta\";
+            d3folder.InitialDirectory = @"C:\Program Files (x86)\Diablo III Beta\";
             if (d3folder.ShowDialog() == DialogResult.OK) // Test result.
             {
                 // Get the directory name.
@@ -260,21 +292,6 @@ namespace MadCow
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
             //Diablo Path
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void openFileDialog1_FileOk_1(object sender, CancelEventArgs e)
-        {
-           
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-
         }
 
         //DOWNLOAD SOURCE FROM REPOSITORY
@@ -365,5 +382,6 @@ namespace MadCow
                 textBox1_Repository_Url.ForeColor = SystemColors.ControlText;
             }
         }
+
     }
 }
