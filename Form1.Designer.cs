@@ -606,9 +606,9 @@
             this.tabPage4.Text = "Credits";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // timer1
+            // Timer for AutoUpdate
             // 
-            this.timer1.Interval = 1000;
+            this.timer1.Interval = 60000; //ms = 1 Minute interval.
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // openFileDialog1
