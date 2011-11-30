@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -38,6 +39,9 @@ namespace MadCow
             // Set up the ToolTip text for the Buttons.
             toolTip1.SetToolTip(this.button2, "This will update mooege to latest version");
             toolTip1.SetToolTip(this.button3, "This will copy MPQ's if you have D3 installed");
+            toolTip1.SetToolTip(this.button8, "This will check pre-requirements and update Mooege Server");
+
+            textBox4.Text = @"C:\Program Files (x86)\Diablo III Beta\Diablo III.exe";
         }
         private void tabPage1_Click(object sender, EventArgs e) { }
         private void label2_Click(object sender, EventArgs e) { }
@@ -131,19 +135,32 @@ namespace MadCow
         //-------------------------//
         // First Run Through Button //
         //-------------------------//
-        private void button5_Click(object sender, EventArgs e)
+        /*private void button5_Click(object sender, EventArgs e)
         {
             //creates folders needed, copies over MPQs
             //MadCowRunProcedure.RunMadCow(1);
-        }
+        }*/
 
         //-------------------------//
         // Play Diablo //
         //-------------------------//
         private void button4_Click(object sender, EventArgs e)
         {
-            //Starts Mooege
-            //Run Diablo - Local Host
+            /*
+             * TODO: use mooegepathexepath, not shortcut because people might not want or may delete the shortcut
+             * may need batch file for starting up diablo because of shortcut properties
+             * I cant figure out how they work.
+             */
+            /*Compile.currentMooegeExePath = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\Mooege.exe";
+            Process proc0 = new Process();
+            proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
+            proc0.Start();
+            MessageBox.Show(Compile.currentMooegeExePath);
+            Process proc1 = new Process();
+            proc1.StartInfo = new ProcessStartInfo(textBox4.Text);
+            proc1.Start();
+            MessageBox.Show(textBox4.Text);
+             */
         }
 
         //-------------------------//
@@ -210,6 +227,13 @@ namespace MadCow
         private void button6_Click(object sender, EventArgs e)
         {
             //only launch mooege (mostly for servers)
+            /*
+            Compile.currentMooegeExePath = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\Mooege.exe";
+            Process proc0 = new Process();
+            proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
+            proc0.Start();
+             */
+            MessageBox.Show(Compile.currentMooegeExePath);
         }
 
         private void button8_Click(object sender, EventArgs e)

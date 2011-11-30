@@ -38,6 +38,12 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.button7 = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button8 = new System.Windows.Forms.Button();
@@ -55,30 +61,24 @@
             this.textBox12 = new System.Windows.Forms.TextBox();
             this.textBox13 = new System.Windows.Forms.TextBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button9 = new System.Windows.Forms.Button();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.progressBar2 = new System.Windows.Forms.ProgressBar();
-            this.button3 = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.button9 = new System.Windows.Forms.Button();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.progressBar2 = new System.Windows.Forms.ProgressBar();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label5 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -87,19 +87,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabPage4.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox6.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // checkBox1
@@ -182,6 +182,65 @@
             this.tabPage3.TabIndex = 3;
             this.tabPage3.Text = "Remote Server";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.label6);
+            this.groupBox4.Controls.Add(this.label8);
+            this.groupBox4.Controls.Add(this.label7);
+            this.groupBox4.Controls.Add(this.textBox3);
+            this.groupBox4.Controls.Add(this.textBox2);
+            this.groupBox4.Location = new System.Drawing.Point(5, 6);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(332, 83);
+            this.groupBox4.TabIndex = 1;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Remote Server";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 16);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(239, 13);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "This is to connect to server on another computer.";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(220, 41);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(69, 13);
+            this.label8.TabIndex = 3;
+            this.label8.Text = "Remote Port:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(1, 41);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(72, 13);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "Remote Host:";
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(223, 57);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(100, 20);
+            this.textBox3.TabIndex = 1;
+            this.textBox3.Text = "1345";
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(3, 57);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(197, 20);
+            this.textBox2.TabIndex = 0;
+            this.textBox2.Text = "0.0.0.0";
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label12
             // 
@@ -369,188 +428,6 @@
             this.tabPage1.Text = "Updates";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.label6);
-            this.groupBox4.Controls.Add(this.label8);
-            this.groupBox4.Controls.Add(this.label7);
-            this.groupBox4.Controls.Add(this.textBox3);
-            this.groupBox4.Controls.Add(this.textBox2);
-            this.groupBox4.Location = new System.Drawing.Point(5, 6);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(332, 83);
-            this.groupBox4.TabIndex = 1;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Remote Server";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 16);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(239, 13);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "This is to connect to server on another computer.";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(220, 41);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(69, 13);
-            this.label8.TabIndex = 3;
-            this.label8.Text = "Remote Port:";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(1, 41);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(72, 13);
-            this.label7.TabIndex = 2;
-            this.label7.Text = "Remote Host:";
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(223, 57);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 1;
-            this.textBox3.Text = "1345";
-            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(3, 57);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(197, 20);
-            this.textBox2.TabIndex = 0;
-            this.textBox2.Text = "0.0.0.0";
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
-            // 
-            // button9
-            // 
-            this.button9.Location = new System.Drawing.Point(245, 89);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(75, 23);
-            this.button9.TabIndex = 4;
-            this.button9.Text = "Find Diablo3";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(24, 89);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(214, 20);
-            this.textBox4.TabIndex = 3;
-            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Location = new System.Drawing.Point(3, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(353, 304);
-            this.tabControl1.TabIndex = 13;
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.label12);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(345, 278);
-            this.tabPage4.TabIndex = 4;
-            this.tabPage4.Text = "Credits";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.panel1);
-            this.groupBox6.Location = new System.Drawing.Point(6, 179);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(333, 46);
-            this.groupBox6.TabIndex = 18;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Download Bar";
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.progressBar2);
-            this.panel1.Location = new System.Drawing.Point(9, 16);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(316, 27);
-            this.panel1.TabIndex = 17;
-            // 
-            // progressBar2
-            // 
-            this.progressBar2.Location = new System.Drawing.Point(5, 4);
-            this.progressBar2.Name = "progressBar2";
-            this.progressBar2.Size = new System.Drawing.Size(308, 18);
-            this.progressBar2.TabIndex = 0;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(234, 234);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(94, 34);
-            this.button3.TabIndex = 18;
-            this.button3.Text = "Update MPQ\'s";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.panel2);
-            this.groupBox3.Location = new System.Drawing.Point(6, 127);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(333, 45);
-            this.groupBox3.TabIndex = 17;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "General Progress";
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.progressBar1);
-            this.panel2.Location = new System.Drawing.Point(9, 19);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(316, 22);
-            this.panel2.TabIndex = 17;
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.progressBar1.Location = new System.Drawing.Point(5, 3);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(308, 17);
-            this.progressBar1.Step = 20;
-            this.progressBar1.TabIndex = 0;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(123, 234);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(94, 34);
-            this.button2.TabIndex = 17;
-            this.button2.Text = "Update Mooege";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click_Update_Mooege);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(9, 234);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(94, 34);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Validate Repository";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_Validate_Repository);
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.pictureBox2);
@@ -605,6 +482,130 @@
             this.label4.Size = new System.Drawing.Size(194, 26);
             this.label4.TabIndex = 16;
             // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(245, 89);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(75, 23);
+            this.button9.TabIndex = 4;
+            this.button9.Text = "Find Diablo3";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.panel1);
+            this.groupBox6.Location = new System.Drawing.Point(6, 179);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(333, 46);
+            this.groupBox6.TabIndex = 18;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Download Bar";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.progressBar2);
+            this.panel1.Location = new System.Drawing.Point(9, 16);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(316, 27);
+            this.panel1.TabIndex = 17;
+            // 
+            // progressBar2
+            // 
+            this.progressBar2.Location = new System.Drawing.Point(5, 4);
+            this.progressBar2.Name = "progressBar2";
+            this.progressBar2.Size = new System.Drawing.Size(308, 18);
+            this.progressBar2.TabIndex = 0;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(24, 89);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(214, 20);
+            this.textBox4.TabIndex = 3;
+            this.textBox4.Text = "C:\\Program Files (x86)\\Diablo III Beta\\Diablo III.exe";
+            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(9, 231);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(94, 34);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Validate Repository";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_Validate_Repository);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(123, 231);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(94, 34);
+            this.button2.TabIndex = 17;
+            this.button2.Text = "Update Mooege";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_Update_Mooege);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(234, 231);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(94, 34);
+            this.button3.TabIndex = 18;
+            this.button3.Text = "Update MPQ\'s";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.panel2);
+            this.groupBox3.Location = new System.Drawing.Point(6, 127);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(333, 45);
+            this.groupBox3.TabIndex = 17;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "General Progress";
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.progressBar1);
+            this.panel2.Location = new System.Drawing.Point(9, 19);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(316, 22);
+            this.panel2.TabIndex = 17;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.progressBar1.Location = new System.Drawing.Point(5, 3);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(308, 17);
+            this.progressBar1.Step = 20;
+            this.progressBar1.TabIndex = 0;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Location = new System.Drawing.Point(3, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(353, 304);
+            this.tabControl1.TabIndex = 13;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.label12);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(345, 278);
+            this.tabPage4.TabIndex = 4;
+            this.tabPage4.Text = "Credits";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
             // timer1
             // 
             this.timer1.Interval = 1000;
@@ -612,10 +613,11 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(173, 335);
+            this.label5.Location = new System.Drawing.Point(174, 322);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(0, 13);
             this.label5.TabIndex = 14;
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // openFileDialog1
             // 
@@ -650,24 +652,24 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage4.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox6.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
