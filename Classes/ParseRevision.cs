@@ -25,17 +25,27 @@ namespace MadCow
 {
     class ParseRevision
     {
-        public static string revisionUrl = "";
-        public static string developerName = "";
-        public static string branchName = "";
+        public static String revisionUrl = "";
+        public static String developerName = "";
+        public static String branchName = "";
         public static String lastRevision = "";
+        public static String commitFile = "";
+        public static String errorSender = "";
 
         public static void getDeveloperName()
         {
-            Int32 FirstPointer = revisionUrl.IndexOf(".com/");
-            Int32 LastPointer = revisionUrl.LastIndexOf("/");
-            Int32 BetweenPointers = LastPointer - FirstPointer;
-            developerName = revisionUrl.Substring(FirstPointer+5, BetweenPointers-5);
+            try
+            {
+                Int32 FirstPointer = revisionUrl.IndexOf(".com/");
+                Int32 LastPointer = revisionUrl.LastIndexOf("/");
+                Int32 BetweenPointers = LastPointer - FirstPointer;
+                developerName = revisionUrl.Substring(FirstPointer + 5, BetweenPointers - 5);
+            }
+            catch (Exception)
+            {
+                commitFile = "Incorrect repository entry";
+                errorSender = "Incorrect repository entry.";
+            }
         }
 
         public static void getBranchName() // /D3Sharp /Mooege /Mooege-1 , etc.
@@ -47,26 +57,34 @@ namespace MadCow
             branchName = revisionUrl.Substring(FirstPointer + DeveloperNameLength + 1, BranchNameLength);
         }
 
-        public static String GetRevision()
+        public static void GetRevision()
         {
             try
             {
                 WebClient client = new WebClient();
-                String commitFile = client.DownloadString(revisionUrl + "/commits/master.atom");
+                commitFile = client.DownloadString(revisionUrl + "/commits/master.atom");
                 Int32 pos2 = commitFile.IndexOf("Commit/");
                 String revision = commitFile.Substring(pos2 + 7, 7);
                 lastRevision = commitFile.Substring(pos2 + 7, 7);
-                return revision;
             }
-            catch (WebException webEx)
+            catch (WebException ex)
             {
-                Console.WriteLine(webEx.ToString());
-                if (webEx.Status == WebExceptionStatus.ConnectFailure)
+                if (ex.Status == WebExceptionStatus.ProtocolError)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Error: Make sure your internet connection is working");
+                    if (((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.NotFound)
+                    {
+                        commitFile = "Incorrect repository entry";
+                        errorSender = "Incorrect repository entry.";
+                    }
                 }
-                return "Fatal Exception";
+                else if (ex.Status == WebExceptionStatus.ConnectFailure)
+                {
+                    commitFile = "ConnectionFailure";
+                    errorSender = "Check your internet connection.";
+                }
+                else
+                    commitFile = "Incorrect repository entry";
+                errorSender = "Incorrect repository entry.";
             }
         }
     }
