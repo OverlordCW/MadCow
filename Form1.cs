@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-//using System.Diagnostics; //used with opening files, used for testing
+using System.Diagnostics; //used with opening files, used for testing
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -145,16 +145,17 @@ namespace MadCow
              * I cant figure out how they work.
              */
 
-            /*Compile.currentMooegeExePath = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\Mooege.exe";
-            Process proc0 = new Process();
-            proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
-            proc0.Start();
-            MessageBox.Show(Compile.currentMooegeExePath);
+            //Compile.currentMooegeExePath = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\Mooege.exe";
+            //Process proc0 = new Process();
+            //proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
+            //proc0.Start();
+           // MessageBox.Show(Compile.currentMooegeExePath);
             Process proc1 = new Process();
             proc1.StartInfo = new ProcessStartInfo(textBox4.Text);
+            proc1.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
             proc1.Start();
-            MessageBox.Show(textBox4.Text);
-             */
+            //MessageBox.Show(textBox4.Text); //Debugging Purposes
+            
         }
 
         //-------------------------//
