@@ -22,6 +22,8 @@ namespace MadCow
             InitializeComponent();
             button2.Enabled = false;
             button3.Enabled = false;
+            numericUpDown1.Enabled = false;
+            checkBox1.Enabled = false;
         }
 
         //-------------------------//
@@ -71,6 +73,8 @@ namespace MadCow
                         pictureBox2.Hide();
                         textBox1_Repository_Url.Text = ParseRevision.errorSender;
                         pictureBox1.Show();
+                        numericUpDown1.Enabled = false; //If validation fails we set Update and Autoupdate
+                        checkBox1.Enabled = false;      //functions disabled!.
                         button2.Enabled = false;
                     }
 
@@ -79,6 +83,8 @@ namespace MadCow
                         pictureBox2.Hide();
                         textBox1_Repository_Url.Text = ParseRevision.errorSender;
                         pictureBox1.Show();
+                        numericUpDown1.Enabled = false; //If validation fails we set Update and Autoupdate
+                        checkBox1.Enabled = false;      //functions disabled!.
                         button2.Enabled = false;
                     }
                     
@@ -87,6 +93,8 @@ namespace MadCow
                         pictureBox2.Hide();
                         textBox1_Repository_Url.Text = "Incorrect repository entry";
                         pictureBox1.Show();
+                        numericUpDown1.Enabled = false;  //If validation fails we set Update and Autoupdate
+                        checkBox1.Enabled = false;       //functions disabled!.
                         button2.Enabled = false;
                     }
                     else
@@ -98,6 +106,8 @@ namespace MadCow
                         ParseRevision.getDeveloperName();
                         ParseRevision.getBranchName();
                         button2.Enabled = true;
+                        numericUpDown1.Enabled = true;
+                        checkBox1.Enabled = true;
                     }
                 }
                 catch (Exception)
@@ -113,6 +123,12 @@ namespace MadCow
             if (Directory.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
             {
                 Console.WriteLine("You have latest [" + ParseRevision.developerName + "] Mooege revision: " + ParseRevision.lastRevision);
+                
+                if (checkBox1.Checked == true)
+                {
+                tik = (int)this.numericUpDown1.Value;
+                label1.Text = "Update in " + tik + " minutes.";
+                }
             }
 
             else if (Directory.Exists(Program.programPath + "/MPQ")) //Checks for MPQ Folder
@@ -121,7 +137,15 @@ namespace MadCow
                 Console.WriteLine("Found default MadCow MPQ folder");
                 Console.ForegroundColor = ConsoleColor.White;
                 button2.Enabled = false;
-                backgroundWorker1.RunWorkerAsync();
+                
+                if (checkBox1.Checked == true)
+                {
+                    timer1.Stop();
+                    label1.Text = "Updating...";
+                    backgroundWorker1.RunWorkerAsync();
+                }
+                //else
+                //backgroundWorker1.RunWorkerAsync();
             }
 
             else
@@ -242,40 +266,46 @@ namespace MadCow
             //MadCowRunProcedure.RunMadCow(0);
         }
 
+
         //-------------------------//
-        // Timer Stuff //
-        //-------------------------//
-        
+        //      Timer Stuff        //
+        //-------------------------//   
+   
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
+            tik = (int)this.numericUpDown1.Value;
 
             if (checkBox1.Checked == true)
             {
-                tik = (int)this.numericUpDown1.Value * 60;
+                label1.Text = "Update in " + tik + " minutes.";
                 timer1.Start();
+                numericUpDown1.Enabled = false;
             }
-            else
+
+            else if (checkBox1.Checked == false)
+            {
                 timer1.Stop();
-               label1.Text = " ";
+                label1.Text = " ";
+                numericUpDown1.Enabled = true;
+            }
         }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
            tik--;
            if (tik == 0)
            {
-                label1.Text = "Checking..";
-                timer1.Stop();
-                Commands.RunUpdate();
-                tik = (int)this.numericUpDown1.Value * 60;
-                timer1.Start();
+                button2.PerformClick(); //Runs Update
+                tik = (int)this.numericUpDown1.Value;
            }
            else
-               label1.Text = "Update in " + tik.ToString();
+               label1.Text = "Update in " + tik + " minutes.";
         }
         
         //-------------------------//
-        // Diablo 3 Path Stuff //
+        //   Diablo 3 Path Stuff   //
         //-------------------------//
+
         private void button9_Click(object sender, EventArgs e)
         {
             //Opens path to find Diablo3
@@ -358,12 +388,21 @@ namespace MadCow
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Commands.RunUpdate();
+            button2.Enabled = true;
+
+            if (checkBox1.Checked == true)
+            {
+                timer1.Start();
+                label1.Text = "Update in " + tik + " minutes.";
+            }
         }
 
         //URL TEXT FIELD COLOR MANAGEMENT
         private void textBox1_Repository_Url_TextChanged(object sender, EventArgs e)
         {
             button2.Enabled = false;
+            numericUpDown1.Enabled = false; //If user is typing a new URL Update and Autoupdate
+            checkBox1.Enabled = false;      //Functions gets disabled
             try
             {
                 if (textBox1_Repository_Url.Text == "Incorrect repository entry." || textBox1_Repository_Url.Text == "Check your internet connection.")
