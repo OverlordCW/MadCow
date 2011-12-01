@@ -14,18 +14,22 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Windows.Forms;
+using System.Threading;
 
 namespace MadCow
 {
     class Commands
     {
-        public static void RunUpdateMPQ(int RunUpdateMPQ1)
+        //
+        //    TODO: This is next to work on. Validating MD5, Copying MPQ's- Wesko
+        //
+        /*public static void RunUpdateMPQ(int RunUpdateMPQ1)
         {
             if (RunUpdateMPQ1 == 1)
             {
@@ -44,42 +48,26 @@ namespace MadCow
                         MPQprocedure.MpqTransfer();
                     }
             }
-        }
-        public static void RunUpdate()
+        }*/
+
+        public static void RunUpdate() //This is actually the whole process MadCow uses before Downloading source.
         {
             Compile.currentMooegeExePath = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\Mooege.exe";
             Compile.currentMooegeDebugFolderPath = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\";
             Compile.mooegeINI = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini";
-            Compile.compileArgs = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\build\Mooege-VS2010.sln";
+            Compile.compileArgs = "\"" + Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\build\Mooege-VS2010.sln" + "\"";
 
-            //Where does this delete Mooege Folders?
-            //FindAndKillProcess("mooege");
             Uncompress.UncompressFiles();
-            Compile.ExecuteCommandSync(Compile.msbuildPath + " " + Compile.compileArgs);
-            Compile.ModifyMooegeINI();
-            Compile.WriteVbsPath();
-         
-
-            if (File.Exists(Program.desktopPath + "\\Mooege.lnk"))
-            {
-                File.Delete(Program.desktopPath + "\\Mooege.lnk");
-                System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
-            }
-            else
-            {
-            System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
-            }     
+            RefreshDesktop.RefreshDesktopPlease(); //Sends a refresh call to desktop, probably this is working for Windows Explorer too, so i'll leave it there for now -wesko
+            Thread.Sleep(2000); //This shit is needed for madcow to work on VM XP, you need to wait for Windows Explorer to refresh folders or compiling wont find the new mooege folder just uncompressed.
+            Form1.progressBar1.PerformStep(); //This sends an update to progress bar
+            Compile.CreateBatchCompileFile();
+            Compile.WriteCompileBatch();
+            Compile.ExecuteCommandSync(Program.programPath + @"\Tools\CompileBatch");  //Compile command.         
+            Form1.progressBar1.PerformStep();
+            Compile.ModifyMooegeINI(); //Add MadCow MPQ folder Path to Mooege
+            Form1.progressBar1.PerformStep();
+            Form1.progressBar1.PerformStep();    
         }
-
-        public static void AutoUpdate(int AutoUpdate1)
-        {
-            if (AutoUpdate1 == 1)
-            {
-                    //  TODO: Implement a timer which will check for Mooege updates.
-                    //  !autoupdate <minutes>
-                    Console.WriteLine("Not implemented yet");
-                }
-        }
-
-        }
+    }
 }

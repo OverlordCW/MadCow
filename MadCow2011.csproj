@@ -62,7 +62,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Nini">
-      <HintPath>dep\nini\Nini.dll</HintPath>
+      <HintPath>Tools\Nini.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -77,12 +77,11 @@
     <Compile Include="Classes\Delete.cs" />
     <Compile Include="Classes\Commands.cs" />
     <Compile Include="Classes\Diablo3.cs" />
-    <Compile Include="Classes\MadCowRunProcedure.cs" />
     <Compile Include="Classes\MPQprocedure.cs" />
     <Compile Include="Classes\ParseRevision.cs" />
     <Compile Include="Classes\Compile.cs" />
-    <Compile Include="Classes\DownloadRevision.cs" />
     <Compile Include="Classes\PreRequeriments.cs" />
+    <Compile Include="Classes\RefreshDesktop.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,10 +103,6 @@
     <Content Include="mooege.ico" />
     <Content Include="Resources\error_cross.png" />
     <Content Include="Resources\green-tick.png" />
-    <Content Include="Tools\ShortcutCreator.vbs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <CustomToolNamespace>ShortcutCreator</CustomToolNamespace>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
@@ -134,7 +129,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="app.manifest" />
-    <Content Include="Tools\Settings.ini">
+    <Content Include="Tools\CompileBatch.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

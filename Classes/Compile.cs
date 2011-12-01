@@ -40,11 +40,11 @@ namespace MadCow
             try
             {
                 System.Diagnostics.ProcessStartInfo procStartInformation =
-                new System.Diagnostics.ProcessStartInfo("cmd", "/c" + command);
+                new System.Diagnostics.ProcessStartInfo(command);
             
                 procStartInformation.RedirectStandardOutput = false;
                 procStartInformation.UseShellExecute = true;
-                procStartInformation.CreateNoWindow = true;
+                procStartInformation.CreateNoWindow = false;
 
                 System.Diagnostics.Process proc = new System.Diagnostics.Process();
                 proc.StartInfo = procStartInformation;
@@ -57,16 +57,8 @@ namespace MadCow
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
                 Console.ForegroundColor = ConsoleColor.Red;
-                //The problem is, while passing args to ExecuteCommandSync(String command)
-                //If the argument its too long due to the current mooege folder path (Program.programPath)
-                //msbuild.exe won't be able to recieve the complete arguments and compiling will fail.
-                Console.WriteLine("\nLONGPATHERROR: Couldn't compile Mooege Source,"
-                                  + "\nplease use a shorter folder path by moving"
-                                  + "\nMadCow files into (e.g C:/MadCow/)");
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("\nPress any key to exit...");
+                Console.WriteLine(e);
                 Console.ReadKey();
                 Environment.Exit(0);
             }
@@ -108,27 +100,44 @@ namespace MadCow
             }
         }
 
-        static public void WriteVbsPath()
+        public static void CreateBatchCompileFile() 
+        //This build up the compile batch file that fixed long path issue.
         {
-            String vbsPath = (Program.programPath + "\\Tools\\ShortcutCreator.vbs");
-            StreamReader reader = new StreamReader(vbsPath);
-            string content = reader.ReadToEnd();
-            reader.Close();
- 
-            content = Regex.Replace(content, "MODIFY", Compile.currentMooegeExePath);
-            content = Regex.Replace(content, "WESKO", Compile.currentMooegeDebugFolderPath);
-            StreamWriter writer = new StreamWriter(vbsPath);
-            writer.Write(content);
-            writer.Close();
-
-            //Creates shortcut
-            if (File.Exists(Program.desktopPath + "\\Mooege.lnk"))
+            String val = "CompileBatch.bat";
+            if (File.Exists(Program.programPath + "\\Tools\\" + val))
             {
-                File.Delete(Program.desktopPath + "\\Mooege.lnk");
-                System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
+                File.Delete(Program.programPath + "\\Tools\\" + val);
+                Console.WriteLine("DELETED BATCH FILE");
+                FileInfo fi = new FileInfo(Program.programPath + "\\Tools\\" + val);
+                StreamWriter sw = fi.CreateText();
+                sw.WriteLine(@"cd C:\Windows\Microsoft.NET\Framework\v4.0.30319\");
+                sw.WriteLine("MSBUILD MODIFY");
+                sw.Close();
+                Console.WriteLine("CREATED BATCH FILE");
             }
             else
-                System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
+            {
+                FileInfo fi = new FileInfo(Program.programPath + "\\Tools\\" + val);
+                StreamWriter sw = fi.CreateText();
+                sw.WriteLine(@"cd C:\Windows\Microsoft.NET\Framework\v4.0.30319\");
+                sw.WriteLine("MSBUILD MODIFY");
+                sw.Close();
+                Console.WriteLine("CREATED BATCH FILE");
+            }
+        }
+
+        public static void WriteCompileBatch()
+        //This modifieds the batch to the respective repository selected by the user.
+        {
+            String CompileBatch = (Program.programPath + "\\Tools\\CompileBatch.bat");
+            StreamReader reader = new StreamReader(CompileBatch);
+            string content = reader.ReadToEnd();
+            reader.Close();
+
+            content = Regex.Replace(content, "MODIFY", Compile.compileArgs);
+            StreamWriter writer = new StreamWriter(CompileBatch);
+            writer.Write(content);
+            writer.Close();
         }
     }
 }

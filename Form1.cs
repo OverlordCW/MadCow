@@ -1,4 +1,20 @@
-﻿using System;
+﻿// Copyright (C) 2011 Iker Ruiz Arnauda (Wesko)
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,6 +32,7 @@ namespace MadCow
     {
         //Timing
         private int tik;
+
         public Form1()
         {
             InitializeComponent();
@@ -23,6 +40,7 @@ namespace MadCow
             button3.Enabled = false;
             numericUpDown1.Enabled = false;
             checkBox1.Enabled = false;
+            button4.Enabled = false;
         }
 
         //-------------------------//
@@ -32,8 +50,8 @@ namespace MadCow
         {
             ToolTip toolTip1 = new ToolTip();
             // Set up the delays for the ToolTip.
-            toolTip1.AutoPopDelay = 5000;
-            toolTip1.InitialDelay = 1000;
+            toolTip1.AutoPopDelay = 1800;
+            toolTip1.InitialDelay = 500;
             toolTip1.ReshowDelay = 500;
             // Force the ToolTip text to be displayed whether or not the form is active.
             toolTip1.ShowAlways = true;
@@ -41,7 +59,7 @@ namespace MadCow
             toolTip1.SetToolTip(this.button2, "This will update mooege to latest version");
             toolTip1.SetToolTip(this.button3, "This will copy MPQ's if you have D3 installed");
             toolTip1.SetToolTip(this.button8, "This will check pre-requirements and update Mooege Server");
-            textBox4.Text = @"C:\Program Files (x86)\Diablo III Beta\Diablo III.exe";
+            textBox4.Text = "Please Select your Diablo III path.";
         }
         private void tabPage1_Click(object sender, EventArgs e) { }
         private void label2_Click(object sender, EventArgs e) { }
@@ -58,11 +76,12 @@ namespace MadCow
         private void textBox3_TextChanged(object sender, EventArgs e) { }
 
         //-------------------------//
-        //      Update Mooege      //
+        // Update Mooege //
         //-------------------------//
         private void button1_Click_Validate_Repository(object sender, EventArgs e)
         {
             //Update Mooege - does not start Diablo
+
             ParseRevision.revisionUrl = textBox1_Repository_Url.Text;  
             try
                 {
@@ -122,6 +141,9 @@ namespace MadCow
                 }
         }
 
+        //-------------------------//
+        //   UPDATE MOOEGE: This will validate ur current revision, if outdated prooced to download calling ->backgroundWorker1.RunWorkerAsync()->backgroundWorker1_RunWorkerCompleted.
+        //-------------------------//
         private void button2_Click_Update_Mooege(object sender, EventArgs e)
         {
             if (Directory.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
@@ -144,9 +166,10 @@ namespace MadCow
                 {
                     timer1.Stop();
                     label1.Text = "Updating...";
-                    label2.Text = " ";
                     backgroundWorker1.RunWorkerAsync();
                 }
+                label2.Text = "Updating...";
+                backgroundWorker1.RunWorkerAsync();
             }
 
             else
@@ -155,9 +178,8 @@ namespace MadCow
                 {
                     timer1.Stop();
                     label1.Text = "Updating...";
-                    label2.Text = " ";
                 }
-                Console.WriteLine("Creating MadCow MPQ folder...");
+                label2.Text = "Updating...";
                 Directory.CreateDirectory(Program.programPath + "/MPQ");
                 button2.Enabled = false;
                 backgroundWorker1.RunWorkerAsync();
@@ -181,7 +203,8 @@ namespace MadCow
             proc1.StartInfo = new ProcessStartInfo(textBox4.Text);
             proc1.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
             proc1.Start();
-            label2.Text = "Starting Diablo..";      
+            label2.Text = "Starting Diablo..";
+            
         }
 
 
@@ -252,8 +275,8 @@ namespace MadCow
         {
             //Updates Mooege does not check for Diablo Client
             //Instead of MadCowRunProcedure.RunMadCow(0);
-            //PreRequeriments.CheckPrerequeriments();
-            //Commands.RunUpdate();
+ 	     	//PreRequeriments.CheckPrerequeriments();
+ 	    	//Commands.RunUpdate();
         }
 
 
@@ -299,15 +322,17 @@ namespace MadCow
         private void button9_Click(object sender, EventArgs e)
         {
             //Opens path to find Diablo3
-            OpenFileDialog d3folder = new OpenFileDialog();
-            d3folder.Title = "Diablo 3.exe";
-            d3folder.InitialDirectory = @"C:\Program Files (x86)\Diablo III Beta\";
-            if (d3folder.ShowDialog() == DialogResult.OK) // Test result.
+            OpenFileDialog FindD3Exe = new OpenFileDialog();
+            FindD3Exe.Title = "MadCow By Wesko";
+            FindD3Exe.InitialDirectory = @"C:\Program Files (x86)\Diablo III Beta\";
+            FindD3Exe.Filter = "Diablo III|Diablo III.exe";
+            if (FindD3Exe.ShowDialog() == DialogResult.OK) // Test result.
             {
                 // Get the directory name.
-                string dirName = System.IO.Path.GetDirectoryName(d3folder.FileName);
+                string dirName = System.IO.Path.GetDirectoryName(FindD3Exe.FileName);
                 // Output Name
-                textBox4.Text = d3folder.FileName;
+                textBox4.Text = FindD3Exe.FileName;
+                button4.Enabled = true;
             }
         }
 
@@ -371,12 +396,15 @@ namespace MadCow
             progressBar2.Value = e.ProgressPercentage;
         }
 
+        //
         //PROCEED WITH THE PROCESS ONCE THE DOWNLOAD ITS COMPLETE
+        //
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            progressBar1.PerformStep();
             Commands.RunUpdate();
+            label2.Text = "Update Complete";
             button2.Enabled = true;
-
             if (checkBox1.Checked == true)
             {
                 tik = (int)this.numericUpDown1.Value;
@@ -385,7 +413,9 @@ namespace MadCow
             }
         }
 
+        //
         //URL TEXT FIELD COLOR MANAGEMENT
+        //This has the function on turning letters red if Error, Black if normal.
         private void textBox1_Repository_Url_TextChanged(object sender, EventArgs e)
         {
             button2.Enabled = false;
@@ -396,14 +426,13 @@ namespace MadCow
                 if (textBox1_Repository_Url.Text == "Incorrect repository entry." || textBox1_Repository_Url.Text == "Check your internet connection.")
                 {
                     textBox1_Repository_Url.ForeColor = Color.Red;
-                    //this.label4.BackColor = System.Drawing.Color.Red;
                 }
                 else
                 {
                     textBox1_Repository_Url.ForeColor = Color.Black;
                     this.label4.BackColor = System.Drawing.Color.Transparent;
-                    pictureBox1.Hide();//Error
-                    pictureBox2.Hide();//Correct
+                    pictureBox1.Hide();//Error Image (Cross)
+                    pictureBox2.Hide();//Correct Image (Tick)
                 }
             }
             catch
@@ -412,54 +441,69 @@ namespace MadCow
             }
         }
        //----------------------------------------------------------------------
-        /*private void Labels(object sender, EventArgs e)
+       //---------------------TESTINGGGGGGGGGGGGGGGGGGG------------------------
+       //Tried a lot of crap Wlly, as u see progressbar already works, but its hard
+       //to actually pass the Description of what the program its doing.
+       //----------------------------------------------------------------------
+       
+        /*public void ProgressStatusCommunicator(int procedure)
         {
-
-         //More Labelling for progression stuff 
-         
-                if (Directory.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
-                {
-                    // This path is a file
-                    label1.Text = "Uncompress Done";
-                }
-                else if (Directory.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\"))
-                {
-                    // This path is a directory
-                    label1.Text = "Compile Complete";
-                }
-                else if (Directory.Exists(Program.programPath + "/MPQ"))
-                {
-                    label1.Text = "MPQ folder Created";
-                }
-                else if (Directory.Exists(Program.programPath + "/MPQ/base") && File.Exists(Program.programPath + "/MPQ/CoreData.mpq") && File.Exists(Program.programPath + "/MPQ/ClientData.mpq"))
-                {
-                    label1.Text = "Copying MPQs Complete";
-                }
-                else
-                {
-                    label1.Text = "";
-                }
-        }
-         */
-
-        //-------------------------//
-        //  Find and Kill Process  //
-        //-------------------------//
-        public bool FindAndKillProcess(string name)
-        {
-            //see if process is running.
-            foreach (Process clsProcess in Process.GetProcesses())
+            switch (procedure)
             {
-               if (clsProcess.ProcessName.Contains(name))
-                {
-                    // Kill Kill Kill
-                    clsProcess.Kill();
-                    return true;
-                }
-            }
-            //otherwise do not kill process because it's not there
-            return false;
+
+                case 1:
+                    label1.Text = "Download Complete";
+                    progressBar1.PerformStep();
+                    break;
+                case 2:
+                    label1.Text = "Uncompress Complete";
+                    progressBar1.PerformStep();
+                    break;
+                case 3:
+                    label1.Text = "Compile Complete";
+                    progressBar1.PerformStep();
+                    break;
+                case 4:
+                    label1.Text = "Mooege Config.ini Complete";
+                    progressBar1.PerformStep();
+                    break;
+                case 5:
+                    label1.Text = "MPQ folder Created Complete";
+                    progressBar1.PerformStep();
+                    break;
+                case 6:
+                    label1.Text = "MPQ folder Found Complete";
+                    progressBar1.PerformStep();
+                    break;
+                case 7:
+                    label1.Text = "Copying MPQs Complete";
+                    progressBar1.PerformStep();
+                    break;*/
+
+        //-----------------------Test Part 2 Wlly's Code---------------------------------
+        /*if (Directory.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
+        {
+            // This path is a file
+            label1.Text = "Uncompress Done";
+        }
+        else if (Directory.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\"))
+        {
+            // This path is a directory
+            label1.Text = "Compile Complete";
+        }
+        else if (Directory.Exists(Program.programPath + "/MPQ"))
+        {
+            label1.Text = "MPQ folder Created";
+        }
+        else if (Directory.Exists(Program.programPath + "/MPQ/base") && File.Exists(Program.programPath + "/MPQ/CoreData.mpq") && File.Exists(Program.programPath + "/MPQ/ClientData.mpq"))
+        {
+            label1.Text = "Copying MPQs Complete";
+        }
+        else
+        {
+            label1.Text = "";
         }
     }
-
+}*/
+    }
  }
