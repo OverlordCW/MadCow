@@ -79,13 +79,5 @@ namespace MadCow
                 }
         }
 
-        public static void Help(int Help1)
-        {
-                if (Help1 == 1)
-                {
-                    Console.WriteLine("You're So Silly");
-                }
-        }
-
         }
 }
