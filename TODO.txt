@@ -15,3 +15,6 @@ fristrunconfiguration in PreRequeriments.cs?
 TODO: Mooege updating, when it finds a new update, does it delete old folders? (Wetwlly:I've added findandkillprocess to kill mooege if its found running.)
 Kill diablo3 and Agent.exe?
 
+7.running validater in new thread
+8.move Validate Diablo Version to Form1 area
+9.Validate MD5 of MPQ when Updating MPQs and (also when you find Diablo3?)

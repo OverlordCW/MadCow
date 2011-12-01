@@ -251,7 +251,9 @@ namespace MadCow
         private void button8_Click(object sender, EventArgs e)
         {
             //Updates Mooege does not check for Diablo Client
-            //MadCowRunProcedure.RunMadCow(0);
+            //Instead of MadCowRunProcedure.RunMadCow(0);
+            //PreRequeriments.CheckPrerequeriments();
+            //Commands.RunUpdate();
         }
 
 
