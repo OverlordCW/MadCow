@@ -21,6 +21,7 @@ using System.Text;
 using System.IO;
 using System.Timers;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MadCow
 {
@@ -38,6 +39,7 @@ namespace MadCow
 
         public static void ValidateMD5()
         {
+            //Figure out a way to jsut check 7841?
             DateTime startTime = DateTime.Now;
             String baseFolderPath = Diablo3._d3loc + "\\Data_D3\\PC\\MPQs\\base";
             String[] filePaths = Directory.GetFiles(baseFolderPath, "*.*", SearchOption.TopDirectoryOnly);
@@ -67,11 +69,20 @@ namespace MadCow
             }
             else
             {
-                Console.WriteLine("Validating MPQ's MD5 Hash FAILED!"
-                    + "\n Please reinstall your Diablo III client or"
-                    + "\n try using D3 Launcher to fix them.");
-                Console.ReadKey();
-                Environment.Exit(0);
+                DialogResult result;
+                result = MessageBox.Show("Yes or No?", "Would you like to AutoGrab the correct MD5 for base-7841?", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    //This will delete the MPQ files that need to be deleted for better md5
+                    SimpleFileDelete.Delete(0);
+                    //this will open diablo launcher, and wait for files
+                    MPQprocedure.Processing();
+                }
+                else
+                {
+                    MessageBox.Show("You will need to check MD5Hash of base-7841 in order to run Mooege.");
+                    //Stop?
+                }
             }
         }
 
@@ -144,5 +155,13 @@ namespace MadCow
 
             }
         }
+        public static void Processing()
+        {
+            //TODO here: opens Diablo 3 Launcher
+            //TODO here: waits for new files.
+            //rechecks MD5
+            MPQprocedure.ValidateMD5();
+        }
+
     }
 }

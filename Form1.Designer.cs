@@ -76,7 +76,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -85,6 +85,7 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.button5 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -597,7 +598,7 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(progressBar1);
+            this.panel2.Controls.Add(this.progressBar1);
             this.panel2.Location = new System.Drawing.Point(9, 19);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(316, 17);
@@ -605,12 +606,12 @@
             // 
             // progressBar1
             // 
-            progressBar1.Cursor = System.Windows.Forms.Cursors.Arrow;
-            progressBar1.Location = new System.Drawing.Point(5, 3);
-            progressBar1.Name = "progressBar1";
-            progressBar1.Size = new System.Drawing.Size(308, 11);
-            progressBar1.Step = 20;
-            progressBar1.TabIndex = 0;
+            this.progressBar1.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.progressBar1.Location = new System.Drawing.Point(5, 3);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(308, 11);
+            this.progressBar1.Step = 20;
+            this.progressBar1.TabIndex = 0;
             // 
             // tabControl1
             // 
@@ -626,6 +627,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.button5);
             this.tabPage4.Controls.Add(this.label12);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
@@ -660,7 +662,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(127, 307);
+            this.label1.Location = new System.Drawing.Point(116, 310);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(0, 13);
             this.label1.TabIndex = 14;
@@ -669,10 +671,20 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(127, 330);
+            this.label2.Location = new System.Drawing.Point(116, 333);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(0, 13);
             this.label2.TabIndex = 15;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(248, 249);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(90, 23);
+            this.button5.TabIndex = 2;
+            this.button5.Text = "Reset Commit";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // Form1
             // 
@@ -772,6 +784,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         public System.Windows.Forms.Panel panel2;
-        public static System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Button button5;
+        public System.Windows.Forms.ProgressBar progressBar1;
     }
 }

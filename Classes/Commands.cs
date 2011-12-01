@@ -28,27 +28,38 @@ namespace MadCow
     {
         //
         //    TODO: This is next to work on. Validating MD5, Copying MPQ's- Wesko
+        //      Validate MD5s, if incorrect MessageBox (Yes or No), if you would like to autograb correct MPQs -> checks in Commands, Does the work in MPQprocedure
+        //          Find MD5, if wrong, Delete Base file, Base-Win file, and Cache Folder
+        //                              Delete.cs can be configured to do this since it is not in use for Reseting Last Commit(It can do both if we set it to)
+        //          Start up Diablo Beta Launcher, timer check on mpqs? (do we have to wait for them to finish or just load new mpqs?)
+        //          Repeat until canceled or correct MD5.
+        //      Once correct MD5, proceed to MPQTransfer.
         //
-        /*public static void RunUpdateMPQ(int RunUpdateMPQ1)
+        public static void RunUpdateMPQ()
         {
-            if (RunUpdateMPQ1 == 1)
-            {
-                    if (Directory.Exists(Program.programPath + "/MPQ"))
+                    if (Directory.Exists(Program.programPath + @"/MPQ"))
                     {
-                        //does not delete directory
-                        Directory.Delete(Program.programPath + "/MPQ", true);
+                        //MD5 Check
+                        //inside validateMD5, it will if/else to delete mpqs from diablo and validate new ones
+                        MPQprocedure.ValidateMD5();
+
+                        //Delete Folder if already exists
+                        System.IO.Directory.Delete(Program.programPath + @"/MPQ", true);
                         Console.WriteLine("Deleted current MPQ MadCow folder succeedeed");
-                        Directory.CreateDirectory(Program.programPath + "/MPQ");
+
+                        //Create new Folder
+                        System.IO.Directory.CreateDirectory(Program.programPath + @"/MPQ");
                         Console.WriteLine("Creating new MPQ MadCow folder succeedeed");
+
+                        //Transfer MPQs
                         MPQprocedure.MpqTransfer();
                     }
                     else
                     {
-                        Directory.CreateDirectory(Program.programPath + "/MPQ");
+                        System.IO.Directory.CreateDirectory(Program.programPath + @"/MPQ");
                         MPQprocedure.MpqTransfer();
                     }
-            }
-        }*/
+        }
 
         public static void RunUpdate() //This is actually the whole process MadCow uses before Downloading source.
         {
@@ -60,14 +71,14 @@ namespace MadCow
             Uncompress.UncompressFiles();
             RefreshDesktop.RefreshDesktopPlease(); //Sends a refresh call to desktop, probably this is working for Windows Explorer too, so i'll leave it there for now -wesko
             Thread.Sleep(2000); //This shit is needed for madcow to work on VM XP, you need to wait for Windows Explorer to refresh folders or compiling wont find the new mooege folder just uncompressed.
-            Form1.progressBar1.PerformStep(); //This sends an update to progress bar
+            //Form1.progressBar1.PerformStep(); //This sends an update to progress bar
             Compile.CreateBatchCompileFile();
             Compile.WriteCompileBatch();
             Compile.ExecuteCommandSync(Program.programPath + @"\Tools\CompileBatch");  //Compile command.         
-            Form1.progressBar1.PerformStep();
+            //Form1.progressBar1.PerformStep();
             Compile.ModifyMooegeINI(); //Add MadCow MPQ folder Path to Mooege
-            Form1.progressBar1.PerformStep();
-            Form1.progressBar1.PerformStep();    
+            //Form1.progressBar1.PerformStep();
+            //Form1.progressBar1.PerformStep();    
         }
     }
 }

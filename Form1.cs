@@ -440,6 +440,11 @@ namespace MadCow
                 textBox1_Repository_Url.ForeColor = SystemColors.ControlText;
             }
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            SimpleFileDelete.Delete(1);
+        }
        //----------------------------------------------------------------------
        //---------------------TESTINGGGGGGGGGGGGGGGGGGG------------------------
        //Tried a lot of crap Wlly, as u see progressbar already works, but its hard
