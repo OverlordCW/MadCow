@@ -52,6 +52,8 @@ namespace MadCow
             Compile.mooegeINI = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini";
             Compile.compileArgs = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\build\Mooege-VS2010.sln";
 
+            //Where does this delete Mooege Folders?
+            //FindAndKillProcess("mooege");
             Uncompress.UncompressFiles();
             Compile.ExecuteCommandSync(Compile.msbuildPath + " " + Compile.compileArgs);
             Compile.ModifyMooegeINI();

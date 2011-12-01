@@ -58,7 +58,7 @@ namespace MadCow
         private void textBox3_TextChanged(object sender, EventArgs e) { }
 
         //-------------------------//
-        // Update Mooege //
+        //      Update Mooege      //
         //-------------------------//
         private void button1_Click_Validate_Repository(object sender, EventArgs e)
         {
@@ -181,8 +181,7 @@ namespace MadCow
             proc1.StartInfo = new ProcessStartInfo(textBox4.Text);
             proc1.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
             proc1.Start();
-            label2.Text = "Starting Diablo..";
-            
+            label2.Text = "Starting Diablo..";      
         }
 
 
@@ -414,6 +413,8 @@ namespace MadCow
         /*private void Labels(object sender, EventArgs e)
         {
 
+         //More Labelling for progression stuff 
+         
                 if (Directory.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
                 {
                     // This path is a file
@@ -438,6 +439,25 @@ namespace MadCow
                 }
         }
          */
+
+        //-------------------------//
+        //  Find and Kill Process  //
+        //-------------------------//
+        public bool FindAndKillProcess(string name)
+        {
+            //see if process is running.
+            foreach (Process clsProcess in Process.GetProcesses())
+            {
+               if (clsProcess.ProcessName.Contains(name))
+                {
+                    // Kill Kill Kill
+                    clsProcess.Kill();
+                    return true;
+                }
+            }
+            //otherwise do not kill process because it's not there
+            return false;
+        }
     }
 
  }
