@@ -148,7 +148,7 @@ namespace MadCow
         {
             if (Directory.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
             {
-                label2.Text = "You have latest [" + ParseRevision.developerName + "] Mooege revision: " + ParseRevision.lastRevision;
+                label2.Text = "You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision;
                 
                 if (checkBox1.Checked == true)
                 {
@@ -510,5 +510,25 @@ namespace MadCow
         }
     }
 }*/
+
+//-------------------------//
+//  Find and Kill Process  //
+//-------------------------//
+
+public bool FindAndKillProcess(string name)
+{
+//see if process is running.
+    foreach (Process clsProcess in Process.GetProcesses())
+    {
+        if (clsProcess.ProcessName.Contains(name))
+        {
+            // Kill Kill Kill
+            clsProcess.Kill();
+            return true;
+        }
+    }
+    //otherwise do not kill process because it's not there
+    return false;
+}
     }
  }

@@ -35,12 +35,8 @@ namespace MadCow
                 {
                     try
                     {
-                        Console.WriteLine("Deleting Cache Folder");
-                        System.IO.Directory.Delete(@"C:\Program Files (x86)\Diablo III Beta\Data_D3\PC\MPQs\Cache", true);
                         Console.WriteLine("Deleting d3-update-base-7841.MPQ");
                         System.IO.File.Delete(@"C:\Program Files (x86)\Diablo III Beta\Data_D3\PC\MPQs\d3-update-base-7841.MPQ");
-                        Console.WriteLine("Deleting base-Win.MPQ");
-                        System.IO.File.Delete(@"C:\Program Files (x86)\Diablo III Beta\Data_D3\PC\MPQs\base-Win.MPQ");
                     }
                     catch (System.IO.IOException e)
                     {
