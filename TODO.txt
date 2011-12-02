@@ -18,3 +18,5 @@ Kill diablo3 and Agent.exe?
 7.running validater in new thread
 8.move Validate Diablo Version to Form1 area
 9.Validate MD5 of MPQ when Updating MPQs and (also when you find Diablo3?)
+
+ if madcow sees coretoc error. messageBox Yes or No, do you want to try and fix error? click yes, kill diablo and mooege process, download mpq to mooege(because it doesnt matter the md5 of diablos, just mooege)
