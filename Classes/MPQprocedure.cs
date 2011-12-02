@@ -28,6 +28,8 @@ namespace MadCow
     class MPQprocedure
     {
         //\base\ Folder MD5's.
+        //7931.mpq
+        //"777da16a46d4f1d231bae8c1e11cdeaf"
         public static String[] MD5ValidPool = {"39765d908accf4f37a4c2dfa99b8cd52"//7170
                                            ,"7148ee45696c84796f3ca16729b9aadc"   //7200
                                            ,"7ee326516f3da2c8f8b80eba6199deef"   //7318
