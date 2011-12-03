@@ -1,20 +1,10 @@
-1.When compiling, MadCow needs to be in a short path folder, otherwise command line wont be able
-to recieve the whole compiling argument: E.G: cmd C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe C:\Downloads\December\XXX\XXXXX\BLABLA\<mooege>\build\slnfile.
-That will fail because there are just too many characters, so I dont know a way to fix this.
-
-//2.Check if mooege process is running and terminate it if we are trying to do an operation that compromise files being used by mooege.//
-//3.Check for Mooege Process.//
-4.Implement a way to know if assembly System.Data.SQLite is running.
-//5.Implement !autoupdate <timer> command in order to call !update every "X" time given by the user.//
-6.Fix compatibility with other versios of Windows, or even go Linux too?.
-
-
-do we still need diablo3.cs?
-do we need AutoUpdate in Commands.cs?
-fristrunconfiguration in PreRequeriments.cs?
-TODO: Mooege updating, when it finds a new update, does it delete old folders? (Wetwlly:I've added findandkillprocess to kill mooege if its found running.)
-Kill diablo3 and Agent.exe?
-
-7.running validater in new thread
-8.move Validate Diablo Version to Form1 area
-9.Validate MD5 of MPQ when Updating MPQs and (also when you find Diablo3?)
+1.Implement a way to know if assembly System.Data.SQLite is running.
+2.Fix compatibility with other versios of Windows, or even go Linux too?.
+3.do we still need diablo3.cs?
+4.do we need AutoUpdate in Commands.cs?
+5.fristrunconfiguration in PreRequeriments.cs?
+6.TODO: Mooege updating, when it finds a new update, does it delete old folders? (Wetwlly:I've added findandkillprocess to kill mooege if its found running.)
+7.Kill diablo3 and Agent.exe?
+8.running validater in new thread
+9.move Validate Diablo Version to Form1 area
+10.Validate MD5 of MPQ when Updating MPQs and (also when you find Diablo3?)

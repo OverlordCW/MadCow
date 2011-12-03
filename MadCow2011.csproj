@@ -132,6 +132,7 @@
     <Content Include="Tools\CompileBatch.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="madcow.ini" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Shell32">

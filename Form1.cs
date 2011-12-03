@@ -24,6 +24,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Net;
+using Nini.Config;
 
 namespace MadCow
 {
@@ -59,8 +61,29 @@ namespace MadCow
             toolTip1.SetToolTip(this.button2, "This will update mooege to latest version");
             toolTip1.SetToolTip(this.button3, "This will copy MPQ's if you have D3 installed");
             toolTip1.SetToolTip(this.button8, "This will check pre-requirements and update Mooege Server");
-            textBox4.Text = "Please Select your Diablo III path.";
+
+            //Diablo 3 Path Saving
+            if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+            {
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                string Src = source.Configs["DiabloPath"].Get("D3Path");
+                textBox4.Text = Src;
+            }
+            else textBox4.Text = "Please Select your Diablo III path.";
+
         }
+        
+                /*
+            textBox13.Text = "0.0.0.0";
+            textBox12.Text = "1345";
+            textBox11.Text = "0.0.0.0";
+            textBox10.Text = "1999";
+            textBox9.Text = "0.0.0.0";
+            checkBox3.Checked = false;
+            textBox1.Text = "Welcome to mooege development server!";
+                 */
+
+
         private void tabPage1_Click(object sender, EventArgs e) { }
         private void label2_Click(object sender, EventArgs e) { }
         private void label10_Click(object sender, EventArgs e) { }
@@ -130,6 +153,13 @@ namespace MadCow
                         button2.Enabled = true;
                         numericUpDown1.Enabled = true;
                         checkBox1.Enabled = true;
+                        textBox13.Enabled = true;
+                        textBox12.Enabled = true;
+                        textBox11.Enabled = true;
+                        textBox10.Enabled = true;
+                        textBox9.Enabled = true;
+                        checkBox3.Enabled = true;
+                        textBox1.Enabled = true;
                         label2.Text = "Repository Validated!";
                     }
                 }
@@ -148,7 +178,7 @@ namespace MadCow
         {
             if (Directory.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
             {
-                label2.Text = "You have latest [" + ParseRevision.developerName + "] Mooege revision: " + ParseRevision.lastRevision;
+                label2.Text = "You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision;
                 
                 if (checkBox1.Checked == true)
                 {
@@ -157,7 +187,7 @@ namespace MadCow
                 }
             }
 
-            else if (Directory.Exists(Program.programPath + "/MPQ")) //Checks for MPQ Folder
+            else if (Directory.Exists(Program.programPath + @"/MPQ")) //Checks for MPQ Folder
             {
                 label2.Text = "Found default MadCow MPQ folder";
                 button2.Enabled = false;
@@ -214,7 +244,7 @@ namespace MadCow
 
         private void button3_Click(object sender, EventArgs e)
         {
-            //Commands.RunUpdateMPQ();
+            Commands.RunUpdateMPQ();
         }
 
 
@@ -257,13 +287,78 @@ namespace MadCow
             textBox10.Text = "1999";
             textBox9.Text = "0.0.0.0";
             checkBox3.Checked = false;
+            textBox1.Text = "Welcome to mooege development server!";
+            IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+            IConfig config = source.Configs["MooNet-Server"];
+            config.Set("BindIP", textBox13.Text);
+            IConfig config1 = source.Configs["MooNet-Server"];
+            config1.Set("Port", textBox12.Text);
+            IConfig config2 = source.Configs["Game-Server"];
+            config2.Set("BindIP", textBox11.Text);
+            IConfig config3 = source.Configs["Game-Server"];
+            config3.Set("Port", textBox10.Text);
+            IConfig config4 = source.Configs["NAT"];
+            config4.Set("PublicIP", textBox9.Text);
+            IConfig config5 = source.Configs["NAT"];
+            config5.Set("Enabled", "false");
+            IConfig config6 = source.Configs["MooNet-Server"];
+            config6.Set("MOTD", textBox1.Text);
+            source.Save();
+            
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            //launches only mooege server
-            //Any changes made on Server Control -> need to change config.ini
+            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
+            {
+                //First we modify the Mooege INI storage path.
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+
+                    Console.WriteLine("Modifying MooNet-Server IP...");
+                    IConfig config = source.Configs["MooNet-Server"];
+                    config.Set("BindIP", textBox13.Text);
+                    Console.WriteLine("Modifying MooNet-Server Port...");
+                    IConfig config1 = source.Configs["MooNet-Server"];
+                    config1.Set("Port", textBox12.Text);
+                    Console.WriteLine("Modifying Game-Server IP...");
+                    IConfig config2 = source.Configs["Game-Server"];
+                    config2.Set("BindIP", textBox11.Text);
+                    Console.WriteLine("Modifying Game-Server Port...");
+                    IConfig config3 = source.Configs["Game-Server"];
+                    config3.Set("Port", textBox10.Text);
+                    Console.WriteLine("Modifying Public IP...");
+                    IConfig config4 = source.Configs["NAT"];
+                    config4.Set("PublicIP", textBox9.Text);
+                    Console.WriteLine("Modifying MOTD...");
+                    IConfig config7 = source.Configs["MooNet-Server"];
+                    config7.Set("MOTD", textBox1.Text);
+
+                if (checkBox3.Checked == true)
+                    {
+                        Console.WriteLine("Modifying NAT...");
+                        IConfig config5 = source.Configs["NAT"];
+                        config5.Set("Enabled", "true");
+                        source.Save();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Keeping NAT the same...");
+                        IConfig config6 = source.Configs["NAT"];
+                        config6.Set("Enabled", "false");
+                        source.Save();
+                    }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Could not modify Mooege INI FILE");
+                Console.WriteLine("Do you have mooege?");
+                label2.Text = "Update Mooege Server";
+                Console.ForegroundColor = ConsoleColor.White;
+
+            }
             /*
+            Thread.Sleep(2000);
             Process proc0 = new Process();
             proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
             proc0.Start();
@@ -332,8 +427,35 @@ namespace MadCow
                 string dirName = System.IO.Path.GetDirectoryName(FindD3Exe.FileName);
                 // Output Name
                 textBox4.Text = FindD3Exe.FileName;
+                button3.Enabled = true;
                 button4.Enabled = true;
+                //Bottom three are Enabled on Remote Server
+                textBox2.Enabled = true;
+                textBox3.Enabled = true;
+                button7.Enabled = true;
             }
+            String val = "madcow.ini";
+            if (File.Exists(Program.programPath + "\\Tools\\" + val))
+            {
+                FileInfo fi = new FileInfo(Program.programPath + "\\Tools\\" + val);
+                StreamWriter sw = fi.CreateText();
+                sw.WriteLine(@"[DiabloPath]");
+                sw.WriteLine(@"D3Path = " + textBox4.Text);
+                sw.WriteLine(@"MPQpath = " + new FileInfo(textBox4.Text).DirectoryName + "\\Data_D3\\PC\\MPQs");
+                sw.Close();
+                Console.WriteLine("CREATED MADCOW.INI");
+            }
+            else
+            {
+                FileInfo fi = new FileInfo(Program.programPath + "\\Tools\\" + val);
+                StreamWriter sw = fi.CreateText();
+                sw.WriteLine(@"[DiabloPath]");
+                sw.WriteLine(@"D3Path = " + textBox4.Text);
+                sw.WriteLine(@"MPQpath = " + new FileInfo(textBox4.Text).DirectoryName + "\\Data_D3\\PC\\MPQs");
+                sw.Close();
+                Console.WriteLine("CREATED MADCOW.INI");
+            }
+                    
         }
 
         private void textBox4_TextChanged(object sender, EventArgs e) { /*Diablo Path*/ }
@@ -440,6 +562,11 @@ namespace MadCow
                 textBox1_Repository_Url.ForeColor = SystemColors.ControlText;
             }
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            SimpleFileDelete.Delete(1);
+        }
        //----------------------------------------------------------------------
        //---------------------TESTINGGGGGGGGGGGGGGGGGGG------------------------
        //Tried a lot of crap Wlly, as u see progressbar already works, but its hard
@@ -505,5 +632,118 @@ namespace MadCow
         }
     }
 }*/
+
+//-------------------------//
+//  Find and Kill Process  //
+//-------------------------//
+
+        public bool FindAndKillProcess(string name)
+        {
+        //see if process is running.
+          foreach (Process clsProcess in Process.GetProcesses())
+          {
+               if (clsProcess.ProcessName.Contains(name))
+               {
+                   // Kill Kill Kill
+                   clsProcess.Kill();
+                   return true;
+               }
+          }
+            //otherwise do not kill process because it's not there
+            return false;
+        }
+        //-------------------------//
+        //  ReDownload 7841 MPQ    //
+        //-------------------------//
+        private void button10_Click(object sender, EventArgs e)
+        {  
+            SimpleFileDelete.Delete(0);
+            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+            string MPQpath = source.Configs["DiabloPath"].Get("MPQpath");
+            WebClient webClient = new WebClient();
+            webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
+            webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressChanged);
+            webClient.DownloadFileAsync(new Uri("http://ak.worldofwarcraft.com.edgesuite.net/d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7841.MPQ"), MPQpath + @"\base\d3-update-base-7841.MPQ");
+        }
+
+        private void ProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            progressBar3.Value = e.ProgressPercentage;
+        }
+
+        private void Completed(object sender, AsyncCompletedEventArgs e)
+        {
+            MessageBox.Show("Download completed!");
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            MPQprocedure.ValidateMD5();
+        }
+
+        //Server Control Refresh From Config.Ini
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (File.Exists(Program.programPath + "\\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + "\\src\\Mooege\\bin\\Debug\\config.ini"))
+            {
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                string Src1 = source.Configs["MooNet-Server"].Get("BindIP");
+                textBox13.Text = Src1;
+            }
+            else textBox13.Text = "0.0.0.0";
+
+            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
+            {
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                string Src2 = source.Configs["MooNet-Server"].Get("Port");
+                textBox12.Text = Src2;
+            }
+            else textBox12.Text = "1345";
+
+            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
+            {
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                string Src3 = source.Configs["Game-Server"].Get("BindIP");
+                textBox11.Text = Src3;
+            }
+            else textBox11.Text = "0.0.0.0";
+
+            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
+            {
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                string Src4 = source.Configs["Game-Server"].Get("Port");
+                textBox10.Text = Src4;
+            }
+            else textBox10.Text = "1999";
+
+            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
+            {
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                string Src5 = source.Configs["NAT"].Get("PublicIP");
+                textBox9.Text = Src5;
+            }
+            else textBox9.Text = "0.0.0.0";
+
+            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
+            {
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                string Src6 = source.Configs["MooNet-Server"].Get("MOTD");
+                textBox1.Text = Src6;
+            }
+            else textBox1.Text = "Welcome to mooege development server!";
+
+            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
+            {
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                string Src7 = source.Configs["NAT"].Get("Enabled");
+                if (Src7 == "true")
+                {
+                    checkBox3.Checked = true;
+                }
+                else
+                    checkBox3.Checked = false;
+            }
+            else checkBox3.Checked = false;
+        }
     }
  }
