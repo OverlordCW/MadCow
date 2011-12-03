@@ -639,10 +639,12 @@ namespace MadCow
         private void button10_Click(object sender, EventArgs e)
         {  
             SimpleFileDelete.Delete(0);
+            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+            string MPQpath = source.Configs["DiabloPath"].Get("MPQpath");
             WebClient webClient = new WebClient();
             webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
             webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressChanged);
-            webClient.DownloadFileAsync(new Uri("http://ak.worldofwarcraft.com.edgesuite.net/d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7841.MPQ"), Program.programPath + "/MPQ/base/d3-update-base-7841.MPQ");
+            webClient.DownloadFileAsync(new Uri("http://ak.worldofwarcraft.com.edgesuite.net/d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7841.MPQ"), MPQpath + @"\base\d3-update-base-7841.MPQ");
         }
 
         private void ProgressChanged(object sender, DownloadProgressChangedEventArgs e)

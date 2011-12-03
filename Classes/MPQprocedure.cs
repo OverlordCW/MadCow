@@ -43,9 +43,10 @@ namespace MadCow
         public static void ValidateMD5()
         {
             DateTime startTime = DateTime.Now;
-            //Checks MD5s from Mooege's MPQs
-            String[] filePaths = Directory.GetFiles(Program.programPath + @"/MPQ/base", "*.*", SearchOption.TopDirectoryOnly);
-            int fileCount = Directory.GetFiles(Program.programPath + @"/MPQ/base", "*.*", SearchOption.TopDirectoryOnly).Length;
+            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+            string MPQpath = source.Configs["DiabloPath"].Get("MPQpath");
+            String[] filePaths = Directory.GetFiles(MPQpath + @"/base", "*.*", SearchOption.TopDirectoryOnly);
+            int fileCount = Directory.GetFiles(MPQpath + @"/base", "*.*", SearchOption.TopDirectoryOnly).Length;
             int trueCounter = 0;
 
             Parallel.ForEach(filePaths, dir =>  
