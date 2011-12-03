@@ -62,15 +62,28 @@ namespace MadCow
             toolTip1.SetToolTip(this.button3, "This will copy MPQ's if you have D3 installed");
             toolTip1.SetToolTip(this.button8, "This will check pre-requirements and update Mooege Server");
 
-            String val = "madcow.ini";
-            if (File.Exists(Program.programPath + "\\Tools\\" + val))
+            //Diablo 3 Path Saving
+            if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
             {
                 IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
                 string Src = source.Configs["DiabloPath"].Get("D3Path");
                 textBox4.Text = Src;
             }
             else textBox4.Text = "Please Select your Diablo III path.";
+
         }
+        
+                /*
+            textBox13.Text = "0.0.0.0";
+            textBox12.Text = "1345";
+            textBox11.Text = "0.0.0.0";
+            textBox10.Text = "1999";
+            textBox9.Text = "0.0.0.0";
+            checkBox3.Checked = false;
+            textBox1.Text = "Welcome to mooege development server!";
+                 */
+
+
         private void tabPage1_Click(object sender, EventArgs e) { }
         private void label2_Click(object sender, EventArgs e) { }
         private void label10_Click(object sender, EventArgs e) { }
@@ -666,6 +679,71 @@ namespace MadCow
         private void button11_Click(object sender, EventArgs e)
         {
             MPQprocedure.ValidateMD5();
+        }
+
+        //Server Control Refresh From Config.Ini
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (File.Exists(Program.programPath + "\\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + "\\src\\Mooege\\bin\\Debug\\config.ini"))
+            {
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                string Src1 = source.Configs["MooNet-Server"].Get("BindIP");
+                textBox13.Text = Src1;
+            }
+            else textBox13.Text = "0.0.0.0";
+
+            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
+            {
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                string Src2 = source.Configs["MooNet-Server"].Get("Port");
+                textBox12.Text = Src2;
+            }
+            else textBox12.Text = "1345";
+
+            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
+            {
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                string Src3 = source.Configs["Game-Server"].Get("BindIP");
+                textBox11.Text = Src3;
+            }
+            else textBox11.Text = "0.0.0.0";
+
+            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
+            {
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                string Src4 = source.Configs["Game-Server"].Get("Port");
+                textBox10.Text = Src4;
+            }
+            else textBox10.Text = "1999";
+
+            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
+            {
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                string Src5 = source.Configs["NAT"].Get("PublicIP");
+                textBox9.Text = Src5;
+            }
+            else textBox9.Text = "0.0.0.0";
+
+            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
+            {
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                string Src6 = source.Configs["MooNet-Server"].Get("MOTD");
+                textBox1.Text = Src6;
+            }
+            else textBox1.Text = "Welcome to mooege development server!";
+
+            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
+            {
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                string Src7 = source.Configs["NAT"].Get("Enabled");
+                if (Src7 == "true")
+                {
+                    checkBox3.Checked = true;
+                }
+                else
+                    checkBox3.Checked = false;
+            }
+            else checkBox3.Checked = false;
         }
     }
  }
