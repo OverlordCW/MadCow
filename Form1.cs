@@ -66,6 +66,7 @@ namespace MadCow
             //Diablo 3 Path Saving
             if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
             {
+                //TODO:When Ini Saves beforehand as Blank, it will copy over the blank instead of using Please Select your Path text.
                 IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
                 String Src = source.Configs["DiabloPath"].Get("D3Path");
                 Diablo3UserPathSelection.Text = Src;
@@ -432,14 +433,6 @@ namespace MadCow
 
             if (FindD3Exe.ShowDialog() == DialogResult.OK) // If user was able to locate Diablo III.exe
             {
-                if (CompareD3Versions() == false) //We verify if the current version is the required by Mooege by calling VerifyVersion(), if returns false we warn him.
-                {                                 //This will tae about 2-3 seconds, since it parse it right from the Mooege repo files. Similar to the little hang that happens when you fist validate a repo.
-                    MessageBox.Show("You need Diablo III Client version [" + MooegeSupporterVersion + "] in order to play over Mooege.\nPlease Update.", "Warning",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
-
-                else
-                {
                     // Get the directory name.
                     String dirName = System.IO.Path.GetDirectoryName(FindD3Exe.FileName);
                     // Output Name
@@ -450,17 +443,26 @@ namespace MadCow
                     textBox2.Enabled = true;
                     textBox3.Enabled = true;
                     button7.Enabled = true;
-                }
 
                 //We always save the path, even if the client its not compatible with current mooege.
                 //Wlly*** please modify this, have a premade INI with the tags and values in blank and instead of writing the whole file over and over, just modify the tags values.
-                FileInfo fi = new FileInfo(Program.programPath + "\\Tools\\" + madCowIni);
-                StreamWriter sw = fi.CreateText();
-                sw.WriteLine(@"[DiabloPath]");
-                sw.WriteLine(@"D3Path = " + Diablo3UserPathSelection.Text);
-                sw.WriteLine(@"MPQpath = " + new FileInfo(Diablo3UserPathSelection.Text).DirectoryName + "\\Data_D3\\PC\\MPQs");
-                sw.Close();
-                Console.WriteLine("CREATED MADCOW.INI WITH D3 PATHS");
+                if (File.Exists(Program.programPath + "\\Tools\\" + madCowIni))
+                {
+                    //First we modify the Mooege INI storage path.
+                    IConfigSource source = new IniConfigSource(Program.programPath + "\\Tools\\" + madCowIni);
+                    IConfig config = source.Configs["DiabloPath"];
+                    config.Set("D3Path", Diablo3UserPathSelection.Text);
+                    IConfig config1 = source.Configs["DiabloPath"];
+                    config1.Set("MPQpath", new FileInfo(Diablo3UserPathSelection.Text).DirectoryName + "\\Data_D3\\PC\\MPQs");
+                    source.Save();
+                    Console.WriteLine("MODIFIED MADCOW.INI WITH D3 PATHS");
+                }
+
+                if (CompareD3Versions() == false) //We verify if the current version is the required by Mooege by calling VerifyVersion(), if returns false we warn him.
+                {                                 //This will tae about 2-3 seconds, since it parse it right from the Mooege repo files. Similar to the little hang that happens when you fist validate a repo.
+                    MessageBox.Show("You need Diablo III Client version [" + MooegeSupporterVersion + "] in order to play over Mooege.\nPlease Update.", "Warning",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
             }
             else //If user didn't select a Diablo III.exe, we show a warning and ofc, we dont save any path.
             {
