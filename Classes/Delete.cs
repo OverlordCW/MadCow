@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using Nini.Config;
+using System.Windows.Forms;
 
 namespace MadCow
 {
@@ -26,18 +27,6 @@ namespace MadCow
                     {
                         Console.WriteLine(e.Message);
                     }
-                }
-            }
-            //MPQs - d3-update-base-7841.MPQ
-            if (folder == 0)
-            {
-                IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
-                string Src = source.Configs["DiabloPath"].Get("MPQpath");
-
-                if (System.IO.Directory.Exists(Src))
-                {
-                        Console.WriteLine("Deleting d3-update-base-7841.MPQ");
-                        System.IO.File.Delete(Src + @"\base\d3-update-base-7841.MPQ");
                 }
             }
          }
