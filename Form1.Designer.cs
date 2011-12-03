@@ -79,13 +79,22 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.progressBar3 = new System.Windows.Forms.ProgressBar();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.button10 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -102,6 +111,7 @@
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             this.SuspendLayout();
             // 
             // checkBox1
@@ -150,6 +160,7 @@
             // button4
             // 
             this.button4.BackColor = System.Drawing.Color.Transparent;
+            this.button4.Enabled = false;
             this.button4.Location = new System.Drawing.Point(16, 306);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(94, 43);
@@ -160,7 +171,6 @@
             // 
             // button6
             // 
-            this.button6.Enabled = false;
             this.button6.Location = new System.Drawing.Point(195, 178);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(100, 23);
@@ -193,6 +203,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.label11);
             this.tabPage3.Controls.Add(this.groupBox4);
             this.tabPage3.Controls.Add(this.button7);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
@@ -267,7 +278,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(33, 56);
+            this.label12.Location = new System.Drawing.Point(39, 61);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(264, 156);
             this.label12.TabIndex = 1;
@@ -276,6 +287,9 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label18);
+            this.tabPage2.Controls.Add(this.textBox1);
+            this.tabPage2.Controls.Add(this.label9);
             this.tabPage2.Controls.Add(this.button8);
             this.tabPage2.Controls.Add(this.groupBox5);
             this.tabPage2.Controls.Add(this.button6);
@@ -289,7 +303,6 @@
             // 
             // button8
             // 
-            this.button8.Enabled = false;
             this.button8.Location = new System.Drawing.Point(38, 178);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(128, 23);
@@ -619,6 +632,7 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Location = new System.Drawing.Point(3, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -627,25 +641,75 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.progressBar3);
+            this.tabPage4.Controls.Add(this.label5);
+            this.tabPage4.Controls.Add(this.label3);
+            this.tabPage4.Controls.Add(this.button10);
             this.tabPage4.Controls.Add(this.button5);
-            this.tabPage4.Controls.Add(this.label12);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage4.Size = new System.Drawing.Size(345, 278);
             this.tabPage4.TabIndex = 4;
-            this.tabPage4.Text = "Credits";
+            this.tabPage4.Text = "Help";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // progressBar3
+            // 
+            this.progressBar3.Location = new System.Drawing.Point(230, 80);
+            this.progressBar3.Name = "progressBar3";
+            this.progressBar3.Size = new System.Drawing.Size(100, 13);
+            this.progressBar3.TabIndex = 6;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(55, 11);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(109, 13);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "Reset Mooege Folder";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 40);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(206, 39);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Did Mooege receive\r\n\"Couldn\'t Find Catalog File: CoreToc.Dat\" \r\nError?";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(229, 40);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(104, 34);
+            this.button10.TabIndex = 3;
+            this.button10.Text = "Redownload 7841 MPQ";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(248, 249);
+            this.button5.Location = new System.Drawing.Point(236, 6);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(90, 23);
             this.button5.TabIndex = 2;
             this.button5.Text = "Reset Commit";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.label12);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(345, 278);
+            this.tabPage5.TabIndex = 5;
+            this.tabPage5.Text = "Credits";
+            this.tabPage5.UseVisualStyleBackColor = true;
             // 
             // timer1
             // 
@@ -686,6 +750,42 @@
             this.label2.Size = new System.Drawing.Size(0, 13);
             this.label2.TabIndex = 15;
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(44, 218);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(242, 13);
+            this.label9.TabIndex = 11;
+            this.label9.Text = "To Activate Validate Repository(Will be Changing)";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(54, 153);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(225, 13);
+            this.label11.TabIndex = 15;
+            this.label11.Text = "To Activate, Add Diablo Path on Updates Tab";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Enabled = false;
+            this.textBox1.Location = new System.Drawing.Point(9, 252);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(330, 20);
+            this.textBox1.TabIndex = 12;
+            this.textBox1.Text = "Welcome to mooege development server!";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(10, 233);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(39, 13);
+            this.label18.TabIndex = 13;
+            this.label18.Text = "MOTD";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -705,9 +805,11 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.tabPage1.ResumeLayout(false);
@@ -723,6 +825,8 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -785,6 +889,15 @@
         private System.Windows.Forms.Label label2;
         public System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.ProgressBar progressBar3;
         public System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

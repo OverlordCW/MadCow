@@ -27,21 +27,13 @@ namespace MadCow
                     }
                 }
             }
-            //MPQs - d3-update-base-7841.MPQ, base-Win.mpq, and Cache directory
-            //TODO: find a way to transfer over Diablo 3 Directory from Form1...
+            //MPQs - d3-update-base-7841.MPQ
             if (folder == 0)
             {
-                if (System.IO.Directory.Exists(@"C:\Program Files (x86)\Diablo III Beta\"))
+                if (System.IO.Directory.Exists(Program.programPath + @"/MPQ"))
                 {
-                    try
-                    {
                         Console.WriteLine("Deleting d3-update-base-7841.MPQ");
-                        System.IO.File.Delete(@"C:\Program Files (x86)\Diablo III Beta\Data_D3\PC\MPQs\d3-update-base-7841.MPQ");
-                    }
-                    catch (System.IO.IOException e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
+                        System.IO.File.Delete(Program.programPath + @"/MPQ/base/d3-update-base-7841.MPQ");
                 }
             }
          }

@@ -26,37 +26,25 @@ namespace MadCow
 {
     class Commands
     {
-        //
-        //    TODO: This is next to work on. Validating MD5, Copying MPQ's- Wesko
-        //      Validate MD5s, if incorrect MessageBox (Yes or No), if you would like to autograb correct MPQs -> checks in Commands, Does the work in MPQprocedure
-        //          Find MD5, if wrong, Delete Base file, Base-Win file, and Cache Folder
-        //                              Delete.cs can be configured to do this since it is not in use for Reseting Last Commit(It can do both if we set it to)
-        //          Start up Diablo Beta Launcher, timer check on mpqs? (do we have to wait for them to finish or just load new mpqs?)
-        //          Repeat until canceled or correct MD5.
-        //      Once correct MD5, proceed to MPQTransfer.
-        //
         public static void RunUpdateMPQ()
         {
                     if (Directory.Exists(Program.programPath + @"/MPQ"))
                     {
-                        //MD5 Check
-                        //inside validateMD5, it will if/else to delete mpqs from diablo and validate new ones
-                        MPQprocedure.ValidateMD5();
-
                         //Delete Folder if already exists
                         System.IO.Directory.Delete(Program.programPath + @"/MPQ", true);
                         Console.WriteLine("Deleted current MPQ MadCow folder succeedeed");
 
-                        //Create new Folder
-                        System.IO.Directory.CreateDirectory(Program.programPath + @"/MPQ");
-                        Console.WriteLine("Creating new MPQ MadCow folder succeedeed");
-
+                        //Create new Folder // DO not need because MPQTransfer creates folder!
+                        //System.IO.Directory.CreateDirectory(Program.programPath + @"/MPQ");
+                        //Console.WriteLine("Creating new MPQ MadCow folder succeedeed");
+                        Thread.Sleep(1000);
                         //Transfer MPQs
                         MPQprocedure.MpqTransfer();
                     }
                     else
                     {
-                        System.IO.Directory.CreateDirectory(Program.programPath + @"/MPQ");
+                        // DO not need because MPQTransfer creates folder!
+                        //System.IO.Directory.CreateDirectory(Program.programPath + @"/MPQ");
                         MPQprocedure.MpqTransfer();
                     }
         }

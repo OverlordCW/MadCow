@@ -21,6 +21,7 @@ using System.Text;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Nini.Config;
 
 namespace MadCow
 {
@@ -68,28 +69,19 @@ namespace MadCow
             }
             else
             {
-                DialogResult result;
-                result = MessageBox.Show("Yes or No?", "Would you like to AutoGrab the correct MD5 for base-7841?", MessageBoxButtons.YesNo);
-                if (result == DialogResult.Yes)
-                {
-                    //This will delete the MPQ files that need to be deleted for better md5
-                    SimpleFileDelete.Delete(0);
-                    //this will open diablo launcher, and wait for files
-                    //Download from http://ak.worldofwarcraft.com.edgesuite.net/d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7841.MPQ
-                }
-                else
-                {
-                    MessageBox.Show("You will need to check MD5Hash of base-7841 in order to run Mooege.");
-                }
+                MessageBox.Show("One of your MPQs may be an incorrect hash\nIf you receive a CoreToc.dat error\nGo to Help Tab on MadCow.");
             }
         }
 
         public static void MpqTransfer()
         {
-            String Src = Diablo3._d3loc + "\\Data_D3\\PC\\MPQs";
-            String Dst = Program.programPath + "\\MPQ";
+            //Takes Diablo Path from Ini, which gets it from finding diablo3.exe 
+            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+            string fileName = source.Configs["DiabloPath"].Get("D3Path");
+            String Src = fileName;
+            String Dst = Program.programPath + @"/MPQ";
 
-            if (Directory.Exists(Program.programPath + "/MPQ")) //Checks for MPQ Folder
+            if (Directory.Exists(Program.programPath + @"/MPQ/base") && File.Exists(Program.programPath + @"/MPQ/CoreData.mpq") && File.Exists(Program.programPath + @"/MPQ/ClientData.mpq")) //Checks for MPQ Folder
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Found default MadCow MPQ folder");
@@ -98,7 +90,7 @@ namespace MadCow
             else //If not found, creates it and proceed with copying.
             {
                 Console.WriteLine("Creating MadCow MPQ folder...");
-                Directory.CreateDirectory(Program.programPath + "/MPQ");
+                Directory.CreateDirectory(Program.programPath + @"/MPQ");
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Creating MadCow MPQ folder Complete");
                 Console.ForegroundColor = ConsoleColor.White;
