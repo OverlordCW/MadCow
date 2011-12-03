@@ -40,10 +40,10 @@ namespace MadCow
         {
             InitializeComponent();
             UpdateMooegeButton.Enabled = false;
-            button3.Enabled = false;
+            CopyMPQButton.Enabled = false;
             AutoUpdateValue.Enabled = false;
             EnableAutoUpdateBox.Enabled = false;
-            button4.Enabled = false;
+            PlayDiabloButton.Enabled = false;
         }
 
         //-------------------------//
@@ -60,8 +60,8 @@ namespace MadCow
             toolTip1.ShowAlways = true;
             // Set up the ToolTip text for the Buttons.
             toolTip1.SetToolTip(this.UpdateMooegeButton, "This will update mooege to latest version");
-            toolTip1.SetToolTip(this.button3, "This will copy MPQ's if you have D3 installed");
-            toolTip1.SetToolTip(this.button8, "This will check pre-requirements and update Mooege Server");
+            toolTip1.SetToolTip(this.CopyMPQButton, "This will copy MPQ's if you have D3 installed");
+            toolTip1.SetToolTip(this.UpdateMooegeServerButton, "This will check pre-requirements and update Mooege Server");
 
             //Diablo 3 Path Saving
             if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
@@ -70,11 +70,11 @@ namespace MadCow
                 IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
                 String Src = source.Configs["DiabloPath"].Get("D3Path");
                 Diablo3UserPathSelection.Text = Src;
-                button3.Enabled = true;
-                button4.Enabled = true;
+                CopyMPQButton.Enabled = true;
+                PlayDiabloButton.Enabled = true;
                 textBox2.Enabled = true;
                 textBox3.Enabled = true;
-                button7.Enabled = true;
+                RemoteServerButton.Enabled = true;
 
             }
             else Diablo3UserPathSelection.Text = "Please Select your Diablo III path.";
@@ -109,7 +109,7 @@ namespace MadCow
         //-------------------------//
         // Update Mooege //
         //-------------------------//
-        private void button1_Click_Validate_Repository(object sender, EventArgs e)
+        private void Validate_Repository_Click(object sender, EventArgs e)
         {
             //Update Mooege - does not start Diablo
 
@@ -250,7 +250,7 @@ namespace MadCow
         // Update MPQS             //
         //-------------------------//
 
-        private void UpdateMPQ_Click(object sender, EventArgs e)
+        private void CopyMPQs_Click(object sender, EventArgs e)
         {
             Commands.RunUpdateMPQ();
         }
@@ -259,7 +259,7 @@ namespace MadCow
         //-------------------------//
         // Remote Server Settings  //
         //-------------------------//
-        private void button7_Click(object sender, EventArgs e)
+        private void RemoteServer_Click(object sender, EventArgs e)
         {
             //Remote Server
             //Opens Diablo with extension to Remote Server
@@ -315,7 +315,7 @@ namespace MadCow
             
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void LaunchServer_Click(object sender, EventArgs e)
         {
             if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
             {
@@ -374,7 +374,7 @@ namespace MadCow
             MessageBox.Show(Compile.currentMooegeExePath);
         }
 
-        private void button8_Click(object sender, EventArgs e)
+        private void UpdateMooegeServer_Click(object sender, EventArgs e)
         {
             //Updates Mooege does not check for Diablo Client
             //Instead of MadCowRunProcedure.RunMadCow(0);
@@ -422,7 +422,7 @@ namespace MadCow
         //   Diablo 3 Path Stuff   //
         //-------------------------//
 
-        private void button9_Click(object sender, EventArgs e)
+        private void FindDiablo_Click(object sender, EventArgs e)
         {
             String madCowIni = "madcow.ini"; //Our INI setting file.
             //Opens path to find Diablo3
@@ -437,15 +437,13 @@ namespace MadCow
                     String dirName = System.IO.Path.GetDirectoryName(FindD3Exe.FileName);
                     // Output Name
                     Diablo3UserPathSelection.Text = FindD3Exe.FileName;
-                    button3.Enabled = true;
-                    button4.Enabled = true;
+                    CopyMPQButton.Enabled = true;
+                    PlayDiabloButton.Enabled = true;
                     //Bottom three are Enabled on Remote Server
                     textBox2.Enabled = true;
                     textBox3.Enabled = true;
-                    button7.Enabled = true;
+                    RemoteServerButton.Enabled = true;
 
-                //We always save the path, even if the client its not compatible with current mooege.
-                //Wlly*** please modify this, have a premade INI with the tags and values in blank and instead of writing the whole file over and over, just modify the tags values.
                 if (File.Exists(Program.programPath + "\\Tools\\" + madCowIni))
                 {
                     //First we modify the Mooege INI storage path.
@@ -456,6 +454,7 @@ namespace MadCow
                     config1.Set("MPQpath", new FileInfo(Diablo3UserPathSelection.Text).DirectoryName + "\\Data_D3\\PC\\MPQs");
                     source.Save();
                     Console.WriteLine("MODIFIED MADCOW.INI WITH D3 PATHS");
+                    Console.WriteLine("Verifying Diablo..");
                 }
 
                 if (CompareD3Versions() == false) //We verify if the current version is the required by Mooege by calling VerifyVersion(), if returns false we warn him.
@@ -577,7 +576,7 @@ namespace MadCow
             }
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void ResetRepoFolder_Click(object sender, EventArgs e)
         {
             SimpleFileDelete.Delete(1);
         }
@@ -725,7 +724,7 @@ namespace MadCow
             MessageBox.Show("Download completed!");
         }
 
-        private void button11_Click(object sender, EventArgs e)//Starts validating MD5's
+        private void ValidateMPQs_Click(object sender, EventArgs e)//Starts validating MD5's
         {
             MPQprocedure.ValidateMD5();
 

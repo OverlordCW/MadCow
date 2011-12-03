@@ -37,6 +37,7 @@ namespace MadCow
                                            ,"7e13f6184d66520ed3f6b799656a30ca"   //7728
                                            ,"5eb4983d4530e3b8bab0d6415d8251fa"   //7841
                                            ,"3faf4efa2a96d501c9c47746cba5a7ad"   //7841
+                                           ,"0a1e7ebcaa1199c5349db83946aa1b5d"   //7841
                                            ,"777da16a46d4f1d231bae8c1e11cdeaf"   //7931
                                            ,"3d92eee4ed83aeedd977274bdb8af1b7"}; //7931
 
