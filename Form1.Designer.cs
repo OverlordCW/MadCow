@@ -614,7 +614,6 @@
             this.textBox4.ReadOnly = true;
             this.textBox4.Size = new System.Drawing.Size(248, 20);
             this.textBox4.TabIndex = 3;
-            this.textBox4.Text = "C:\\Program Files (x86)\\Diablo III Beta\\Diablo III.exe";
             this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // button2

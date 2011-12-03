@@ -61,7 +61,15 @@ namespace MadCow
             toolTip1.SetToolTip(this.button2, "This will update mooege to latest version");
             toolTip1.SetToolTip(this.button3, "This will copy MPQ's if you have D3 installed");
             toolTip1.SetToolTip(this.button8, "This will check pre-requirements and update Mooege Server");
-            textBox4.Text = "Please Select your Diablo III path.";
+
+            String val = "madcow.ini";
+            if (File.Exists(Program.programPath + "\\Tools\\" + val))
+            {
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                string Src = source.Configs["DiabloPath"].Get("D3Path");
+                textBox4.Text = Src;
+            }
+            else textBox4.Text = "Please Select your Diablo III path.";
         }
         private void tabPage1_Click(object sender, EventArgs e) { }
         private void label2_Click(object sender, EventArgs e) { }
@@ -416,8 +424,6 @@ namespace MadCow
             String val = "madcow.ini";
             if (File.Exists(Program.programPath + "\\Tools\\" + val))
             {
-                File.Delete(Program.programPath + "\\Tools\\" + val);
-                Console.WriteLine("DELETED MADCOW.INI");
                 FileInfo fi = new FileInfo(Program.programPath + "\\Tools\\" + val);
                 StreamWriter sw = fi.CreateText();
                 sw.WriteLine(@"[DiabloPath]");
