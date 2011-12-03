@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.EnableAutoUpdateBox = new System.Windows.Forms.CheckBox();
+            this.AutoUpdateValue = new System.Windows.Forms.NumericUpDown();
             this.textBox1_Repository_Url = new System.Windows.Forms.TextBox();
             this.button4 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
@@ -52,6 +52,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.button8 = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -75,8 +76,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.progressBar2 = new System.Windows.Forms.ProgressBar();
             this.button1 = new System.Windows.Forms.Button();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.Diablo3UserPathSelection = new System.Windows.Forms.TextBox();
+            this.UpdateMooegeButton = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -97,8 +98,7 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -119,37 +119,37 @@
             // 
             // checkBox1
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(16, 45);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(59, 17);
-            this.checkBox1.TabIndex = 3;
-            this.checkBox1.Text = "Enable";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.EnableAutoUpdateBox.AutoSize = true;
+            this.EnableAutoUpdateBox.Location = new System.Drawing.Point(16, 45);
+            this.EnableAutoUpdateBox.Name = "checkBox1";
+            this.EnableAutoUpdateBox.Size = new System.Drawing.Size(59, 17);
+            this.EnableAutoUpdateBox.TabIndex = 3;
+            this.EnableAutoUpdateBox.Text = "Enable";
+            this.EnableAutoUpdateBox.UseVisualStyleBackColor = true;
+            this.EnableAutoUpdateBox.CheckedChanged += new System.EventHandler(this.AutoUpdate_CheckedChanged);
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(16, 19);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.AutoUpdateValue.Location = new System.Drawing.Point(16, 19);
+            this.AutoUpdateValue.Maximum = new decimal(new int[] {
             500,
             0,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.AutoUpdateValue.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(86, 20);
-            this.numericUpDown1.TabIndex = 4;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.AutoUpdateValue.Name = "numericUpDown1";
+            this.AutoUpdateValue.Size = new System.Drawing.Size(86, 20);
+            this.AutoUpdateValue.TabIndex = 4;
+            this.AutoUpdateValue.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            this.AutoUpdateValue.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // textBox1_Repository_Url
             // 
@@ -170,7 +170,7 @@
             this.button4.TabIndex = 7;
             this.button4.Text = "Play Diablo";
             this.button4.UseVisualStyleBackColor = false;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.button4.Click += new System.EventHandler(this.PlayDiablo_Click);
             // 
             // button6
             // 
@@ -184,8 +184,8 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.numericUpDown1);
-            this.groupBox2.Controls.Add(this.checkBox1);
+            this.groupBox2.Controls.Add(this.AutoUpdateValue);
+            this.groupBox2.Controls.Add(this.EnableAutoUpdateBox);
             this.groupBox2.Location = new System.Drawing.Point(229, 6);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(112, 68);
@@ -372,6 +372,18 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Local Server";
             // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.LinkColor = System.Drawing.Color.DimGray;
+            this.linkLabel1.Location = new System.Drawing.Point(143, 143);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(99, 13);
+            this.linkLabel1.TabIndex = 12;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Refresh from config";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
@@ -493,8 +505,8 @@
             this.tabPage1.Controls.Add(this.groupBox6);
             this.tabPage1.Controls.Add(this.groupBox2);
             this.tabPage1.Controls.Add(this.button1);
-            this.tabPage1.Controls.Add(this.textBox4);
-            this.tabPage1.Controls.Add(this.button2);
+            this.tabPage1.Controls.Add(this.Diablo3UserPathSelection);
+            this.tabPage1.Controls.Add(this.UpdateMooegeButton);
             this.tabPage1.Controls.Add(this.button3);
             this.tabPage1.Controls.Add(this.groupBox3);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -606,22 +618,21 @@
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(9, 184);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.ReadOnly = true;
-            this.textBox4.Size = new System.Drawing.Size(248, 20);
-            this.textBox4.TabIndex = 3;
-            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
+            this.Diablo3UserPathSelection.Location = new System.Drawing.Point(9, 184);
+            this.Diablo3UserPathSelection.Name = "textBox4";
+            this.Diablo3UserPathSelection.ReadOnly = true;
+            this.Diablo3UserPathSelection.Size = new System.Drawing.Size(248, 20);
+            this.Diablo3UserPathSelection.TabIndex = 3;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(123, 221);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 44);
-            this.button2.TabIndex = 17;
-            this.button2.Text = "Update Mooege";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click_Update_Mooege);
+            this.UpdateMooegeButton.Location = new System.Drawing.Point(123, 221);
+            this.UpdateMooegeButton.Name = "button2";
+            this.UpdateMooegeButton.Size = new System.Drawing.Size(100, 44);
+            this.UpdateMooegeButton.TabIndex = 17;
+            this.UpdateMooegeButton.Text = "Update Mooege";
+            this.UpdateMooegeButton.UseVisualStyleBackColor = true;
+            this.UpdateMooegeButton.Click += new System.EventHandler(this.Update_Mooege_Click);
             // 
             // button3
             // 
@@ -631,7 +642,7 @@
             this.button3.TabIndex = 18;
             this.button3.Text = "Update MPQ\'s";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button3.Click += new System.EventHandler(this.UpdateMPQ_Click);
             // 
             // groupBox3
             // 
@@ -744,7 +755,7 @@
             this.button10.TabIndex = 3;
             this.button10.Text = "Redownload 7841 MPQ";
             this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
+            this.button10.Click += new System.EventHandler(this.ReDownloadMPQ_Click);
             // 
             // button5
             // 
@@ -806,18 +817,6 @@
             this.label2.Size = new System.Drawing.Size(0, 13);
             this.label2.TabIndex = 15;
             // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.LinkColor = System.Drawing.Color.DimGray;
-            this.linkLabel1.Location = new System.Drawing.Point(143, 143);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(94, 13);
-            this.linkLabel1.TabIndex = 12;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "refresh from config";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -833,7 +832,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MadCow By Wesko";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
@@ -866,8 +865,8 @@
 
         #endregion
 
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.CheckBox EnableAutoUpdateBox;
+        private System.Windows.Forms.NumericUpDown AutoUpdateValue;
         private System.Windows.Forms.TextBox textBox1_Repository_Url;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button6;
@@ -901,14 +900,14 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox Diablo3UserPathSelection;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button UpdateMooegeButton;
         private System.Windows.Forms.Button button3;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.GroupBox groupBox6;

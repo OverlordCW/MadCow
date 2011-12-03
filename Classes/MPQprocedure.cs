@@ -28,7 +28,7 @@ namespace MadCow
     class MPQprocedure
     {
         //\base\ Folder MD5's.
-        public static String[] MD5ValidPool = {"39765d908accf4f37a4c2dfa99b8cd52"//7170
+        private static String[] MD5ValidPool = {"39765d908accf4f37a4c2dfa99b8cd52"//7170
                                            ,"7148ee45696c84796f3ca16729b9aadc"   //7200
                                            ,"7ee326516f3da2c8f8b80eba6199deef"   //7318
                                            ,"68c43ae976872a1fa7f5a929b7f21b58"   //7338
@@ -40,7 +40,7 @@ namespace MadCow
                                            ,"777da16a46d4f1d231bae8c1e11cdeaf"   //7931
                                            ,"3d92eee4ed83aeedd977274bdb8af1b7"}; //7931
 
-        public static void ValidateMD5()
+        public static Boolean ValidateMD5()
         {
             DateTime startTime = DateTime.Now;
             IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
@@ -67,13 +67,21 @@ namespace MadCow
                 DateTime stopTime = DateTime.Now;
                 TimeSpan duration = stopTime - startTime;
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Validating MPQ's MD5 Hash Complete in: {0}ms",duration.Milliseconds);
+                Console.WriteLine("Validating MPQ's MD5 Hash Complete in: {0}seconds", duration.Seconds);
                 Console.ForegroundColor = ConsoleColor.White;
+                return true;
             }
-            else
+
+            else if (fileCount != trueCounter)
             {
-                MessageBox.Show("One of your MPQs may be an incorrect hash\nIf you receive a CoreToc.dat error\nGo to Help Tab on MadCow.");
+                DateTime stopTime = DateTime.Now;
+                TimeSpan duration = stopTime - startTime;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Validating MPQ's MD5 Hash Complete in: {0}seconds", duration.Seconds);
+                Console.ForegroundColor = ConsoleColor.White;
+                return false;
             }
+            else return false;
         }
 
         public static void MpqTransfer()

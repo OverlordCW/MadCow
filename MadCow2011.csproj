@@ -76,7 +76,6 @@
   <ItemGroup>
     <Compile Include="Classes\Delete.cs" />
     <Compile Include="Classes\Commands.cs" />
-    <Compile Include="Classes\Diablo3.cs" />
     <Compile Include="Classes\MPQprocedure.cs" />
     <Compile Include="Classes\ParseRevision.cs" />
     <Compile Include="Classes\Compile.cs" />
@@ -132,7 +131,9 @@
     <Content Include="Tools\CompileBatch.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="madcow.ini" />
+    <Content Include="Tools\madcow.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Shell32">
