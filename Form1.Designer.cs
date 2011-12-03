@@ -38,6 +38,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.button7 = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label11 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -46,6 +47,9 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label18 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.button8 = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
@@ -79,6 +83,8 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label19 = new System.Windows.Forms.Label();
+            this.button11 = new System.Windows.Forms.Button();
             this.progressBar3 = new System.Windows.Forms.ProgressBar();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -91,10 +97,6 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -214,6 +216,15 @@
             this.tabPage3.Text = "Remote Server";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(54, 153);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(225, 13);
+            this.label11.TabIndex = 15;
+            this.label11.Text = "To Activate, Add Diablo Path on Updates Tab";
+            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.label6);
@@ -300,6 +311,33 @@
             this.tabPage2.TabIndex = 2;
             this.tabPage2.Text = "Server Control";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(10, 233);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(39, 13);
+            this.label18.TabIndex = 13;
+            this.label18.Text = "MOTD";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Enabled = false;
+            this.textBox1.Location = new System.Drawing.Point(9, 252);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(330, 20);
+            this.textBox1.TabIndex = 12;
+            this.textBox1.Text = "Welcome to mooege development server!";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(44, 218);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(242, 13);
+            this.label9.TabIndex = 11;
+            this.label9.Text = "To Activate Validate Repository(Will be Changing)";
             // 
             // button8
             // 
@@ -641,6 +679,8 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.label19);
+            this.tabPage4.Controls.Add(this.button11);
             this.tabPage4.Controls.Add(this.progressBar3);
             this.tabPage4.Controls.Add(this.label5);
             this.tabPage4.Controls.Add(this.label3);
@@ -653,6 +693,26 @@
             this.tabPage4.TabIndex = 4;
             this.tabPage4.Text = "Help";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(31, 114);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(151, 26);
+            this.label19.TabIndex = 8;
+            this.label19.Text = "Checks MD5 sums from a pool\r\nTesting Purposes";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // button11
+            // 
+            this.button11.Location = new System.Drawing.Point(236, 109);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(90, 23);
+            this.button11.TabIndex = 7;
+            this.button11.Text = "Validate MPQs";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
             // progressBar3
             // 
@@ -749,42 +809,6 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(0, 13);
             this.label2.TabIndex = 15;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(44, 218);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(242, 13);
-            this.label9.TabIndex = 11;
-            this.label9.Text = "To Activate Validate Repository(Will be Changing)";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(54, 153);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(225, 13);
-            this.label11.TabIndex = 15;
-            this.label11.Text = "To Activate, Add Diablo Path on Updates Tab";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(9, 252);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(330, 20);
-            this.textBox1.TabIndex = 12;
-            this.textBox1.Text = "Welcome to mooege development server!";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(10, 233);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(39, 13);
-            this.label18.TabIndex = 13;
-            this.label18.Text = "MOTD";
             // 
             // Form1
             // 
@@ -899,5 +923,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Button button11;
     }
 }

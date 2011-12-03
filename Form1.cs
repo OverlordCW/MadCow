@@ -422,6 +422,7 @@ namespace MadCow
                 StreamWriter sw = fi.CreateText();
                 sw.WriteLine(@"[DiabloPath]");
                 sw.WriteLine(@"D3Path = " + textBox4.Text);
+                sw.WriteLine(@"MPQpath = " + new FileInfo(textBox4.Text).DirectoryName + "\\Data_D3\\PC\\MPQs");
                 sw.Close();
                 Console.WriteLine("CREATED MADCOW.INI");
             }
@@ -431,6 +432,7 @@ namespace MadCow
                 StreamWriter sw = fi.CreateText();
                 sw.WriteLine(@"[DiabloPath]");
                 sw.WriteLine(@"D3Path = " + textBox4.Text);
+                sw.WriteLine(@"MPQpath = " + new FileInfo(textBox4.Text).DirectoryName + "\\Data_D3\\PC\\MPQs");
                 sw.Close();
                 Console.WriteLine("CREATED MADCOW.INI");
             }
@@ -651,6 +653,11 @@ namespace MadCow
         private void Completed(object sender, AsyncCompletedEventArgs e)
         {
             MessageBox.Show("Download completed!");
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            MPQprocedure.ValidateMD5();
         }
     }
  }

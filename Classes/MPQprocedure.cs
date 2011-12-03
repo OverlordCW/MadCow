@@ -34,16 +34,18 @@ namespace MadCow
                                            ,"68c43ae976872a1fa7f5a929b7f21b58"   //7338
                                            ,"751b8bf5c84220688048c192ab23f380"   //7447
                                            ,"d5eba8a2324cdc815b2cd5b92104b7fa"   //7728
+                                           ,"7e13f6184d66520ed3f6b799656a30ca"   //7728
                                            ,"5eb4983d4530e3b8bab0d6415d8251fa"   //7841
                                            ,"3faf4efa2a96d501c9c47746cba5a7ad"   //7841
-                                           ,"777da16a46d4f1d231bae8c1e11cdeaf"}; //7931
+                                           ,"777da16a46d4f1d231bae8c1e11cdeaf"   //7931
+                                           ,"3d92eee4ed83aeedd977274bdb8af1b7"}; //7931
 
         public static void ValidateMD5()
         {
             DateTime startTime = DateTime.Now;
-            String baseFolderPath = Diablo3._d3loc + "\\Data_D3\\PC\\MPQs\\base";
-            String[] filePaths = Directory.GetFiles(baseFolderPath, "*.*", SearchOption.TopDirectoryOnly);
-            int fileCount = Directory.GetFiles(baseFolderPath, "*.*", SearchOption.TopDirectoryOnly).Length;
+            //Checks MD5s from Mooege's MPQs
+            String[] filePaths = Directory.GetFiles(Program.programPath + @"/MPQ/base", "*.*", SearchOption.TopDirectoryOnly);
+            int fileCount = Directory.GetFiles(Program.programPath + @"/MPQ/base", "*.*", SearchOption.TopDirectoryOnly).Length;
             int trueCounter = 0;
 
             Parallel.ForEach(filePaths, dir =>  
@@ -77,8 +79,7 @@ namespace MadCow
         {
             //Takes Diablo Path from Ini, which gets it from finding diablo3.exe 
             IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
-            string fileName = source.Configs["DiabloPath"].Get("D3Path");
-            String Src = fileName;
+            string Src = source.Configs["DiabloPath"].Get("MPQpath");
             String Dst = Program.programPath + @"/MPQ";
 
             if (Directory.Exists(Program.programPath + @"/MPQ/base") && File.Exists(Program.programPath + @"/MPQ/CoreData.mpq") && File.Exists(Program.programPath + @"/MPQ/ClientData.mpq")) //Checks for MPQ Folder
@@ -96,6 +97,7 @@ namespace MadCow
                 Console.ForegroundColor = ConsoleColor.White;
                 //Proceeds to copy data
                 Console.WriteLine("Copying MPQ files to MadCow Folders...");
+                Console.WriteLine(Src);
                 copyDirectory(Src, Dst);
                 //When all the files has been copied then:
                 Console.ForegroundColor = ConsoleColor.Green;
