@@ -27,6 +27,7 @@ namespace MadCow
 {
     class MPQprocedure
     {
+
         //\base\ Folder MD5's.
         private static String[] MD5ValidPool = {"39765d908accf4f37a4c2dfa99b8cd52"//7170
                                            ,"7148ee45696c84796f3ca16729b9aadc"   //7200
@@ -68,6 +69,8 @@ namespace MadCow
                 DateTime stopTime = DateTime.Now;
                 TimeSpan duration = stopTime - startTime;
                 Console.ForegroundColor = ConsoleColor.Green;
+                //This is a test
+                Announcer.Say("Hello");
                 Console.WriteLine("Validating MPQ's MD5 Hash Complete in: {0}seconds", duration.Seconds);
                 Console.ForegroundColor = ConsoleColor.White;
                 return true;

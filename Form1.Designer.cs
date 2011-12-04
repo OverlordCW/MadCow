@@ -921,7 +921,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         public System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button ResetRepoFolder;
         private System.Windows.Forms.Label label5;
@@ -937,5 +936,6 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Button ValidateMPQButton;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        public System.Windows.Forms.Label label2;
     }
 }
