@@ -59,6 +59,8 @@ namespace MadCow
                 {
                     if (md5Filecheck.Contains(MD5ValidPool[i]) == true)
                     {
+                        Console.WriteLine(dir); 
+                            Console.WriteLine(md5Filecheck);
                         trueCounter += 1;
                     }
                 }
@@ -70,7 +72,6 @@ namespace MadCow
                 TimeSpan duration = stopTime - startTime;
                 Console.ForegroundColor = ConsoleColor.Green;
                 //This is a test
-                Announcer.Say("Hello");
                 Console.WriteLine("Validating MPQ's MD5 Hash Complete in: {0}seconds", duration.Seconds);
                 Console.ForegroundColor = ConsoleColor.White;
                 return true;
