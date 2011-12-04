@@ -626,6 +626,7 @@
             // 
             // UpdateMooegeButton
             // 
+            this.UpdateMooegeButton.Enabled = false;
             this.UpdateMooegeButton.Location = new System.Drawing.Point(123, 221);
             this.UpdateMooegeButton.Name = "UpdateMooegeButton";
             this.UpdateMooegeButton.Size = new System.Drawing.Size(100, 44);
@@ -636,6 +637,7 @@
             // 
             // CopyMPQButton
             // 
+            this.CopyMPQButton.Enabled = false;
             this.CopyMPQButton.Location = new System.Drawing.Point(245, 221);
             this.CopyMPQButton.Name = "CopyMPQButton";
             this.CopyMPQButton.Size = new System.Drawing.Size(93, 44);
@@ -713,6 +715,7 @@
             // 
             // ValidateMPQButton
             // 
+            this.ValidateMPQButton.Enabled = false;
             this.ValidateMPQButton.Location = new System.Drawing.Point(236, 109);
             this.ValidateMPQButton.Name = "ValidateMPQButton";
             this.ValidateMPQButton.Size = new System.Drawing.Size(90, 23);
@@ -749,6 +752,7 @@
             // 
             // RedownloadMPQButton
             // 
+            this.RedownloadMPQButton.Enabled = false;
             this.RedownloadMPQButton.Location = new System.Drawing.Point(229, 40);
             this.RedownloadMPQButton.Name = "RedownloadMPQButton";
             this.RedownloadMPQButton.Size = new System.Drawing.Size(104, 34);

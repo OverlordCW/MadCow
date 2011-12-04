@@ -26,6 +26,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Net;
 using Nini.Config;
+using System.Threading;
 
 namespace MadCow
 {
@@ -39,8 +40,6 @@ namespace MadCow
         public Form1()
         {
             InitializeComponent();
-            UpdateMooegeButton.Enabled = false;
-            CopyMPQButton.Enabled = false;
             AutoUpdateValue.Enabled = false;
             EnableAutoUpdateBox.Enabled = false;
             PlayDiabloButton.Enabled = false;
@@ -66,31 +65,34 @@ namespace MadCow
             //Diablo 3 Path Saving
             if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
             {
-                //TODO:When Ini Saves beforehand as Blank, it will copy over the blank instead of using Please Select your Path text.
                 IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
                 String Src = source.Configs["DiabloPath"].Get("D3Path");
                 Diablo3UserPathSelection.Text = Src;
+                if (Diablo3UserPathSelection.Text == "")
+                {
+                    //TODO: Even though Diablo3UserPathSelection Information below is changed, it will bypass these below
+                    //      and believe that they should be enabled, because there is "info" in the Src from madcow.ini, even
+                    //      though it seems empty.
+                    Diablo3UserPathSelection.Text = "Please Select your Diablo III path.";
+                    CopyMPQButton.Enabled = false;
+                    PlayDiabloButton.Enabled = false;
+                    textBox2.Enabled = false;
+                    textBox3.Enabled = false;
+                    RemoteServerButton.Enabled = false;
+                }
+                else
                 CopyMPQButton.Enabled = true;
-                PlayDiabloButton.Enabled = true;
+                PlayDiabloButton.Enabled = true;  
                 textBox2.Enabled = true;
                 textBox3.Enabled = true;
                 RemoteServerButton.Enabled = true;
-
+                //Freezes at the start longer, but at least you get verified when you load!
+                CompareD3Versions();
+                ValidateMPQButton.Enabled = true;
+                RedownloadMPQButton.Enabled = true;
             }
-            else Diablo3UserPathSelection.Text = "Please Select your Diablo III path.";
 
         }
-        
-                /*
-            textBox13.Text = "0.0.0.0";
-            textBox12.Text = "1345";
-            textBox11.Text = "0.0.0.0";
-            textBox10.Text = "1999";
-            textBox9.Text = "0.0.0.0";
-            checkBox3.Checked = false;
-            textBox1.Text = "Welcome to mooege development server!";
-                 */
-
 
         private void tabPage1_Click(object sender, EventArgs e) { }
         private void label2_Click(object sender, EventArgs e) { }
@@ -230,18 +232,27 @@ namespace MadCow
         //-------------------------//
         private void PlayDiablo_Click(object sender, EventArgs e)
         {
-            //TODO: waiting time between mooege starting up and diablo?
+            if (ProcessFind.FindProcess("Mooege") == false)
+            {
+                Process proc0 = new Process();
+                proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
+                proc0.Start();
+                Thread.Sleep(1000);
+                Process proc1 = new Process();
+                proc1.StartInfo = new ProcessStartInfo(Diablo3UserPathSelection.Text);
+                proc1.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
+                proc1.Start();
+                label2.Text = "Starting Diablo..";
+            }
 
-            //Compile.currentMooegeExePath = Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\Mooege.exe";
-            //Process proc0 = new Process();
-            //proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
-            //proc0.Start();
-            //MessageBox.Show(Compile.currentMooegeExePath);
-            Process proc1 = new Process();
-            proc1.StartInfo = new ProcessStartInfo(Diablo3UserPathSelection.Text);
-            proc1.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
-            proc1.Start();
-            label2.Text = "Starting Diablo..";
+            if (ProcessFind.FindProcess("Mooege") == true)
+            {
+                Process proc1 = new Process();
+                proc1.StartInfo = new ProcessStartInfo(Diablo3UserPathSelection.Text);
+                proc1.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
+                proc1.Start();
+                label2.Text = "Starting Diablo..";
+            }
             
         }
 
@@ -317,10 +328,25 @@ namespace MadCow
 
         private void LaunchServer_Click(object sender, EventArgs e)
         {
-            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
+            if (ProcessFind.FindProcess("Mooege") == true)
             {
-                //First we modify the Mooege INI storage path.
-                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                var answer = MessageBox.Show("Mooege is already Running. Do you want to restart Mooege?", "Attention",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (answer == DialogResult.Yes)
+                {
+                    ProcessFind.KillProcess("Mooege");
+                }
+                else
+                {
+                    //Do Nothing
+                }
+            }
+            else
+            {
+                if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
+                {
+                    //First we modify the Mooege INI storage path.
+                    IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
 
                     Console.WriteLine("Modifying MooNet-Server IP...");
                     IConfig config = source.Configs["MooNet-Server"];
@@ -341,7 +367,7 @@ namespace MadCow
                     IConfig config7 = source.Configs["MooNet-Server"];
                     config7.Set("MOTD", textBox1.Text);
 
-                if (checkBox3.Checked == true)
+                    if (checkBox3.Checked == true)
                     {
                         Console.WriteLine("Modifying NAT...");
                         IConfig config5 = source.Configs["NAT"];
@@ -355,28 +381,32 @@ namespace MadCow
                         config6.Set("Enabled", "false");
                         source.Save();
                     }
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Could not modify Mooege INI FILE");
-                Console.WriteLine("Do you have mooege?");
-                label2.Text = "Update Mooege Server";
-                Console.ForegroundColor = ConsoleColor.White;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Could not modify Mooege INI FILE");
+                    Console.WriteLine("Do you have mooege?");
+                    label2.Text = "Use Update Mooege Server";
+                    Console.ForegroundColor = ConsoleColor.White;
 
+                }
+                /*
+                Thread.Sleep(2000);
+                Process proc0 = new Process();
+                proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
+                proc0.Start();
+                */
+                MessageBox.Show(Compile.currentMooegeExePath);
             }
-            /*
-            Thread.Sleep(2000);
-            Process proc0 = new Process();
-            proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
-            proc0.Start();
-            */
-            MessageBox.Show(Compile.currentMooegeExePath);
         }
 
         private void UpdateMooegeServer_Click(object sender, EventArgs e)
         {
-            //Updates Mooege does not check for Diablo Client
+            if (ProcessFind.FindProcess("Mooege") == true)
+            {
+                ProcessFind.KillProcess("Mooege");
+            }
             //Instead of MadCowRunProcedure.RunMadCow(0);
  	     	//PreRequeriments.CheckPrerequeriments();
  	    	//Commands.RunUpdate();
@@ -437,12 +467,12 @@ namespace MadCow
                     String dirName = System.IO.Path.GetDirectoryName(FindD3Exe.FileName);
                     // Output Name
                     Diablo3UserPathSelection.Text = FindD3Exe.FileName;
-                    CopyMPQButton.Enabled = true;
-                    PlayDiabloButton.Enabled = true;
                     //Bottom three are Enabled on Remote Server
                     textBox2.Enabled = true;
                     textBox3.Enabled = true;
                     RemoteServerButton.Enabled = true;
+                    RedownloadMPQButton.Enabled = true;
+                    ValidateMPQButton.Enabled = true;
 
                 if (File.Exists(Program.programPath + "\\Tools\\" + madCowIni))
                 {
@@ -646,25 +676,6 @@ namespace MadCow
     }
 }*/
 
-//-------------------------//
-//  Find and Kill Process  //
-//-------------------------//
-
-        public bool FindAndKillProcess(string name)
-        {
-        //see if process is running.
-          foreach (Process clsProcess in Process.GetProcesses())
-          {
-               if (clsProcess.ProcessName.Contains(name))
-               {
-                   // Kill Kill Kill
-                   clsProcess.Kill();
-                   return true;
-               }
-          }
-            //otherwise do not kill process because it's not there
-            return false;
-        }
         //-------------------------//
         //  ReDownload 7841 MPQ    //
         //-------------------------//
@@ -679,7 +690,20 @@ namespace MadCow
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (answer == DialogResult.Yes)
                 {
-                    System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7841.MPQ");
+                    if (ProcessFind.FindProcess("Diablo") == true)
+                    {
+                        ProcessFind.KillProcess("Diablo");
+                        Thread.Sleep(500);
+                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7170.MPQ.LOCK");
+                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7200.MPQ.LOCK");
+                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7318.MPQ.LOCK");
+                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7338.MPQ.LOCK");
+                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7447.MPQ.LOCK");
+                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7728.MPQ.LOCK");
+                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7841.MPQ.LOCK");
+                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7931.MPQ.LOCK");
+                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7841.MPQ");
+                    }
                     try
                     {
                         WebClient webClient = new WebClient();
@@ -832,6 +856,8 @@ namespace MadCow
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Found the correct Mooege supported version of Diablo III [" + CurrentD3VersionSupported + "]");
                     Console.ForegroundColor = ConsoleColor.White;
+                    PlayDiabloButton.Enabled = true;
+                    CopyMPQButton.Enabled = true;
                     return true;
                 }
 
@@ -841,6 +867,8 @@ namespace MadCow
                     Console.WriteLine("Mooege needs Diablo III version [" + MooegeVersion + "]"
                         + "\nYou currently own version [" + LocalD3Version + "]. Please Update.");
                     Console.ForegroundColor = ConsoleColor.White;
+                    PlayDiabloButton.Enabled = false;
+                    CopyMPQButton.Enabled = false;
                     return false;
                 }
             }
