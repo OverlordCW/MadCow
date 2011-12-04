@@ -14,6 +14,7 @@ Added by Wetwlly
 
 Future TODOs
 
-1. "Validate MPQs" should output which one is corrupt, or at least match up and output File to MD5Hash, and show the one that is corrupt in red
+1. "Validate MPQs" should output which one is corrupt and show the one that is corrupt in red
 
-2. Drop-Down Menu of Saved Validated Repositories
+//Complete: Validate MPQs" shouldmatch up and output File to MD5Hash, and 
+//Complete: Drop-Down Menu of Saved Validated Repositories
