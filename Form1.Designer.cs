@@ -32,7 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.EnableAutoUpdateBox = new System.Windows.Forms.CheckBox();
             this.AutoUpdateValue = new System.Windows.Forms.NumericUpDown();
-            this.textBox1_Repository_Url = new System.Windows.Forms.TextBox();
             this.PlayDiabloButton = new System.Windows.Forms.Button();
             this.LaunchServerButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -67,6 +66,7 @@
             this.textBox13 = new System.Windows.Forms.TextBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -150,15 +150,6 @@
             0,
             0});
             this.AutoUpdateValue.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
-            // 
-            // textBox1_Repository_Url
-            // 
-            this.textBox1_Repository_Url.Location = new System.Drawing.Point(3, 19);
-            this.textBox1_Repository_Url.Name = "textBox1_Repository_Url";
-            this.textBox1_Repository_Url.Size = new System.Drawing.Size(188, 20);
-            this.textBox1_Repository_Url.TabIndex = 6;
-            this.textBox1_Repository_Url.Text = "https://github.com/mooege/mooege";
-            this.textBox1_Repository_Url.TextChanged += new System.EventHandler(this.textBox1_Repository_Url_TextChanged);
             // 
             // PlayDiabloButton
             // 
@@ -519,9 +510,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.comboBox1);
             this.groupBox1.Controls.Add(this.pictureBox2);
             this.groupBox1.Controls.Add(this.pictureBox1);
-            this.groupBox1.Controls.Add(this.textBox1_Repository_Url);
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Location = new System.Drawing.Point(6, 6);
@@ -530,6 +521,23 @@
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Repository";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "https://github.com/mooege/mooege",
+            "https://github.com/Egris/mooege",
+            "https://github.com/DarkLotus/mooege",
+            "https://github.com/angerwin/d3sharp",
+            "https://github.com/Farmy/mooege",
+            "https://github.com/mdz444/mooege"});
+            this.comboBox1.Location = new System.Drawing.Point(3, 18);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(188, 21);
+            this.comboBox1.TabIndex = 17;
+            this.comboBox1.Text = "https://github.com/mooege/mooege";
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // pictureBox2
             // 
@@ -557,7 +565,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.label10.Location = new System.Drawing.Point(6, 42);
+            this.label10.Location = new System.Drawing.Point(5, 42);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(199, 13);
             this.label10.TabIndex = 13;
@@ -871,7 +879,6 @@
 
         private System.Windows.Forms.CheckBox EnableAutoUpdateBox;
         private System.Windows.Forms.NumericUpDown AutoUpdateValue;
-        private System.Windows.Forms.TextBox textBox1_Repository_Url;
         private System.Windows.Forms.Button PlayDiabloButton;
         private System.Windows.Forms.Button LaunchServerButton;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -937,5 +944,6 @@
         private System.Windows.Forms.Button ValidateMPQButton;
         private System.Windows.Forms.LinkLabel linkLabel1;
         public System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
