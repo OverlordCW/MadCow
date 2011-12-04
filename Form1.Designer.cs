@@ -33,10 +33,10 @@
             this.EnableAutoUpdateBox = new System.Windows.Forms.CheckBox();
             this.AutoUpdateValue = new System.Windows.Forms.NumericUpDown();
             this.textBox1_Repository_Url = new System.Windows.Forms.TextBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.PlayDiabloButton = new System.Windows.Forms.Button();
+            this.LaunchServerButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button7 = new System.Windows.Forms.Button();
+            this.RemoteServerButton = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label11 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -50,7 +50,7 @@
             this.label18 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.button8 = new System.Windows.Forms.Button();
+            this.UpdateMooegeServerButton = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
@@ -71,26 +71,26 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.button9 = new System.Windows.Forms.Button();
+            this.FindDiabloButton = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.progressBar2 = new System.Windows.Forms.ProgressBar();
-            this.button1 = new System.Windows.Forms.Button();
+            this.ValidateRepoButton = new System.Windows.Forms.Button();
             this.Diablo3UserPathSelection = new System.Windows.Forms.TextBox();
             this.UpdateMooegeButton = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.CopyMPQButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.label19 = new System.Windows.Forms.Label();
-            this.button11 = new System.Windows.Forms.Button();
+            this.ValidateMPQButton = new System.Windows.Forms.Button();
             this.progressBar3 = new System.Windows.Forms.ProgressBar();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.RedownloadMPQButton = new System.Windows.Forms.Button();
+            this.ResetRepoFolder = new System.Windows.Forms.Button();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -117,18 +117,18 @@
             this.tabPage5.SuspendLayout();
             this.SuspendLayout();
             // 
-            // checkBox1
+            // EnableAutoUpdateBox
             // 
             this.EnableAutoUpdateBox.AutoSize = true;
             this.EnableAutoUpdateBox.Location = new System.Drawing.Point(16, 45);
-            this.EnableAutoUpdateBox.Name = "checkBox1";
+            this.EnableAutoUpdateBox.Name = "EnableAutoUpdateBox";
             this.EnableAutoUpdateBox.Size = new System.Drawing.Size(59, 17);
             this.EnableAutoUpdateBox.TabIndex = 3;
             this.EnableAutoUpdateBox.Text = "Enable";
             this.EnableAutoUpdateBox.UseVisualStyleBackColor = true;
             this.EnableAutoUpdateBox.CheckedChanged += new System.EventHandler(this.AutoUpdate_CheckedChanged);
             // 
-            // numericUpDown1
+            // AutoUpdateValue
             // 
             this.AutoUpdateValue.Location = new System.Drawing.Point(16, 19);
             this.AutoUpdateValue.Maximum = new decimal(new int[] {
@@ -141,7 +141,7 @@
             0,
             0,
             0});
-            this.AutoUpdateValue.Name = "numericUpDown1";
+            this.AutoUpdateValue.Name = "AutoUpdateValue";
             this.AutoUpdateValue.Size = new System.Drawing.Size(86, 20);
             this.AutoUpdateValue.TabIndex = 4;
             this.AutoUpdateValue.Value = new decimal(new int[] {
@@ -160,27 +160,27 @@
             this.textBox1_Repository_Url.Text = "https://github.com/mooege/mooege";
             this.textBox1_Repository_Url.TextChanged += new System.EventHandler(this.textBox1_Repository_Url_TextChanged);
             // 
-            // button4
+            // PlayDiabloButton
             // 
-            this.button4.BackColor = System.Drawing.Color.Transparent;
-            this.button4.Enabled = false;
-            this.button4.Location = new System.Drawing.Point(16, 306);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(94, 43);
-            this.button4.TabIndex = 7;
-            this.button4.Text = "Play Diablo";
-            this.button4.UseVisualStyleBackColor = false;
-            this.button4.Click += new System.EventHandler(this.PlayDiablo_Click);
+            this.PlayDiabloButton.BackColor = System.Drawing.Color.Transparent;
+            this.PlayDiabloButton.Enabled = false;
+            this.PlayDiabloButton.Location = new System.Drawing.Point(16, 306);
+            this.PlayDiabloButton.Name = "PlayDiabloButton";
+            this.PlayDiabloButton.Size = new System.Drawing.Size(94, 43);
+            this.PlayDiabloButton.TabIndex = 7;
+            this.PlayDiabloButton.Text = "Play Diablo";
+            this.PlayDiabloButton.UseVisualStyleBackColor = false;
+            this.PlayDiabloButton.Click += new System.EventHandler(this.PlayDiablo_Click);
             // 
-            // button6
+            // LaunchServerButton
             // 
-            this.button6.Location = new System.Drawing.Point(195, 178);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(100, 23);
-            this.button6.TabIndex = 9;
-            this.button6.Text = "Launch Server";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.LaunchServerButton.Location = new System.Drawing.Point(195, 178);
+            this.LaunchServerButton.Name = "LaunchServerButton";
+            this.LaunchServerButton.Size = new System.Drawing.Size(100, 23);
+            this.LaunchServerButton.TabIndex = 9;
+            this.LaunchServerButton.Text = "Launch Server";
+            this.LaunchServerButton.UseVisualStyleBackColor = true;
+            this.LaunchServerButton.Click += new System.EventHandler(this.LaunchServer_Click);
             // 
             // groupBox2
             // 
@@ -193,22 +193,22 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Auto Updating";
             // 
-            // button7
+            // RemoteServerButton
             // 
-            this.button7.Enabled = false;
-            this.button7.Location = new System.Drawing.Point(101, 95);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(141, 46);
-            this.button7.TabIndex = 14;
-            this.button7.Text = "Play on Remote Server";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.RemoteServerButton.Enabled = false;
+            this.RemoteServerButton.Location = new System.Drawing.Point(101, 95);
+            this.RemoteServerButton.Name = "RemoteServerButton";
+            this.RemoteServerButton.Size = new System.Drawing.Size(141, 46);
+            this.RemoteServerButton.TabIndex = 14;
+            this.RemoteServerButton.Text = "Play on Remote Server";
+            this.RemoteServerButton.UseVisualStyleBackColor = true;
+            this.RemoteServerButton.Click += new System.EventHandler(this.RemoteServer_Click);
             // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.label11);
             this.tabPage3.Controls.Add(this.groupBox4);
-            this.tabPage3.Controls.Add(this.button7);
+            this.tabPage3.Controls.Add(this.RemoteServerButton);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -302,9 +302,9 @@
             this.tabPage2.Controls.Add(this.label18);
             this.tabPage2.Controls.Add(this.textBox1);
             this.tabPage2.Controls.Add(this.label9);
-            this.tabPage2.Controls.Add(this.button8);
+            this.tabPage2.Controls.Add(this.UpdateMooegeServerButton);
             this.tabPage2.Controls.Add(this.groupBox5);
-            this.tabPage2.Controls.Add(this.button6);
+            this.tabPage2.Controls.Add(this.LaunchServerButton);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -340,15 +340,15 @@
             this.label9.TabIndex = 11;
             this.label9.Text = "To Activate Validate Repository(Will be Changing)";
             // 
-            // button8
+            // UpdateMooegeServerButton
             // 
-            this.button8.Location = new System.Drawing.Point(38, 178);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(128, 23);
-            this.button8.TabIndex = 10;
-            this.button8.Text = "Update Mooege Server";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
+            this.UpdateMooegeServerButton.Location = new System.Drawing.Point(38, 178);
+            this.UpdateMooegeServerButton.Name = "UpdateMooegeServerButton";
+            this.UpdateMooegeServerButton.Size = new System.Drawing.Size(128, 23);
+            this.UpdateMooegeServerButton.TabIndex = 10;
+            this.UpdateMooegeServerButton.Text = "Update Mooege Server";
+            this.UpdateMooegeServerButton.UseVisualStyleBackColor = true;
+            this.UpdateMooegeServerButton.Click += new System.EventHandler(this.UpdateMooegeServer_Click);
             // 
             // groupBox5
             // 
@@ -501,13 +501,13 @@
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.groupBox1);
-            this.tabPage1.Controls.Add(this.button9);
+            this.tabPage1.Controls.Add(this.FindDiabloButton);
             this.tabPage1.Controls.Add(this.groupBox6);
             this.tabPage1.Controls.Add(this.groupBox2);
-            this.tabPage1.Controls.Add(this.button1);
+            this.tabPage1.Controls.Add(this.ValidateRepoButton);
             this.tabPage1.Controls.Add(this.Diablo3UserPathSelection);
             this.tabPage1.Controls.Add(this.UpdateMooegeButton);
-            this.tabPage1.Controls.Add(this.button3);
+            this.tabPage1.Controls.Add(this.CopyMPQButton);
             this.tabPage1.Controls.Add(this.groupBox3);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
@@ -571,15 +571,15 @@
             this.label4.Size = new System.Drawing.Size(194, 26);
             this.label4.TabIndex = 16;
             // 
-            // button9
+            // FindDiabloButton
             // 
-            this.button9.Location = new System.Drawing.Point(263, 184);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(75, 20);
-            this.button9.TabIndex = 4;
-            this.button9.Text = "Find Diablo3";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
+            this.FindDiabloButton.Location = new System.Drawing.Point(263, 184);
+            this.FindDiabloButton.Name = "FindDiabloButton";
+            this.FindDiabloButton.Size = new System.Drawing.Size(75, 20);
+            this.FindDiabloButton.TabIndex = 4;
+            this.FindDiabloButton.Text = "Find Diablo3";
+            this.FindDiabloButton.UseVisualStyleBackColor = true;
+            this.FindDiabloButton.Click += new System.EventHandler(this.FindDiablo_Click);
             // 
             // groupBox6
             // 
@@ -606,43 +606,45 @@
             this.progressBar2.Size = new System.Drawing.Size(308, 10);
             this.progressBar2.TabIndex = 0;
             // 
-            // button1
+            // ValidateRepoButton
             // 
-            this.button1.Location = new System.Drawing.Point(9, 221);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(94, 44);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Validate Repository";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_Validate_Repository);
+            this.ValidateRepoButton.Location = new System.Drawing.Point(9, 221);
+            this.ValidateRepoButton.Name = "ValidateRepoButton";
+            this.ValidateRepoButton.Size = new System.Drawing.Size(94, 44);
+            this.ValidateRepoButton.TabIndex = 0;
+            this.ValidateRepoButton.Text = "Validate Repository";
+            this.ValidateRepoButton.UseVisualStyleBackColor = true;
+            this.ValidateRepoButton.Click += new System.EventHandler(this.Validate_Repository_Click);
             // 
-            // textBox4
+            // Diablo3UserPathSelection
             // 
             this.Diablo3UserPathSelection.Location = new System.Drawing.Point(9, 184);
-            this.Diablo3UserPathSelection.Name = "textBox4";
+            this.Diablo3UserPathSelection.Name = "Diablo3UserPathSelection";
             this.Diablo3UserPathSelection.ReadOnly = true;
             this.Diablo3UserPathSelection.Size = new System.Drawing.Size(248, 20);
             this.Diablo3UserPathSelection.TabIndex = 3;
             // 
-            // button2
+            // UpdateMooegeButton
             // 
+            this.UpdateMooegeButton.Enabled = false;
             this.UpdateMooegeButton.Location = new System.Drawing.Point(123, 221);
-            this.UpdateMooegeButton.Name = "button2";
+            this.UpdateMooegeButton.Name = "UpdateMooegeButton";
             this.UpdateMooegeButton.Size = new System.Drawing.Size(100, 44);
             this.UpdateMooegeButton.TabIndex = 17;
             this.UpdateMooegeButton.Text = "Update Mooege";
             this.UpdateMooegeButton.UseVisualStyleBackColor = true;
             this.UpdateMooegeButton.Click += new System.EventHandler(this.Update_Mooege_Click);
             // 
-            // button3
+            // CopyMPQButton
             // 
-            this.button3.Location = new System.Drawing.Point(245, 221);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(93, 44);
-            this.button3.TabIndex = 18;
-            this.button3.Text = "Update MPQ\'s";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.UpdateMPQ_Click);
+            this.CopyMPQButton.Enabled = false;
+            this.CopyMPQButton.Location = new System.Drawing.Point(245, 221);
+            this.CopyMPQButton.Name = "CopyMPQButton";
+            this.CopyMPQButton.Size = new System.Drawing.Size(93, 44);
+            this.CopyMPQButton.TabIndex = 18;
+            this.CopyMPQButton.Text = "Copy MPQ\'s";
+            this.CopyMPQButton.UseVisualStyleBackColor = true;
+            this.CopyMPQButton.Click += new System.EventHandler(this.CopyMPQs_Click);
             // 
             // groupBox3
             // 
@@ -687,12 +689,12 @@
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.label19);
-            this.tabPage4.Controls.Add(this.button11);
+            this.tabPage4.Controls.Add(this.ValidateMPQButton);
             this.tabPage4.Controls.Add(this.progressBar3);
             this.tabPage4.Controls.Add(this.label5);
             this.tabPage4.Controls.Add(this.label3);
-            this.tabPage4.Controls.Add(this.button10);
-            this.tabPage4.Controls.Add(this.button5);
+            this.tabPage4.Controls.Add(this.RedownloadMPQButton);
+            this.tabPage4.Controls.Add(this.ResetRepoFolder);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
@@ -711,15 +713,16 @@
             this.label19.Text = "Checks MD5 sums from a pool\r\nTesting Purposes";
             this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // button11
+            // ValidateMPQButton
             // 
-            this.button11.Location = new System.Drawing.Point(236, 109);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(90, 23);
-            this.button11.TabIndex = 7;
-            this.button11.Text = "Validate MPQs";
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
+            this.ValidateMPQButton.Enabled = false;
+            this.ValidateMPQButton.Location = new System.Drawing.Point(236, 109);
+            this.ValidateMPQButton.Name = "ValidateMPQButton";
+            this.ValidateMPQButton.Size = new System.Drawing.Size(90, 23);
+            this.ValidateMPQButton.TabIndex = 7;
+            this.ValidateMPQButton.Text = "Validate MPQs";
+            this.ValidateMPQButton.UseVisualStyleBackColor = true;
+            this.ValidateMPQButton.Click += new System.EventHandler(this.ValidateMPQs_Click);
             // 
             // progressBar3
             // 
@@ -731,11 +734,11 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(55, 11);
+            this.label5.Location = new System.Drawing.Point(31, 11);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(109, 13);
+            this.label5.Size = new System.Drawing.Size(162, 13);
             this.label5.TabIndex = 5;
-            this.label5.Text = "Reset Mooege Folder";
+            this.label5.Text = "Reset Mooege Repository Folder";
             // 
             // label3
             // 
@@ -747,25 +750,26 @@
             this.label3.Text = "Did Mooege receive\r\n\"Couldn\'t Find Catalog File: CoreToc.Dat\" \r\nError?";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // button10
+            // RedownloadMPQButton
             // 
-            this.button10.Location = new System.Drawing.Point(229, 40);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(104, 34);
-            this.button10.TabIndex = 3;
-            this.button10.Text = "Redownload 7841 MPQ";
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.ReDownloadMPQ_Click);
+            this.RedownloadMPQButton.Enabled = false;
+            this.RedownloadMPQButton.Location = new System.Drawing.Point(229, 40);
+            this.RedownloadMPQButton.Name = "RedownloadMPQButton";
+            this.RedownloadMPQButton.Size = new System.Drawing.Size(104, 34);
+            this.RedownloadMPQButton.TabIndex = 3;
+            this.RedownloadMPQButton.Text = "Redownload 7841 MPQ";
+            this.RedownloadMPQButton.UseVisualStyleBackColor = true;
+            this.RedownloadMPQButton.Click += new System.EventHandler(this.ReDownloadMPQ_Click);
             // 
-            // button5
+            // ResetRepoFolder
             // 
-            this.button5.Location = new System.Drawing.Point(236, 6);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(90, 23);
-            this.button5.TabIndex = 2;
-            this.button5.Text = "Reset Commit";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.ResetRepoFolder.Location = new System.Drawing.Point(236, 6);
+            this.ResetRepoFolder.Name = "ResetRepoFolder";
+            this.ResetRepoFolder.Size = new System.Drawing.Size(90, 23);
+            this.ResetRepoFolder.TabIndex = 2;
+            this.ResetRepoFolder.Text = "Reset Folder";
+            this.ResetRepoFolder.UseVisualStyleBackColor = true;
+            this.ResetRepoFolder.Click += new System.EventHandler(this.ResetRepoFolder_Click);
             // 
             // tabPage5
             // 
@@ -825,7 +829,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.button4);
+            this.Controls.Add(this.PlayDiabloButton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -868,10 +872,10 @@
         private System.Windows.Forms.CheckBox EnableAutoUpdateBox;
         private System.Windows.Forms.NumericUpDown AutoUpdateValue;
         private System.Windows.Forms.TextBox textBox1_Repository_Url;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button PlayDiabloButton;
+        private System.Windows.Forms.Button LaunchServerButton;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button RemoteServerButton;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TabPage tabPage2;
@@ -895,20 +899,20 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button UpdateMooegeServerButton;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button FindDiabloButton;
         private System.Windows.Forms.TextBox Diablo3UserPathSelection;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button ValidateRepoButton;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button UpdateMooegeButton;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button CopyMPQButton;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Panel panel1;
@@ -919,10 +923,10 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         public System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button ResetRepoFolder;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button RedownloadMPQButton;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.ProgressBar progressBar3;
         public System.Windows.Forms.ProgressBar progressBar1;
@@ -931,7 +935,7 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Button ValidateMPQButton;
         private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }

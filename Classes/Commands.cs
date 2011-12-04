@@ -21,6 +21,8 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using System.Threading;
+using System.Diagnostics;
+using Nini.Config;
 
 namespace MadCow
 {
@@ -28,18 +30,37 @@ namespace MadCow
     {
         public static void RunUpdateMPQ()
         {
-                    if (Directory.Exists(Program.programPath + @"/MPQ"))
+            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+            String MPQpath = source.Configs["DiabloPath"].Get("MPQpath");
+                    
+            if (Directory.Exists(Program.programPath + @"/MPQ"))
                     {
                         //Delete Folder if already exists
                         System.IO.Directory.Delete(Program.programPath + @"/MPQ", true);
                         Console.WriteLine("Deleted current MPQ MadCow folder succeedeed");
 
-                        //Create new Folder // DO not need because MPQTransfer creates folder!
-                        //System.IO.Directory.CreateDirectory(Program.programPath + @"/MPQ");
-                        //Console.WriteLine("Creating new MPQ MadCow folder succeedeed");
-                        Thread.Sleep(1000);
-                        //Transfer MPQs
-                        MPQprocedure.MpqTransfer();
+                        if (ProcessFind.FindProcess("Diablo") == true)
+                        {
+                            ProcessFind.KillProcess("Diablo");
+                            //cleans up Lock files
+                            System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7170.MPQ.LOCK");
+                            System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7200.MPQ.LOCK");
+                            System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7318.MPQ.LOCK");
+                            System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7338.MPQ.LOCK");
+                            System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7447.MPQ.LOCK");
+                            System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7728.MPQ.LOCK");
+                            System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7841.MPQ.LOCK");
+                            System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7931.MPQ.LOCK");
+                            Thread.Sleep(1000);
+                            //Transfer MPQs
+                            MPQprocedure.MpqTransfer();
+                        }
+                        else
+                        {
+                            Thread.Sleep(1000);
+                            //Transfer MPQs
+                            MPQprocedure.MpqTransfer();
+                        }
                     }
                     else
                     {

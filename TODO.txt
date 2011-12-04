@@ -1,21 +1,19 @@
-Wesko
-1.Implement a way to know if assembly System.Data.SQLite is running.
+Added by Wesko
+1. Implement a way to know if assembly System.Data.SQLite is running.
 
 
-2.Fix compatibility with other versios of Windows, or even go Linux too?.
+2. Fix compatibility with other versios of Windows, or even go Linux too?.
 
 3. running validater in new thread
 
 
-Wetwlly
-1.Close diablo3 (and Agent.exe) if updating MPQs and for Redownloading 7841 MPQ
+Added by Wetwlly
+1. Update Mooege should create Repository Folder first, put Mooege inside Repository.
 
-2. Update Mooege should create Repository Folder first, put Mooege inside Repository.
+2. Update Mooege should FindAndKillProcess("mooege") beforehand.
 
-3. Reset Repository Folder -> clears all revisions in the folder.
+Future TODOs
 
-4. Drop-Down Menu of Saved Validated Repositories
+1. "Validate MPQs" should output which one is corrupt, or at least match up and output File to MD5Hash, and show the one that is corrupt in red
 
-5. Update Mooege and Update Mooege Server should FindAndKillProcess("mooege") beforehand.
-
-6. "Play Diablo" should check if mooege is running (if false, start mooege, check process, if true, start d3)
+2. Drop-Down Menu of Saved Validated Repositories
