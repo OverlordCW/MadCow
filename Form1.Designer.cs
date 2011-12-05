@@ -99,6 +99,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtConsole = new System.Windows.Forms.TextBox();
+            this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -374,7 +375,7 @@
             this.linkLabel1.TabIndex = 12;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "Refresh from config";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.RefreshFromConfig_LinkClicked);
             // 
             // linkLabel2
             // 
@@ -386,7 +387,7 @@
             this.linkLabel2.TabIndex = 11;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "Restore Defaults";
-            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.RestoreDefault_LinkClicked);
             // 
             // checkBox3
             // 
@@ -829,7 +830,11 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(0, 13);
             this.label2.TabIndex = 15;
+            //
+			// backgroundWorker2
             // 
+            this.backgroundWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
+			//
             // txtConsole
             // 
             this.txtConsole.Location = new System.Drawing.Point(372, 22);
@@ -959,5 +964,7 @@
         public System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.TextBox txtConsole;
+        private System.ComponentModel.BackgroundWorker backgroundWorker2;
+
     }
 }
