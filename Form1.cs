@@ -576,7 +576,6 @@ namespace MadCow
         //This has the function on turning letters red if Error, Black if normal.
         ////////////////////////////////////////////////////////////////////////
 
-       
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateMooegeButton.Enabled = false;
@@ -586,7 +585,7 @@ namespace MadCow
             {
                 if (comboBox1.Text == "Incorrect repository entry." || comboBox1.Text == "Check your internet connection.")
                 {
-                    comboBox1.ForeColor = Color.Red;
+                    this.comboBox1.ForeColor = Color.Red;
                 }
                 else
                 {
