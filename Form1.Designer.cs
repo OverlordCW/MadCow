@@ -373,7 +373,7 @@
             this.linkLabel1.TabIndex = 12;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "Refresh from config";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.RefreshFromConfig_LinkClicked);
             // 
             // linkLabel2
             // 
@@ -385,7 +385,7 @@
             this.linkLabel2.TabIndex = 11;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "Restore Defaults";
-            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.RestoreDefault_LinkClicked);
             // 
             // checkBox3
             // 
@@ -631,6 +631,7 @@
             this.Diablo3UserPathSelection.ReadOnly = true;
             this.Diablo3UserPathSelection.Size = new System.Drawing.Size(248, 20);
             this.Diablo3UserPathSelection.TabIndex = 3;
+            this.Diablo3UserPathSelection.TextChanged += new System.EventHandler(this.Diablo3UserPathSelection_TextChanged);
             // 
             // UpdateMooegeButton
             // 

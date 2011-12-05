@@ -74,7 +74,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Announcer.cs" />
     <Compile Include="Classes\ProcessFind.cs" />
     <Compile Include="Classes\Delete.cs" />
     <Compile Include="Classes\Commands.cs" />

@@ -34,7 +34,7 @@ namespace MadCow
     public partial class Form1 : Form
     {
         //Timing
-        public static String MooegeSupporterVersion;
+        public static String MooegeSupportedVersion;
         private int Tick;
 
         public Form1()
@@ -61,37 +61,7 @@ namespace MadCow
             toolTip1.SetToolTip(this.UpdateMooegeButton, "This will update mooege to latest version");
             toolTip1.SetToolTip(this.CopyMPQButton, "This will copy MPQ's if you have D3 installed");
             toolTip1.SetToolTip(this.UpdateMooegeServerButton, "This will check pre-requirements and update Mooege Server");
-
-            //Diablo 3 Path Saving
-            if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
-            {
-                IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
-                String Src = source.Configs["DiabloPath"].Get("D3Path");
-                Diablo3UserPathSelection.Text = Src;
-                if (Diablo3UserPathSelection.Text == "")
-                {
-                    //TODO: Even though Diablo3UserPathSelection Information below is changed, it will bypass these below
-                    //      and believe that they should be enabled, because there is "info" in the Src from madcow.ini, even
-                    //      though it seems empty.
-                    Diablo3UserPathSelection.Text = "Please Select your Diablo III path.";
-                    CopyMPQButton.Enabled = false;
-                    PlayDiabloButton.Enabled = false;
-                    textBox2.Enabled = false;
-                    textBox3.Enabled = false;
-                    RemoteServerButton.Enabled = false;
-                }
-                else
-                CopyMPQButton.Enabled = true;
-                PlayDiabloButton.Enabled = true;  
-                textBox2.Enabled = true;
-                textBox3.Enabled = true;
-                RemoteServerButton.Enabled = true;
-                //Freezes at the start longer, but at least you get verified when you load!
-                CompareD3Versions();
-                ValidateMPQButton.Enabled = true;
-                RedownloadMPQButton.Enabled = true;
-            }
-
+            InitializeFindPath();
         }
 
         private void tabPage1_Click(object sender, EventArgs e) { }
@@ -245,7 +215,7 @@ namespace MadCow
                 label2.Text = "Starting Diablo..";
             }
 
-            if (ProcessFind.FindProcess("Mooege") == true)
+            else
             {
                 Process proc1 = new Process();
                 proc1.StartInfo = new ProcessStartInfo(Diablo3UserPathSelection.Text);
@@ -297,7 +267,7 @@ namespace MadCow
         private void textBox9_TextChanged(object sender, EventArgs e) { /*Public Server IP*/ }
         private void checkBox3_CheckedChanged(object sender, EventArgs e) { /*enable or disable NAT*/ }
 
-        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void RestoreDefault_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             //Restore Default Server Control Settings
             textBox13.Text = "0.0.0.0";
@@ -452,6 +422,49 @@ namespace MadCow
         //   Diablo 3 Path Stuff   //
         //-------------------------//
 
+        private void InitializeFindPath()
+        {
+            if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+            {
+                try
+                {
+                    IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                    String Src = source.Configs["DiabloPath"].Get("D3Path");
+
+                    if (Src.Contains("MODIFY")) //If a d3 path exist, then we wont find "MODIFY" and program will proceed.
+                    {
+                        //TODO: Even though Diablo3UserPathSelection Information below is changed, it will bypass these below
+                        //      and believe that they should be enabled, because there is "info" in the Src from madcow.ini, even
+                        //      though it seems empty.
+                        Diablo3UserPathSelection.Text = "Please Select your Diablo III path.";
+                        CopyMPQButton.Enabled = false;
+                        PlayDiabloButton.Enabled = false;
+                        textBox2.Enabled = false;
+                        textBox3.Enabled = false;
+                        RemoteServerButton.Enabled = false;
+                    }
+                    else
+                    {
+                        Diablo3UserPathSelection.Text = Src;
+                        CopyMPQButton.Enabled = true;
+                        PlayDiabloButton.Enabled = true;
+                        textBox2.Enabled = true;
+                        textBox3.Enabled = true;
+                        RemoteServerButton.Enabled = true;
+                        //Freezes at the start longer, but at least you get verified when you load!
+                        CompareD3Versions();
+                        ValidateMPQButton.Enabled = true;
+                        RedownloadMPQButton.Enabled = true;
+                    }
+                }
+                catch (Exception Ex)
+                {
+                    Console.WriteLine("Something failed while trying to verify D3 Version or Writting INI");
+                    Console.WriteLine(Ex);
+                }
+            }
+        }
+
         private void FindDiablo_Click(object sender, EventArgs e)
         {
             String madCowIni = "madcow.ini"; //Our INI setting file.
@@ -489,7 +502,7 @@ namespace MadCow
 
                 if (CompareD3Versions() == false) //We verify if the current version is the required by Mooege by calling VerifyVersion(), if returns false we warn him.
                 {                                 //This will tae about 2-3 seconds, since it parse it right from the Mooege repo files. Similar to the little hang that happens when you fist validate a repo.
-                    MessageBox.Show("You need Diablo III Client version [" + MooegeSupporterVersion + "] in order to play over Mooege.\nPlease Update.", "Warning",
+                    MessageBox.Show("You need Diablo III Client version [" + MooegeSupportedVersion + "] in order to play over Mooege.\nPlease Update.", "Warning",
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
@@ -564,6 +577,7 @@ namespace MadCow
         //
         //PROCEED WITH THE PROCESS ONCE THE DOWNLOAD ITS COMPLETE
         //
+
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             progressBar1.PerformStep();
@@ -578,9 +592,12 @@ namespace MadCow
             }
         }
 
-        //
+        ////////////////////////////////////////////////////////////////////////
         //URL TEXT FIELD COLOR MANAGEMENT
         //This has the function on turning letters red if Error, Black if normal.
+        ////////////////////////////////////////////////////////////////////////
+
+       
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateMooegeButton.Enabled = false;
@@ -610,75 +627,11 @@ namespace MadCow
         {
             SimpleFileDelete.Delete(1);
         }
-       //----------------------------------------------------------------------
-       //---------------------TESTINGGGGGGGGGGGGGGGGGGG------------------------
-       //Tried a lot of crap Wlly, as u see progressbar already works, but its hard
-       //to actually pass the Description of what the program its doing.
-       //----------------------------------------------------------------------
-       
-        /*public void ProgressStatusCommunicator(int procedure)
-        {
-            switch (procedure)
-            {
-
-                case 1:
-                    label1.Text = "Download Complete";
-                    progressBar1.PerformStep();
-                    break;
-                case 2:
-                    label1.Text = "Uncompress Complete";
-                    progressBar1.PerformStep();
-                    break;
-                case 3:
-                    label1.Text = "Compile Complete";
-                    progressBar1.PerformStep();
-                    break;
-                case 4:
-                    label1.Text = "Mooege Config.ini Complete";
-                    progressBar1.PerformStep();
-                    break;
-                case 5:
-                    label1.Text = "MPQ folder Created Complete";
-                    progressBar1.PerformStep();
-                    break;
-                case 6:
-                    label1.Text = "MPQ folder Found Complete";
-                    progressBar1.PerformStep();
-                    break;
-                case 7:
-                    label1.Text = "Copying MPQs Complete";
-                    progressBar1.PerformStep();
-                    break;*/
-
-        //-----------------------Test Part 2 Wlly's Code---------------------------------
-        /*if (Directory.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
-        {
-            // This path is a file
-            label1.Text = "Uncompress Done";
-        }
-        else if (Directory.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\"))
-        {
-            // This path is a directory
-            label1.Text = "Compile Complete";
-        }
-        else if (Directory.Exists(Program.programPath + "/MPQ"))
-        {
-            label1.Text = "MPQ folder Created";
-        }
-        else if (Directory.Exists(Program.programPath + "/MPQ/base") && File.Exists(Program.programPath + "/MPQ/CoreData.mpq") && File.Exists(Program.programPath + "/MPQ/ClientData.mpq"))
-        {
-            label1.Text = "Copying MPQs Complete";
-        }
-        else
-        {
-            label1.Text = "";
-        }
-    }
-}*/
-
+     
         //-------------------------//
         //  ReDownload 7841 MPQ    //
         //-------------------------//
+
         private void ReDownloadMPQ_Click(object sender, EventArgs e)
         {  
             IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
@@ -748,6 +701,10 @@ namespace MadCow
             MessageBox.Show("Download completed!");
         }
 
+        //-------------------------//
+        //  Validate        MPQ    //
+        //-------------------------//
+
         private void ValidateMPQs_Click(object sender, EventArgs e)//Starts validating MD5's
         {
             MPQprocedure.ValidateMD5();
@@ -768,7 +725,7 @@ namespace MadCow
         //Server Control Refresh From Config.Ini
         ////////////////////////////////////////
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void RefreshFromConfig_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (File.Exists(Program.programPath + "\\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + "\\src\\Mooege\\bin\\Debug\\config.ini"))
             {
@@ -838,7 +795,6 @@ namespace MadCow
         
         protected Boolean CompareD3Versions()
         {
-            //FileVersionInfo.GetVersionInfo(textBox4.Text);
             FileVersionInfo d3Version = FileVersionInfo.GetVersionInfo(Diablo3UserPathSelection.Text);
 
             try
@@ -847,7 +803,7 @@ namespace MadCow
                 String parseVersion = client.DownloadString("https://raw.github.com/mooege/mooege/master/src/Mooege/Common/Versions/VersionInfo.cs");
                 Int32 ParsePointer = parseVersion.IndexOf("RequiredPatchVersion = ");
                 String MooegeVersion = parseVersion.Substring(ParsePointer + 23, 4); //Gets required version by Mooege
-                MooegeSupporterVersion = MooegeVersion; //Public String to display over D3 path validation.
+                MooegeSupportedVersion = MooegeVersion; //Public String to display over D3 path validation.
                 int CurrentD3VersionSupported = Convert.ToInt32(MooegeVersion);
                 int LocalD3Version = d3Version.FilePrivatePart;
 
@@ -878,6 +834,11 @@ namespace MadCow
                 return false;
             }
             return true;
+        }
+
+        private void Diablo3UserPathSelection_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
  }
