@@ -17,7 +17,12 @@ namespace MadCow
         public override void Write(char value)
         {
             base.Write(value);
-            _output.AppendText(value.ToString()); // When character data is written, append it to the text box.
+            Form1.txtConsole.Invoke(new Action(() =>
+            {
+                _output.AppendText(value.ToString()); // When character data is written, append it to the text box.
+            }
+            ));
+            
         }
 
         public override Encoding Encoding
