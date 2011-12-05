@@ -39,22 +39,12 @@ namespace MadCow
                         if (ProcessFind.FindProcess("Diablo") == true)
                         {
                             ProcessFind.KillProcess("Diablo");
-                            //cleans up Lock files
-                            System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7170.MPQ.LOCK");
-                            System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7200.MPQ.LOCK");
-                            System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7318.MPQ.LOCK");
-                            System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7338.MPQ.LOCK");
-                            System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7447.MPQ.LOCK");
-                            System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7728.MPQ.LOCK");
-                            System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7841.MPQ.LOCK");
-                            System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7931.MPQ.LOCK");
                             Thread.Sleep(1000);
                             //Transfer MPQs
                             MPQprocedure.MpqTransfer();
                         }
                         else
                         {
-                            Thread.Sleep(1000);
                             //Transfer MPQs
                             MPQprocedure.MpqTransfer();
                         }

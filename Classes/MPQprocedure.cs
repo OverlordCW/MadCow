@@ -94,7 +94,7 @@ namespace MadCow
             string Src = source.Configs["DiabloPath"].Get("MPQpath");
             String Dst = Program.programPath + @"/MPQ";
 
-            if (Directory.Exists(Program.programPath + @"/MPQ/base") && File.Exists(Program.programPath + @"/MPQ/CoreData.mpq") && File.Exists(Program.programPath + @"/MPQ/ClientData.mpq")) //Checks for MPQ Folder
+            if (Directory.Exists(Program.programPath + @"/MPQ")) //Checks for MPQ Folder -WTF u did here wlly? :P
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Found default MadCow MPQ folder");
@@ -135,7 +135,7 @@ namespace MadCow
                     || Element.Contains("Win") || Element.Contains("enUS_Audio") 
                     || Element.Contains("enUS_Cutscene") || Element.Contains("enUS_Text") 
                     || Element.Contains("Sound") || Element.Contains("Texture")
-                    || Element.Contains("HLSLShaders"))
+                    || Element.Contains("HLSLShaders") || Element.Contains("lock"))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("Skipped: " + Path.GetFileName(Element));
