@@ -115,7 +115,7 @@ namespace MadCow
         {
             //Update Mooege - does not start Diablo
 
-            ParseRevision.revisionUrl = textBox1_Repository_Url.Text;  
+            ParseRevision.revisionUrl = comboBox1.Text;  
             try
                 {
                     ParseRevision.GetRevision();
@@ -123,7 +123,7 @@ namespace MadCow
                     if (ParseRevision.commitFile == "ConnectionFailure")
                     {
                         pictureBox2.Hide();
-                        textBox1_Repository_Url.Text = ParseRevision.errorSender;
+                        comboBox1.Text = ParseRevision.errorSender;
                         pictureBox1.Show();
                         AutoUpdateValue.Enabled = false; //If validation fails we set Update and Autoupdate
                         EnableAutoUpdateBox.Enabled = false;      //functions disabled!.
@@ -134,7 +134,7 @@ namespace MadCow
                     else if (ParseRevision.commitFile == "Incorrect repository entry")
                     {
                         pictureBox2.Hide();
-                        textBox1_Repository_Url.Text = ParseRevision.errorSender;
+                        comboBox1.Text = ParseRevision.errorSender;
                         pictureBox1.Show();
                         AutoUpdateValue.Enabled = false; //If validation fails we set Update and Autoupdate
                         EnableAutoUpdateBox.Enabled = false;      //functions disabled!.
@@ -145,7 +145,7 @@ namespace MadCow
                     else if (ParseRevision.revisionUrl.EndsWith("/"))
                     {
                         pictureBox2.Hide();
-                        textBox1_Repository_Url.Text = "Incorrect repository entry";
+                        comboBox1.Text = "Incorrect repository entry";
                         pictureBox1.Show();
                         AutoUpdateValue.Enabled = false;  //If validation fails we set Update and Autoupdate
                         EnableAutoUpdateBox.Enabled = false;       //functions disabled!.
@@ -156,8 +156,8 @@ namespace MadCow
 
                     {
                         pictureBox2.Show();
-                        textBox1_Repository_Url.ForeColor = Color.Green;
-                        textBox1_Repository_Url.Text = ParseRevision.revisionUrl;
+                        comboBox1.ForeColor = Color.Green;
+                        comboBox1.Text = ParseRevision.revisionUrl;
                         ParseRevision.getDeveloperName();
                         ParseRevision.getBranchName();
                         UpdateMooegeButton.Enabled = true;
@@ -176,7 +176,7 @@ namespace MadCow
                 catch (Exception)
                 {
                     pictureBox2.Hide();
-                    textBox1_Repository_Url.Text = ParseRevision.errorSender;
+                    comboBox1.Text = ParseRevision.errorSender;
                     pictureBox1.Show();
                 }
         }
@@ -581,20 +581,20 @@ namespace MadCow
         //
         //URL TEXT FIELD COLOR MANAGEMENT
         //This has the function on turning letters red if Error, Black if normal.
-        private void textBox1_Repository_Url_TextChanged(object sender, EventArgs e)
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateMooegeButton.Enabled = false;
             AutoUpdateValue.Enabled = false; //If user is typing a new URL Update and Autoupdate
             EnableAutoUpdateBox.Enabled = false;      //Functions gets disabled
             try
             {
-                if (textBox1_Repository_Url.Text == "Incorrect repository entry." || textBox1_Repository_Url.Text == "Check your internet connection.")
+                if (comboBox1.Text == "Incorrect repository entry." || comboBox1.Text == "Check your internet connection.")
                 {
-                    textBox1_Repository_Url.ForeColor = Color.Red;
+                    comboBox1.ForeColor = Color.Red;
                 }
                 else
                 {
-                    textBox1_Repository_Url.ForeColor = Color.Black;
+                    comboBox1.ForeColor = Color.Black;
                     this.label4.BackColor = System.Drawing.Color.Transparent;
                     pictureBox1.Hide();//Error Image (Cross)
                     pictureBox2.Hide();//Correct Image (Tick)
@@ -602,7 +602,7 @@ namespace MadCow
             }
             catch
             {
-                textBox1_Repository_Url.ForeColor = SystemColors.ControlText;
+                comboBox1.ForeColor = SystemColors.ControlText;
             }
         }
 
