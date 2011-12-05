@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2011 Iker Ruiz Arnauda (Wesko)
+﻿// Copyright (C) 2011 MadCow Project
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,24 +15,35 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Collections.Generic;
+using System.Text;
+using System.IO;
 using System.Windows.Forms;
 
 namespace MadCow
 {
-
-    class Program
+    public class TextBoxStreamWriter : TextWriter
     {
-        //Global used variables.
-        public static String programPath = System.IO.Directory.GetCurrentDirectory();
-        public static String desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        
-        [STAThread]
-        static void Main()
+        TextBox _output = null;
+
+        public TextBoxStreamWriter(TextBox output)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            _output = output;
+        }
+
+        public override void Write(char value)
+        {
+            base.Write(value);
+            Form1.txtConsole.Invoke(new Action(() =>
+            {
+                _output.AppendText(value.ToString()); // When character data is written, append it to the text box.
+            }
+            ));
+            
+        }
+
+        public override Encoding Encoding
+        {
+            get { return System.Text.Encoding.UTF8; }
         }
     }
 }
