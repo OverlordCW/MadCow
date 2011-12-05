@@ -27,7 +27,6 @@ namespace MadCow
                 proc1.Start();
                 Console.WriteLine("Starting Diablo..");
             }
-
             else
             {
                 Process proc1 = new Process();

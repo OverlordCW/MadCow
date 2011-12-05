@@ -20,3 +20,5 @@ Future TODOs
 
 //Complete: Validate MPQs" shouldmatch up and output File to MD5Hash, and 
 //Complete: Drop-Down Menu of Saved Validated Repositories
+
+2. Check to see if MPQpath exists for redownload MPQ, and after completion copy MPQ over to Mooege Dir, output text also.

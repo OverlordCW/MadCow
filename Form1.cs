@@ -13,7 +13,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
+// Fix damn you!
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -206,28 +206,7 @@ namespace MadCow
         //-------------------------//
         private void PlayDiablo_Click(object sender, EventArgs e)
         {
-            if (ProcessFind.FindProcess("Mooege") == false)
-            {
-                Process proc0 = new Process();
-                proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
-                proc0.Start();
-                Thread.Sleep(1000);
-                Process proc1 = new Process();
-                proc1.StartInfo = new ProcessStartInfo(Diablo3UserPathSelection.Text);
-                proc1.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
-                proc1.Start();
-                label2.Text = "Starting Diablo..";
-            }
-
-            else
-            {
-                Process proc1 = new Process();
-                proc1.StartInfo = new ProcessStartInfo(Diablo3UserPathSelection.Text);
-                proc1.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
-                proc1.Start();
-                label2.Text = "Starting Diablo..";
-            }
-            
+            Diablo.Play();
         }
 
 
