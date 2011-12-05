@@ -29,18 +29,18 @@ namespace MadCow
     {
 
         //\base\ Folder MD5's.
-        private static String[] MD5ValidPool = {"39765d908accf4f37a4c2dfa99b8cd52"//7170
-                                           ,"7148ee45696c84796f3ca16729b9aadc"   //7200
-                                           ,"7ee326516f3da2c8f8b80eba6199deef"   //7318
-                                           ,"68c43ae976872a1fa7f5a929b7f21b58"   //7338
-                                           ,"751b8bf5c84220688048c192ab23f380"   //7447
-                                           ,"d5eba8a2324cdc815b2cd5b92104b7fa"   //7728
-                                           ,"7e13f6184d66520ed3f6b799656a30ca"   //7728
-                                           ,"5eb4983d4530e3b8bab0d6415d8251fa"   //7841
-                                           ,"3faf4efa2a96d501c9c47746cba5a7ad"   //7841
-                                           ,"0a1e7ebcaa1199c5349db83946aa1b5d"   //7841
-                                           ,"777da16a46d4f1d231bae8c1e11cdeaf"   //7931
-                                           ,"3d92eee4ed83aeedd977274bdb8af1b7"}; //7931
+        private static String[] MD5ValidPool = {"39765d908accf4f37a4c2dfa99b8cd52"   //7170
+                                               ,"7148ee45696c84796f3ca16729b9aadc"   //7200
+                                               ,"7ee326516f3da2c8f8b80eba6199deef"   //7318
+                                               ,"68c43ae976872a1fa7f5a929b7f21b58"   //7338
+                                               ,"751b8bf5c84220688048c192ab23f380"   //7447
+                                               ,"d5eba8a2324cdc815b2cd5b92104b7fa"   //7728
+                                               ,"7e13f6184d66520ed3f6b799656a30ca"   //7728
+                                               ,"5eb4983d4530e3b8bab0d6415d8251fa"   //7841
+                                               ,"3faf4efa2a96d501c9c47746cba5a7ad"   //7841
+                                               ,"0a1e7ebcaa1199c5349db83946aa1b5d"   //7841
+                                               ,"777da16a46d4f1d231bae8c1e11cdeaf"   //7931
+                                               ,"3d92eee4ed83aeedd977274bdb8af1b7"}; //7931
 
         public static Boolean ValidateMD5()
         {

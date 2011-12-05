@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E43C3165-EE18-4F15-AF5A-447DFE662C66}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MadCow</RootNamespace>
     <AssemblyName>MadCow2011</AssemblyName>
@@ -74,7 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TextBoxStreamWriter.cs" />
+    <Compile Include="Classes\TextBoxStreamWriter.cs" />
     <Compile Include="Classes\ProcessFind.cs" />
     <Compile Include="Classes\Delete.cs" />
     <Compile Include="Classes\Commands.cs" />
