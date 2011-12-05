@@ -16,19 +16,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
 
 namespace MadCow
 {
 
     class Program
     {
-        [DllImport("user32.dll")]
-        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
-        [DllImport("user32.dll")]
-        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
         //Global used variables.
         public static String programPath = System.IO.Directory.GetCurrentDirectory();
         public static String desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
