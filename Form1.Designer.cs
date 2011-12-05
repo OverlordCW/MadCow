@@ -98,6 +98,7 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -631,7 +632,6 @@
             this.Diablo3UserPathSelection.ReadOnly = true;
             this.Diablo3UserPathSelection.Size = new System.Drawing.Size(248, 20);
             this.Diablo3UserPathSelection.TabIndex = 3;
-            this.Diablo3UserPathSelection.TextChanged += new System.EventHandler(this.Diablo3UserPathSelection_TextChanged);
             // 
             // UpdateMooegeButton
             // 
@@ -830,6 +830,10 @@
             this.label2.Size = new System.Drawing.Size(0, 13);
             this.label2.TabIndex = 15;
             // 
+            // backgroundWorker2
+            // 
+            this.backgroundWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -946,5 +950,6 @@
         private System.Windows.Forms.LinkLabel linkLabel1;
         public System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker2;
     }
 }

@@ -452,7 +452,7 @@ namespace MadCow
                         textBox3.Enabled = true;
                         RemoteServerButton.Enabled = true;
                         //Freezes at the start longer, but at least you get verified when you load!
-                        CompareD3Versions();
+                        backgroundWorker2.RunWorkerAsync(); //Compares Versions of D3 with Mooege
                         ValidateMPQButton.Enabled = true;
                         RedownloadMPQButton.Enabled = true;
                     }
@@ -500,11 +500,7 @@ namespace MadCow
                     Console.WriteLine("Verifying Diablo..");
                 }
 
-                if (CompareD3Versions() == false) //We verify if the current version is the required by Mooege by calling VerifyVersion(), if returns false we warn him.
-                {                                 //This will tae about 2-3 seconds, since it parse it right from the Mooege repo files. Similar to the little hang that happens when you fist validate a repo.
-                    MessageBox.Show("You need Diablo III Client version [" + MooegeSupportedVersion + "] in order to play over Mooege.\nPlease Update.", "Warning",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
+                backgroundWorker2.RunWorkerAsync(); //Compares versions of D3 with Mooege
             }
             else //If user didn't select a Diablo III.exe, we show a warning and ofc, we dont save any path.
             {
@@ -793,52 +789,70 @@ namespace MadCow
         //Verify Diablo 3 Version compared to Mooege supported one.
         ///////////////////////////////////////////////////////////
         
-        protected Boolean CompareD3Versions()
+        private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
         {
-            FileVersionInfo d3Version = FileVersionInfo.GetVersionInfo(Diablo3UserPathSelection.Text);
-
             try
             {
                 WebClient client = new WebClient();
-                String parseVersion = client.DownloadString("https://raw.github.com/mooege/mooege/master/src/Mooege/Common/Versions/VersionInfo.cs");
-                Int32 ParsePointer = parseVersion.IndexOf("RequiredPatchVersion = ");
-                String MooegeVersion = parseVersion.Substring(ParsePointer + 23, 4); //Gets required version by Mooege
-                MooegeSupportedVersion = MooegeVersion; //Public String to display over D3 path validation.
-                int CurrentD3VersionSupported = Convert.ToInt32(MooegeVersion);
-                int LocalD3Version = d3Version.FilePrivatePart;
-
-                if (LocalD3Version == CurrentD3VersionSupported)
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Found the correct Mooege supported version of Diablo III [" + CurrentD3VersionSupported + "]");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    PlayDiabloButton.Enabled = true;
-                    CopyMPQButton.Enabled = true;
-                    return true;
-                }
-
-                else if (LocalD3Version != CurrentD3VersionSupported)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Mooege needs Diablo III version [" + MooegeVersion + "]"
-                        + "\nYou currently own version [" + LocalD3Version + "]. Please Update.");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    PlayDiabloButton.Enabled = false;
-                    CopyMPQButton.Enabled = false;
-                    return false;
-                }
+                client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(Checkversions);
+                Uri uri = new Uri("https://raw.github.com/mooege/mooege/master/src/Mooege/Common/Versions/VersionInfo.cs");
+                client.DownloadStringAsync(uri);
             }
-            catch (WebException webEx)
+            catch (Exception Ex)
             {
-                Console.WriteLine(webEx);
-                return false;
+                Console.WriteLine(Ex);
             }
-            return true;
         }
 
-        private void Diablo3UserPathSelection_TextChanged(object sender, EventArgs e)
+        private void Checkversions(Object sender, DownloadStringCompletedEventArgs e)
         {
+            String parseVersion = e.Result;
+            FileVersionInfo d3Version = FileVersionInfo.GetVersionInfo(Diablo3UserPathSelection.Text);
+            Int32 ParsePointer = parseVersion.IndexOf("RequiredPatchVersion = ");
+            String MooegeVersion = parseVersion.Substring(ParsePointer + 23, 4); //Gets required version by Mooege
+            MooegeSupportedVersion = MooegeVersion; //Public String to display over D3 path validation.
+            int CurrentD3VersionSupported = Convert.ToInt32(MooegeVersion);
+            int LocalD3Version = d3Version.FilePrivatePart;
 
+            if (LocalD3Version == CurrentD3VersionSupported)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Found the correct Mooege supported version of Diablo III [" + CurrentD3VersionSupported + "]");
+                Console.ForegroundColor = ConsoleColor.White;
+                //Following code its needed to access Form1 Objects from a different thread
+                //Remember this function its called from backgroundworker2, so its running on a different thread than Control's Main thread.
+                PlayDiabloButton.Invoke(new Action(() =>
+                {
+                    PlayDiabloButton.Enabled = true;
+                }
+                ));
+                CopyMPQButton.Invoke(new Action(() =>
+                {
+                    CopyMPQButton.Enabled = true;
+                }
+                ));
+            }
+
+            else if (LocalD3Version != CurrentD3VersionSupported)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Wrong client version FOUND!");
+                Console.ForegroundColor = ConsoleColor.White;
+                MessageBox.Show("You need Diablo III Client version [" + MooegeSupportedVersion + "] in order to play over Mooege.\nPlease Update.", "Warning",
+                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                //Following code its needed to access Form1 Objects from a different thread
+                //Remember this function its called from backgroundworker2, so its running on a different thread than Control's Main thread.
+                PlayDiabloButton.Invoke(new Action(() =>
+                {
+                    PlayDiabloButton.Enabled = false;
+                }
+                ));
+                CopyMPQButton.Invoke(new Action(() =>
+                {
+                    CopyMPQButton.Enabled = false;
+                }
+                ));
+            }
         }
     }
  }
