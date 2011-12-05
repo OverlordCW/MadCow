@@ -830,11 +830,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(0, 13);
             this.label2.TabIndex = 15;
-            //
-			// backgroundWorker2
             // 
-            this.backgroundWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
-			//
             // txtConsole
             // 
             this.txtConsole.Location = new System.Drawing.Point(372, 22);
@@ -845,6 +841,10 @@
             this.txtConsole.Size = new System.Drawing.Size(334, 282);
             this.txtConsole.TabIndex = 16;
             this.txtConsole.TextChanged += new System.EventHandler(this.txtConsole_TextChanged);
+            // 
+            // backgroundWorker2
+            // 
+            this.backgroundWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
             // 
             // Form1
             // 
@@ -963,8 +963,8 @@
         private System.Windows.Forms.LinkLabel linkLabel1;
         public System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TextBox txtConsole;
         private System.ComponentModel.BackgroundWorker backgroundWorker2;
+        public System.Windows.Forms.TextBox txtConsole;
 
     }
 }

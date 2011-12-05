@@ -206,28 +206,7 @@ namespace MadCow
         //-------------------------//
         private void PlayDiablo_Click(object sender, EventArgs e)
         {
-            if (ProcessFind.FindProcess("Mooege") == false)
-            {
-                Process proc0 = new Process();
-                proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
-                proc0.Start();
-                Thread.Sleep(1000);
-                Process proc1 = new Process();
-                proc1.StartInfo = new ProcessStartInfo(Diablo3UserPathSelection.Text);
-                proc1.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
-                proc1.Start();
-                label2.Text = "Starting Diablo..";
-            }
-
-            else
-            {
-                Process proc1 = new Process();
-                proc1.StartInfo = new ProcessStartInfo(Diablo3UserPathSelection.Text);
-                proc1.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
-                proc1.Start();
-                label2.Text = "Starting Diablo..";
-            }
-            
+            Diablo.Play();
         }
 
 
