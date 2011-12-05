@@ -36,6 +36,7 @@ namespace MadCow
         //Timing
         public static String MooegeSupportedVersion;
         private int Tick;
+        TextWriter _writer = null;
 
         public Form1()
         {
@@ -50,6 +51,9 @@ namespace MadCow
         //-------------------------//
         private void Form1_Load(object sender, EventArgs e)
         {
+            _writer = new TextBoxStreamWriter(txtConsole);
+            Console.SetOut(_writer);
+            Console.WriteLine("Welcome to MadCow!");
             ToolTip toolTip1 = new ToolTip();
             // Set up the delays for the ToolTip.
             toolTip1.AutoPopDelay = 1800;
@@ -854,5 +858,7 @@ namespace MadCow
                 ));
             }
         }
+
+        private void txtConsole_TextChanged(object sender, EventArgs e) { }
     }
  }
