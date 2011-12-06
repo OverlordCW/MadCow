@@ -66,5 +66,12 @@ namespace MadCow.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        internal static System.Drawing.Bitmap green_tick {
+            get {
+                object obj = ResourceManager.GetObject("green-tick", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

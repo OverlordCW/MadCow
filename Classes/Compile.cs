@@ -40,9 +40,10 @@ namespace MadCow
                 System.Diagnostics.ProcessStartInfo procStartInformation =
                 new System.Diagnostics.ProcessStartInfo(command);
             
-                procStartInformation.RedirectStandardOutput = false;
-                procStartInformation.UseShellExecute = true;
-                procStartInformation.CreateNoWindow = false;
+                //procStartInformation.RedirectStandardOutput = true;
+                //procStartInformation.UseShellExecute = false;
+                procStartInformation.CreateNoWindow = true;
+                procStartInformation.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
 
                 System.Diagnostics.Process proc = new System.Diagnostics.Process();
                 proc.StartInfo = procStartInformation;

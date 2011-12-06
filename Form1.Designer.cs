@@ -46,29 +46,26 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label18 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.UpdateMooegeServerButton = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.LoadProfile = new System.Windows.Forms.Button();
+            this.SaveProfile = new System.Windows.Forms.Button();
+            this.MOTD = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.RestoreDefaults = new System.Windows.Forms.LinkLabel();
+            this.NATcheckBox = new System.Windows.Forms.CheckBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.PublicServerIp = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.textBox10 = new System.Windows.Forms.TextBox();
-            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.GameServerPort = new System.Windows.Forms.TextBox();
+            this.GameServerIp = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
-            this.textBox12 = new System.Windows.Forms.TextBox();
-            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.BnetServerPort = new System.Windows.Forms.TextBox();
+            this.BnetServerIp = new System.Windows.Forms.TextBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.FindDiabloButton = new System.Windows.Forms.Button();
@@ -81,7 +78,7 @@
             this.CopyMPQButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            progressBar1 = new System.Windows.Forms.ProgressBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.label19 = new System.Windows.Forms.Label();
@@ -97,9 +94,20 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             txtConsole = new System.Windows.Forms.TextBox();
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.TickBnetServerIP = new System.Windows.Forms.PictureBox();
+            this.ErrorGameServerPort = new System.Windows.Forms.PictureBox();
+            this.ErrorBnetServerPort = new System.Windows.Forms.PictureBox();
+            this.ErrorPublicServerIp = new System.Windows.Forms.PictureBox();
+            this.ErrorGameServerIp = new System.Windows.Forms.PictureBox();
+            this.ErrorBnetServerIp = new System.Windows.Forms.PictureBox();
+            this.TickGameServerIp = new System.Windows.Forms.PictureBox();
+            this.TickPublicServerIp = new System.Windows.Forms.PictureBox();
+            this.TickBnetServerPort = new System.Windows.Forms.PictureBox();
+            this.TickGameServerPort = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -108,8 +116,6 @@
             this.groupBox5.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox6.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -117,6 +123,18 @@
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TickBnetServerIP)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorGameServerPort)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorBnetServerPort)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorPublicServerIp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorGameServerIp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorBnetServerIp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TickGameServerIp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TickPublicServerIp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TickBnetServerPort)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TickGameServerPort)).BeginInit();
             this.SuspendLayout();
             // 
             // EnableAutoUpdateBox
@@ -157,21 +175,21 @@
             // 
             this.PlayDiabloButton.BackColor = System.Drawing.Color.Transparent;
             this.PlayDiabloButton.Enabled = false;
-            this.PlayDiabloButton.Location = new System.Drawing.Point(16, 306);
+            this.PlayDiabloButton.Location = new System.Drawing.Point(10, 271);
             this.PlayDiabloButton.Name = "PlayDiabloButton";
-            this.PlayDiabloButton.Size = new System.Drawing.Size(94, 43);
+            this.PlayDiabloButton.Size = new System.Drawing.Size(329, 43);
             this.PlayDiabloButton.TabIndex = 7;
-            this.PlayDiabloButton.Text = "Play Diablo";
+            this.PlayDiabloButton.Text = "Play Diablo (Local)";
             this.PlayDiabloButton.UseVisualStyleBackColor = false;
             this.PlayDiabloButton.Click += new System.EventHandler(this.PlayDiablo_Click);
             // 
             // LaunchServerButton
             // 
-            this.LaunchServerButton.Location = new System.Drawing.Point(195, 178);
+            this.LaunchServerButton.Location = new System.Drawing.Point(6, 268);
             this.LaunchServerButton.Name = "LaunchServerButton";
-            this.LaunchServerButton.Size = new System.Drawing.Size(100, 23);
+            this.LaunchServerButton.Size = new System.Drawing.Size(327, 43);
             this.LaunchServerButton.TabIndex = 9;
-            this.LaunchServerButton.Text = "Launch Server";
+            this.LaunchServerButton.Text = "Launch Server Only";
             this.LaunchServerButton.UseVisualStyleBackColor = true;
             this.LaunchServerButton.Click += new System.EventHandler(this.LaunchServer_Click);
             // 
@@ -205,7 +223,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(345, 278);
+            this.tabPage3.Size = new System.Drawing.Size(345, 320);
             this.tabPage3.TabIndex = 3;
             this.tabPage3.Text = "Remote Server";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -282,142 +300,140 @@
             // 
             // label12
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(39, 61);
+            this.label12.BackColor = System.Drawing.Color.Transparent;
+            this.label12.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.label12.Location = new System.Drawing.Point(6, 61);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(264, 156);
+            this.label12.Size = new System.Drawing.Size(334, 186);
             this.label12.TabIndex = 1;
             this.label12.Text = resources.GetString("label12.Text");
             this.label12.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.label18);
-            this.tabPage2.Controls.Add(this.textBox1);
-            this.tabPage2.Controls.Add(this.label9);
-            this.tabPage2.Controls.Add(this.UpdateMooegeServerButton);
             this.tabPage2.Controls.Add(this.groupBox5);
-            this.tabPage2.Controls.Add(this.LaunchServerButton);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(345, 278);
+            this.tabPage2.Size = new System.Drawing.Size(345, 320);
             this.tabPage2.TabIndex = 2;
             this.tabPage2.Text = "Server Control";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.TickGameServerPort);
+            this.groupBox5.Controls.Add(this.TickBnetServerPort);
+            this.groupBox5.Controls.Add(this.TickPublicServerIp);
+            this.groupBox5.Controls.Add(this.TickGameServerIp);
+            this.groupBox5.Controls.Add(this.TickBnetServerIP);
+            this.groupBox5.Controls.Add(this.ErrorGameServerPort);
+            this.groupBox5.Controls.Add(this.ErrorBnetServerPort);
+            this.groupBox5.Controls.Add(this.ErrorPublicServerIp);
+            this.groupBox5.Controls.Add(this.ErrorGameServerIp);
+            this.groupBox5.Controls.Add(this.ErrorBnetServerIp);
+            this.groupBox5.Controls.Add(this.LoadProfile);
+            this.groupBox5.Controls.Add(this.SaveProfile);
+            this.groupBox5.Controls.Add(this.MOTD);
+            this.groupBox5.Controls.Add(this.label18);
+            this.groupBox5.Controls.Add(this.RestoreDefaults);
+            this.groupBox5.Controls.Add(this.LaunchServerButton);
+            this.groupBox5.Controls.Add(this.NATcheckBox);
+            this.groupBox5.Controls.Add(this.label13);
+            this.groupBox5.Controls.Add(this.PublicServerIp);
+            this.groupBox5.Controls.Add(this.label14);
+            this.groupBox5.Controls.Add(this.label15);
+            this.groupBox5.Controls.Add(this.GameServerPort);
+            this.groupBox5.Controls.Add(this.GameServerIp);
+            this.groupBox5.Controls.Add(this.label16);
+            this.groupBox5.Controls.Add(this.label17);
+            this.groupBox5.Controls.Add(this.BnetServerPort);
+            this.groupBox5.Controls.Add(this.BnetServerIp);
+            this.groupBox5.Location = new System.Drawing.Point(3, 6);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(339, 311);
+            this.groupBox5.TabIndex = 1;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Server Configuration";
+            // 
+            // LoadProfile
+            // 
+            this.LoadProfile.Location = new System.Drawing.Point(109, 220);
+            this.LoadProfile.Name = "LoadProfile";
+            this.LoadProfile.Size = new System.Drawing.Size(75, 23);
+            this.LoadProfile.TabIndex = 15;
+            this.LoadProfile.Text = "Load Profile";
+            this.LoadProfile.UseVisualStyleBackColor = true;
+            this.LoadProfile.Click += new System.EventHandler(this.LoadProfile_Click);
+            // 
+            // SaveProfile
+            // 
+            this.SaveProfile.Location = new System.Drawing.Point(11, 220);
+            this.SaveProfile.Name = "SaveProfile";
+            this.SaveProfile.Size = new System.Drawing.Size(75, 23);
+            this.SaveProfile.TabIndex = 14;
+            this.SaveProfile.Text = "Save Profile";
+            this.SaveProfile.UseVisualStyleBackColor = true;
+            this.SaveProfile.Click += new System.EventHandler(this.SaveProfile_Click);
+            // 
+            // MOTD
+            // 
+            this.MOTD.Location = new System.Drawing.Point(11, 183);
+            this.MOTD.Name = "MOTD";
+            this.MOTD.Size = new System.Drawing.Size(322, 20);
+            this.MOTD.TabIndex = 12;
+            this.MOTD.Text = "Welcome to mooege development server!";
+            // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(10, 233);
+            this.label18.Location = new System.Drawing.Point(8, 167);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(39, 13);
             this.label18.TabIndex = 13;
             this.label18.Text = "MOTD";
             // 
-            // textBox1
+            // RestoreDefaults
             // 
-            this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(9, 252);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(330, 20);
-            this.textBox1.TabIndex = 12;
-            this.textBox1.Text = "Welcome to mooege development server!";
+            this.RestoreDefaults.AutoSize = true;
+            this.RestoreDefaults.LinkColor = System.Drawing.Color.DimGray;
+            this.RestoreDefaults.Location = new System.Drawing.Point(247, 206);
+            this.RestoreDefaults.Name = "RestoreDefaults";
+            this.RestoreDefaults.Size = new System.Drawing.Size(86, 13);
+            this.RestoreDefaults.TabIndex = 11;
+            this.RestoreDefaults.TabStop = true;
+            this.RestoreDefaults.Text = "Restore Defaults";
+            this.RestoreDefaults.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.RestoreDefault_LinkClicked);
             // 
-            // label9
+            // NATcheckBox
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(44, 218);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(242, 13);
-            this.label9.TabIndex = 11;
-            this.label9.Text = "To Activate Validate Repository(Will be Changing)";
-            // 
-            // UpdateMooegeServerButton
-            // 
-            this.UpdateMooegeServerButton.Location = new System.Drawing.Point(38, 178);
-            this.UpdateMooegeServerButton.Name = "UpdateMooegeServerButton";
-            this.UpdateMooegeServerButton.Size = new System.Drawing.Size(128, 23);
-            this.UpdateMooegeServerButton.TabIndex = 10;
-            this.UpdateMooegeServerButton.Text = "Update Mooege Server";
-            this.UpdateMooegeServerButton.UseVisualStyleBackColor = true;
-            this.UpdateMooegeServerButton.Click += new System.EventHandler(this.UpdateMooegeServer_Click);
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.linkLabel1);
-            this.groupBox5.Controls.Add(this.linkLabel2);
-            this.groupBox5.Controls.Add(this.checkBox3);
-            this.groupBox5.Controls.Add(this.label13);
-            this.groupBox5.Controls.Add(this.textBox9);
-            this.groupBox5.Controls.Add(this.label14);
-            this.groupBox5.Controls.Add(this.label15);
-            this.groupBox5.Controls.Add(this.textBox10);
-            this.groupBox5.Controls.Add(this.textBox11);
-            this.groupBox5.Controls.Add(this.label16);
-            this.groupBox5.Controls.Add(this.label17);
-            this.groupBox5.Controls.Add(this.textBox12);
-            this.groupBox5.Controls.Add(this.textBox13);
-            this.groupBox5.Location = new System.Drawing.Point(3, 6);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(339, 166);
-            this.groupBox5.TabIndex = 1;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Local Server";
-            // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.LinkColor = System.Drawing.Color.DimGray;
-            this.linkLabel1.Location = new System.Drawing.Point(143, 143);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(99, 13);
-            this.linkLabel1.TabIndex = 12;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Refresh from config";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.RefreshFromConfig_LinkClicked);
-            // 
-            // linkLabel2
-            // 
-            this.linkLabel2.AutoSize = true;
-            this.linkLabel2.LinkColor = System.Drawing.Color.DimGray;
-            this.linkLabel2.Location = new System.Drawing.Point(242, 143);
-            this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(86, 13);
-            this.linkLabel2.TabIndex = 11;
-            this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "Restore Defaults";
-            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.RestoreDefault_LinkClicked);
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Enabled = false;
-            this.checkBox3.Location = new System.Drawing.Point(12, 139);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(90, 17);
-            this.checkBox3.TabIndex = 10;
-            this.checkBox3.Text = "NAT Enabled";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            this.NATcheckBox.AutoSize = true;
+            this.NATcheckBox.Location = new System.Drawing.Point(230, 133);
+            this.NATcheckBox.Name = "NATcheckBox";
+            this.NATcheckBox.Size = new System.Drawing.Size(90, 17);
+            this.NATcheckBox.TabIndex = 10;
+            this.NATcheckBox.Text = "NAT Enabled";
+            this.NATcheckBox.UseVisualStyleBackColor = true;
+            this.NATcheckBox.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(4, 120);
+            this.label13.Location = new System.Drawing.Point(6, 117);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(86, 13);
             this.label13.TabIndex = 9;
             this.label13.Text = "Public Server IP:";
             // 
-            // textBox9
+            // PublicServerIp
             // 
-            this.textBox9.Enabled = false;
-            this.textBox9.Location = new System.Drawing.Point(96, 117);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(196, 20);
-            this.textBox9.TabIndex = 8;
-            this.textBox9.TextChanged += new System.EventHandler(this.textBox9_TextChanged);
+            this.PublicServerIp.Location = new System.Drawing.Point(11, 133);
+            this.PublicServerIp.Name = "PublicServerIp";
+            this.PublicServerIp.Size = new System.Drawing.Size(196, 20);
+            this.PublicServerIp.TabIndex = 8;
+            this.PublicServerIp.Text = "0.0.0.0";
+            this.PublicServerIp.TextChanged += new System.EventHandler(this.PublicServerIp_TextChanged);
             // 
             // label14
             // 
@@ -437,23 +453,23 @@
             this.label15.TabIndex = 6;
             this.label15.Text = "Game Server IP:";
             // 
-            // textBox10
+            // GameServerPort
             // 
-            this.textBox10.Enabled = false;
-            this.textBox10.Location = new System.Drawing.Point(230, 81);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(100, 20);
-            this.textBox10.TabIndex = 5;
-            this.textBox10.TextChanged += new System.EventHandler(this.textBox10_TextChanged);
+            this.GameServerPort.Location = new System.Drawing.Point(230, 81);
+            this.GameServerPort.Name = "GameServerPort";
+            this.GameServerPort.Size = new System.Drawing.Size(83, 20);
+            this.GameServerPort.TabIndex = 5;
+            this.GameServerPort.Text = "1999";
+            this.GameServerPort.TextChanged += new System.EventHandler(this.GameServerPort_TextChanged);
             // 
-            // textBox11
+            // GameServerIp
             // 
-            this.textBox11.Enabled = false;
-            this.textBox11.Location = new System.Drawing.Point(11, 82);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(196, 20);
-            this.textBox11.TabIndex = 4;
-            this.textBox11.TextChanged += new System.EventHandler(this.textBox11_TextChanged);
+            this.GameServerIp.Location = new System.Drawing.Point(11, 82);
+            this.GameServerIp.Name = "GameServerIp";
+            this.GameServerIp.Size = new System.Drawing.Size(196, 20);
+            this.GameServerIp.TabIndex = 4;
+            this.GameServerIp.Text = "0.0.0.0";
+            this.GameServerIp.TextChanged += new System.EventHandler(this.GameServerIp_TextChanged);
             // 
             // label16
             // 
@@ -473,29 +489,30 @@
             this.label17.TabIndex = 2;
             this.label17.Text = "Bnet Server IP:";
             // 
-            // textBox12
+            // BnetServerPort
             // 
-            this.textBox12.Enabled = false;
-            this.textBox12.Location = new System.Drawing.Point(228, 31);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(100, 20);
-            this.textBox12.TabIndex = 1;
-            this.textBox12.TextChanged += new System.EventHandler(this.textBox12_TextChanged);
+            this.BnetServerPort.Location = new System.Drawing.Point(228, 31);
+            this.BnetServerPort.Name = "BnetServerPort";
+            this.BnetServerPort.Size = new System.Drawing.Size(85, 20);
+            this.BnetServerPort.TabIndex = 1;
+            this.BnetServerPort.Text = "1345";
+            this.BnetServerPort.TextChanged += new System.EventHandler(this.BnetServerPort_TextChanged);
             // 
-            // textBox13
+            // BnetServerIp
             // 
-            this.textBox13.Enabled = false;
-            this.textBox13.Location = new System.Drawing.Point(11, 31);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(196, 20);
-            this.textBox13.TabIndex = 0;
-            this.textBox13.TextChanged += new System.EventHandler(this.textBox13_TextChanged);
+            this.BnetServerIp.Location = new System.Drawing.Point(11, 31);
+            this.BnetServerIp.Name = "BnetServerIp";
+            this.BnetServerIp.Size = new System.Drawing.Size(196, 20);
+            this.BnetServerIp.TabIndex = 0;
+            this.BnetServerIp.Text = "0.0.0.0";
+            this.BnetServerIp.TextChanged += new System.EventHandler(this.BnetServerIp_TextChanged);
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Controls.Add(this.FindDiabloButton);
             this.tabPage1.Controls.Add(this.groupBox6);
+            this.tabPage1.Controls.Add(this.PlayDiabloButton);
             this.tabPage1.Controls.Add(this.groupBox2);
             this.tabPage1.Controls.Add(this.ValidateRepoButton);
             this.tabPage1.Controls.Add(this.Diablo3UserPathSelection);
@@ -505,7 +522,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(345, 278);
+            this.tabPage1.Size = new System.Drawing.Size(345, 320);
             this.tabPage1.TabIndex = 1;
             this.tabPage1.Text = "Updates";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -540,28 +557,6 @@
             this.comboBox1.TabIndex = 17;
             this.comboBox1.Text = "https://github.com/mooege/mooege";
             this.comboBox1.TextChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(194, 19);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(17, 20);
-            this.pictureBox2.TabIndex = 15;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Visible = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(194, 19);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(17, 20);
-            this.pictureBox1.TabIndex = 14;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Visible = false;
             // 
             // label10
             // 
@@ -668,7 +663,7 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.progressBar1);
+            this.panel2.Controls.Add(progressBar1);
             this.panel2.Location = new System.Drawing.Point(9, 19);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(316, 17);
@@ -676,12 +671,12 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.progressBar1.Location = new System.Drawing.Point(5, 3);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(308, 11);
-            this.progressBar1.Step = 20;
-            this.progressBar1.TabIndex = 0;
+            progressBar1.Cursor = System.Windows.Forms.Cursors.Arrow;
+            progressBar1.Location = new System.Drawing.Point(5, 3);
+            progressBar1.Name = "progressBar1";
+            progressBar1.Size = new System.Drawing.Size(308, 11);
+            progressBar1.Step = 20;
+            progressBar1.TabIndex = 0;
             // 
             // tabControl1
             // 
@@ -693,7 +688,7 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(353, 304);
+            this.tabControl1.Size = new System.Drawing.Size(353, 346);
             this.tabControl1.TabIndex = 13;
             // 
             // tabPage4
@@ -708,7 +703,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(345, 278);
+            this.tabPage4.Size = new System.Drawing.Size(345, 320);
             this.tabPage4.TabIndex = 4;
             this.tabPage4.Text = "Help";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -787,7 +782,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(345, 278);
+            this.tabPage5.Size = new System.Drawing.Size(345, 320);
             this.tabPage5.TabIndex = 5;
             this.tabPage5.Text = "Credits";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -817,34 +812,147 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(116, 310);
+            this.label1.Location = new System.Drawing.Point(467, 22);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(0, 13);
             this.label1.TabIndex = 14;
             this.label1.UseMnemonic = false;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(116, 333);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(0, 13);
-            this.label2.TabIndex = 15;
-            // 
             // txtConsole
             // 
-            txtConsole.Location = new System.Drawing.Point(372, 22);
+            txtConsole.Location = new System.Drawing.Point(372, 41);
             txtConsole.Multiline = true;
             txtConsole.Name = "txtConsole";
             txtConsole.ReadOnly = true;
             txtConsole.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             txtConsole.Size = new System.Drawing.Size(334, 282);
             txtConsole.TabIndex = 16;
-            txtConsole.TextChanged += new System.EventHandler(txtConsole_TextChanged);
             // 
             // backgroundWorker2
             // 
             this.backgroundWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(194, 19);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(17, 20);
+            this.pictureBox2.TabIndex = 15;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.Visible = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(194, 19);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(17, 20);
+            this.pictureBox1.TabIndex = 14;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Visible = false;
+            // 
+            // TickBnetServerIP
+            // 
+            this.TickBnetServerIP.Image = global::MadCow.Properties.Resources.green_tick;
+            this.TickBnetServerIP.Location = new System.Drawing.Point(207, 30);
+            this.TickBnetServerIP.Name = "TickBnetServerIP";
+            this.TickBnetServerIP.Size = new System.Drawing.Size(15, 16);
+            this.TickBnetServerIP.TabIndex = 21;
+            this.TickBnetServerIP.TabStop = false;
+            this.TickBnetServerIP.Visible = false;
+            // 
+            // ErrorGameServerPort
+            // 
+            this.ErrorGameServerPort.Image = global::MadCow.Properties.Resources.error_cross;
+            this.ErrorGameServerPort.Location = new System.Drawing.Point(318, 81);
+            this.ErrorGameServerPort.Name = "ErrorGameServerPort";
+            this.ErrorGameServerPort.Size = new System.Drawing.Size(15, 15);
+            this.ErrorGameServerPort.TabIndex = 20;
+            this.ErrorGameServerPort.TabStop = false;
+            this.ErrorGameServerPort.Visible = false;
+            // 
+            // ErrorBnetServerPort
+            // 
+            this.ErrorBnetServerPort.Image = global::MadCow.Properties.Resources.error_cross;
+            this.ErrorBnetServerPort.Location = new System.Drawing.Point(318, 31);
+            this.ErrorBnetServerPort.Name = "ErrorBnetServerPort";
+            this.ErrorBnetServerPort.Size = new System.Drawing.Size(15, 15);
+            this.ErrorBnetServerPort.TabIndex = 19;
+            this.ErrorBnetServerPort.TabStop = false;
+            this.ErrorBnetServerPort.Visible = false;
+            // 
+            // ErrorPublicServerIp
+            // 
+            this.ErrorPublicServerIp.Image = global::MadCow.Properties.Resources.error_cross;
+            this.ErrorPublicServerIp.Location = new System.Drawing.Point(207, 133);
+            this.ErrorPublicServerIp.Name = "ErrorPublicServerIp";
+            this.ErrorPublicServerIp.Size = new System.Drawing.Size(15, 15);
+            this.ErrorPublicServerIp.TabIndex = 18;
+            this.ErrorPublicServerIp.TabStop = false;
+            this.ErrorPublicServerIp.Visible = false;
+            // 
+            // ErrorGameServerIp
+            // 
+            this.ErrorGameServerIp.Image = global::MadCow.Properties.Resources.error_cross;
+            this.ErrorGameServerIp.Location = new System.Drawing.Point(207, 82);
+            this.ErrorGameServerIp.Name = "ErrorGameServerIp";
+            this.ErrorGameServerIp.Size = new System.Drawing.Size(15, 15);
+            this.ErrorGameServerIp.TabIndex = 17;
+            this.ErrorGameServerIp.TabStop = false;
+            this.ErrorGameServerIp.Visible = false;
+            // 
+            // ErrorBnetServerIp
+            // 
+            this.ErrorBnetServerIp.Image = global::MadCow.Properties.Resources.error_cross;
+            this.ErrorBnetServerIp.Location = new System.Drawing.Point(207, 31);
+            this.ErrorBnetServerIp.Name = "ErrorBnetServerIp";
+            this.ErrorBnetServerIp.Size = new System.Drawing.Size(15, 15);
+            this.ErrorBnetServerIp.TabIndex = 16;
+            this.ErrorBnetServerIp.TabStop = false;
+            this.ErrorBnetServerIp.Visible = false;
+            // 
+            // TickGameServerIp
+            // 
+            this.TickGameServerIp.Image = global::MadCow.Properties.Resources.green_tick;
+            this.TickGameServerIp.Location = new System.Drawing.Point(207, 81);
+            this.TickGameServerIp.Name = "TickGameServerIp";
+            this.TickGameServerIp.Size = new System.Drawing.Size(15, 16);
+            this.TickGameServerIp.TabIndex = 22;
+            this.TickGameServerIp.TabStop = false;
+            this.TickGameServerIp.Visible = false;
+            // 
+            // TickPublicServerIp
+            // 
+            this.TickPublicServerIp.Image = global::MadCow.Properties.Resources.green_tick;
+            this.TickPublicServerIp.Location = new System.Drawing.Point(207, 132);
+            this.TickPublicServerIp.Name = "TickPublicServerIp";
+            this.TickPublicServerIp.Size = new System.Drawing.Size(15, 16);
+            this.TickPublicServerIp.TabIndex = 23;
+            this.TickPublicServerIp.TabStop = false;
+            this.TickPublicServerIp.Visible = false;
+            // 
+            // TickBnetServerPort
+            // 
+            this.TickBnetServerPort.Image = global::MadCow.Properties.Resources.green_tick;
+            this.TickBnetServerPort.Location = new System.Drawing.Point(318, 31);
+            this.TickBnetServerPort.Name = "TickBnetServerPort";
+            this.TickBnetServerPort.Size = new System.Drawing.Size(15, 16);
+            this.TickBnetServerPort.TabIndex = 24;
+            this.TickBnetServerPort.TabStop = false;
+            this.TickBnetServerPort.Visible = false;
+            // 
+            // TickGameServerPort
+            // 
+            this.TickGameServerPort.Image = global::MadCow.Properties.Resources.green_tick;
+            this.TickGameServerPort.Location = new System.Drawing.Point(318, 80);
+            this.TickGameServerPort.Name = "TickGameServerPort";
+            this.TickGameServerPort.Size = new System.Drawing.Size(15, 16);
+            this.TickGameServerPort.TabIndex = 25;
+            this.TickGameServerPort.TabStop = false;
+            this.TickGameServerPort.Visible = false;
             // 
             // Form1
             // 
@@ -852,10 +960,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(718, 352);
             this.Controls.Add(txtConsole);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.PlayDiabloButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -871,15 +977,12 @@
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox6.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
@@ -888,7 +991,18 @@
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             this.tabPage5.ResumeLayout(false);
-            this.tabPage5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TickBnetServerIP)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorGameServerPort)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorBnetServerPort)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorPublicServerIp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorGameServerIp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorBnetServerIp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TickGameServerIp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TickPublicServerIp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TickBnetServerPort)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TickGameServerPort)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -906,18 +1020,18 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.LinkLabel linkLabel2;
-        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.LinkLabel RestoreDefaults;
+        private System.Windows.Forms.CheckBox NATcheckBox;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.TextBox PublicServerIp;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox textBox10;
-        private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.TextBox GameServerPort;
+        private System.Windows.Forms.TextBox GameServerIp;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TextBox textBox12;
-        private System.Windows.Forms.TextBox textBox13;
+        private System.Windows.Forms.TextBox BnetServerPort;
+        private System.Windows.Forms.TextBox BnetServerIp;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label8;
@@ -925,7 +1039,6 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.Button UpdateMooegeServerButton;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TabPage tabPage4;
@@ -954,18 +1067,27 @@
         private System.Windows.Forms.Button RedownloadMPQButton;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.ProgressBar progressBar3;
-        public System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.Label label9;
+        public static System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox MOTD;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Button ValidateMPQButton;
-        private System.Windows.Forms.LinkLabel linkLabel1;
-        public System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.ComponentModel.BackgroundWorker backgroundWorker2;
+        private System.Windows.Forms.Button LoadProfile;
+        private System.Windows.Forms.Button SaveProfile;
         public static System.Windows.Forms.TextBox txtConsole;
+        private System.Windows.Forms.PictureBox ErrorGameServerPort;
+        private System.Windows.Forms.PictureBox ErrorBnetServerPort;
+        private System.Windows.Forms.PictureBox ErrorPublicServerIp;
+        private System.Windows.Forms.PictureBox ErrorGameServerIp;
+        private System.Windows.Forms.PictureBox ErrorBnetServerIp;
+        private System.Windows.Forms.PictureBox TickBnetServerIP;
+        private System.Windows.Forms.PictureBox TickGameServerPort;
+        private System.Windows.Forms.PictureBox TickBnetServerPort;
+        private System.Windows.Forms.PictureBox TickPublicServerIp;
+        private System.Windows.Forms.PictureBox TickGameServerIp;
 
     }
 }
