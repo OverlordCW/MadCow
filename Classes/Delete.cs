@@ -35,6 +35,7 @@ namespace MadCow
                     {
                         System.IO.Directory.Delete(Program.programPath + @"/Repositories", true);
                         Console.WriteLine("Deleted Repositories Folder");
+                        Directory.CreateDirectory(Program.programPath + @"/Repositories");
                     }
                     catch (System.IO.IOException e)
                     {
