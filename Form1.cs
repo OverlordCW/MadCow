@@ -890,6 +890,20 @@ namespace MadCow
                     this.NATcheckBox.Checked = false;
                 }
                 tr.Close();
+                //Loading a profile means it has the correct values for every box, so first we disable every red cross that might be out there.
+                this.ErrorBnetServerIp.Visible = false;
+                this.ErrorBnetServerPort.Visible = false;
+                this.ErrorGameServerIp.Visible = false;
+                this.ErrorGameServerPort.Visible = false;
+                this.ErrorGameServerPort.Visible = false;
+                this.ErrorPublicServerIp.Visible = false;
+                //Loading a profile means it has the correct values for every box, so we change everything to green ticked.
+                this.TickBnetServerIP.Visible = true;
+                this.TickBnetServerPort.Visible = true;
+                this.TickGameServerIp.Visible = true;
+                this.TickGameServerPort.Visible = true;
+                this.TickGameServerPort.Visible = true;
+                this.TickPublicServerIp.Visible = true;
                 Console.Write("Loaded Profile " + OpenProfile.FileName + " succesfully");
             }
         }
