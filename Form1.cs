@@ -160,7 +160,7 @@ namespace MadCow
         //-------------------------//
         private void Update_Mooege_Click(object sender, EventArgs e)
         {
-            if (Directory.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
+            if (Directory.Exists(Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
             {
                 label2.Text = "You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision;
                 
@@ -206,9 +206,15 @@ namespace MadCow
         //-------------------------//
         private void PlayDiablo_Click(object sender, EventArgs e)
         {
-            Diablo.Play();
+            System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadProc));
+            t.Start();
+            //Diablo.Play();
         }
 
+        public static void ThreadProc()
+        {
+            Application.Run(new PlayDiablo());
+        }
 
         //-------------------------//
         // Update MPQS             //
@@ -296,10 +302,10 @@ namespace MadCow
             }
             else
             {
-                if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
+                if (File.Exists(Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
                 {
                     //First we modify the Mooege INI storage path.
-                    IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                    IConfigSource source = new IniConfigSource(Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
 
                     Console.WriteLine("Modifying MooNet-Server IP...");
                     IConfig config = source.Configs["MooNet-Server"];
@@ -515,7 +521,7 @@ namespace MadCow
             using (System.IO.Stream streamRemote = client.OpenRead(new Uri(ParseRevision.revisionUrl + "/zipball/master")))
             {
             // We write those files into the file system.
-                 using (Stream streamLocal = new FileStream(Program.programPath + "/Mooege.zip", FileMode.Create, FileAccess.Write, FileShare.None))
+                 using (Stream streamLocal = new FileStream(Program.programPath + "/Repositories/Mooege.zip", FileMode.Create, FileAccess.Write, FileShare.None))
                  {
                   // Loop the stream and get the file into the byte buffer
                   int iByteSize = 0;
@@ -625,14 +631,6 @@ namespace MadCow
                     {
                         ProcessFind.KillProcess("Diablo");
                         Thread.Sleep(500);
-                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7170.MPQ.LOCK");
-                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7200.MPQ.LOCK");
-                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7318.MPQ.LOCK");
-                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7338.MPQ.LOCK");
-                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7447.MPQ.LOCK");
-                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7728.MPQ.LOCK");
-                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7841.MPQ.LOCK");
-                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7931.MPQ.LOCK");
                         System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7841.MPQ");
                     }
                     try
@@ -705,57 +703,57 @@ namespace MadCow
 
         private void RefreshFromConfig_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (File.Exists(Program.programPath + "\\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + "\\src\\Mooege\\bin\\Debug\\config.ini"))
+            if (File.Exists(Program.programPath + "\\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + "\\src\\Mooege\\bin\\Debug\\config.ini"))
             {
-                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
                 string Src1 = source.Configs["MooNet-Server"].Get("BindIP");
                 textBox13.Text = Src1;
             }
             else textBox13.Text = "0.0.0.0";
 
-            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
+            if (File.Exists(Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
             {
-                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
                 string Src2 = source.Configs["MooNet-Server"].Get("Port");
                 textBox12.Text = Src2;
             }
             else textBox12.Text = "1345";
 
-            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
+            if (File.Exists(Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
             {
-                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
                 string Src3 = source.Configs["Game-Server"].Get("BindIP");
                 textBox11.Text = Src3;
             }
             else textBox11.Text = "0.0.0.0";
 
-            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
+            if (File.Exists(Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
             {
-                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
                 string Src4 = source.Configs["Game-Server"].Get("Port");
                 textBox10.Text = Src4;
             }
             else textBox10.Text = "1999";
 
-            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
+            if (File.Exists(Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
             {
-                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
                 string Src5 = source.Configs["NAT"].Get("PublicIP");
                 textBox9.Text = Src5;
             }
             else textBox9.Text = "0.0.0.0";
 
-            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
+            if (File.Exists(Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
             {
-                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
                 string Src6 = source.Configs["MooNet-Server"].Get("MOTD");
                 textBox1.Text = Src6;
             }
             else textBox1.Text = "Welcome to mooege development server!";
 
-            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
+            if (File.Exists(Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
             {
-                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
                 string Src7 = source.Configs["NAT"].Get("Enabled");
                 if (Src7 == "true")
                 {

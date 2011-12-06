@@ -830,11 +830,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(0, 13);
             this.label2.TabIndex = 15;
-            //
-			// backgroundWorker2
             // 
-            this.backgroundWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
-			//
             // txtConsole
             // 
             txtConsole.Location = new System.Drawing.Point(372, 22);
@@ -846,6 +842,10 @@
             txtConsole.TabIndex = 16;
             txtConsole.TextChanged += new System.EventHandler(txtConsole_TextChanged);
             // 
+            // backgroundWorker2
+            // 
+            this.backgroundWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -856,6 +856,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.PlayDiabloButton);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -963,8 +964,8 @@
         private System.Windows.Forms.LinkLabel linkLabel1;
         public System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBox1;
-        public static System.Windows.Forms.TextBox txtConsole;
         private System.ComponentModel.BackgroundWorker backgroundWorker2;
+        public static System.Windows.Forms.TextBox txtConsole;
 
     }
 }
