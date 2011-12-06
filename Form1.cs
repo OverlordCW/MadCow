@@ -242,7 +242,7 @@ namespace MadCow
             String ServerHost = HostIP + @":" + Port;
             proc1.StartInfo.Arguments = @" -launch -auroraaddress " + ServerHost;
             MessageBox.Show(proc1.StartInfo.Arguments);
-            //proc1.Start();
+            proc1.Start();
             Console.WriteLine("Starting Diablo...");           
         }
 
@@ -554,7 +554,12 @@ namespace MadCow
 
         private void Completed(object sender, AsyncCompletedEventArgs e)
         {
-            MessageBox.Show("Download completed!");
+            Console.WriteLine("Download completed!");
+            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+            string Src = source.Configs["DiabloPath"].Get("MPQpath");
+            String Dst = Program.programPath + @"/MPQ";
+            File.Copy(Src + @"/base/d3-update-base-7841.MPQ", Dst + @"/base/d3-update-base-7841.MPQ", true);
+            Console.WriteLine("Moved New MPQ to Mooege's MPQ Folder.");
         }
 
         ///////////////////////////////////////////////////////////

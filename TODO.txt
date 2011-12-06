@@ -17,8 +17,8 @@ Future TODOs
 
 1. "Validate MPQs" should output which one is corrupt and show the one that is corrupt in red
 
-2. Validate MPQs" shouldmatch up and output File to MD5Hash
+2. Validate MPQs" should match up and output File to MD5Hash
 
-3. Drop-Down Menu of Saved Validated Repositories //This is not implemented, there is a fixed list atm, we need to dimanycally add user validates repos to our current list.
+3. Drop-Down Menu of Saved Validated Repositories //This is not implemented, there is a fixed list atm, we need to dynamically add user validates repos to our current list.
 
-4. Check to see if MPQpath exists for redownload MPQ, and after completion copy MPQ over to Mooege Dir, output text also. 
+//Complete: 4. Check to see if MPQpath exists for redownload MPQ, and after completion copy MPQ over to Mooege Dir, output text also. 
