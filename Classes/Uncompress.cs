@@ -28,14 +28,14 @@ namespace MadCow
         {
             try
             {
-                using (ZipStorer zip = ZipStorer.Open(Program.programPath + "/Mooege.zip", FileAccess.Read))
+                using (ZipStorer zip = ZipStorer.Open(Program.programPath + @"\Repositories\" + @"\Mooege.zip", FileAccess.Read))
                 {
                     List<ZipStorer.ZipFileEntry> dir = zip.ReadCentralDir();
 
                     Console.WriteLine("Uncompressing Mooege Source...");
                     foreach (ZipStorer.ZipFileEntry entry in dir)
                     {
-                        zip.ExtractFile(entry, Program.programPath + "/" + entry);
+                        zip.ExtractFile(entry, Program.programPath + @"\" + @"Repositories\" + entry);
                     }
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Uncompressing Mooege Source Complete");

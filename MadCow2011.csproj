@@ -90,6 +90,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="RepositorySelectionPlay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RepositorySelectionPlay.Designer.cs">
+      <DependentUpon>RepositorySelectionPlay.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -97,14 +103,27 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="RepositorySelectionServer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RepositorySelectionServer.Designer.cs">
+      <DependentUpon>RepositorySelectionServer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tools\Md5Validate.cs" />
     <Compile Include="Tools\ZipStorer.cs" />
     <Compile Include="Classes\Uncompress.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="mooege.ico" />
-    <Content Include="Resources\error_cross.png" />
-    <Content Include="Resources\green-tick.png" />
+    <Content Include="Repositories\ReposGoHere.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\error_cross.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\green-tick.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
@@ -131,10 +150,16 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="app.manifest" />
+    <Content Include="ServerProfiles\ProfilesGoHere.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Tools\CompileBatch.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Tools\madcow.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ServerProfiles\Default.mdc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -157,9 +182,15 @@
       <DependentUpon>Form1.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="RepositorySelectionPlay.resx">
+      <DependentUpon>RepositorySelectionPlay.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RepositorySelectionServer.resx">
+      <DependentUpon>RepositorySelectionServer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

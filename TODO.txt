@@ -1,24 +1,18 @@
 Added by Wesko
 1. Implement a way to know if assembly System.Data.SQLite is running.
-
-
-2. Fix compatibility with other versios of Windows, or even go Linux too?.
-
-3. running validater in new thread
-
+2. Polish button visible evenhandlers.
+3. Clean All Button - Deletes all downloaded repositories
+4. Some tweaking into server control profile handling.
 
 Added by Wetwlly
-1. Update Mooege should create Repository Folder first, put Mooege inside Repository.
 
-2. Update Mooege should FindAndKillProcess("mooege") beforehand.
-
-3. Fix Labelling? or add Dialog Window(Mooext Style)
+2. Update Mooege should FindAndKillProcess("mooege") beforehand. //Think this is already done?
 
 Future TODOs
 
 1. "Validate MPQs" should output which one is corrupt and show the one that is corrupt in red
 
 //Complete: Validate MPQs" shouldmatch up and output File to MD5Hash, and 
-//Complete: Drop-Down Menu of Saved Validated Repositories
+Drop-Down Menu of Saved Validated Repositories //This is not implemented, there is a fixed list atm, we need to dimanycally add user validates repos to our current list.
 
-2. Check to see if MPQpath exists for redownload MPQ, and after completion copy MPQ over to Mooege Dir, output text also.
+2. Check to see if MPQpath exists for redownload MPQ, and after completion copy MPQ over to Mooege Dir, output text also. 

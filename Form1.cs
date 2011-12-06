@@ -13,7 +13,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-// Fix damn you!
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,15 +26,20 @@ using System.IO;
 using System.Net;
 using Nini.Config;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace MadCow
 {
 
     public partial class Form1 : Form
     {
-        //Timing
+        //This variable its used to stablish the default profile loaded into the server control tab, if the user selects another profile this variable changes.
+        public static String CurrentProfile = Program.programPath + @"\ServerProfiles\Default.mdc"; //We set this as the default profile loaded.
+        //We update this variable with the current supported D3 client after parsing the required version.
         public static String MooegeSupportedVersion;
+        //Timing for autoupdate
         private int Tick;
+        //Parsing Console into a textbox
         TextWriter _writer = null;
 
         public Form1()
@@ -46,9 +50,9 @@ namespace MadCow
             PlayDiabloButton.Enabled = false;
         }
 
-        //-------------------------//
-        // Unused Items in Form //
-        //-------------------------//
+        ///////////////////////////////////////////////////////////
+        //Unused shit
+        ///////////////////////////////////////////////////////////
         private void Form1_Load(object sender, EventArgs e)
         {
             _writer = new TextBoxStreamWriter(txtConsole);
@@ -64,7 +68,6 @@ namespace MadCow
             // Set up the ToolTip text for the Buttons.
             toolTip1.SetToolTip(this.UpdateMooegeButton, "This will update mooege to latest version");
             toolTip1.SetToolTip(this.CopyMPQButton, "This will copy MPQ's if you have D3 installed");
-            toolTip1.SetToolTip(this.UpdateMooegeServerButton, "This will check pre-requirements and update Mooege Server");
             InitializeFindPath();
         }
 
@@ -82,9 +85,9 @@ namespace MadCow
         private void textBox2_TextChanged(object sender, EventArgs e) { }
         private void textBox3_TextChanged(object sender, EventArgs e) { }
 
-        //-------------------------//
-        // Update Mooege //
-        //-------------------------//
+        ///////////////////////////////////////////////////////////
+        //Update Mooege
+        ///////////////////////////////////////////////////////////
         private void Validate_Repository_Click(object sender, EventArgs e)
         {
             //Update Mooege - does not start Diablo
@@ -102,7 +105,7 @@ namespace MadCow
                         AutoUpdateValue.Enabled = false; //If validation fails we set Update and Autoupdate
                         EnableAutoUpdateBox.Enabled = false;      //functions disabled!.
                         UpdateMooegeButton.Enabled = false;
-                        label2.Text = "Internet Problems.";
+                        Console.WriteLine("Internet Problems.");
                     }
 
                     else if (ParseRevision.commitFile == "Incorrect repository entry")
@@ -113,7 +116,7 @@ namespace MadCow
                         AutoUpdateValue.Enabled = false; //If validation fails we set Update and Autoupdate
                         EnableAutoUpdateBox.Enabled = false;      //functions disabled!.
                         UpdateMooegeButton.Enabled = false;
-                        label2.Text = "Please try a different Repo.";
+                        Console.WriteLine("Please try a different Repository.");
                     }
                     
                     else if (ParseRevision.revisionUrl.EndsWith("/"))
@@ -124,7 +127,7 @@ namespace MadCow
                         AutoUpdateValue.Enabled = false;  //If validation fails we set Update and Autoupdate
                         EnableAutoUpdateBox.Enabled = false;       //functions disabled!.
                         UpdateMooegeButton.Enabled = false;
-                        label2.Text = "Delete the last '/' on the repo.";
+                        Console.WriteLine("Delete the last '/' on the repository.");
                     }
                     else
 
@@ -137,14 +140,14 @@ namespace MadCow
                         UpdateMooegeButton.Enabled = true;
                         AutoUpdateValue.Enabled = true;
                         EnableAutoUpdateBox.Enabled = true;
-                        textBox13.Enabled = true;
-                        textBox12.Enabled = true;
-                        textBox11.Enabled = true;
-                        textBox10.Enabled = true;
-                        textBox9.Enabled = true;
-                        checkBox3.Enabled = true;
-                        textBox1.Enabled = true;
-                        label2.Text = "Repository Validated!";
+                        BnetServerIp.Enabled = true;
+                        BnetServerPort.Enabled = true;
+                        GameServerIp.Enabled = true;
+                        GameServerPort.Enabled = true;
+                        PublicServerIp.Enabled = true;
+                        NATcheckBox.Enabled = true;
+                        MOTD.Enabled = true;
+                        Console.WriteLine("Repository Validated!");
                     }
                 }
                 catch (Exception)
@@ -155,14 +158,14 @@ namespace MadCow
                 }
         }
 
-        //-------------------------//
-        //   UPDATE MOOEGE: This will validate ur current revision, if outdated proceed to download calling ->backgroundWorker1.RunWorkerAsync()->backgroundWorker1_RunWorkerCompleted.
-        //-------------------------//
+        /////////////////////////////
+        //UPDATE MOOEGE: This will validate ur current revision, if outdated proceed to download calling ->backgroundWorker1.RunWorkerAsync()->backgroundWorker1_RunWorkerCompleted.
+        /////////////////////////////
         private void Update_Mooege_Click(object sender, EventArgs e)
         {
-            if (Directory.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
+            if (Directory.Exists(Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
             {
-                label2.Text = "You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision;
+                Console.WriteLine("You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision);
                 
                 if (EnableAutoUpdateBox.Checked == true)
                 {
@@ -173,16 +176,16 @@ namespace MadCow
 
             else if (Directory.Exists(Program.programPath + @"/MPQ")) //Checks for MPQ Folder
             {
-                label2.Text = "Found default MadCow MPQ folder";
+                Console.WriteLine("Found default MadCow MPQ folder");
                 UpdateMooegeButton.Enabled = false;
                 
                 if (EnableAutoUpdateBox.Checked == true)
                 {
                     timer1.Stop();
-                    label1.Text = "Updating...";
+                    Console.WriteLine("Updating...");
                     backgroundWorker1.RunWorkerAsync();
                 }
-                label2.Text = "Updating...";
+                Console.WriteLine("Updating...");
                 backgroundWorker1.RunWorkerAsync();
             }
 
@@ -191,9 +194,9 @@ namespace MadCow
                 if (EnableAutoUpdateBox.Checked == true)
                 {
                     timer1.Stop();
-                    label1.Text = "Updating...";
+                    Console.WriteLine("Updating...");
                 }
-                label2.Text = "Updating...";
+                Console.WriteLine("Updating...");
                 Directory.CreateDirectory(Program.programPath + "/MPQ");
                 UpdateMooegeButton.Enabled = false;
                 backgroundWorker1.RunWorkerAsync();
@@ -201,18 +204,23 @@ namespace MadCow
         }
 
 
-        //-------------------------//
-        // Play Diablo Button      //
-        //-------------------------//
+        ///////////////////////////////////////////////////////////
+        //Play Diablo Button
+        ///////////////////////////////////////////////////////////
         private void PlayDiablo_Click(object sender, EventArgs e)
         {
-            Diablo.Play();
+            System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadProc));
+            t.Start();
         }
 
+        public static void ThreadProc()
+        {
+            Application.Run(new RepositorySelectionPlay());
+        }
 
-        //-------------------------//
-        // Update MPQS             //
-        //-------------------------//
+        ///////////////////////////////////////////////////////////
+        //Copy MPQ files from D3 to MadCow MPQ Folder.
+        ///////////////////////////////////////////////////////////
 
         private void CopyMPQs_Click(object sender, EventArgs e)
         {
@@ -220,9 +228,9 @@ namespace MadCow
         }
 
 
-        //-------------------------//
-        // Remote Server Settings  //
-        //-------------------------//
+        ///////////////////////////////////////////////////////////
+        //Remote Server Settings
+        ///////////////////////////////////////////////////////////
         private void RemoteServer_Click(object sender, EventArgs e)
         {
             //Remote Server
@@ -235,14 +243,13 @@ namespace MadCow
             proc1.StartInfo.Arguments = @" -launch -auroraaddress " + ServerHost;
             MessageBox.Show(proc1.StartInfo.Arguments);
             //proc1.Start();
-            label2.Text = "Starting Diablo..";
-            
+            Console.WriteLine("Starting Diablo...");           
         }
 
 
-        //-------------------------//
-        // Server Control Settings //
-        //-------------------------//
+        ///////////////////////////////////////////////////////////
+        //Server Control Settings
+        ///////////////////////////////////////////////////////////
         private void textBox13_TextChanged(object sender, EventArgs e) { /*Bnet Server IP*/ }
         private void textBox12_TextChanged(object sender, EventArgs e) { /*Bnet Server Port*/ }
         private void textBox11_TextChanged(object sender, EventArgs e) { /*Game Server IP*/ }
@@ -253,122 +260,29 @@ namespace MadCow
         private void RestoreDefault_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             //Restore Default Server Control Settings
-            textBox13.Text = "0.0.0.0";
-            textBox12.Text = "1345";
-            textBox11.Text = "0.0.0.0";
-            textBox10.Text = "1999";
-            textBox9.Text = "0.0.0.0";
-            checkBox3.Checked = false;
-            textBox1.Text = "Welcome to mooege development server!";
-            /*IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
-            IConfig config = source.Configs["MooNet-Server"];
-            config.Set("BindIP", textBox13.Text);
-            IConfig config1 = source.Configs["MooNet-Server"];
-            config1.Set("Port", textBox12.Text);
-            IConfig config2 = source.Configs["Game-Server"];
-            config2.Set("BindIP", textBox11.Text);
-            IConfig config3 = source.Configs["Game-Server"];
-            config3.Set("Port", textBox10.Text);
-            IConfig config4 = source.Configs["NAT"];
-            config4.Set("PublicIP", textBox9.Text);
-            IConfig config5 = source.Configs["NAT"];
-            config5.Set("Enabled", "false");
-            IConfig config6 = source.Configs["MooNet-Server"];
-            config6.Set("MOTD", textBox1.Text);
-            source.Save();*/
-            
+            BnetServerIp.Text = "0.0.0.0";
+            BnetServerPort.Text = "1345";
+            GameServerIp.Text = "0.0.0.0";
+            GameServerPort.Text = "1999";
+            PublicServerIp.Text = "0.0.0.0";
+            NATcheckBox.Checked = false;
+            MOTD.Text = "Welcome to mooege development server!";            
         }
 
         private void LaunchServer_Click(object sender, EventArgs e)
         {
-            if (ProcessFind.FindProcess("Mooege") == true)
-            {
-                var answer = MessageBox.Show("Mooege is already Running. Do you want to restart Mooege?", "Attention",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (answer == DialogResult.Yes)
-                {
-                    ProcessFind.KillProcess("Mooege");
-                }
-                else
-                {
-                    //Do Nothing
-                }
-            }
-            else
-            {
-                if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
-                {
-                    //First we modify the Mooege INI storage path.
-                    IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
-
-                    Console.WriteLine("Modifying MooNet-Server IP...");
-                    IConfig config = source.Configs["MooNet-Server"];
-                    config.Set("BindIP", textBox13.Text);
-                    Console.WriteLine("Modifying MooNet-Server Port...");
-                    IConfig config1 = source.Configs["MooNet-Server"];
-                    config1.Set("Port", textBox12.Text);
-                    Console.WriteLine("Modifying Game-Server IP...");
-                    IConfig config2 = source.Configs["Game-Server"];
-                    config2.Set("BindIP", textBox11.Text);
-                    Console.WriteLine("Modifying Game-Server Port...");
-                    IConfig config3 = source.Configs["Game-Server"];
-                    config3.Set("Port", textBox10.Text);
-                    Console.WriteLine("Modifying Public IP...");
-                    IConfig config4 = source.Configs["NAT"];
-                    config4.Set("PublicIP", textBox9.Text);
-                    Console.WriteLine("Modifying MOTD...");
-                    IConfig config7 = source.Configs["MooNet-Server"];
-                    config7.Set("MOTD", textBox1.Text);
-
-                    if (checkBox3.Checked == true)
-                    {
-                        Console.WriteLine("Modifying NAT...");
-                        IConfig config5 = source.Configs["NAT"];
-                        config5.Set("Enabled", "true");
-                        source.Save();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Keeping NAT the same...");
-                        IConfig config6 = source.Configs["NAT"];
-                        config6.Set("Enabled", "false");
-                        source.Save();
-                    }
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Could not modify Mooege INI FILE");
-                    Console.WriteLine("Do you have mooege?");
-                    label2.Text = "Use Update Mooege Server";
-                    Console.ForegroundColor = ConsoleColor.White;
-
-                }
-                /*
-                Thread.Sleep(2000);
-                Process proc0 = new Process();
-                proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
-                proc0.Start();
-                */
-                MessageBox.Show(Compile.currentMooegeExePath);
-            }
+            System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadProc2));
+            t.Start();
         }
 
-        private void UpdateMooegeServer_Click(object sender, EventArgs e)
+        public static void ThreadProc2()
         {
-            if (ProcessFind.FindProcess("Mooege") == true)
-            {
-                ProcessFind.KillProcess("Mooege");
-            }
-            //Instead of MadCowRunProcedure.RunMadCow(0);
- 	     	//PreRequeriments.CheckPrerequeriments();
- 	    	//Commands.RunUpdate();
+            Application.Run(new RepositorySelectionServer());
         }
 
-
-        //-------------------------//
-        //   Timer For AutoUpdate  // Complex shit :P.
-        //-------------------------//   
+        ///////////////////////////////////////////////////////////
+        //Timer stuff for AutoUpdate
+        ///////////////////////////////////////////////////////////
    
         private void AutoUpdate_CheckedChanged(object sender, EventArgs e)
         {
@@ -400,10 +314,10 @@ namespace MadCow
            else
                label1.Text = "Update in " + Tick + " minutes.";
         }
-        
-        //-------------------------//
-        //   Diablo 3 Path Stuff   //
-        //-------------------------//
+
+        ///////////////////////////////////////////////////////////
+        //Diablo Path Stuff
+        ///////////////////////////////////////////////////////////
 
         private void InitializeFindPath()
         {
@@ -448,6 +362,7 @@ namespace MadCow
             }
         }
 
+        //Find Diablo Path Dialog
         private void FindDiablo_Click(object sender, EventArgs e)
         {
             String madCowIni = "madcow.ini"; //Our INI setting file.
@@ -515,7 +430,7 @@ namespace MadCow
             using (System.IO.Stream streamRemote = client.OpenRead(new Uri(ParseRevision.revisionUrl + "/zipball/master")))
             {
             // We write those files into the file system.
-                 using (Stream streamLocal = new FileStream(Program.programPath + "/Mooege.zip", FileMode.Create, FileAccess.Write, FileShare.None))
+                 using (Stream streamLocal = new FileStream(Program.programPath + "/Repositories/Mooege.zip", FileMode.Create, FileAccess.Write, FileShare.None))
                  {
                   // Loop the stream and get the file into the byte buffer
                   int iByteSize = 0;
@@ -552,16 +467,13 @@ namespace MadCow
         {
             progressBar2.Value = e.ProgressPercentage;
         }
-
-        //
+                
         //PROCEED WITH THE PROCESS ONCE THE DOWNLOAD ITS COMPLETE
-        //
-
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             progressBar1.PerformStep();
             Commands.RunUpdate();
-            label2.Text = "Update Complete";
+            Console.WriteLine("Update Complete!");
             UpdateMooegeButton.Enabled = true;
             if (EnableAutoUpdateBox.Checked == true)
             {
@@ -571,44 +483,18 @@ namespace MadCow
             }
         }
 
-        ////////////////////////////////////////////////////////////////////////
-        //URL TEXT FIELD COLOR MANAGEMENT
-        //This has the function on turning letters red if Error, Black if normal.
-        ////////////////////////////////////////////////////////////////////////
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateMooegeButton.Enabled = false;
-            AutoUpdateValue.Enabled = false; //If user is typing a new URL Update and Autoupdate
-            EnableAutoUpdateBox.Enabled = false;      //Functions gets disabled
-            try
-            {
-                if (comboBox1.Text == "Incorrect repository entry." || comboBox1.Text == "Check your internet connection.")
-                {
-                    this.comboBox1.ForeColor = Color.Red;
-                }
-                else
-                {
-                    comboBox1.ForeColor = Color.Black;
-                    this.label4.BackColor = System.Drawing.Color.Transparent;
-                    pictureBox1.Hide();//Error Image (Cross)
-                    pictureBox2.Hide();//Correct Image (Tick)
-                }
-            }
-            catch
-            {
-                comboBox1.ForeColor = SystemColors.ControlText;
-            }
-        }
-
+        ///////////////////////////////////////////////////////////
+        //ResetRepoFolder
+        ///////////////////////////////////////////////////////////
+        
         private void ResetRepoFolder_Click(object sender, EventArgs e)
         {
             SimpleFileDelete.Delete(1);
         }
-     
-        //-------------------------//
-        //  ReDownload 7841 MPQ    //
-        //-------------------------//
+
+        ///////////////////////////////////////////////////////////
+        //Redownload 7841
+        ///////////////////////////////////////////////////////////
 
         private void ReDownloadMPQ_Click(object sender, EventArgs e)
         {  
@@ -625,14 +511,6 @@ namespace MadCow
                     {
                         ProcessFind.KillProcess("Diablo");
                         Thread.Sleep(500);
-                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7170.MPQ.LOCK");
-                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7200.MPQ.LOCK");
-                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7318.MPQ.LOCK");
-                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7338.MPQ.LOCK");
-                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7447.MPQ.LOCK");
-                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7728.MPQ.LOCK");
-                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7841.MPQ.LOCK");
-                        System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7931.MPQ.LOCK");
                         System.IO.File.Delete(MPQpath + @"\base\d3-update-base-7841.MPQ");
                     }
                     try
@@ -679,9 +557,9 @@ namespace MadCow
             MessageBox.Show("Download completed!");
         }
 
-        //-------------------------//
-        //  Validate        MPQ    //
-        //-------------------------//
+        ///////////////////////////////////////////////////////////
+        //Validate MPQ's-MD5
+        ///////////////////////////////////////////////////////////
 
         private void ValidateMPQs_Click(object sender, EventArgs e)//Starts validating MD5's
         {
@@ -699,78 +577,11 @@ namespace MadCow
             }
         }
 
-        ////////////////////////////////////////
-        //Server Control Refresh From Config.Ini
-        ////////////////////////////////////////
-
-        private void RefreshFromConfig_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            if (File.Exists(Program.programPath + "\\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + "\\src\\Mooege\\bin\\Debug\\config.ini"))
-            {
-                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
-                string Src1 = source.Configs["MooNet-Server"].Get("BindIP");
-                textBox13.Text = Src1;
-            }
-            else textBox13.Text = "0.0.0.0";
-
-            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
-            {
-                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
-                string Src2 = source.Configs["MooNet-Server"].Get("Port");
-                textBox12.Text = Src2;
-            }
-            else textBox12.Text = "1345";
-
-            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
-            {
-                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
-                string Src3 = source.Configs["Game-Server"].Get("BindIP");
-                textBox11.Text = Src3;
-            }
-            else textBox11.Text = "0.0.0.0";
-
-            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
-            {
-                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
-                string Src4 = source.Configs["Game-Server"].Get("Port");
-                textBox10.Text = Src4;
-            }
-            else textBox10.Text = "1999";
-
-            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
-            {
-                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
-                string Src5 = source.Configs["NAT"].Get("PublicIP");
-                textBox9.Text = Src5;
-            }
-            else textBox9.Text = "0.0.0.0";
-
-            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
-            {
-                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
-                string Src6 = source.Configs["MooNet-Server"].Get("MOTD");
-                textBox1.Text = Src6;
-            }
-            else textBox1.Text = "Welcome to mooege development server!";
-
-            if (File.Exists(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini"))
-            {
-                IConfigSource source = new IniConfigSource(Program.programPath + @"\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini");
-                string Src7 = source.Configs["NAT"].Get("Enabled");
-                if (Src7 == "true")
-                {
-                    checkBox3.Checked = true;
-                }
-                else
-                    checkBox3.Checked = false;
-            }
-            else checkBox3.Checked = false;
-        }
-
         ///////////////////////////////////////////////////////////
         //Verify Diablo 3 Version compared to Mooege supported one.
         ///////////////////////////////////////////////////////////
         
+        //We open a WebClient in the backgroundworker so it doesnt freeze MadCow UI.
         private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
         {
             try
@@ -786,6 +597,7 @@ namespace MadCow
             }
         }
 
+        //After Asyn download complete, we proceed to parse the required version by Mooege in VersionInfo.cs.
         private void Checkversions(Object sender, DownloadStringCompletedEventArgs e)
         {
             String parseVersion = e.Result;
@@ -814,7 +626,7 @@ namespace MadCow
                 }
                 ));
             }
-
+            //If the versions missmatch:
             else if (LocalD3Version != CurrentD3VersionSupported)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -837,6 +649,398 @@ namespace MadCow
             }
         }
 
-        private void txtConsole_TextChanged(object sender, EventArgs e) { }
+        ///////////////////////////////////////////////////////////
+        //Save Profile (We write a .mdc (Madcow :P) file into "ServerProfiles" Folder. //We validate first the IP & Port Entries.
+        ///////////////////////////////////////////////////////////
+        private void SaveProfile_Click(object sender, EventArgs e)
+        {
+            //Match Pattern
+            string pattern = @"(([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|255[0-5])\.){3}([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])";
+            Regex check = new Regex(pattern);
+            string[] ipFields = { this.BnetServerIp.Text, this.GameServerIp.Text, this.PublicServerIp.Text };            
+            int i = 0; //Foreach IP counter.
+            int j = 0; //Foreach PORT counter.
+            Boolean invalidIP = false;
+
+            //Error handling if textbox null -> Giving feedback in the textbox field.
+            for (int x = 0; x < ipFields.Length; x++)
+            {
+                if (string.IsNullOrEmpty(ipFields[x]))
+                {
+                    IpErrorHandler(x);
+                    invalidIP = true;
+                }
+            }
+
+            //VALIDATION FOR IP
+            if (invalidIP == false)
+            {
+                foreach (string value in ipFields)
+                {
+                    for (int Lp = 0; Lp < 999; Lp++)
+                    {
+                        string IPAddress = String.Format("{0}.{0}.{0}.{0}", Lp);
+
+                        if (Regex.Match(ipFields[i], pattern).Success)
+                        {
+                            IpCorrectHandler(i);
+                        }
+                        else
+                        {
+                            IpErrorHandler(i);
+                            invalidIP = true;
+                            break;
+                        }
+                    }
+                    i++;
+                }
+            }
+
+            //VALIDATION FOR PORT
+
+            string[] portFields = { this.BnetServerPort.Text, this.GameServerPort.Text };      
+            int Number;
+            bool isNumber;
+
+            for (int x = 0; x < portFields.Length; x++)
+            {
+                if (string.IsNullOrEmpty(portFields[x]))
+                {
+                    PortErrorHandler(x);
+                    invalidIP = true;
+                }
+            }
+
+            foreach (string value in portFields)
+            {
+                isNumber = Int32.TryParse(portFields[j], out Number);
+
+                if (!isNumber || portFields[j].Length > 4 || portFields[j].Length < 4)
+                {
+                    PortErrorHandler(j);
+                    invalidIP = true;
+                }
+                else
+                {
+                    PortCorrectHandler(j);
+                }
+                j++;
+            }
+
+            if (invalidIP == false)
+            {
+                //If invalidIP == false which means all fields are valid, we hide any error cross that might be around.
+                this.ErrorBnetServerIp.Visible = false;
+                this.ErrorBnetServerPort.Visible = false;
+                this.ErrorGameServerIp.Visible = false;
+                this.ErrorGameServerPort.Visible = false;
+                this.ErrorGameServerPort.Visible = false;
+                this.ErrorPublicServerIp.Visible = false;
+
+                //If invalidIP == false which means all fields are valid, we show all green ticks!
+                this.TickBnetServerIP.Visible = true;
+                this.TickBnetServerPort.Visible = true;
+                this.TickGameServerIp.Visible = true;
+                this.TickGameServerPort.Visible = true;
+                this.TickGameServerPort.Visible = true;
+                this.TickPublicServerIp.Visible = true;
+
+                //We proceed to ask the user where to save the file.
+                SaveFileDialog saveProfile = new SaveFileDialog();
+                saveProfile.Title = "Save Server Profile";
+                saveProfile.DefaultExt = ".mdc";
+                saveProfile.Filter = "MadCow Profile|*.mdc";
+                saveProfile.InitialDirectory = Program.programPath + @"\ServerProfiles";
+                saveProfile.ShowDialog();
+
+                if (saveProfile.FileName == "")
+                {
+                    Console.WriteLine("You didn't specify a profile name");
+                }
+
+                else
+                {
+                    CurrentProfile = saveProfile.FileName; //We set the global string value, we will grab this value from RepositorySelectionServer.
+                    TextWriter tw = new StreamWriter(saveProfile.FileName);
+                    //tw.WriteLine("Bnet Server Ip");
+                    tw.WriteLine(this.BnetServerIp.Text);
+                    //tw.WriteLine("Game Server Ip");
+                    tw.WriteLine(this.GameServerIp.Text);
+                    //tw.WriteLine("Public Server Ip");
+                    tw.WriteLine(this.PublicServerIp.Text);
+                    //tw.WriteLine("Bnet Server Port");
+                    tw.WriteLine(this.BnetServerPort.Text);
+                    //tw.WriteLine("Game Server Port");
+                    tw.WriteLine(this.GameServerPort.Text);
+                    //tw.WriteLine("MOTD");
+                    tw.WriteLine(this.MOTD.Text);
+                    //tw.WriteLine("NAT");
+                    tw.WriteLine(this.NATcheckBox.Checked);
+                    tw.Close();
+                    Console.Write("Saved profile " + saveProfile.FileName + " succesfully");
+                }
+            }
+        }
+
+        private void IpErrorHandler(int i)
+        {
+            switch (i)
+            {
+                case 0: //BnetServerIp
+                    this.BnetServerIp.Text = "Invalid IP";
+                    this.ErrorBnetServerIp.Visible = true;
+                    this.TickBnetServerIP.Visible = false;
+                    break;
+                case 1: //GameServerIp
+                    this.GameServerIp.Text = "Invalid IP";
+                    this.ErrorGameServerIp.Visible = true;
+                    this.TickGameServerIp.Visible = false;
+                    break;
+                case 2: //PublicServerIp
+                    this.PublicServerIp.Text = "Invalid IP";
+                    this.ErrorPublicServerIp.Visible = true;
+                    this.TickPublicServerIp.Visible = false;
+                    break;
+            }
+        }
+
+        private void IpCorrectHandler(int i)
+        {
+            switch (i)
+            {
+                case 0: //BnetServerIp
+                    this.ErrorBnetServerIp.Visible = false;
+                    this.TickBnetServerIP.Visible = true;
+                    break;
+                case 1: //GameServerIp
+                    this.ErrorGameServerIp.Visible = false;
+                    this.TickGameServerIp.Visible = true;
+                    break;
+                case 2: //PublicServerIp
+                    this.ErrorPublicServerIp.Visible = false;
+                    this.TickPublicServerIp.Visible = true;
+                    break;
+            }
+        }
+
+        private void PortErrorHandler(int i)
+        {
+            switch (i)
+            {
+                case 0: //BnetServerPort
+                    this.BnetServerPort.Text = "Invalid Port";
+                    this.ErrorBnetServerPort.Visible = true;
+                    this.TickBnetServerPort.Visible = false;
+                    break;
+                case 1: //GameServerPort
+                    this.GameServerPort.Text = "Invalid Port";
+                    this.ErrorGameServerPort.Visible = true;
+                    this.TickGameServerPort.Visible = false;
+                    break;
+            }
+        }
+
+        private void PortCorrectHandler(int i)
+        {
+            switch (i)
+            {
+                case 0: //BnetServerPort
+                    this.ErrorBnetServerPort.Visible = false;
+                    this.TickBnetServerPort.Visible = true;
+                    break;
+                case 1: //GameServerPort
+                    this.ErrorGameServerPort.Visible = false;
+                    this.TickGameServerPort.Visible = true;
+                    break;
+            }
+        }
+
+        ///////////////////////////////////////////////////////////
+        //Load Profile - We load from a .mdc file, update CurrenProfile variable and parse the values into the boxes.
+        ///////////////////////////////////////////////////////////
+        private void LoadProfile_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog OpenProfile = new OpenFileDialog();
+            OpenProfile.Title = "Save Server Profile";
+            OpenProfile.Filter = "MadCow Profile|*.mdc";
+            OpenProfile.InitialDirectory = Program.programPath + @"\ServerProfiles";
+            OpenProfile.ShowDialog();
+            if (OpenProfile.FileName == "")
+            {
+                Console.WriteLine("You didn't select a profile name");
+            }
+
+            else
+            {
+                CurrentProfile = OpenProfile.FileName; //We set the global string value, we will grab this value from RepositorySelectionServer.
+                TextReader tr = new StreamReader(OpenProfile.FileName);
+                this.BnetServerIp.Text = tr.ReadLine();
+                this.GameServerIp.Text = tr.ReadLine();
+                this.PublicServerIp.Text = tr.ReadLine();
+                this.BnetServerPort.Text = tr.ReadLine();
+                this.GameServerPort.Text = tr.ReadLine();
+                this.MOTD.Text = tr.ReadLine();
+                if (tr.ReadLine().Contains("True"))
+                {
+                    this.NATcheckBox.Checked = true;
+                }
+                else
+                {
+                    this.NATcheckBox.Checked = false;
+                }
+                tr.Close();
+                //Loading a profile means it has the correct values for every box, so first we disable every red cross that might be out there.
+                this.ErrorBnetServerIp.Visible = false;
+                this.ErrorBnetServerPort.Visible = false;
+                this.ErrorGameServerIp.Visible = false;
+                this.ErrorGameServerPort.Visible = false;
+                this.ErrorGameServerPort.Visible = false;
+                this.ErrorPublicServerIp.Visible = false;
+                //Loading a profile means it has the correct values for every box, so we change everything to green ticked.
+                this.TickBnetServerIP.Visible = true;
+                this.TickBnetServerPort.Visible = true;
+                this.TickGameServerIp.Visible = true;
+                this.TickGameServerPort.Visible = true;
+                this.TickGameServerPort.Visible = true;
+                this.TickPublicServerIp.Visible = true;
+                Console.Write("Loaded Profile " + OpenProfile.FileName + " succesfully");
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        //URL TEXT FIELD COLOR MANAGEMENT
+        //This has the function on turning letters red if Error, Black if normal.
+        ////////////////////////////////////////////////////////////////////////
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateMooegeButton.Enabled = false;
+            AutoUpdateValue.Enabled = false; //If user is typing a new URL Update and Autoupdate
+            EnableAutoUpdateBox.Enabled = false;      //Functions gets disabled
+            try
+            {
+                if (comboBox1.Text == "Incorrect repository entry." || comboBox1.Text == "Check your internet connection.")
+                {
+                    this.comboBox1.ForeColor = Color.Red;
+                }
+                else
+                {
+                    comboBox1.ForeColor = Color.Black;
+                    this.label4.BackColor = System.Drawing.Color.Transparent;
+                    pictureBox1.Hide();//Error Image (Cross)
+                    pictureBox2.Hide();//Correct Image (Tick)
+                }
+            }
+            catch
+            {
+                comboBox1.ForeColor = SystemColors.ControlText;
+            }
+        }
+
+        //Color handler for BnetServerIp
+        private void BnetServerIp_TextChanged(object sender, EventArgs e)
+        {
+            string currentText = this.BnetServerIp.Text;
+            try
+            {
+                if (currentText == "Invalid IP")
+                {
+                    Console.WriteLine("Check for input errors!");
+                    this.BnetServerIp.ForeColor = Color.Red;
+                }
+                else
+                {
+                    this.BnetServerIp.ForeColor = Color.Black;
+                }
+            }
+            catch
+            {
+                this.BnetServerIp.ForeColor = SystemColors.ControlText;
+            }
+        }
+        //Color handler for GameServerIp
+        private void GameServerIp_TextChanged(object sender, EventArgs e)
+        {
+            string currentText = this.GameServerIp.Text;
+            try
+            {
+                if (currentText == "Invalid IP")
+                {
+                    Console.WriteLine("Check for input errors!");
+                    this.GameServerIp.ForeColor = Color.Red;
+                }
+                else
+                {
+                    this.GameServerIp.ForeColor = Color.Black;
+                }
+            }
+            catch
+            {
+                this.GameServerIp.ForeColor = SystemColors.ControlText;
+            }
+        }
+        //Color handler for PublicServerIp
+        private void PublicServerIp_TextChanged(object sender, EventArgs e)
+        {
+            string currentText = this.PublicServerIp.Text;
+            try
+            {
+                if (currentText == "Invalid IP")
+                {
+                    Console.WriteLine("Check for input errors!");
+                    this.PublicServerIp.ForeColor = Color.Red;
+                }
+                else
+                {
+                    this.PublicServerIp.ForeColor = Color.Black;
+                }
+            }
+            catch
+            {
+                this.PublicServerIp.ForeColor = SystemColors.ControlText;
+            }
+        }
+        //Color handler for BnetServerPort
+        private void BnetServerPort_TextChanged(object sender, EventArgs e)
+        {
+            string currentText = this.BnetServerPort.Text;
+            try
+            {
+                if (currentText == "Invalid Port")
+                {
+                    Console.WriteLine("Check for input errors!");
+                    this.BnetServerPort.ForeColor = Color.Red;
+                }
+                else
+                {
+                    this.BnetServerPort.ForeColor = Color.Black;
+                }
+            }
+            catch
+            {
+                this.BnetServerPort.ForeColor = SystemColors.ControlText;
+            }
+        }
+        //Color handler for GameServerPort
+        private void GameServerPort_TextChanged(object sender, EventArgs e)
+        {
+            string currentText = this.GameServerPort.Text;
+            try
+            {
+                if (currentText == "Invalid Port")
+                {
+                    Console.WriteLine("Check for input errors!");
+                    this.GameServerPort.ForeColor = Color.Red;
+                }
+                else
+                {
+                    this.GameServerPort.ForeColor = Color.Black;
+                }
+            }
+            catch
+            {
+                this.GameServerPort.ForeColor = SystemColors.ControlText;
+            }
+        }
     }
- }
+}
