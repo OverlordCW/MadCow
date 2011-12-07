@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RepositorySelectionPlay));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.LaunchDiabloButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,22 +56,22 @@
             this.checkedListBox1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox1_ItemCheck);
             this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
             // 
-            // button1
+            // LaunchDiabloButton
             // 
-            this.button1.Location = new System.Drawing.Point(34, 183);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(237, 58);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Launch Diablo 3";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.LaunchDiabloButton.Location = new System.Drawing.Point(34, 183);
+            this.LaunchDiabloButton.Name = "LaunchDiabloButton";
+            this.LaunchDiabloButton.Size = new System.Drawing.Size(237, 58);
+            this.LaunchDiabloButton.TabIndex = 1;
+            this.LaunchDiabloButton.Text = "Launch Diablo 3";
+            this.LaunchDiabloButton.UseVisualStyleBackColor = true;
+            this.LaunchDiabloButton.Click += new System.EventHandler(this.button1_Click);
             // 
             // RepositorySelectionPlay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(302, 247);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.LaunchDiabloButton);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -87,6 +87,6 @@
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button LaunchDiabloButton;
     }
 }
