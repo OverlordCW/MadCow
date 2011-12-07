@@ -29,12 +29,13 @@ namespace MadCow
             if (folder == 1)
             {
            // Delete a directory and all subdirectories with Directory static method...
-            if (System.IO.Directory.Exists(Program.programPath + @"/Repository/" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
+            if (System.IO.Directory.Exists(Program.programPath + @"/Repositories"))
                 {
                     try
                     {
-                        Console.WriteLine("Deleting Repository Folder");
-                        System.IO.Directory.Delete(Program.programPath + @"/Repository/" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision, true);
+                        System.IO.Directory.Delete(Program.programPath + @"/Repositories", true);
+                        Console.WriteLine("Deleted Repositories Folder");
+                        Directory.CreateDirectory(Program.programPath + @"/Repositories");
                     }
                     catch (System.IO.IOException e)
                     {

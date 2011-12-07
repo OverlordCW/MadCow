@@ -106,13 +106,13 @@ namespace MadCow
             if (File.Exists(Program.programPath + "\\Tools\\" + val))
             {
                 File.Delete(Program.programPath + "\\Tools\\" + val);
-                Console.WriteLine("DELETED BATCH FILE");
+                Console.WriteLine("Deleting Batch File..");
                 FileInfo fi = new FileInfo(Program.programPath + "\\Tools\\" + val);
                 StreamWriter sw = fi.CreateText();
                 sw.WriteLine(@"cd C:\Windows\Microsoft.NET\Framework\v4.0.30319\");
                 sw.WriteLine("MSBUILD MODIFY");
                 sw.Close();
-                Console.WriteLine("CREATED BATCH FILE");
+                Console.WriteLine("Created Batch File.");
             }
             else
             {
@@ -121,7 +121,7 @@ namespace MadCow
                 sw.WriteLine(@"cd C:\Windows\Microsoft.NET\Framework\v4.0.30319\");
                 sw.WriteLine("MSBUILD MODIFY");
                 sw.Close();
-                Console.WriteLine("CREATED BATCH FILE");
+                Console.WriteLine("Created Batch File.");
             }
         }
 
