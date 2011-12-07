@@ -48,6 +48,7 @@ namespace MadCow
             AutoUpdateValue.Enabled = false;
             EnableAutoUpdateBox.Enabled = false;
             PlayDiabloButton.Enabled = false;
+            SimpleFileDelete.HideFile();
         }
 
         ///////////////////////////////////////////////////////////
