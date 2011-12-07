@@ -33,6 +33,7 @@ namespace MadCow
         {
             InitializeComponent();
             AddAvailableRepositories();
+            LaunchServerButton.Enabled = false;
         }
 
         public void AddAvailableRepositories() //Adds available repos to the list.
@@ -47,6 +48,7 @@ namespace MadCow
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            LaunchServerButton.Enabled = true;
             int selected = checkedListBox1.SelectedIndex;
             if (selected != -1)
             {   //We set the Mooege INI path according to user repo selection for further use when writing new config values.               
