@@ -31,6 +31,7 @@ namespace MadCow
         {
             InitializeComponent();
             AddAvailableRepositories();
+            LaunchDiabloButton.Enabled = false;
         }
 
         public void AddAvailableRepositories() //Adds available repos to the list.
@@ -49,6 +50,7 @@ namespace MadCow
             if (selected != -1)
             {
                 Compile.currentMooegeExePath = Program.programPath + @"\" + @"Repositories\" + checkedListBox1.Items[selected].ToString() + @"\src\Mooege\bin\Debug\Mooege.exe";
+                LaunchDiabloButton.Enabled = true;
             }
         }
 
