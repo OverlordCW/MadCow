@@ -41,6 +41,7 @@ namespace MadCow
         private int Tick;
         //Parsing Console into a textbox
         TextWriter _writer = null;
+        public static double ticker = 0;
 
         public Form1()
         {
@@ -351,8 +352,8 @@ namespace MadCow
                         RemoteServerButton.Enabled = true;
                         //Freezes at the start longer, but at least you get verified when you load!
                         backgroundWorker2.RunWorkerAsync(); //Compares Versions of D3 with Mooege
-                        ValidateMPQButton.Enabled = true;
-                        RedownloadMPQButton.Enabled = true;
+                        //ValidateMPQButton.Enabled = true;
+                        //RedownloadMPQButton.Enabled = true;
                     }
                 }
                 catch (Exception Ex)
@@ -383,8 +384,8 @@ namespace MadCow
                     textBox2.Enabled = true;
                     textBox3.Enabled = true;
                     RemoteServerButton.Enabled = true;
-                    RedownloadMPQButton.Enabled = true;
-                    ValidateMPQButton.Enabled = true;
+                    //RedownloadMPQButton.Enabled = true;
+                    //ValidateMPQButton.Enabled = true;
 
                 if (File.Exists(Program.programPath + "\\Tools\\" + madCowIni))
                 {
@@ -550,7 +551,7 @@ namespace MadCow
 
         private void ProgressChanged(object sender, DownloadProgressChangedEventArgs e)//Download MPQ Progress bar.
         {
-            progressBar3.Value = e.ProgressPercentage;
+            //progressBar3.Value = e.ProgressPercentage;
         }
 
         private void Completed(object sender, AsyncCompletedEventArgs e)
@@ -1048,5 +1049,102 @@ namespace MadCow
                 this.GameServerPort.ForeColor = SystemColors.ControlText;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////
+        //Download ALL Mpq files needed by Mooege ATM.
+        ////////////////////////////////////////////////////////////////////////
+        private void DownloadMPQSButton_Click(object sender, EventArgs e)
+        {
+            backgroundWorker3.RunWorkerAsync();
+        }
+
+        private void DownloadMPQS(object sender, DoWorkEventArgs e)
+        {
+            int i = 0; //Used as a counter to move forward into the string array values.
+            String[] mpqUrls = {"http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7170.MPQ",
+                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7200.MPQ",
+                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7318.MPQ",
+                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7338.MPQ",
+                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7447.MPQ",
+                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7728.MPQ",
+                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7841.MPQ",
+                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7931.MPQ",
+                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/ClientData.mpg",
+                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/CoreData.mpq"};
+
+            Stopwatch speedTimer = new Stopwatch();
+            foreach (string value in mpqUrls)
+            {
+                Uri url = new Uri(mpqUrls[i]);
+                System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
+                System.Net.HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse();
+                //Parsing the file name.
+                var fullName = url.LocalPath.TrimStart('/');
+                var name = Path.GetFileNameWithoutExtension(fullName);
+                var ext = Path.GetExtension(fullName);
+                //End Parsing.
+                response.Close();
+                Int64 iSize = response.ContentLength;
+                Int64 iRunningByteTotal = 0;
+                
+                using (System.Net.WebClient client = new System.Net.WebClient())
+                {
+                    using (System.IO.Stream streamRemote = client.OpenRead(new Uri(mpqUrls[i])))
+                    {
+                        using (Stream streamLocal = new FileStream(Program.programPath + @"\MPQ\" + name + ext, FileMode.Create, FileAccess.Write, FileShare.None))
+                        {
+                            //We start the timer to measure speed - This still needs testing not sure if speed its accuarate. - wesko
+                            speedTimer.Start();
+                            DownloadingFileName.Invoke(new Action(() =>
+                            {
+                                this.DownloadingFileName.Text = "Downloading File: " + name + ext;
+                            }
+                            ));
+
+                            int iByteSize = 0;
+                            byte[] byteBuffer = new byte[iSize];
+                            while ((iByteSize = streamRemote.Read(byteBuffer, 0, byteBuffer.Length)) > 0)
+                            {
+                                streamLocal.Write(byteBuffer, 0, iByteSize);
+                                iRunningByteTotal += iByteSize;
+
+                                double dIndex = (double)(iRunningByteTotal);
+                                double dTotal = (double)byteBuffer.Length;
+                                double dProgressPercentage = (dIndex / dTotal);
+                                int iProgressPercentage = (int)(dProgressPercentage * 100);
+                                
+                                //We calculate the download speed.
+                                TimeSpan ts = speedTimer.Elapsed;
+                                double bytesReceivedSpeed = (iRunningByteTotal / 1024) / ts.TotalSeconds;
+                                DownloadFileSpeed.Invoke(new Action(() =>
+                                {
+                                    this.DownloadFileSpeed.Text = "Downloading Speed: " + Convert.ToInt32(bytesReceivedSpeed) + "Kbps";
+                                }
+                                ));
+                                backgroundWorker3.ReportProgress(iProgressPercentage);
+                            }
+                            streamLocal.Close();
+                        }
+                        streamRemote.Close();
+                    }
+                } i++;
+            } speedTimer.Stop();
+        }
+
+        private void downloader_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            DownloadingFileName.Visible = true;
+            DownloadFileSpeed.Visible = true;
+            DownloadMPQSprogressBar.Value = e.ProgressPercentage;
+        }
+
+        private void downloader_DownloadedComplete(object sender, RunWorkerCompletedEventArgs e)
+        {
+            DownloadingFileName.Visible = false;
+            DownloadFileSpeed.Visible = false;
+            System.Console.WriteLine("Download complete.");
+        }
+
+
     }
 }
