@@ -977,6 +977,9 @@ namespace MadCow
                                "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/ClientData.mpg",
                                "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/CoreData.mpq"};
 
+            //Fixed path implementation for now.
+            String[] mpqDestination = { @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\", @"\MPQ\" };
+
             Stopwatch speedTimer = new Stopwatch();
             foreach (string value in mpqUrls)
             {
@@ -996,7 +999,7 @@ namespace MadCow
                 {
                     using (System.IO.Stream streamRemote = client.OpenRead(new Uri(mpqUrls[i])))
                     {
-                        using (Stream streamLocal = new FileStream(Program.programPath + @"\MPQ\" + name + ext, FileMode.Create, FileAccess.Write, FileShare.None))
+                        using (Stream streamLocal = new FileStream(Program.programPath + mpqDestination[i] + name + ext, FileMode.Create, FileAccess.Write, FileShare.None))
                         {
                             //We start the timer to measure speed - This still needs testing not sure if speed its accuarate. - wesko
                             speedTimer.Start();

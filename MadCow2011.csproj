@@ -115,6 +115,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="mooege.ico" />
+    <Content Include="MPQ\base\MPQFolder.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Repositories\ReposGoHere.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
