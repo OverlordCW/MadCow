@@ -57,8 +57,6 @@ namespace MadCow
                 {
                     if (md5Filecheck.Contains(MD5ValidPool[i]) == true)
                     {
-                        Console.WriteLine(dir); 
-                            Console.WriteLine(md5Filecheck);
                         trueCounter += 1;
                     }
                 }
