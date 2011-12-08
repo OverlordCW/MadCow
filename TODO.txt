@@ -8,6 +8,7 @@ Added by Wesko
 
 Added by Wetwlly
 
+1. Re-add Wesko's ShortCut Creator (Mooege -> Desktop)
 
 Future TODOs
 

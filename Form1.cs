@@ -72,20 +72,6 @@ namespace MadCow
             InitializeFindPath();
         }
 
-        private void tabPage1_Click(object sender, EventArgs e) { }
-        private void label2_Click(object sender, EventArgs e) { }
-        private void label10_Click(object sender, EventArgs e) { }
-        private void label9_Click(object sender, EventArgs e) { }
-        private void textBox6_TextChanged(object sender, EventArgs e) { }
-        private void textBox7_TextChanged(object sender, EventArgs e) { }
-        private void label12_Click(object sender, EventArgs e) { }
-        private void openFileDialog1_FileOk(object sender, CancelEventArgs e) { }
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e) { }
-        private void toolTip1_Popup(object sender, PopupEventArgs e) { }
-        private void openFileDialog1_FileOk_1(object sender, CancelEventArgs e) { }
-        private void textBox2_TextChanged(object sender, EventArgs e) { }
-        private void textBox3_TextChanged(object sender, EventArgs e) { }
-
         ///////////////////////////////////////////////////////////
         //Update Mooege
         ///////////////////////////////////////////////////////////
@@ -251,13 +237,6 @@ namespace MadCow
         ///////////////////////////////////////////////////////////
         //Server Control Settings
         ///////////////////////////////////////////////////////////
-        private void textBox13_TextChanged(object sender, EventArgs e) { /*Bnet Server IP*/ }
-        private void textBox12_TextChanged(object sender, EventArgs e) { /*Bnet Server Port*/ }
-        private void textBox11_TextChanged(object sender, EventArgs e) { /*Game Server IP*/ }
-        private void textBox10_TextChanged(object sender, EventArgs e) { /*Game Server Port*/ }
-        private void textBox9_TextChanged(object sender, EventArgs e) { /*Public Server IP*/ }
-        private void checkBox3_CheckedChanged(object sender, EventArgs e) { /*enable or disable NAT*/ }
-
         private void RestoreDefault_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             //Restore Default Server Control Settings
@@ -1048,5 +1027,25 @@ namespace MadCow
                 this.GameServerPort.ForeColor = SystemColors.ControlText;
             }
         }
+
+        private void tabPage1_Click(object sender, EventArgs e) { }
+        private void label2_Click(object sender, EventArgs e) { }
+        private void label10_Click(object sender, EventArgs e) { }
+        private void label9_Click(object sender, EventArgs e) { }
+        private void textBox6_TextChanged(object sender, EventArgs e) { }
+        private void textBox7_TextChanged(object sender, EventArgs e) { }
+        private void label12_Click(object sender, EventArgs e) { }
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e) { }
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e) { }
+        private void toolTip1_Popup(object sender, PopupEventArgs e) { }
+        private void openFileDialog1_FileOk_1(object sender, CancelEventArgs e) { }
+        private void textBox2_TextChanged(object sender, EventArgs e) { }
+        private void textBox3_TextChanged(object sender, EventArgs e) { }
+        private void textBox13_TextChanged(object sender, EventArgs e) { /*Bnet Server IP*/ }
+        private void textBox12_TextChanged(object sender, EventArgs e) { /*Bnet Server Port*/ }
+        private void textBox11_TextChanged(object sender, EventArgs e) { /*Game Server IP*/ }
+        private void textBox10_TextChanged(object sender, EventArgs e) { /*Game Server Port*/ }
+        private void textBox9_TextChanged(object sender, EventArgs e) { /*Public Server IP*/ }
+        private void checkBox3_CheckedChanged(object sender, EventArgs e) { /*enable or disable NAT*/ }
     }
 }
