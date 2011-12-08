@@ -3,14 +3,10 @@ Added by Wesko
 
 2. Polish button visible evenhandlers.
 
-//Complete: 3. Clean All Button - Deletes all downloaded repositories
-
-4. Some tweaking into server control profile handling.
+3. Some tweaking into server control profile handling.
 
 
 Added by Wetwlly
-
-1. Update Mooege should FindAndKillProcess("mooege") beforehand. //Think this is already done? (Wet: I Don't Believe So, should just add it to Commands.RunUpdate(), should be fine)
 
 
 Future TODOs
@@ -21,4 +17,3 @@ Future TODOs
 
 3. Drop-Down Menu of Saved Validated Repositories //This is not implemented, there is a fixed list atm, we need to dynamically add user validates repos to our current list.
 
-//Complete: 4. Check to see if MPQpath exists for redownload MPQ, and after completion copy MPQ over to Mooege Dir, output text also. 
