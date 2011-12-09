@@ -49,6 +49,7 @@ namespace MadCow
             AutoUpdateValue.Enabled = false;
             EnableAutoUpdateBox.Enabled = false;
             PlayDiabloButton.Enabled = false;
+            FixMpqButton.Enabled = false;
             SimpleFileDelete.HideFile();
         }
 
@@ -323,6 +324,7 @@ namespace MadCow
                     }
                     else
                     {
+                        FixMpqButton.Enabled = true;
                         Diablo3UserPathSelection.Text = Src;
                         CopyMPQButton.Enabled = true;
                         PlayDiabloButton.Enabled = true;
@@ -361,6 +363,7 @@ namespace MadCow
                     textBox2.Enabled = true;
                     textBox3.Enabled = true;
                     RemoteServerButton.Enabled = true;
+                    FixMpqButton.Enabled = true;
 
                 if (File.Exists(Program.programPath + "\\Tools\\" + madCowIni))
                 {
@@ -467,26 +470,6 @@ namespace MadCow
         private void ResetRepoFolder_Click(object sender, EventArgs e)
         {
             SimpleFileDelete.Delete(1);
-        }
-
-        ///////////////////////////////////////////////////////////
-        //Validate MPQ's-MD5
-        ///////////////////////////////////////////////////////////
-
-        private void ValidateMPQs_Click(object sender, EventArgs e)//Starts validating MD5's
-        {
-            MPQprocedure.ValidateMD5();
-
-            if (MPQprocedure.ValidateMD5() == true)
-            {
-                MessageBox.Show("Found correct hashes for MPQ files"); //WLLY AT SOME POINT WE NEED TO USE ANOTHER OUTPUT FOR INFORMATION, MAYBE OVER A LABEL.
-                //USING POP UP BOXES ITS AGAINST GOOD INTERFACE DESIGN SINCE IT STOPS THE PROGRAM "FLOW".
-            }
-            else
-            {
-                MessageBox.Show("Found Incorrect Hashes! Please use our Help Tab.", "Warning", //TODO: Give specific corrupted file feedback.
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         ///////////////////////////////////////////////////////////
@@ -1053,6 +1036,103 @@ namespace MadCow
             System.Console.WriteLine("Download complete.");
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        //Download Mpq files that didn't passed validation.
+        ////////////////////////////////////////////////////////////////////////
+        private void FixMpqButton_Click(object sender, EventArgs e)
+        {
+            if (MPQprocedure.ValidateMD5() == false) //Didn't passed validation
+            {
+                var answer = MessageBox.Show("Do you want MadCow to download the correct MPQ files for you?", "Invalid Hashes Found",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (answer == DialogResult.Yes)
+                {
+                    backgroundWorker4.RunWorkerAsync();
+                }
+                else
+                {
+                    //Nothing!
+                }
+            }
+        }
+
+        private void DownloadSpecificMPQS(object sender, DoWorkEventArgs e)
+        {
+            var result1 = MPQprocedure.fileToDownload.Where(item => !string.IsNullOrEmpty(item));
+            Stopwatch speedTimer = new Stopwatch();
+            foreach (string value in result1)
+            {
+                Uri url = new Uri(value);
+                System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
+                System.Net.HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse();
+                //Parsing the file name.
+                var fullName = url.LocalPath.TrimStart('/');
+                var name = Path.GetFileNameWithoutExtension(fullName);
+                var ext = Path.GetExtension(fullName);
+                //End Parsing.
+                response.Close();
+                Int64 iSize = response.ContentLength;
+                Int64 iRunningByteTotal = 0;
+
+                using (System.Net.WebClient client = new System.Net.WebClient())
+                {
+                    using (System.IO.Stream streamRemote = client.OpenRead(new Uri(value)))
+                    {
+                        using (Stream streamLocal = new FileStream(Program.programPath + @"\MPQ\base\" + name + ext, FileMode.Create, FileAccess.Write, FileShare.None))
+                        {
+                            //We start the timer to measure speed - This still needs testing not sure if speed its accuarate. - wesko
+                            speedTimer.Start();
+                            DownloadingFileName.Invoke(new Action(() =>
+                            {
+                                this.DownloadingFileName.Text = "Downloading File: " + name + ext;
+                            }
+                            ));
+
+                            int iByteSize = 0;
+                            byte[] byteBuffer = new byte[iSize];
+                            while ((iByteSize = streamRemote.Read(byteBuffer, 0, byteBuffer.Length)) > 0)
+                            {
+                                streamLocal.Write(byteBuffer, 0, iByteSize);
+                                iRunningByteTotal += iByteSize;
+
+                                double dIndex = (double)(iRunningByteTotal);
+                                double dTotal = (double)byteBuffer.Length;
+                                double dProgressPercentage = (dIndex / dTotal);
+                                int iProgressPercentage = (int)(dProgressPercentage * 100);
+
+                                //We calculate the download speed.
+                                TimeSpan ts = speedTimer.Elapsed;
+                                double bytesReceivedSpeed = (iRunningByteTotal / 1024) / ts.TotalSeconds;
+                                DownloadFileSpeed.Invoke(new Action(() =>
+                                {
+                                    this.DownloadFileSpeed.Text = "Downloading Speed: " + Convert.ToInt32(bytesReceivedSpeed) + "Kbps";
+                                }
+                                ));
+                                backgroundWorker4.ReportProgress(iProgressPercentage);
+                            }
+                            streamLocal.Close();
+                        }
+                        streamRemote.Close();
+                    }
+                }
+            } speedTimer.Stop();
+        }
+
+        private void downloader_ProgressChanged2(object sender, ProgressChangedEventArgs e)
+        {
+            DownloadingFileName.Visible = true;
+            DownloadFileSpeed.Visible = true;
+            DownloadMPQSprogressBar.Value = e.ProgressPercentage;
+        }
+
+        private void downloader_DownloadedComplete2(object sender, RunWorkerCompletedEventArgs e)
+        {
+            DownloadingFileName.Visible = false;
+            DownloadFileSpeed.Visible = false;
+            System.Console.WriteLine("Download complete.");
+        }
+
+        //BE AWARE: CRAP BELOW.
         private void tabPage1_Click(object sender, EventArgs e) { }
         private void label2_Click(object sender, EventArgs e) { }
         private void label10_Click(object sender, EventArgs e) { }

@@ -47,8 +47,8 @@ namespace MadCow
 
         public static void HideFile()//We hide the default profile, we dont want nubs deleting this cause MadCow will cry about it.
         {
-            string filePath = Program.programPath + @"\ServerProfiles\Default.mdc";
-            File.SetAttributes(filePath, File.GetAttributes(filePath) | FileAttributes.Hidden);
+            //string filePath = Program.programPath + @"\ServerProfiles\Default.mdc";
+            //File.SetAttributes(filePath, File.GetAttributes(filePath) | FileAttributes.Hidden);
         }
 
     }
