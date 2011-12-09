@@ -32,14 +32,22 @@ namespace MadCow
                                                     ,"d3-update-base-7170.MPQ"
                                                ,"388d550d389492605a6ff6cb44ab1d63"   //7170
                                                     ,"d3-update-base-7170.MPQ"
+                                               ,"fe2d92f17a7a67e468569b941aadb097"   //7170
+                                                    ,"d3-update-base-7170.MPQ"
                                                ,"6a22c97a921216ad84b7712627ccf689"   //7200
                                                     ,"d3-update-base-7200.MPQ"
                                                ,"7148ee45696c84796f3ca16729b9aadc"   //7200
+                                                    ,"d3-update-base-7200.MPQ"
+                                               ,"ba0731144d2409996fe0448d6914d65e"   //7200
                                                     ,"d3-update-base-7200.MPQ"
                                                ,"2e804b7a6eb0454df1d73b17d1a3d8b4"   //7318
                                                     ,"d3-update-base-7318.MPQ"
                                                ,"7ee326516f3da2c8f8b80eba6199deef"   //7318
                                                     ,"d3-update-base-7318.MPQ"
+                                               ,"e851077e777f75976a4c1425a6efee46"   //7318
+                                                    ,"d3-update-base-7318.MPQ"
+                                               ,"426f24fd1cf165bf354356401e238f7d"   //7338
+                                                    ,"d3-update-base-7338.MPQ"
                                                ,"4d1e10d80450f44038b6a2b75e57f46b"   //7338
                                                     ,"d3-update-base-7338.MPQ"
                                                ,"68c43ae976872a1fa7f5a929b7f21b58"   //7338
@@ -47,6 +55,8 @@ namespace MadCow
                                                ,"b7f9057d018f8341c65f8c1220d578c7"   //7447
                                                     ,"d3-update-base-7447.MPQ"
                                                ,"751b8bf5c84220688048c192ab23f380"   //7447
+                                                    ,"d3-update-base-7447.MPQ"
+                                               ,"b46f31ee5b1c6c259f1dfc77b904ca5d"   //7447
                                                     ,"d3-update-base-7447.MPQ"
                                                ,"357d257eac6f5990096a75b03cc284df"   //7728
                                                     ,"d3-update-base-7728.MPQ"
