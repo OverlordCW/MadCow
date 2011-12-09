@@ -1047,6 +1047,7 @@ namespace MadCow
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (answer == DialogResult.Yes)
                 {
+                    SimpleFileDelete.DeleteCorruptedMpq();
                     backgroundWorker4.RunWorkerAsync();
                 }
                 else
@@ -1059,6 +1060,8 @@ namespace MadCow
         private void DownloadSpecificMPQS(object sender, DoWorkEventArgs e)
         {
             var result1 = MPQprocedure.fileToDownload.Where(item => !string.IsNullOrEmpty(item));
+            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+            string downloadDestination = source.Configs["DiabloPath"].Get("MPQpath");
             Stopwatch speedTimer = new Stopwatch();
             foreach (string value in result1)
             {
@@ -1078,7 +1081,7 @@ namespace MadCow
                 {
                     using (System.IO.Stream streamRemote = client.OpenRead(new Uri(value)))
                     {
-                        using (Stream streamLocal = new FileStream(Program.programPath + @"\MPQ\base\" + name + ext, FileMode.Create, FileAccess.Write, FileShare.None))
+                        using (Stream streamLocal = new FileStream(downloadDestination + @"\base\" + name + ext, FileMode.Create, FileAccess.Write, FileShare.None))
                         {
                             //We start the timer to measure speed - This still needs testing not sure if speed its accuarate. - wesko
                             speedTimer.Start();

@@ -18,6 +18,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using System.Linq;
+using Nini.Config;
 
 namespace MadCow
 {
@@ -49,6 +51,18 @@ namespace MadCow
         {
             //string filePath = Program.programPath + @"\ServerProfiles\Default.mdc";
             //File.SetAttributes(filePath, File.GetAttributes(filePath) | FileAttributes.Hidden);
+        }
+
+        public static void DeleteCorruptedMpq()
+        {
+            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+            string MPQpath = source.Configs["DiabloPath"].Get("MPQpath");
+            var result1 = MPQprocedure.fileToDelete.Where(item => !string.IsNullOrEmpty(item));
+            foreach (string value in result1)
+            {
+                Console.WriteLine("Deleting file " + value);
+                File.Delete(MPQpath + @"\base\" + value);
+            }
         }
 
     }
