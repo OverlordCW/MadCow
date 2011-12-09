@@ -30,15 +30,15 @@ namespace MadCow
         private static string validFound = "";
         private static String[] MD5ValidPool = {"39765d908accf4f37a4c2dfa99b8cd52"   //7170
                                                     ,"d3-update-base-7170.MPQ"
-                                               ,"a88d550d389492605a6ff6cb44ab1d63"   //7170 3
+                                               ,"388d550d389492605a6ff6cb44ab1d63"   //7170
                                                     ,"d3-update-base-7170.MPQ"
-                                               ,"aa22c97a921216ad84b7712627ccf689"   //7200 6
+                                               ,"6a22c97a921216ad84b7712627ccf689"   //7200
                                                     ,"d3-update-base-7200.MPQ"
                                                ,"7148ee45696c84796f3ca16729b9aadc"   //7200
                                                     ,"d3-update-base-7200.MPQ"
-                                               ,"ae804b7a6eb0454df1d73b17d1a3d8b4"   //7318 2
+                                               ,"2e804b7a6eb0454df1d73b17d1a3d8b4"   //7318
                                                     ,"d3-update-base-7318.MPQ"
-                                               ,"7ee326516f3da2c8f8b80eba6199deef"   //7318 7
+                                               ,"7ee326516f3da2c8f8b80eba6199deef"   //7318
                                                     ,"d3-update-base-7318.MPQ"
                                                ,"4d1e10d80450f44038b6a2b75e57f46b"   //7338
                                                     ,"d3-update-base-7338.MPQ"
