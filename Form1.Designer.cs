@@ -47,6 +47,16 @@
             this.label12 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.TickGameServerPort = new System.Windows.Forms.PictureBox();
+            this.TickBnetServerPort = new System.Windows.Forms.PictureBox();
+            this.TickPublicServerIp = new System.Windows.Forms.PictureBox();
+            this.TickGameServerIp = new System.Windows.Forms.PictureBox();
+            this.TickBnetServerIP = new System.Windows.Forms.PictureBox();
+            this.ErrorGameServerPort = new System.Windows.Forms.PictureBox();
+            this.ErrorBnetServerPort = new System.Windows.Forms.PictureBox();
+            this.ErrorPublicServerIp = new System.Windows.Forms.PictureBox();
+            this.ErrorGameServerIp = new System.Windows.Forms.PictureBox();
+            this.ErrorBnetServerIp = new System.Windows.Forms.PictureBox();
             this.LoadProfile = new System.Windows.Forms.Button();
             this.SaveProfile = new System.Windows.Forms.Button();
             this.MOTD = new System.Windows.Forms.TextBox();
@@ -66,6 +76,8 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.FindDiabloButton = new System.Windows.Forms.Button();
@@ -81,12 +93,14 @@
             progressBar1 = new System.Windows.Forms.ProgressBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.label19 = new System.Windows.Forms.Label();
-            this.ValidateMPQButton = new System.Windows.Forms.Button();
-            this.progressBar3 = new System.Windows.Forms.ProgressBar();
-            this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.RedownloadMPQButton = new System.Windows.Forms.Button();
+            this.FixMpqButton = new System.Windows.Forms.Button();
+            this.DownloadFileSpeed = new System.Windows.Forms.Label();
+            this.DownloadingFileName = new System.Windows.Forms.Label();
+            this.DownloadMPQSprogressBar = new System.Windows.Forms.ProgressBar();
+            this.label2 = new System.Windows.Forms.Label();
+            this.DownloadMPQSButton = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
             this.ResetRepoFolder = new System.Windows.Forms.Button();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -96,26 +110,28 @@
             this.label1 = new System.Windows.Forms.Label();
             txtConsole = new System.Windows.Forms.TextBox();
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.TickBnetServerIP = new System.Windows.Forms.PictureBox();
-            this.ErrorGameServerPort = new System.Windows.Forms.PictureBox();
-            this.ErrorBnetServerPort = new System.Windows.Forms.PictureBox();
-            this.ErrorPublicServerIp = new System.Windows.Forms.PictureBox();
-            this.ErrorGameServerIp = new System.Windows.Forms.PictureBox();
-            this.ErrorBnetServerIp = new System.Windows.Forms.PictureBox();
-            this.TickGameServerIp = new System.Windows.Forms.PictureBox();
-            this.TickPublicServerIp = new System.Windows.Forms.PictureBox();
-            this.TickBnetServerPort = new System.Windows.Forms.PictureBox();
-            this.TickGameServerPort = new System.Windows.Forms.PictureBox();
+            this.backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TickGameServerPort)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TickBnetServerPort)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TickPublicServerIp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TickGameServerIp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TickBnetServerIP)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorGameServerPort)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorBnetServerPort)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorPublicServerIp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorGameServerIp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorBnetServerIp)).BeginInit();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox6.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -123,18 +139,6 @@
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TickBnetServerIP)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ErrorGameServerPort)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ErrorBnetServerPort)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ErrorPublicServerIp)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ErrorGameServerIp)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ErrorBnetServerIp)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TickGameServerIp)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TickPublicServerIp)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TickBnetServerPort)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TickGameServerPort)).BeginInit();
             this.SuspendLayout();
             // 
             // EnableAutoUpdateBox
@@ -357,6 +361,106 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Server Configuration";
             // 
+            // TickGameServerPort
+            // 
+            this.TickGameServerPort.Image = global::MadCow.Properties.Resources.green_tick;
+            this.TickGameServerPort.Location = new System.Drawing.Point(318, 80);
+            this.TickGameServerPort.Name = "TickGameServerPort";
+            this.TickGameServerPort.Size = new System.Drawing.Size(15, 16);
+            this.TickGameServerPort.TabIndex = 25;
+            this.TickGameServerPort.TabStop = false;
+            this.TickGameServerPort.Visible = false;
+            // 
+            // TickBnetServerPort
+            // 
+            this.TickBnetServerPort.Image = global::MadCow.Properties.Resources.green_tick;
+            this.TickBnetServerPort.Location = new System.Drawing.Point(318, 31);
+            this.TickBnetServerPort.Name = "TickBnetServerPort";
+            this.TickBnetServerPort.Size = new System.Drawing.Size(15, 16);
+            this.TickBnetServerPort.TabIndex = 24;
+            this.TickBnetServerPort.TabStop = false;
+            this.TickBnetServerPort.Visible = false;
+            // 
+            // TickPublicServerIp
+            // 
+            this.TickPublicServerIp.Image = global::MadCow.Properties.Resources.green_tick;
+            this.TickPublicServerIp.Location = new System.Drawing.Point(207, 132);
+            this.TickPublicServerIp.Name = "TickPublicServerIp";
+            this.TickPublicServerIp.Size = new System.Drawing.Size(15, 16);
+            this.TickPublicServerIp.TabIndex = 23;
+            this.TickPublicServerIp.TabStop = false;
+            this.TickPublicServerIp.Visible = false;
+            // 
+            // TickGameServerIp
+            // 
+            this.TickGameServerIp.Image = global::MadCow.Properties.Resources.green_tick;
+            this.TickGameServerIp.Location = new System.Drawing.Point(207, 81);
+            this.TickGameServerIp.Name = "TickGameServerIp";
+            this.TickGameServerIp.Size = new System.Drawing.Size(15, 16);
+            this.TickGameServerIp.TabIndex = 22;
+            this.TickGameServerIp.TabStop = false;
+            this.TickGameServerIp.Visible = false;
+            // 
+            // TickBnetServerIP
+            // 
+            this.TickBnetServerIP.Image = global::MadCow.Properties.Resources.green_tick;
+            this.TickBnetServerIP.Location = new System.Drawing.Point(207, 30);
+            this.TickBnetServerIP.Name = "TickBnetServerIP";
+            this.TickBnetServerIP.Size = new System.Drawing.Size(15, 16);
+            this.TickBnetServerIP.TabIndex = 21;
+            this.TickBnetServerIP.TabStop = false;
+            this.TickBnetServerIP.Visible = false;
+            // 
+            // ErrorGameServerPort
+            // 
+            this.ErrorGameServerPort.Image = global::MadCow.Properties.Resources.error_cross;
+            this.ErrorGameServerPort.Location = new System.Drawing.Point(318, 81);
+            this.ErrorGameServerPort.Name = "ErrorGameServerPort";
+            this.ErrorGameServerPort.Size = new System.Drawing.Size(15, 15);
+            this.ErrorGameServerPort.TabIndex = 20;
+            this.ErrorGameServerPort.TabStop = false;
+            this.ErrorGameServerPort.Visible = false;
+            // 
+            // ErrorBnetServerPort
+            // 
+            this.ErrorBnetServerPort.Image = global::MadCow.Properties.Resources.error_cross;
+            this.ErrorBnetServerPort.Location = new System.Drawing.Point(318, 31);
+            this.ErrorBnetServerPort.Name = "ErrorBnetServerPort";
+            this.ErrorBnetServerPort.Size = new System.Drawing.Size(15, 15);
+            this.ErrorBnetServerPort.TabIndex = 19;
+            this.ErrorBnetServerPort.TabStop = false;
+            this.ErrorBnetServerPort.Visible = false;
+            // 
+            // ErrorPublicServerIp
+            // 
+            this.ErrorPublicServerIp.Image = global::MadCow.Properties.Resources.error_cross;
+            this.ErrorPublicServerIp.Location = new System.Drawing.Point(207, 133);
+            this.ErrorPublicServerIp.Name = "ErrorPublicServerIp";
+            this.ErrorPublicServerIp.Size = new System.Drawing.Size(15, 15);
+            this.ErrorPublicServerIp.TabIndex = 18;
+            this.ErrorPublicServerIp.TabStop = false;
+            this.ErrorPublicServerIp.Visible = false;
+            // 
+            // ErrorGameServerIp
+            // 
+            this.ErrorGameServerIp.Image = global::MadCow.Properties.Resources.error_cross;
+            this.ErrorGameServerIp.Location = new System.Drawing.Point(207, 82);
+            this.ErrorGameServerIp.Name = "ErrorGameServerIp";
+            this.ErrorGameServerIp.Size = new System.Drawing.Size(15, 15);
+            this.ErrorGameServerIp.TabIndex = 17;
+            this.ErrorGameServerIp.TabStop = false;
+            this.ErrorGameServerIp.Visible = false;
+            // 
+            // ErrorBnetServerIp
+            // 
+            this.ErrorBnetServerIp.Image = global::MadCow.Properties.Resources.error_cross;
+            this.ErrorBnetServerIp.Location = new System.Drawing.Point(207, 31);
+            this.ErrorBnetServerIp.Name = "ErrorBnetServerIp";
+            this.ErrorBnetServerIp.Size = new System.Drawing.Size(15, 15);
+            this.ErrorBnetServerIp.TabIndex = 16;
+            this.ErrorBnetServerIp.TabStop = false;
+            this.ErrorBnetServerIp.Visible = false;
+            // 
             // LoadProfile
             // 
             this.LoadProfile.Location = new System.Drawing.Point(109, 220);
@@ -558,6 +662,28 @@
             this.comboBox1.Text = "https://github.com/mooege/mooege";
             this.comboBox1.TextChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(194, 19);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(17, 20);
+            this.pictureBox2.TabIndex = 15;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.Visible = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(194, 19);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(17, 20);
+            this.pictureBox1.TabIndex = 14;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Visible = false;
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -693,12 +819,14 @@
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.label19);
-            this.tabPage4.Controls.Add(this.ValidateMPQButton);
-            this.tabPage4.Controls.Add(this.progressBar3);
-            this.tabPage4.Controls.Add(this.label5);
             this.tabPage4.Controls.Add(this.label3);
-            this.tabPage4.Controls.Add(this.RedownloadMPQButton);
+            this.tabPage4.Controls.Add(this.FixMpqButton);
+            this.tabPage4.Controls.Add(this.DownloadFileSpeed);
+            this.tabPage4.Controls.Add(this.DownloadingFileName);
+            this.tabPage4.Controls.Add(this.DownloadMPQSprogressBar);
+            this.tabPage4.Controls.Add(this.label2);
+            this.tabPage4.Controls.Add(this.DownloadMPQSButton);
+            this.tabPage4.Controls.Add(this.label5);
             this.tabPage4.Controls.Add(this.ResetRepoFolder);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
@@ -708,69 +836,85 @@
             this.tabPage4.Text = "Help";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // label19
+            // label3
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(31, 114);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(151, 26);
-            this.label19.TabIndex = 8;
-            this.label19.Text = "Checks MD5 sums from a pool\r\nTesting Purposes";
-            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(18, 127);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(192, 13);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Find corrupted files and download new.";
             // 
-            // ValidateMPQButton
+            // FixMpqButton
             // 
-            this.ValidateMPQButton.Enabled = false;
-            this.ValidateMPQButton.Location = new System.Drawing.Point(236, 109);
-            this.ValidateMPQButton.Name = "ValidateMPQButton";
-            this.ValidateMPQButton.Size = new System.Drawing.Size(90, 23);
-            this.ValidateMPQButton.TabIndex = 7;
-            this.ValidateMPQButton.Text = "Validate MPQs";
-            this.ValidateMPQButton.UseVisualStyleBackColor = true;
-            this.ValidateMPQButton.Click += new System.EventHandler(this.ValidateMPQs_Click);
+            this.FixMpqButton.Location = new System.Drawing.Point(218, 115);
+            this.FixMpqButton.Name = "FixMpqButton";
+            this.FixMpqButton.Size = new System.Drawing.Size(108, 36);
+            this.FixMpqButton.TabIndex = 11;
+            this.FixMpqButton.Text = "Fix MPQ\'s";
+            this.FixMpqButton.UseVisualStyleBackColor = true;
+            this.FixMpqButton.Click += new System.EventHandler(this.FixMpqButton_Click);
             // 
-            // progressBar3
+            // DownloadFileSpeed
             // 
-            this.progressBar3.Location = new System.Drawing.Point(230, 80);
-            this.progressBar3.Name = "progressBar3";
-            this.progressBar3.Size = new System.Drawing.Size(100, 13);
-            this.progressBar3.TabIndex = 6;
+            this.DownloadFileSpeed.AutoSize = true;
+            this.DownloadFileSpeed.Location = new System.Drawing.Point(22, 217);
+            this.DownloadFileSpeed.Name = "DownloadFileSpeed";
+            this.DownloadFileSpeed.Size = new System.Drawing.Size(95, 13);
+            this.DownloadFileSpeed.TabIndex = 10;
+            this.DownloadFileSpeed.Text = "Download Speed: ";
+            this.DownloadFileSpeed.Visible = false;
+            // 
+            // DownloadingFileName
+            // 
+            this.DownloadingFileName.AutoSize = true;
+            this.DownloadingFileName.Location = new System.Drawing.Point(22, 204);
+            this.DownloadingFileName.Name = "DownloadingFileName";
+            this.DownloadingFileName.Size = new System.Drawing.Size(94, 13);
+            this.DownloadingFileName.TabIndex = 9;
+            this.DownloadingFileName.Text = "Downloading File: ";
+            this.DownloadingFileName.Visible = false;
+            // 
+            // DownloadMPQSprogressBar
+            // 
+            this.DownloadMPQSprogressBar.Location = new System.Drawing.Point(25, 172);
+            this.DownloadMPQSprogressBar.Name = "DownloadMPQSprogressBar";
+            this.DownloadMPQSprogressBar.Size = new System.Drawing.Size(301, 29);
+            this.DownloadMPQSprogressBar.TabIndex = 8;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(18, 72);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(193, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Download all MPQ needed by Mooege.";
+            // 
+            // DownloadMPQSButton
+            // 
+            this.DownloadMPQSButton.Location = new System.Drawing.Point(218, 59);
+            this.DownloadMPQSButton.Name = "DownloadMPQSButton";
+            this.DownloadMPQSButton.Size = new System.Drawing.Size(108, 38);
+            this.DownloadMPQSButton.TabIndex = 6;
+            this.DownloadMPQSButton.Text = "Download MPQ\'s";
+            this.DownloadMPQSButton.UseVisualStyleBackColor = true;
+            this.DownloadMPQSButton.Click += new System.EventHandler(this.DownloadMPQSButton_Click);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(31, 11);
+            this.label5.Location = new System.Drawing.Point(18, 18);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(162, 13);
             this.label5.TabIndex = 5;
             this.label5.Text = "Reset Mooege Repository Folder";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 40);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(206, 39);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Did Mooege receive\r\n\"Couldn\'t Find Catalog File: CoreToc.Dat\" \r\nError?";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // RedownloadMPQButton
-            // 
-            this.RedownloadMPQButton.Enabled = false;
-            this.RedownloadMPQButton.Location = new System.Drawing.Point(229, 40);
-            this.RedownloadMPQButton.Name = "RedownloadMPQButton";
-            this.RedownloadMPQButton.Size = new System.Drawing.Size(104, 34);
-            this.RedownloadMPQButton.TabIndex = 3;
-            this.RedownloadMPQButton.Text = "Redownload 7841 MPQ";
-            this.RedownloadMPQButton.UseVisualStyleBackColor = true;
-            this.RedownloadMPQButton.Click += new System.EventHandler(this.ReDownloadMPQ_Click);
-            // 
             // ResetRepoFolder
             // 
-            this.ResetRepoFolder.Location = new System.Drawing.Point(236, 6);
+            this.ResetRepoFolder.Location = new System.Drawing.Point(218, 6);
             this.ResetRepoFolder.Name = "ResetRepoFolder";
-            this.ResetRepoFolder.Size = new System.Drawing.Size(90, 23);
+            this.ResetRepoFolder.Size = new System.Drawing.Size(108, 36);
             this.ResetRepoFolder.TabIndex = 2;
             this.ResetRepoFolder.Text = "Reset Folder";
             this.ResetRepoFolder.UseVisualStyleBackColor = true;
@@ -832,127 +976,21 @@
             // 
             this.backgroundWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
             // 
-            // pictureBox2
+            // backgroundWorker3
             // 
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(194, 19);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(17, 20);
-            this.pictureBox2.TabIndex = 15;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Visible = false;
+            this.backgroundWorker3.WorkerReportsProgress = true;
+            this.backgroundWorker3.WorkerSupportsCancellation = true;
+            this.backgroundWorker3.DoWork += new System.ComponentModel.DoWorkEventHandler(this.DownloadMPQS);
+            this.backgroundWorker3.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.downloader_ProgressChanged);
+            this.backgroundWorker3.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.downloader_DownloadedComplete);
             // 
-            // pictureBox1
+            // backgroundWorker4
             // 
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(194, 19);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(17, 20);
-            this.pictureBox1.TabIndex = 14;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Visible = false;
-            // 
-            // TickBnetServerIP
-            // 
-            this.TickBnetServerIP.Image = global::MadCow.Properties.Resources.green_tick;
-            this.TickBnetServerIP.Location = new System.Drawing.Point(207, 30);
-            this.TickBnetServerIP.Name = "TickBnetServerIP";
-            this.TickBnetServerIP.Size = new System.Drawing.Size(15, 16);
-            this.TickBnetServerIP.TabIndex = 21;
-            this.TickBnetServerIP.TabStop = false;
-            this.TickBnetServerIP.Visible = false;
-            // 
-            // ErrorGameServerPort
-            // 
-            this.ErrorGameServerPort.Image = global::MadCow.Properties.Resources.error_cross;
-            this.ErrorGameServerPort.Location = new System.Drawing.Point(318, 81);
-            this.ErrorGameServerPort.Name = "ErrorGameServerPort";
-            this.ErrorGameServerPort.Size = new System.Drawing.Size(15, 15);
-            this.ErrorGameServerPort.TabIndex = 20;
-            this.ErrorGameServerPort.TabStop = false;
-            this.ErrorGameServerPort.Visible = false;
-            // 
-            // ErrorBnetServerPort
-            // 
-            this.ErrorBnetServerPort.Image = global::MadCow.Properties.Resources.error_cross;
-            this.ErrorBnetServerPort.Location = new System.Drawing.Point(318, 31);
-            this.ErrorBnetServerPort.Name = "ErrorBnetServerPort";
-            this.ErrorBnetServerPort.Size = new System.Drawing.Size(15, 15);
-            this.ErrorBnetServerPort.TabIndex = 19;
-            this.ErrorBnetServerPort.TabStop = false;
-            this.ErrorBnetServerPort.Visible = false;
-            // 
-            // ErrorPublicServerIp
-            // 
-            this.ErrorPublicServerIp.Image = global::MadCow.Properties.Resources.error_cross;
-            this.ErrorPublicServerIp.Location = new System.Drawing.Point(207, 133);
-            this.ErrorPublicServerIp.Name = "ErrorPublicServerIp";
-            this.ErrorPublicServerIp.Size = new System.Drawing.Size(15, 15);
-            this.ErrorPublicServerIp.TabIndex = 18;
-            this.ErrorPublicServerIp.TabStop = false;
-            this.ErrorPublicServerIp.Visible = false;
-            // 
-            // ErrorGameServerIp
-            // 
-            this.ErrorGameServerIp.Image = global::MadCow.Properties.Resources.error_cross;
-            this.ErrorGameServerIp.Location = new System.Drawing.Point(207, 82);
-            this.ErrorGameServerIp.Name = "ErrorGameServerIp";
-            this.ErrorGameServerIp.Size = new System.Drawing.Size(15, 15);
-            this.ErrorGameServerIp.TabIndex = 17;
-            this.ErrorGameServerIp.TabStop = false;
-            this.ErrorGameServerIp.Visible = false;
-            // 
-            // ErrorBnetServerIp
-            // 
-            this.ErrorBnetServerIp.Image = global::MadCow.Properties.Resources.error_cross;
-            this.ErrorBnetServerIp.Location = new System.Drawing.Point(207, 31);
-            this.ErrorBnetServerIp.Name = "ErrorBnetServerIp";
-            this.ErrorBnetServerIp.Size = new System.Drawing.Size(15, 15);
-            this.ErrorBnetServerIp.TabIndex = 16;
-            this.ErrorBnetServerIp.TabStop = false;
-            this.ErrorBnetServerIp.Visible = false;
-            // 
-            // TickGameServerIp
-            // 
-            this.TickGameServerIp.Image = global::MadCow.Properties.Resources.green_tick;
-            this.TickGameServerIp.Location = new System.Drawing.Point(207, 81);
-            this.TickGameServerIp.Name = "TickGameServerIp";
-            this.TickGameServerIp.Size = new System.Drawing.Size(15, 16);
-            this.TickGameServerIp.TabIndex = 22;
-            this.TickGameServerIp.TabStop = false;
-            this.TickGameServerIp.Visible = false;
-            // 
-            // TickPublicServerIp
-            // 
-            this.TickPublicServerIp.Image = global::MadCow.Properties.Resources.green_tick;
-            this.TickPublicServerIp.Location = new System.Drawing.Point(207, 132);
-            this.TickPublicServerIp.Name = "TickPublicServerIp";
-            this.TickPublicServerIp.Size = new System.Drawing.Size(15, 16);
-            this.TickPublicServerIp.TabIndex = 23;
-            this.TickPublicServerIp.TabStop = false;
-            this.TickPublicServerIp.Visible = false;
-            // 
-            // TickBnetServerPort
-            // 
-            this.TickBnetServerPort.Image = global::MadCow.Properties.Resources.green_tick;
-            this.TickBnetServerPort.Location = new System.Drawing.Point(318, 31);
-            this.TickBnetServerPort.Name = "TickBnetServerPort";
-            this.TickBnetServerPort.Size = new System.Drawing.Size(15, 16);
-            this.TickBnetServerPort.TabIndex = 24;
-            this.TickBnetServerPort.TabStop = false;
-            this.TickBnetServerPort.Visible = false;
-            // 
-            // TickGameServerPort
-            // 
-            this.TickGameServerPort.Image = global::MadCow.Properties.Resources.green_tick;
-            this.TickGameServerPort.Location = new System.Drawing.Point(318, 80);
-            this.TickGameServerPort.Name = "TickGameServerPort";
-            this.TickGameServerPort.Size = new System.Drawing.Size(15, 16);
-            this.TickGameServerPort.TabIndex = 25;
-            this.TickGameServerPort.TabStop = false;
-            this.TickGameServerPort.Visible = false;
+            this.backgroundWorker4.WorkerReportsProgress = true;
+            this.backgroundWorker4.WorkerSupportsCancellation = true;
+            this.backgroundWorker4.DoWork += new System.ComponentModel.DoWorkEventHandler(this.DownloadSpecificMPQS);
+            this.backgroundWorker4.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.downloader_ProgressChanged2);
+            this.backgroundWorker4.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.downloader_DownloadedComplete2);
             // 
             // Form1
             // 
@@ -979,10 +1017,22 @@
             this.tabPage2.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TickGameServerPort)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TickBnetServerPort)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TickPublicServerIp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TickGameServerIp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TickBnetServerIP)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorGameServerPort)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorBnetServerPort)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorPublicServerIp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorGameServerIp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorBnetServerIp)).EndInit();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox6.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
@@ -991,18 +1041,6 @@
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             this.tabPage5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TickBnetServerIP)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ErrorGameServerPort)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ErrorBnetServerPort)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ErrorPublicServerIp)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ErrorGameServerIp)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ErrorBnetServerIp)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TickGameServerIp)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TickPublicServerIp)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TickBnetServerPort)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TickGameServerPort)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1063,21 +1101,14 @@
         public System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button ResetRepoFolder;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button RedownloadMPQButton;
         private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.ProgressBar progressBar3;
-        public static System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox MOTD;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Button ValidateMPQButton;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.ComponentModel.BackgroundWorker backgroundWorker2;
         private System.Windows.Forms.Button LoadProfile;
         private System.Windows.Forms.Button SaveProfile;
-        public static System.Windows.Forms.TextBox txtConsole;
         private System.Windows.Forms.PictureBox ErrorGameServerPort;
         private System.Windows.Forms.PictureBox ErrorBnetServerPort;
         private System.Windows.Forms.PictureBox ErrorPublicServerIp;
@@ -1088,6 +1119,17 @@
         private System.Windows.Forms.PictureBox TickBnetServerPort;
         private System.Windows.Forms.PictureBox TickPublicServerIp;
         private System.Windows.Forms.PictureBox TickGameServerIp;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button DownloadMPQSButton;
+        public System.Windows.Forms.ProgressBar DownloadMPQSprogressBar;
+        private System.ComponentModel.BackgroundWorker backgroundWorker3;
+        private System.Windows.Forms.Label DownloadingFileName;
+        private System.Windows.Forms.Label DownloadFileSpeed;
+        private System.Windows.Forms.Button FixMpqButton;
+        private System.Windows.Forms.Label label3;
+        private System.ComponentModel.BackgroundWorker backgroundWorker4;
+        public static System.Windows.Forms.ProgressBar progressBar1;
+        public static System.Windows.Forms.TextBox txtConsole;
 
     }
 }
