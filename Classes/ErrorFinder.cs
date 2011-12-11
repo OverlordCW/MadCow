@@ -17,6 +17,7 @@
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 // When Testing error finder, by using Play Diablo. It is only allowed to be used with Wetwlly's Mooege Fork, 
 //as I've made the changes to mooege to be able to read the logs while accessed by mooege.
@@ -25,24 +26,39 @@ namespace MadCow
 {
     class ErrorFinder
     {
+        //change searchText to FATAL
         public static void SearchLogs(String searchText)
         {
             using (FileStream fileStream = new FileStream(Program.programPath + @"\logs\mooege.log", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 using (TextReader reader = new StreamReader(fileStream))
                 {
-                    //stream reader needs to read by lines? or be able to read previous line.
-
-                    string fileContents = reader.ReadToEnd();
-                    if (System.Text.RegularExpressions.Regex.IsMatch(fileContents, searchText))
+                    string oldline = null;
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
                     {
-                        //This should be a message box.
-                        Console.WriteLine("You in trouble!");
-                    }
-                    else
-                    {
-                        //Show that it was not a match
-                        Console.WriteLine("SO FAR GOOD");
+                        if (line != oldline)
+                        {
+                            if (System.Text.RegularExpressions.Regex.IsMatch(line, searchText))
+                            {
+                                var pattern = "Applying file: (?<filename>.*?).mpq";
+                                var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                                var match = regex.Match(oldline);
+                                var FileName = match.Groups["filename"].Value;
+                                //FileName should now contain the filename of the patch minus the extension
+                                var ErrorAnswer = MessageBox.Show(@"Seems your MPQ: " + FileName + @" is corrupted." ,"Would you like to download a new MPQ?", MessageBoxButtons.YesNo);
+                                if (ErrorAnswer == DialogResult.Yes)
+                                {
+                                    //http://ak.worldofwarcraft.com.edgesuite.net/d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/ + FileName + @".MPQ"
+                                    //Download using the help of outputError, as in having the download link ready and add outputError to it.
+                                }
+                                else
+                                {
+                                    //Nothing!
+                                }
+                            }
+                            oldline = line;
+                        }
                     }
                 }
             }

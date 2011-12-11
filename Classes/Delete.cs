@@ -45,6 +45,23 @@ namespace MadCow
                     }
                 }
             }
+            if (folder == 0)
+            {
+                // Delete a directory and all subdirectories with Directory static method...
+                if (System.IO.Directory.Exists(Program.programPath + @"/logs"))
+                {
+                    try
+                    {
+                        System.IO.Directory.Delete(Program.programPath + @"/logs", true);
+                        Console.WriteLine("Deleted Logs Folder");
+                        Directory.CreateDirectory(Program.programPath + @"/logs");
+                    }
+                    catch (System.IO.IOException e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                }
+            }
          }
 
         public static void HideFile()//We hide the default profile, we dont want nubs deleting this cause MadCow will cry about it.
