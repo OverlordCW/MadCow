@@ -42,6 +42,10 @@ namespace MadCow
                 proc1.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
                 proc1.Start();
                 Console.WriteLine("Starting Diablo..");
+                //After starting up processes, give the log a bit of time before trying to search for error.
+                Thread.Sleep(3000);
+                //At the moment, it is searching for a confirmed MPQ, because I do not have the fatal ones.
+                ErrorFinder.SearchLogs("Applying file: d3-update-base-7931.MPQ");
             }
             else
             {
