@@ -33,6 +33,7 @@ namespace MadCow
             
             if (ProcessFind.FindProcess("Mooege") == false)
             {
+                SimpleFileDelete.Delete(0);
                 Process proc0 = new Process();
                 proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
                 proc0.Start();
@@ -42,6 +43,10 @@ namespace MadCow
                 proc1.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
                 proc1.Start();
                 Console.WriteLine("Starting Diablo..");
+                //After starting up processes, give the log a bit of time before trying to search for error.
+                Thread.Sleep(3000);
+                //Once Ready, change to SearchLogs();
+                ErrorFinder.SearchLogs("Applying file: d3-update-base-7841.MPQ");
             }
             else
             {
