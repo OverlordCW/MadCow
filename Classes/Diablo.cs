@@ -31,7 +31,7 @@ namespace MadCow
             IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
             String Src = source.Configs["DiabloPath"].Get("D3Path");
             
-            if (ProcessFind.FindProcess("Mooege") == false)
+            if (ProcessFinder.FindProcess("Mooege") == false)
             {
                 Console.WriteLine("Starting Mooege..");
                 Process Mooege = new Process();
@@ -41,7 +41,7 @@ namespace MadCow
                 if (ErrorFinder.SearchLogs("Fatal") == true)
                 {
                     Console.WriteLine("Closing Mooege due Fatal Exception");
-                    ProcessFind.KillProcess("Mooege");
+                    ProcessFinder.KillProcess("Mooege");
                 }
                 else
                 {
@@ -55,7 +55,7 @@ namespace MadCow
             else //If Mooege is running we kill it and start it again.
             {
                 Console.WriteLine("Killing Mooege Process..");
-                ProcessFind.KillProcess("Mooege");
+                ProcessFinder.KillProcess("Mooege");
                 Console.WriteLine("Starting Mooege..");
                 Process Mooege = new Process();
                 Mooege.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
@@ -64,7 +64,7 @@ namespace MadCow
                 if (ErrorFinder.SearchLogs("Fatal") == true)
                 {
                     Console.WriteLine("Closing Mooege due Fatal Exception");
-                    ProcessFind.KillProcess("Mooege");
+                    ProcessFinder.KillProcess("Mooege");
                 }
                 else
                 {

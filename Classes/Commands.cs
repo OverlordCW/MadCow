@@ -36,9 +36,9 @@ namespace MadCow
                         System.IO.Directory.Delete(Program.programPath + @"/MPQ", true);
                         Console.WriteLine("Deleted current MPQ MadCow folder succeedeed");
 
-                        if (ProcessFind.FindProcess("Diablo") == true)
+                        if (ProcessFinder.FindProcess("Diablo") == true)
                         {
-                            ProcessFind.KillProcess("Diablo");
+                            ProcessFinder.KillProcess("Diablo");
                             Thread.Sleep(1000);
                             //Transfer MPQs
                             MPQprocedure.MpqTransfer();
@@ -64,9 +64,9 @@ namespace MadCow
             Compile.mooegeINI = Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini";
             Compile.compileArgs = "\"" + Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\build\Mooege-VS2010.sln" + "\"";
 
-            if(ProcessFind.FindProcess("Mooege") == true)
+            if(ProcessFinder.FindProcess("Mooege") == true)
             {
-                ProcessFind.KillProcess("Mooege");
+                ProcessFinder.KillProcess("Mooege");
             }
             Uncompress.UncompressFiles();
             RefreshDesktop.RefreshDesktopPlease(); //Sends a refresh call to desktop, probably this is working for Windows Explorer too, so i'll leave it there for now -wesko
