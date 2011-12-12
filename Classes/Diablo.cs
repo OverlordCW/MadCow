@@ -33,28 +33,47 @@ namespace MadCow
             
             if (ProcessFind.FindProcess("Mooege") == false)
             {
-                SimpleFileDelete.Delete(0);
-                Process proc0 = new Process();
-                proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
-                proc0.Start();
-                Thread.Sleep(1000);
-                Process proc1 = new Process();
-                proc1.StartInfo = new ProcessStartInfo(Src);
-                proc1.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
-                proc1.Start();
-                Console.WriteLine("Starting Diablo..");
-                //After starting up processes, give the log a bit of time before trying to search for error.
-                Thread.Sleep(3000);
-                //Once Ready, change to SearchLogs();
-                ErrorFinder.SearchLogs("Applying file: d3-update-base-7841.MPQ");
+                Console.WriteLine("Starting Mooege..");
+                Process Mooege = new Process();
+                Mooege.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
+                Mooege.Start();
+                Thread.Sleep(2000);
+                if (ErrorFinder.SearchLogs("Fatal") == true)
+                {
+                    Console.WriteLine("Closing Mooege due Fatal Exception");
+                    ProcessFind.KillProcess("Mooege");
+                }
+                else
+                {
+                    Console.WriteLine("Starting Diablo..");
+                    Process Diablo3 = new Process();
+                    Diablo3.StartInfo = new ProcessStartInfo(Src);
+                    Diablo3.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
+                    Diablo3.Start();
+                }
             }
-            else
+            else //If Mooege is running we kill it and start it again.
             {
-                Process proc1 = new Process();
-                proc1.StartInfo = new ProcessStartInfo(Src);
-                proc1.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
-                proc1.Start();
-                Console.WriteLine("Starting Diablo..");
+                Console.WriteLine("Killing Mooege Process..");
+                ProcessFind.KillProcess("Mooege");
+                Console.WriteLine("Starting Mooege..");
+                Process Mooege = new Process();
+                Mooege.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
+                Mooege.Start();
+                Thread.Sleep(2000);
+                if (ErrorFinder.SearchLogs("Fatal") == true)
+                {
+                    Console.WriteLine("Closing Mooege due Fatal Exception");
+                    ProcessFind.KillProcess("Mooege");
+                }
+                else
+                {
+                    Console.WriteLine("Starting Diablo..");
+                    Process Diablo3 = new Process();
+                    Diablo3.StartInfo = new ProcessStartInfo(Src);
+                    Diablo3.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
+                    Diablo3.Start();
+                }
             }
         }
     }

@@ -91,6 +91,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="DialogHelper\BetterDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogHelper\BetterDialog.designer.cs">
+      <DependentUpon>BetterDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="RepositorySelectionPlay.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +128,7 @@
     <Content Include="Repositories\ReposGoHere.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\correct.png" />
     <Content Include="Resources\error_cross.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -185,6 +192,9 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogHelper\BetterDialog.resx">
+      <DependentUpon>BetterDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RepositorySelectionPlay.resx">
       <DependentUpon>RepositorySelectionPlay.cs</DependentUpon>

@@ -60,6 +60,13 @@ namespace MadCow.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap correct {
+            get {
+                object obj = ResourceManager.GetObject("correct", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap error_cross {
             get {
                 object obj = ResourceManager.GetObject("error_cross", resourceCulture);

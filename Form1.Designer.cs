@@ -93,8 +93,6 @@
             progressBar1 = new System.Windows.Forms.ProgressBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.label3 = new System.Windows.Forms.Label();
-            this.FixMpqButton = new System.Windows.Forms.Button();
             this.DownloadFileSpeed = new System.Windows.Forms.Label();
             this.DownloadingFileName = new System.Windows.Forms.Label();
             this.DownloadMPQSprogressBar = new System.Windows.Forms.ProgressBar();
@@ -819,8 +817,6 @@
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.label3);
-            this.tabPage4.Controls.Add(this.FixMpqButton);
             this.tabPage4.Controls.Add(this.DownloadFileSpeed);
             this.tabPage4.Controls.Add(this.DownloadingFileName);
             this.tabPage4.Controls.Add(this.DownloadMPQSprogressBar);
@@ -836,29 +832,10 @@
             this.tabPage4.Text = "Help";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(18, 127);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(192, 13);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "Find corrupted files and download new.";
-            // 
-            // FixMpqButton
-            // 
-            this.FixMpqButton.Location = new System.Drawing.Point(218, 115);
-            this.FixMpqButton.Name = "FixMpqButton";
-            this.FixMpqButton.Size = new System.Drawing.Size(108, 36);
-            this.FixMpqButton.TabIndex = 11;
-            this.FixMpqButton.Text = "Fix MPQ\'s";
-            this.FixMpqButton.UseVisualStyleBackColor = true;
-            this.FixMpqButton.Click += new System.EventHandler(this.FixMpqButton_Click);
-            // 
             // DownloadFileSpeed
             // 
             this.DownloadFileSpeed.AutoSize = true;
-            this.DownloadFileSpeed.Location = new System.Drawing.Point(22, 217);
+            this.DownloadFileSpeed.Location = new System.Drawing.Point(23, 160);
             this.DownloadFileSpeed.Name = "DownloadFileSpeed";
             this.DownloadFileSpeed.Size = new System.Drawing.Size(95, 13);
             this.DownloadFileSpeed.TabIndex = 10;
@@ -868,7 +845,7 @@
             // DownloadingFileName
             // 
             this.DownloadingFileName.AutoSize = true;
-            this.DownloadingFileName.Location = new System.Drawing.Point(22, 204);
+            this.DownloadingFileName.Location = new System.Drawing.Point(23, 147);
             this.DownloadingFileName.Name = "DownloadingFileName";
             this.DownloadingFileName.Size = new System.Drawing.Size(94, 13);
             this.DownloadingFileName.TabIndex = 9;
@@ -877,7 +854,7 @@
             // 
             // DownloadMPQSprogressBar
             // 
-            this.DownloadMPQSprogressBar.Location = new System.Drawing.Point(25, 172);
+            this.DownloadMPQSprogressBar.Location = new System.Drawing.Point(25, 115);
             this.DownloadMPQSprogressBar.Name = "DownloadMPQSprogressBar";
             this.DownloadMPQSprogressBar.Size = new System.Drawing.Size(301, 29);
             this.DownloadMPQSprogressBar.TabIndex = 8;
@@ -1125,8 +1102,6 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker3;
         private System.Windows.Forms.Label DownloadingFileName;
         private System.Windows.Forms.Label DownloadFileSpeed;
-        private System.Windows.Forms.Button FixMpqButton;
-        private System.Windows.Forms.Label label3;
         private System.ComponentModel.BackgroundWorker backgroundWorker4;
         public static System.Windows.Forms.ProgressBar progressBar1;
         public static System.Windows.Forms.TextBox txtConsole;
