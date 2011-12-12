@@ -15,6 +15,8 @@ Added by Wetwlly
 
 2. step-by-step balloon walkthrough for the noobies.
 
+3. Allow Multiple Repos(Done), but Delete Older Revisions if Newer version is available or downloaded.
+
 Future TODOs
 
 1. Drop-Down Menu of Saved Validated Repositories //This is not implemented, there is a fixed list atm, we need to dynamically add user validates repos to our current list.
