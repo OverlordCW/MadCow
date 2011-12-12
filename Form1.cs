@@ -61,6 +61,7 @@ namespace MadCow
             Console.SetOut(_writer);
             Console.WriteLine("Welcome to MadCow!");
             ToolTip toolTip1 = new ToolTip();
+            Compile.WriteVbsPath();
             // Set up the delays for the ToolTip.
             toolTip1.AutoPopDelay = 1800;
             toolTip1.InitialDelay = 500;

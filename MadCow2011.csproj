@@ -128,6 +128,9 @@
     <Content Include="Repositories\ReposGoHere.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Tools\ShortcutCreator.vbs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\correct.png" />
     <Content Include="Resources\error_cross.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
