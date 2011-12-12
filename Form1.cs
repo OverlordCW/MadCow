@@ -49,12 +49,11 @@ namespace MadCow
             AutoUpdateValue.Enabled = false;
             EnableAutoUpdateBox.Enabled = false;
             PlayDiabloButton.Enabled = false;
-            FixMpqButton.Enabled = false;
             SimpleFileDelete.HideFile();
         }
 
         ///////////////////////////////////////////////////////////
-        //Unused shit
+        //Form Load
         ///////////////////////////////////////////////////////////
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -202,9 +201,37 @@ namespace MadCow
             t.Start();
         }
 
-        public static void ThreadProc()
+        public void ThreadProc()
         {
             Application.Run(new RepositorySelectionPlay());
+            //We add ErrorFinder call here, in order to know if Mooege had issues loading.
+            if(File.Exists(Program.programPath + @"\logs\mooege.log"))
+            {
+                if (ErrorFinder.SearchLogs("Fatal") == true)
+                {
+                    SimpleFileDelete.Delete(0); //We delete de Log file HERE. Nowhere else!.
+                    var ErrorAnswer = MessageBox.Show(@"Seems your MPQ [" + ErrorFinder.errorFileName + @"] is corrupted." + "\nWould you like MadCow to fix this for you?","Found corrupted file!",
+                        MessageBoxButtons.YesNo,MessageBoxIcon.Stop);
+
+                    if (ErrorAnswer == DialogResult.Yes)
+                    {
+                        //We move the user to the Help tab so he can see the progress of the download.
+                        tabControl1.Invoke(new Action(() =>
+                        {
+                            this.tabControl1.SelectTab("tabPage4");
+                        }
+                        ));
+                        //We execute the procedure to start downloading the corrupted file @ FixMpq();
+                        FixMpq();
+                    }
+                }
+            }
+            else
+            {
+                //Nothing!
+                //If the user closes Repo selection and we already went through fixing the MPQ, then Mooege.log will not exist and
+                //Madcow would crash when trying to read mooege.log.
+            }
         }
 
         ///////////////////////////////////////////////////////////
@@ -324,7 +351,6 @@ namespace MadCow
                     }
                     else
                     {
-                        FixMpqButton.Enabled = true;
                         Diablo3UserPathSelection.Text = Src;
                         CopyMPQButton.Enabled = true;
                         PlayDiabloButton.Enabled = true;
@@ -352,8 +378,9 @@ namespace MadCow
             FindD3Exe.Title = "MadCow By Wesko";
             FindD3Exe.InitialDirectory = @"C:\Program Files (x86)\Diablo III Beta\";
             FindD3Exe.Filter = "Diablo III|Diablo III.exe";
-
-            if (FindD3Exe.ShowDialog() == DialogResult.OK) // If user was able to locate Diablo III.exe
+            DialogResult response = new DialogResult();
+            response = FindD3Exe.ShowDialog();
+            if (response == DialogResult.OK) // If user was able to locate Diablo III.exe
             {
                     // Get the directory name.
                     String dirName = System.IO.Path.GetDirectoryName(FindD3Exe.FileName);
@@ -363,7 +390,6 @@ namespace MadCow
                     textBox2.Enabled = true;
                     textBox3.Enabled = true;
                     RemoteServerButton.Enabled = true;
-                    FixMpqButton.Enabled = true;
 
                 if (File.Exists(Program.programPath + "\\Tools\\" + madCowIni))
                 {
@@ -379,8 +405,8 @@ namespace MadCow
                 }
 
                 backgroundWorker2.RunWorkerAsync(); //Compares versions of D3 with Mooege
-            }
-            else //If user didn't select a Diablo III.exe, we show a warning and ofc, we dont save any path.
+            }//If the user opens the dialog to select a d3 path and he closes the dialog but already had a d3 path, then no warning will be triggered. (BUG FIXED-wesko)
+            else if (response == DialogResult.Cancel && this.Diablo3UserPathSelection.TextLength == 35)//If user didn't select a Diablo III.exe, we show a warning and ofc, we dont save any path.
             {
                 MessageBox.Show("You didn't select a Diablo III client", "Warning",
                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -1037,35 +1063,22 @@ namespace MadCow
         }
 
         ////////////////////////////////////////////////////////////////////////
-        //Download Mpq files that didn't passed validation.
+        //Download Mpq files that could not be parsed by Mooege.
         ////////////////////////////////////////////////////////////////////////
-        private void FixMpqButton_Click(object sender, EventArgs e)
+        public void FixMpq()
         {
-            if (MPQprocedure.ValidateMD5() == false) //Didn't passed validation
-            {
-                var answer = MessageBox.Show("Do you want MadCow to download the correct MPQ files for you?", "Invalid Hashes Found",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (answer == DialogResult.Yes)
-                {
-                    SimpleFileDelete.DeleteCorruptedMpq();
-                    backgroundWorker4.RunWorkerAsync();
-                }
-                else
-                {
-                    //Nothing!
-                }
-            }
+            SimpleFileDelete.DeleteCorruptedMpq();
+            backgroundWorker4.RunWorkerAsync();
         }
 
         private void DownloadSpecificMPQS(object sender, DoWorkEventArgs e)
         {
-            var result1 = MPQprocedure.fileToDownload.Where(item => !string.IsNullOrEmpty(item));
+            var downloadFileUrl = "http://ak.worldofwarcraft.com.edgesuite.net/d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/" + ErrorFinder.errorFileName + @".MPQ";
             IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
-            string downloadDestination = source.Configs["DiabloPath"].Get("MPQpath");
+            String downloadDestination = source.Configs["DiabloPath"].Get("MPQpath");
             Stopwatch speedTimer = new Stopwatch();
-            foreach (string value in result1)
-            {
-                Uri url = new Uri(value);
+
+                Uri url = new Uri(downloadFileUrl);
                 System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
                 System.Net.HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse();
                 //Parsing the file name.
@@ -1079,11 +1092,11 @@ namespace MadCow
 
                 using (System.Net.WebClient client = new System.Net.WebClient())
                 {
-                    using (System.IO.Stream streamRemote = client.OpenRead(new Uri(value)))
+                    using (System.IO.Stream streamRemote = client.OpenRead(new Uri(downloadFileUrl)))
                     {
                         using (Stream streamLocal = new FileStream(downloadDestination + @"\base\" + name + ext, FileMode.Create, FileAccess.Write, FileShare.None))
                         {
-                            //We start the timer to measure speed - This still needs testing not sure if speed its accuarate. - wesko
+                            Console.WriteLine("Starting download...");
                             speedTimer.Start();
                             DownloadingFileName.Invoke(new Action(() =>
                             {
@@ -1117,22 +1130,59 @@ namespace MadCow
                         }
                         streamRemote.Close();
                     }
-                }
-            } speedTimer.Stop();
+                }speedTimer.Stop();
         }
 
         private void downloader_ProgressChanged2(object sender, ProgressChangedEventArgs e)
         {
-            DownloadingFileName.Visible = true;
-            DownloadFileSpeed.Visible = true;
-            DownloadMPQSprogressBar.Value = e.ProgressPercentage;
+            DownloadingFileName.Invoke(new Action(() =>
+            {
+                DownloadingFileName.Visible = true;
+                DownloadFileSpeed.Visible = true;
+                DownloadMPQSprogressBar.Value = e.ProgressPercentage;
+            }
+            ));
         }
 
         private void downloader_DownloadedComplete2(object sender, RunWorkerCompletedEventArgs e)
         {
-            DownloadingFileName.Visible = false;
-            DownloadFileSpeed.Visible = false;
-            System.Console.WriteLine("Download complete.");
+            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+            String downloadSource = source.Configs["DiabloPath"].Get("MPQpath");
+            String downloadDestination = Program.programPath + @"\MPQ\base\";
+            DownloadingFileName.Invoke(new Action(() =>
+            {
+                DownloadingFileName.Visible = false;
+                DownloadFileSpeed.Visible = false;
+            }
+            ));
+            Console.WriteLine("Download complete.");
+            try
+            {
+                File.Copy(downloadSource + @"\base\" + ErrorFinder.errorFileName + @".MPQ", downloadDestination + ErrorFinder.errorFileName + @".MPQ", true);
+                Console.WriteLine("Copied new MPQ to MadCow MPQ home Folder.");
+                //We give the user an announce of success.
+                DialogResult response = DotNetPerls.BetterDialog.ShowDialog("MadCow Worker",
+                "MadCow succesfully fixed:",
+                ErrorFinder.errorFileName + @".MPQ",
+                "","OK", Properties.Resources.correct);
+                if (response == DialogResult.Cancel) //We take this as the OK response.
+                {
+                    //Since problem must be fixed, we take the user to the Update tab & execute repo selection again
+                    //We move the user to the Help tab so he can see the progress of the download.
+                    tabControl1.Invoke(new Action(() =>
+                    {
+                        this.tabControl1.SelectTab("tabPage1");
+                    }
+                    ));
+                    System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadProc));
+                    t.Start();
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Error while copying new MPQ to MadCow MPQ home Folder");
+            }
+
         }
 
         //BE AWARE: CRAP BELOW.

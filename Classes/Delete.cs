@@ -74,12 +74,8 @@ namespace MadCow
         {
             IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
             string MPQpath = source.Configs["DiabloPath"].Get("MPQpath");
-            var result1 = MPQprocedure.fileToDelete.Where(item => !string.IsNullOrEmpty(item));
-            foreach (string value in result1)
-            {
-                Console.WriteLine("Deleting file " + value);
-                File.Delete(MPQpath + @"\base\" + value);
-            }
+            Console.WriteLine("Deleting file " + ErrorFinder.errorFileName);
+            File.Delete(MPQpath + @"\base\" + ErrorFinder.errorFileName);
         }
 
     }

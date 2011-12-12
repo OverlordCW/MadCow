@@ -2,8 +2,11 @@ Added by Wesko
 1. Implement a way to know if assembly System.Data.SQLite is running.
 
 2. Polish button visible evenhandlers.
+   - Fix "Play Diablo" button to be disabled while repo selector its open
 
 3. Some tweaking into server control profile handling.
+
+4. Implement fatal exception handling into standalone server launcher
 
 
 Added by Wetwlly
