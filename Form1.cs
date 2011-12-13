@@ -49,7 +49,7 @@ namespace MadCow
             AutoUpdateValue.Enabled = false;
             EnableAutoUpdateBox.Enabled = false;
             PlayDiabloButton.Enabled = false;
-            SimpleFileDelete.HideFile();
+            DeleteHelper.HideFile();
         }
 
         ///////////////////////////////////////////////////////////
@@ -157,41 +157,54 @@ namespace MadCow
 
             if (Directory.Exists(Program.programPath + @"\Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
             {
-                Console.WriteLine("You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision);
-                
-                if (EnableAutoUpdateBox.Checked == true)
+                if (EnableAutoUpdateBox.Checked == true) //Using AutoUpdate:
                 {
-                Tick = (int)this.AutoUpdateValue.Value;
-                label1.Text = "Update in " + Tick + " minutes.";
+                    Console.WriteLine("You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision);
+                    Tick = (int)this.AutoUpdateValue.Value;
+                    label1.Text = "Update in " + Tick + " minutes.";
+                }
+                else //With out AutoUpdate:
+                {
+                    Console.WriteLine("You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision);
                 }
             }
 
             else if (Directory.Exists(Program.programPath + @"/MPQ")) //Checks for MPQ Folder
             {
-                Console.WriteLine("Found default MadCow MPQ folder");
-                UpdateMooegeButton.Enabled = false;
-                
-                if (EnableAutoUpdateBox.Checked == true)
+                if (EnableAutoUpdateBox.Checked == true) //Using AutoUpdate:
                 {
                     timer1.Stop();
+                    Console.WriteLine("Found default MadCow MPQ folder");
+                    UpdateMooegeButton.Enabled = false;
                     Console.WriteLine("Updating...");
                     backgroundWorker1.RunWorkerAsync();
                 }
-                Console.WriteLine("Updating...");
-                backgroundWorker1.RunWorkerAsync();
+                else //With out AutoUpdate:
+                {
+                    Console.WriteLine("Found default MadCow MPQ folder");
+                    UpdateMooegeButton.Enabled = false;
+                    Console.WriteLine("Updating...");
+                    backgroundWorker1.RunWorkerAsync();
+                }
             }
 
             else
             {
-                if (EnableAutoUpdateBox.Checked == true)
+                if (EnableAutoUpdateBox.Checked == true) //Using AutoUpdate:
                 {
                     timer1.Stop();
                     Console.WriteLine("Updating...");
+                    Directory.CreateDirectory(Program.programPath + "/MPQ");
+                    UpdateMooegeButton.Enabled = false;
+                    backgroundWorker1.RunWorkerAsync();
                 }
-                Console.WriteLine("Updating...");
-                Directory.CreateDirectory(Program.programPath + "/MPQ");
-                UpdateMooegeButton.Enabled = false;
-                backgroundWorker1.RunWorkerAsync();
+                else //With out AutoUpdate:
+                {
+                    Console.WriteLine("Updating...");
+                    Directory.CreateDirectory(Program.programPath + "/MPQ");
+                    UpdateMooegeButton.Enabled = false;
+                    backgroundWorker1.RunWorkerAsync();
+                }
             }
         }
 
@@ -213,7 +226,7 @@ namespace MadCow
             {
                 if (ErrorFinder.SearchLogs("Fatal") == true)
                 {
-                    SimpleFileDelete.Delete(0); //We delete de Log file HERE. Nowhere else!.
+                    DeleteHelper.Delete(0); //We delete de Log file HERE. Nowhere else!.
                     var ErrorAnswer = MessageBox.Show(@"Seems your MPQ [" + ErrorFinder.errorFileName + @"] is corrupted." + "\nWould you like MadCow to fix this for you?","Found corrupted file!",
                         MessageBoxButtons.YesNo,MessageBoxIcon.Stop);
 
@@ -496,7 +509,7 @@ namespace MadCow
         
         private void ResetRepoFolder_Click(object sender, EventArgs e)
         {
-            SimpleFileDelete.Delete(1);
+            DeleteHelper.Delete(1);
         }
 
         ///////////////////////////////////////////////////////////
@@ -1082,7 +1095,7 @@ namespace MadCow
         ////////////////////////////////////////////////////////////////////////
         public void FixMpq()
         {
-            SimpleFileDelete.DeleteCorruptedMpq();
+            DeleteHelper.Delete(2); //Delete corrupted file.
             backgroundWorker4.RunWorkerAsync();
         }
 
