@@ -11,14 +11,14 @@ Added by Wesko
 
 Added by Wetwlly
 
-1. Re-add Wesko's ShortCut Creator (Mooege -> Desktop)
+1. handle other fatal exceptions
+
+2. Allow Multiple Repos(Done), but Delete Older Revisions if Newer version is available or downloaded.
+
+3. Closing out threads? when using autoupdate, updated mooege, maybe it updated again, and said backgroundworker is currently busy. believe this happens on update mooege and play diablo
 
 Future TODOs
 
-1. "Validate MPQs" should output which one is corrupt and show the one that is corrupt in red
-
-2. Validate MPQs" should match up and output File to MD5Hash
-
-3. Drop-Down Menu of Saved Validated Repositories //This is not implemented, there is a fixed list atm, we need to dynamically add user validates repos to our current list.
+1. Drop-Down Menu of Saved Validated Repositories //This is not implemented, there is a fixed list atm, we need to dynamically add user validates repos to our current list.
 
 

@@ -59,13 +59,13 @@ namespace MadCow
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (ProcessFind.FindProcess("Mooege") == true)
+            if (ProcessFinder.FindProcess("Mooege") == true)
             {
                 var answer = MessageBox.Show("Mooege is already Running. Do you want to restart Mooege?", "Attention",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (answer == DialogResult.Yes)
                 {
-                    ProcessFind.KillProcess("Mooege");
+                    ProcessFinder.KillProcess("Mooege");
                     TextReader tr = new StreamReader(Form1.CurrentProfile);
                     IConfigSource source = new IniConfigSource(Compile.mooegeINI);
                     //The next values are set in an SPECIFIC ORDER, changing the order will make INI modifying FAIL.
@@ -106,7 +106,7 @@ namespace MadCow
             }
             else
             {
-                ProcessFind.KillProcess("Mooege");
+                ProcessFinder.KillProcess("Mooege");
                 TextReader tr = new StreamReader(Form1.CurrentProfile);
                 IConfigSource source = new IniConfigSource(Compile.mooegeINI);
                 //The next values are set in an SPECIFIC ORDER, changing the order will make INI modifying FAIL.

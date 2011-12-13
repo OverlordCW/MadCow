@@ -61,6 +61,7 @@ namespace MadCow
             Console.SetOut(_writer);
             Console.WriteLine("Welcome to MadCow!");
             ToolTip toolTip1 = new ToolTip();
+            Compile.WriteVbsPath();
             // Set up the delays for the ToolTip.
             toolTip1.AutoPopDelay = 1800;
             toolTip1.InitialDelay = 500;
@@ -151,7 +152,10 @@ namespace MadCow
         /////////////////////////////
         private void Update_Mooege_Click(object sender, EventArgs e)
         {
-            if (Directory.Exists(Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
+
+            //if directory exists of developername and branch but not the lastRevision, delete so it can download the newer version. why keep an old revision?
+
+            if (Directory.Exists(Program.programPath + @"\Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
             {
                 Console.WriteLine("You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision);
                 
@@ -339,9 +343,6 @@ namespace MadCow
 
                     if (Src.Contains("MODIFY")) //If a d3 path exist, then we wont find "MODIFY" and program will proceed.
                     {
-                        //TODO: Even though Diablo3UserPathSelection Information below is changed, it will bypass these below
-                        //      and believe that they should be enabled, because there is "info" in the Src from madcow.ini, even
-                        //      though it seems empty.
                         Diablo3UserPathSelection.Text = "Please Select your Diablo III path.";
                         CopyMPQButton.Enabled = false;
                         PlayDiabloButton.Enabled = false;
@@ -983,7 +984,7 @@ namespace MadCow
                                "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7728.MPQ",
                                "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7841.MPQ",
                                "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7931.MPQ",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/ClientData.mpg",
+                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/ClientData.mpq",
                                "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/CoreData.mpq"};
 
             //Fixed path implementation for now.

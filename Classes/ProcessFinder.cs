@@ -20,7 +20,7 @@ using System.Diagnostics;
 
 namespace MadCow
 {
-    class ProcessFind
+    class ProcessFinder
     {
         //Is Process Running Function
         public static bool FindProcess(string AppName)

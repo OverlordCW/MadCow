@@ -19,13 +19,12 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-// When Testing error finder, by using Play Diablo. It is only allowed to be used with Wetwlly's Mooege Fork, 
-//as I've made the changes to mooege to be able to read the logs while accessed by mooege.
-
 namespace MadCow
 {
     class ErrorFinder
     {
+        //TODO: Add other errors, they are similar. and all require downloading all MPQs(my guess).
+        // http://wiki.mooege.org/Project:Current_events
         public static String errorFileName = "";
         //change searchText to FATAL
         public static Boolean SearchLogs(String searchText)

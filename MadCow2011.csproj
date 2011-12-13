@@ -77,7 +77,7 @@
     <Compile Include="Classes\ErrorFinder.cs" />
     <Compile Include="Classes\Diablo.cs" />
     <Compile Include="Classes\TextBoxStreamWriter.cs" />
-    <Compile Include="Classes\ProcessFind.cs" />
+    <Compile Include="Classes\ProcessFinder.cs" />
     <Compile Include="Classes\Delete.cs" />
     <Compile Include="Classes\Commands.cs" />
     <Compile Include="Classes\MPQprocedure.cs" />
@@ -116,7 +116,6 @@
     <Compile Include="RepositorySelectionServer.Designer.cs">
       <DependentUpon>RepositorySelectionServer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tools\Md5Validate.cs" />
     <Compile Include="Tools\ZipStorer.cs" />
     <Compile Include="Classes\Uncompress.cs" />
   </ItemGroup>
@@ -126,6 +125,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Repositories\ReposGoHere.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\ShortcutCreator.vbs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\correct.png" />
