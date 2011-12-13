@@ -152,7 +152,10 @@ namespace MadCow
         /////////////////////////////
         private void Update_Mooege_Click(object sender, EventArgs e)
         {
-            if (Directory.Exists(Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
+
+            //if directory exists of developername and branch but not the lastRevision, delete so it can download the newer version. why keep an old revision?
+
+            if (Directory.Exists(Program.programPath + @"\Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
             {
                 Console.WriteLine("You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision);
                 

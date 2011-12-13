@@ -13,9 +13,7 @@ Added by Wetwlly
 
 1. handle other fatal exceptions
 
-2. step-by-step balloon walkthrough for the noobies.
-
-3. Allow Multiple Repos(Done), but Delete Older Revisions if Newer version is available or downloaded.
+2. Allow Multiple Repos(Done), but Delete Older Revisions if Newer version is available or downloaded.
 
 Future TODOs
 
