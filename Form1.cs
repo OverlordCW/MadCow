@@ -343,9 +343,6 @@ namespace MadCow
 
                     if (Src.Contains("MODIFY")) //If a d3 path exist, then we wont find "MODIFY" and program will proceed.
                     {
-                        //TODO: Even though Diablo3UserPathSelection Information below is changed, it will bypass these below
-                        //      and believe that they should be enabled, because there is "info" in the Src from madcow.ini, even
-                        //      though it seems empty.
                         Diablo3UserPathSelection.Text = "Please Select your Diablo III path.";
                         CopyMPQButton.Enabled = false;
                         PlayDiabloButton.Enabled = false;
