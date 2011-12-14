@@ -23,60 +23,63 @@ using Nini.Config;
 
 namespace MadCow
 {
-    class SimpleFileDelete
+    class DeleteHelper
     {
-        public static void Delete(int folder)
+        public static void Delete(int selection)
         {
-            //Deletes Mooege Folder
-            if (folder == 1)
+            switch (selection)
             {
-           // Delete a directory and all subdirectories with Directory static method...
-            if (System.IO.Directory.Exists(Program.programPath + @"/Repositories"))
-                {
-                    try
+                case 0:
+                    // Delelete/Recreate Logs Folder
+                    if (System.IO.Directory.Exists(Program.programPath + @"/logs"))
                     {
-                        System.IO.Directory.Delete(Program.programPath + @"/Repositories", true);
-                        Console.WriteLine("Deleted Repositories Folder");
-                        Directory.CreateDirectory(Program.programPath + @"/Repositories");
+                        try
+                        {
+                            System.IO.Directory.Delete(Program.programPath + @"/logs", true);
+                            Console.WriteLine("Deleted Logs Folder");
+                            Directory.CreateDirectory(Program.programPath + @"/logs");
+                        }
+                        catch (System.IO.IOException e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
                     }
-                    catch (System.IO.IOException e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
-                }
-            }
-            if (folder == 0)
-            {
-                // Delete a directory and all subdirectories with Directory static method...
-                if (System.IO.Directory.Exists(Program.programPath + @"/logs"))
-                {
-                    try
-                    {
-                        System.IO.Directory.Delete(Program.programPath + @"/logs", true);
-                        Console.WriteLine("Deleted Logs Folder");
-                        Directory.CreateDirectory(Program.programPath + @"/logs");
-                    }
-                    catch (System.IO.IOException e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
-                }
-            }
-         }
+                break;
 
+                case 1: //Delete/Recreate Repository Folders.
+                    if (System.IO.Directory.Exists(Program.programPath + @"/Repositories"))
+                    {
+                        try
+                        {
+                            System.IO.Directory.Delete(Program.programPath + @"/Repositories", true);
+                            Console.WriteLine("Deleted Repositories Folder");
+                            Directory.CreateDirectory(Program.programPath + @"/Repositories");
+                        }
+                        catch (System.IO.IOException e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+                    }
+                break;
+
+                case 2: //Delete corrupted file thrown by ErrorFinder class.
+                    IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                    string MPQpath = source.Configs["DiabloPath"].Get("MPQpath");
+                    Console.WriteLine("Deleting file " + ErrorFinder.errorFileName);
+                    File.Delete(MPQpath + @"\base\" + ErrorFinder.errorFileName);
+                break;
+
+                case 3://Delete existant repository folder, when we find a new version of a repository we use this to clean the old version.
+                    
+                break;
+            }
+        }
+        
+        //This is disabled for now, must be enable for public use version.
         public static void HideFile()//We hide the default profile, we dont want nubs deleting this cause MadCow will cry about it.
         {
             //string filePath = Program.programPath + @"\ServerProfiles\Default.mdc";
             //File.SetAttributes(filePath, File.GetAttributes(filePath) | FileAttributes.Hidden);
         }
-
-        public static void DeleteCorruptedMpq()
-        {
-            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
-            string MPQpath = source.Configs["DiabloPath"].Get("MPQpath");
-            Console.WriteLine("Deleting file " + ErrorFinder.errorFileName);
-            File.Delete(MPQpath + @"\base\" + ErrorFinder.errorFileName);
-        }
-
     }
 }
