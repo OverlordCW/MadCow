@@ -1,4 +1,6 @@
 Added by Wesko
+0. Apply threading to Uncompress/Compile procedure (IMPORTANT!)
+
 1. Implement a way to know if assembly System.Data.SQLite is running.
 
 2. Polish button visible evenhandlers.
