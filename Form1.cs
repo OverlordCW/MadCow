@@ -175,6 +175,7 @@ namespace MadCow
                 {
                     timer1.Stop();
                     Console.WriteLine("Found default MadCow MPQ folder");
+                    DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
                     UpdateMooegeButton.Enabled = false;
                     Console.WriteLine("Updating...");
                     backgroundWorker1.RunWorkerAsync();
@@ -182,6 +183,7 @@ namespace MadCow
                 else //With out AutoUpdate:
                 {
                     Console.WriteLine("Found default MadCow MPQ folder");
+                    DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
                     UpdateMooegeButton.Enabled = false;
                     Console.WriteLine("Updating...");
                     backgroundWorker1.RunWorkerAsync();
@@ -193,6 +195,7 @@ namespace MadCow
                 if (EnableAutoUpdateBox.Checked == true) //Using AutoUpdate:
                 {
                     timer1.Stop();
+                    DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
                     Console.WriteLine("Updating...");
                     Directory.CreateDirectory(Program.programPath + "/MPQ");
                     UpdateMooegeButton.Enabled = false;
@@ -200,6 +203,7 @@ namespace MadCow
                 }
                 else //With out AutoUpdate:
                 {
+                    DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
                     Console.WriteLine("Updating...");
                     Directory.CreateDirectory(Program.programPath + "/MPQ");
                     UpdateMooegeButton.Enabled = false;
