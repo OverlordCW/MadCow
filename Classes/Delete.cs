@@ -81,22 +81,23 @@ namespace MadCow
 
         public static void DeleteOldRepoVersion(string developerName)
         {
+            Console.WriteLine("Looking for {0} old repository", developerName);
             String directoryString = Program.programPath + @"\Repositories\";
             Int32 i = directoryString.LastIndexOf('\\');
             directoryString = directoryString.Remove(i, directoryString.Length - i);
             string[] directories = Directory.GetDirectories(directoryString);
-            string[] folderName = new string[directories.Count()];
+            string[] folderName = new string[2];
             Int32 j = 0;
 
             foreach (string directory in directories)
             {
                     DirectoryInfo dinfo = new DirectoryInfo(directory);
-                    folderName[j] = dinfo.Name;
-                    if (folderName[j].Contains(developerName))
+                    if (directory.Contains(developerName) && dinfo.Name.StartsWith(developerName)) //We avoid deleting all folder that contains Mooege when we are just trying to get rid of Master branch.
                     {
-                        Directory.Delete(directory, true);
-                        Console.WriteLine("Deleted Old Version: \"{0}\"", folderName[j]);
-                        j++;
+                        folderName[j] = dinfo.Name;
+                        folderName[j + 1] = directory;
+                        Directory.Delete(folderName[1], true);
+                        Console.WriteLine("Deleted Old Version of : {0} revision.", folderName[0]);
                     }
             }
         }
