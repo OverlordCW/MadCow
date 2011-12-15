@@ -69,8 +69,16 @@ namespace MadCow
             // Force the ToolTip text to be displayed whether or not the form is active.
             toolTip1.ShowAlways = true;
             // Set up the ToolTip text for the Buttons.
-            toolTip1.SetToolTip(this.UpdateMooegeButton, "This will update mooege to latest version");
-            toolTip1.SetToolTip(this.CopyMPQButton, "This will copy MPQ's if you have D3 installed");
+            toolTip1.SetToolTip(this.UpdateMooegeButton, "Update mooege from GitHub to latest version");
+            toolTip1.SetToolTip(this.CopyMPQButton, "Copy MPQ's if you have D3 installed");
+            toolTip1.SetToolTip(this.FindDiabloButton, "Find Diablo.exe so MadCow can work properly");
+            toolTip1.SetToolTip(this.ValidateRepoButton, "Validate the repository so MadCow can download it");
+            toolTip1.SetToolTip(this.EnableAutoUpdateBox, "Checks for updates to a repository ever 'X' minutes");
+            toolTip1.SetToolTip(this.RemoteServerButton, "Connects to public server you have entered in");
+            toolTip1.SetToolTip(this.ResetRepoFolder, "Resets Repository folder in case of errors");
+            toolTip1.SetToolTip(this.DownloadMPQSButton, "Downloads ALL MPQs needed to run Mooege");
+            toolTip1.SetToolTip(this.RestoreDefaults, "Resets Server Control settings");
+            toolTip1.SetToolTip(this.PlayDiabloButton, "Time to play Diablo 3 through Mooege!");
             InitializeFindPath();
         }
 
