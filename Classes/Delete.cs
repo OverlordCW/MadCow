@@ -44,7 +44,7 @@ namespace MadCow
                             Console.WriteLine(e.Message);
                         }
                     }
-                break;
+                    break;
 
                 case 1: //Delete/Recreate Repository Folders.
                     if (System.IO.Directory.Exists(Program.programPath + @"/Repositories"))
@@ -60,26 +60,45 @@ namespace MadCow
                             Console.WriteLine(e.Message);
                         }
                     }
-                break;
+                    break;
 
                 case 2: //Delete corrupted file thrown by ErrorFinder class.
                     IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
                     string MPQpath = source.Configs["DiabloPath"].Get("MPQpath");
                     Console.WriteLine("Deleting file " + ErrorFinder.errorFileName);
                     File.Delete(MPQpath + @"\base\" + ErrorFinder.errorFileName);
-                break;
-
-                case 3://Delete existant repository folder, when we find a new version of a repository we use this to clean the old version.
-                    
-                break;
+                    break;
             }
         }
+        
         
         //This is disabled for now, must be enable for public use version.
         public static void HideFile()//We hide the default profile, we dont want nubs deleting this cause MadCow will cry about it.
         {
             //string filePath = Program.programPath + @"\ServerProfiles\Default.mdc";
             //File.SetAttributes(filePath, File.GetAttributes(filePath) | FileAttributes.Hidden);
+        }
+
+        public static void DeleteOldRepoVersion(string developerName)
+        {
+            String directoryString = Program.programPath + @"\Repositories\";
+            Int32 i = directoryString.LastIndexOf('\\');
+            directoryString = directoryString.Remove(i, directoryString.Length - i);
+            string[] directories = Directory.GetDirectories(directoryString);
+            string[] folderName = new string[directories.Count()];
+            Int32 j = 0;
+
+            foreach (string directory in directories)
+            {
+                if(directory.Contains(developerName))
+                {
+                    DirectoryInfo dinfo = new DirectoryInfo(directory);
+                    folderName[j] = dinfo.Name;
+                    Directory.Delete(directory,true);
+                    Console.WriteLine("Deleted Old Version: \"{0}\"", folderName[j]);
+                    j++;
+                }
+            }
         }
     }
 }
