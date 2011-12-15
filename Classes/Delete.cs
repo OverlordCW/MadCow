@@ -90,14 +90,14 @@ namespace MadCow
 
             foreach (string directory in directories)
             {
-                if(directory.Contains(developerName))
-                {
                     DirectoryInfo dinfo = new DirectoryInfo(directory);
                     folderName[j] = dinfo.Name;
-                    Directory.Delete(directory,true);
-                    Console.WriteLine("Deleted Old Version: \"{0}\"", folderName[j]);
-                    j++;
-                }
+                    if (folderName[j].Contains(developerName))
+                    {
+                        Directory.Delete(directory, true);
+                        Console.WriteLine("Deleted Old Version: \"{0}\"", folderName[j]);
+                        j++;
+                    }
             }
         }
     }
