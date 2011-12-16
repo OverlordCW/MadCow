@@ -127,6 +127,9 @@
     <Content Include="Repositories\ReposGoHere.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\ShortcutCreator.vbs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Tools\ShortcutCreator.vbs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
