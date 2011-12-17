@@ -90,7 +90,7 @@
             this.CopyMPQButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.generalProgressBar = new System.Windows.Forms.ProgressBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.DownloadFileSpeed = new System.Windows.Forms.Label();
@@ -106,7 +106,7 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label1 = new System.Windows.Forms.Label();
-            txtConsole = new System.Windows.Forms.TextBox();
+            this.txtConsole = new System.Windows.Forms.TextBox();
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
@@ -788,20 +788,20 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(progressBar1);
+            this.panel2.Controls.Add(this.generalProgressBar);
             this.panel2.Location = new System.Drawing.Point(9, 19);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(316, 17);
             this.panel2.TabIndex = 17;
             // 
-            // progressBar1
+            // generalProgressBar
             // 
-            progressBar1.Cursor = System.Windows.Forms.Cursors.Arrow;
-            progressBar1.Location = new System.Drawing.Point(5, 3);
-            progressBar1.Name = "progressBar1";
-            progressBar1.Size = new System.Drawing.Size(308, 11);
-            progressBar1.Step = 20;
-            progressBar1.TabIndex = 0;
+            this.generalProgressBar.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.generalProgressBar.Location = new System.Drawing.Point(5, 3);
+            this.generalProgressBar.Name = "generalProgressBar";
+            this.generalProgressBar.Size = new System.Drawing.Size(308, 11);
+            this.generalProgressBar.Step = 20;
+            this.generalProgressBar.TabIndex = 0;
             // 
             // tabControl1
             // 
@@ -942,13 +942,13 @@
             // 
             // txtConsole
             // 
-            txtConsole.Location = new System.Drawing.Point(372, 41);
-            txtConsole.Multiline = true;
-            txtConsole.Name = "txtConsole";
-            txtConsole.ReadOnly = true;
-            txtConsole.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            txtConsole.Size = new System.Drawing.Size(334, 282);
-            txtConsole.TabIndex = 16;
+            this.txtConsole.Location = new System.Drawing.Point(372, 41);
+            this.txtConsole.Multiline = true;
+            this.txtConsole.Name = "txtConsole";
+            this.txtConsole.ReadOnly = true;
+            this.txtConsole.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtConsole.Size = new System.Drawing.Size(334, 282);
+            this.txtConsole.TabIndex = 16;
             // 
             // backgroundWorker2
             // 
@@ -979,7 +979,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(718, 352);
-            this.Controls.Add(txtConsole);
+            this.Controls.Add(this.txtConsole);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -1109,8 +1109,8 @@
         private System.Windows.Forms.Label DownloadFileSpeed;
         private System.ComponentModel.BackgroundWorker backgroundWorker4;
         private System.ComponentModel.BackgroundWorker backgroundWorker5;
-        public static System.Windows.Forms.ProgressBar progressBar1;
-        public static System.Windows.Forms.TextBox txtConsole;
+        public System.Windows.Forms.TextBox txtConsole;
+        public System.Windows.Forms.ProgressBar generalProgressBar;
 
     }
 }

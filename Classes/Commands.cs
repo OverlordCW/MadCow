@@ -59,6 +59,7 @@ namespace MadCow
 
         public static void RunUpdate() //This is actually the whole process MadCow uses before Downloading source.
         {
+            var form = Form.ActiveForm as Form1; //In order to access Form controls.
             Compile.currentMooegeExePath = Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\Mooege.exe";
             Compile.currentMooegeDebugFolderPath = Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\";
             Compile.mooegeINI = Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini";
@@ -70,15 +71,15 @@ namespace MadCow
             }
             Uncompress.UncompressFiles();
             RefreshDesktop.RefreshDesktopPlease(); //Sends a refresh call to desktop, probably this is working for Windows Explorer too, so i'll leave it there for now -wesko
-            Thread.Sleep(2000); //This shit is needed for madcow to work on VM XP, you need to wait for Windows Explorer to refresh folders or compiling wont find the new mooege folder just uncompressed.
-            Form1.progressBar1.PerformStep(); //This sends an update to progress bar
+            Thread.Sleep(2000); //<-This and ^this is needed for madcow to work on VM XP, you need to wait for Windows Explorer to refresh folders or compiling wont find the new mooege folder just uncompressed.
+            form.generalProgressBar.PerformStep();
             Compile.CreateBatchCompileFile();
             Compile.WriteCompileBatch();
             Compile.ExecuteCommandSync(Program.programPath + @"\Tools\CompileBatch");  //Compile command.         
-            Form1.progressBar1.PerformStep();
+            form.generalProgressBar.PerformStep();
             Compile.ModifyMooegeINI(); //Add MadCow MPQ folder Path to Mooege
-            Form1.progressBar1.PerformStep();
-            Form1.progressBar1.PerformStep();    
+            form.generalProgressBar.PerformStep();
+            form.generalProgressBar.PerformStep();
         }
     }
 }

@@ -559,7 +559,7 @@ namespace MadCow
         //PROCEED WITH THE PROCESS ONCE THE DOWNLOAD ITS COMPLETE
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            progressBar1.PerformStep();
+            generalProgressBar.PerformStep();
             Commands.RunUpdate();
             Console.WriteLine("Update Complete!");
             UpdateMooegeButton.Enabled = true;
