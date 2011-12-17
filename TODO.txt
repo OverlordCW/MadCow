@@ -1,25 +1,38 @@
 Added by Wesko
 0. Apply threading to Uncompress/Compile procedure (IMPORTANT!)
 
-1. Implement a way to know if assembly System.Data.SQLite is running.
-
-2. Polish button visible evenhandlers.
+1. Polish button visible evenhandlers.
    - Fix "Play Diablo" button to be disabled while repo selector its open
 
-3. Some tweaking into server control profile handling.
+2. Some tweaking into server control profile handling.
 
-4. Implement fatal exception handling into standalone server launcher
+3. Implement fatal exception handling into standalone server launcher
+
+
+Future TODOs
+
+1. Drop-Down Menu of Saved Validated Repositories 
+//This is not implemented, there is a fixed list atm, we need to dynamically add user validates repos to our current list.
 
 
 Added by Wetwlly
 
 1. handle other fatal exceptions [base file of patch / MPQstorage BS / if somehow you get Cant find MPQs
 
-2. Closing out threads? when using autoupdate, updated mooege, maybe it updated again, and said backgroundworker is currently busy. believe this happens on update mooege and play diablo
+//_Mooege Errors that I've seen_
+
+Mooege.Core.GS.Items.ItemGenerator
+
+Mooege.Common.MPQ.MPQStorage
+
+//For above two, its easy to just call download ALL mpqs.
 
 
-Future TODOs
+Required Patch-chain version _____ is not satisfied.
+Fatal Program: cannot run servers as MPQStorage failed initialization.
 
-1. Drop-Down Menu of Saved Validated Repositories //This is not implemented, there is a fixed list atm, we need to dynamically add user validates repos to our current list.
+[Error] [MPQPatchChain]: Cannot find base MPQ file: CoreData.mpq.
+[Fatal] [Program]: Cannot run servers as MPQStorage failed initialization.
 
-
+// No idea how these would be called, but in the event that they delete them (does diablo button check??), 
+// look for what MPQs, if one or more is missing -> download them.
