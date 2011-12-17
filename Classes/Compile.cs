@@ -56,10 +56,8 @@ namespace MadCow
             }
             catch (Exception e)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Error while compiling!");
                 Console.WriteLine(e);
-                Console.ReadKey();
-                Environment.Exit(0);
             }
         }
 

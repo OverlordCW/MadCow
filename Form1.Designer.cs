@@ -110,6 +110,7 @@
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -658,7 +659,7 @@
             this.comboBox1.Size = new System.Drawing.Size(188, 21);
             this.comboBox1.TabIndex = 17;
             this.comboBox1.Text = "https://github.com/mooege/mooege";
-            this.comboBox1.TextChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.comboBox1.TextChanged += new System.EventHandler(this.comboBox1_TextChanged);
             // 
             // pictureBox2
             // 
@@ -969,6 +970,10 @@
             this.backgroundWorker4.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.downloader_ProgressChanged2);
             this.backgroundWorker4.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.downloader_DownloadedComplete2);
             // 
+            // backgroundWorker5
+            // 
+            this.backgroundWorker5.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker5_DoWork);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1103,6 +1108,7 @@
         private System.Windows.Forms.Label DownloadingFileName;
         private System.Windows.Forms.Label DownloadFileSpeed;
         private System.ComponentModel.BackgroundWorker backgroundWorker4;
+        private System.ComponentModel.BackgroundWorker backgroundWorker5;
         public static System.Windows.Forms.ProgressBar progressBar1;
         public static System.Windows.Forms.TextBox txtConsole;
 

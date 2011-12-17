@@ -28,7 +28,6 @@ namespace MadCow
         public static String branchName = "";
         public static String lastRevision = "";
         public static String commitFile = "";
-        public static String errorSender = "";
 
         public static void getDeveloperName()
         {
@@ -42,7 +41,6 @@ namespace MadCow
             catch (Exception)
             {
                 commitFile = "Incorrect repository entry";
-                errorSender = "Incorrect repository entry.";
             }
         }
 
@@ -51,39 +49,9 @@ namespace MadCow
             Int32 LastPointer = revisionUrl.Length;
             Int32 FirstPointer = revisionUrl.IndexOf(developerName);
             Int32 DeveloperNameLength = developerName.Length;
-            Int32 BranchNameLength = LastPointer-(FirstPointer+DeveloperNameLength)-1; //+1 or -1 are to fix missing "/" while parsing.
+            Int32 BranchNameLength = LastPointer-(FirstPointer+DeveloperNameLength)-1; //+1 or -1 are to get rid of "/".
             branchName = revisionUrl.Substring(FirstPointer + DeveloperNameLength + 1, BranchNameLength);
-        }
-
-        public static void GetRevision()
-        {
-            try
-            {
-                WebClient client = new WebClient();
-                commitFile = client.DownloadString(revisionUrl + "/commits/master.atom");
-                Int32 pos2 = commitFile.IndexOf("Commit/");
-                String revision = commitFile.Substring(pos2 + 7, 7);
-                lastRevision = commitFile.Substring(pos2 + 7, 7);
-            }
-            catch (WebException ex)
-            {
-                if (ex.Status == WebExceptionStatus.ProtocolError)
-                {
-                    if (((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.NotFound)
-                    {
-                        commitFile = "Incorrect repository entry";
-                        errorSender = "Incorrect repository entry.";
-                    }
-                }
-                else if (ex.Status == WebExceptionStatus.ConnectFailure)
-                {
-                    commitFile = "ConnectionFailure";
-                    errorSender = "Check your internet connection.";
-                }
-                else
-                    commitFile = "Incorrect repository entry";
-                errorSender = "Incorrect repository entry.";
-            }
-        }
+        }          
+      }
     }
-}
+

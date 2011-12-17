@@ -49,7 +49,7 @@ namespace MadCow
             AutoUpdateValue.Enabled = false;
             EnableAutoUpdateBox.Enabled = false;
             PlayDiabloButton.Enabled = false;
-            DeleteHelper.HideFile();
+            //DeleteHelper.HideFile();
         }
 
         ///////////////////////////////////////////////////////////
@@ -83,52 +83,109 @@ namespace MadCow
         }
 
         ///////////////////////////////////////////////////////////
-        //Update Mooege
+        //Validate Repository
         ///////////////////////////////////////////////////////////
         private void Validate_Repository_Click(object sender, EventArgs e)
         {
-            //Update Mooege - does not start Diablo
+            backgroundWorker5.RunWorkerAsync();
+        }
 
-            ParseRevision.revisionUrl = comboBox1.Text;  
+        private void backgroundWorker5_DoWork(object sender, DoWorkEventArgs e)
+        {
+            comboBox1.Invoke (new Action(() =>{ParseRevision.revisionUrl = this.comboBox1.Text;}));
             try
+            {
+                WebClient client = new WebClient();                
+                client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(backgroundWorker5_RunWorkerCompleted);
+                try
                 {
-                    ParseRevision.GetRevision();
-
-                    if (ParseRevision.commitFile == "ConnectionFailure")
+                    Uri uri = new Uri(ParseRevision.revisionUrl + "/commits/master.atom");
+                    client.DownloadStringAsync(uri);
+                }
+                catch (UriFormatException)
+                {
+                    ActiveForm.Invoke(new Action(() =>
                     {
+                        ParseRevision.commitFile = "Incorrect repository entry";
                         pictureBox2.Hide();
-                        comboBox1.Text = ParseRevision.errorSender;
-                        pictureBox1.Show();
-                        AutoUpdateValue.Enabled = false; //If validation fails we set Update and Autoupdate
-                        EnableAutoUpdateBox.Enabled = false;      //functions disabled!.
-                        UpdateMooegeButton.Enabled = false;
-                        Console.WriteLine("Internet Problems.");
-                    }
-
-                    else if (ParseRevision.commitFile == "Incorrect repository entry")
-                    {
-                        pictureBox2.Hide();
-                        comboBox1.Text = ParseRevision.errorSender;
+                        comboBox1.Text = ParseRevision.commitFile;
                         pictureBox1.Show();
                         AutoUpdateValue.Enabled = false; //If validation fails we set Update and Autoupdate
                         EnableAutoUpdateBox.Enabled = false;      //functions disabled!.
                         UpdateMooegeButton.Enabled = false;
                         Console.WriteLine("Please try a different Repository.");
-                    }
-                    
-                    else if (ParseRevision.revisionUrl.EndsWith("/"))
+                    }));
+                }
+                
+            }
+            catch (WebException ex)
+            {
+                if (ex.Status == WebExceptionStatus.ProtocolError)
+                {
+                    if (((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.NotFound)
                     {
+                    ParseRevision.commitFile = "Incorrect repository entry";
+                    }
+                }
+                else if (ex.Status == WebExceptionStatus.ConnectFailure)
+                {
+                    ParseRevision.commitFile = "ConnectionFailure";
+                }
+                else
+                    ParseRevision.commitFile = "Incorrect repository entry";
+            }
+       }
+
+        private void backgroundWorker5_RunWorkerCompleted(object sender, DownloadStringCompletedEventArgs e)
+        {
+
+            if (e.Error != null)
+            {
+                ParseRevision.commitFile = "Incorrect repository entry";
+            }
+
+            else if (e.Result.ToString() != null && e.Error == null)
+            {
+                ParseRevision.commitFile = e.Result.ToString();
+                Int32 pos2 = ParseRevision.commitFile.IndexOf("Commit/");
+                String revision = ParseRevision.commitFile.Substring(pos2 + 7, 7);
+                ParseRevision.lastRevision = ParseRevision.commitFile.Substring(pos2 + 7, 7);
+            }
+
+            try
+                {
+                    if (ParseRevision.commitFile == "ConnectionFailure")
+                    {
+                        ActiveForm.Invoke(new Action(() => 
+                        { 
+                            pictureBox2.Hide();
+                            comboBox1.Text = ParseRevision.commitFile;
+                            pictureBox1.Show();
+                            AutoUpdateValue.Enabled = false; //If validation fails we set Update and Autoupdate
+                            EnableAutoUpdateBox.Enabled = false;      //functions disabled!.
+                            UpdateMooegeButton.Enabled = false;
+                            Console.WriteLine("Internet Problems.");
+                        }));
+                    }
+
+                    else if (ParseRevision.commitFile == "Incorrect repository entry")
+                    {
+                        ActiveForm.Invoke(new Action(() => 
+                        { 
                         pictureBox2.Hide();
-                        comboBox1.Text = "Incorrect repository entry";
+                        comboBox1.Text = ParseRevision.commitFile;
                         pictureBox1.Show();
-                        AutoUpdateValue.Enabled = false;  //If validation fails we set Update and Autoupdate
-                        EnableAutoUpdateBox.Enabled = false;       //functions disabled!.
+                        AutoUpdateValue.Enabled = false; //If validation fails we set Update and Autoupdate
+                        EnableAutoUpdateBox.Enabled = false;      //functions disabled!.
                         UpdateMooegeButton.Enabled = false;
-                        Console.WriteLine("Delete the last '/' on the repository.");
+                        Console.WriteLine("Please try a different Repository.");
+                        }));
                     }
                     else
-
                     {
+                        ActiveForm.Invoke(new Action(() => 
+                        {
+                        pictureBox1.Hide();
                         pictureBox2.Show();
                         comboBox1.ForeColor = Color.Green;
                         comboBox1.Text = ParseRevision.revisionUrl;
@@ -137,26 +194,25 @@ namespace MadCow
                         UpdateMooegeButton.Enabled = true;
                         AutoUpdateValue.Enabled = true;
                         EnableAutoUpdateBox.Enabled = true;
-                        BnetServerIp.Enabled = true;
-                        BnetServerPort.Enabled = true;
-                        GameServerIp.Enabled = true;
-                        GameServerPort.Enabled = true;
-                        PublicServerIp.Enabled = true;
-                        NATcheckBox.Enabled = true;
-                        MOTD.Enabled = true;
                         Console.WriteLine("Repository Validated!");
+                        }));
                     }
                 }
-                catch (Exception)
+                catch (Exception Ex)
                 {
+                    Console.WriteLine(Ex);
+                    ActiveForm.Invoke(new Action(() => 
+                    { 
                     pictureBox2.Hide();
-                    comboBox1.Text = ParseRevision.errorSender;
+                    comboBox1.Text = ParseRevision.commitFile;
                     pictureBox1.Show();
+                    }));
                 }
         }
 
+
         /////////////////////////////
-        //UPDATE MOOEGE: This will validate ur current revision, if outdated proceed to download calling ->backgroundWorker1.RunWorkerAsync()->backgroundWorker1_RunWorkerCompleted.
+        //UPDATE MOOEGE: This will compare ur current revision, if outdated proceed to download calling ->backgroundWorker1.RunWorkerAsync()->backgroundWorker1_RunWorkerCompleted.
         /////////////////////////////
         private void Update_Mooege_Click(object sender, EventArgs e)
         {
@@ -878,21 +934,22 @@ namespace MadCow
         //This has the function on turning letters red if Error, Black if normal.
         ////////////////////////////////////////////////////////////////////////
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBox1_TextChanged(object sender, EventArgs e)
         {
+            string currentText = ParseRevision.commitFile;
             UpdateMooegeButton.Enabled = false;
             AutoUpdateValue.Enabled = false; //If user is typing a new URL Update and Autoupdate
             EnableAutoUpdateBox.Enabled = false;      //Functions gets disabled
             try
             {
-                if (comboBox1.Text == "Incorrect repository entry." || comboBox1.Text == "Check your internet connection.")
+                if (currentText == "Incorrect repository entry")
                 {
                     this.comboBox1.ForeColor = Color.Red;
                 }
                 else
                 {
                     comboBox1.ForeColor = Color.Black;
-                    this.label4.BackColor = System.Drawing.Color.Transparent;
+                    label4.BackColor = System.Drawing.Color.Transparent;
                     pictureBox1.Hide();//Error Image (Cross)
                     pictureBox2.Hide();//Correct Image (Tick)
                 }
