@@ -32,8 +32,8 @@ namespace MadCow
 
         public override void Write(char value)
         {
-            base.Write(value);
-            _output.AppendText(value.ToString());          
+            MethodInvoker action = delegate { _output.AppendText(value.ToString()); };
+            _output.BeginInvoke(action);
         }
 
         public override Encoding Encoding
