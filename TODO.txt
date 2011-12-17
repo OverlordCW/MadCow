@@ -1,4 +1,6 @@
 Added by Wesko
+0. Apply threading to Uncompress/Compile procedure (IMPORTANT!)
+
 1. Implement a way to know if assembly System.Data.SQLite is running.
 
 2. Polish button visible evenhandlers.
@@ -11,11 +13,10 @@ Added by Wesko
 
 Added by Wetwlly
 
-1. handle other fatal exceptions
+1. handle other fatal exceptions [base file of patch / MPQstorage BS / if somehow you get Cant find MPQs
 
-2. Allow Multiple Repos(Done), but Delete Older Revisions if Newer version is available or downloaded.
+2. Closing out threads? when using autoupdate, updated mooege, maybe it updated again, and said backgroundworker is currently busy. believe this happens on update mooege and play diablo
 
-3. Closing out threads? when using autoupdate, updated mooege, maybe it updated again, and said backgroundworker is currently busy. believe this happens on update mooege and play diablo
 
 Future TODOs
 

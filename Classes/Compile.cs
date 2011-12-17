@@ -141,10 +141,14 @@ namespace MadCow
 
         static public void WriteVbsPath()
         {
+
+            File.Copy(Program.programPath + "\\Resources\\ShortcutCreator.vbs", Program.programPath + "\\Tools\\ShortcutCreator.vbs", true);
+
             String vbsPath = (Program.programPath + "\\Tools\\ShortcutCreator.vbs");
             StreamReader reader = new StreamReader(vbsPath);
             string content = reader.ReadToEnd();
             reader.Close();
+
 
             content = Regex.Replace(content, "MODIFY", Program.programPath + @"\MadCow2011.exe");
             content = Regex.Replace(content, "WESKO", Program.programPath);

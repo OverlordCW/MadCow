@@ -69,8 +69,16 @@ namespace MadCow
             // Force the ToolTip text to be displayed whether or not the form is active.
             toolTip1.ShowAlways = true;
             // Set up the ToolTip text for the Buttons.
-            toolTip1.SetToolTip(this.UpdateMooegeButton, "This will update mooege to latest version");
-            toolTip1.SetToolTip(this.CopyMPQButton, "This will copy MPQ's if you have D3 installed");
+            toolTip1.SetToolTip(this.UpdateMooegeButton, "Update mooege from GitHub to latest version");
+            toolTip1.SetToolTip(this.CopyMPQButton, "Copy MPQ's if you have D3 installed");
+            toolTip1.SetToolTip(this.FindDiabloButton, "Find Diablo.exe so MadCow can work properly");
+            toolTip1.SetToolTip(this.ValidateRepoButton, "Validate the repository so MadCow can download it");
+            toolTip1.SetToolTip(this.EnableAutoUpdateBox, "Checks for updates to a repository ever 'X' minutes");
+            toolTip1.SetToolTip(this.RemoteServerButton, "Connects to public server you have entered in");
+            toolTip1.SetToolTip(this.ResetRepoFolder, "Resets Repository folder in case of errors");
+            toolTip1.SetToolTip(this.DownloadMPQSButton, "Downloads ALL MPQs needed to run Mooege");
+            toolTip1.SetToolTip(this.RestoreDefaults, "Resets Server Control settings");
+            toolTip1.SetToolTip(this.PlayDiabloButton, "Time to play Diablo 3 through Mooege!");
             InitializeFindPath();
         }
 
@@ -175,6 +183,7 @@ namespace MadCow
                 {
                     timer1.Stop();
                     Console.WriteLine("Found default MadCow MPQ folder");
+                    DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
                     UpdateMooegeButton.Enabled = false;
                     Console.WriteLine("Updating...");
                     backgroundWorker1.RunWorkerAsync();
@@ -182,6 +191,7 @@ namespace MadCow
                 else //With out AutoUpdate:
                 {
                     Console.WriteLine("Found default MadCow MPQ folder");
+                    DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
                     UpdateMooegeButton.Enabled = false;
                     Console.WriteLine("Updating...");
                     backgroundWorker1.RunWorkerAsync();
@@ -193,6 +203,7 @@ namespace MadCow
                 if (EnableAutoUpdateBox.Checked == true) //Using AutoUpdate:
                 {
                     timer1.Stop();
+                    DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
                     Console.WriteLine("Updating...");
                     Directory.CreateDirectory(Program.programPath + "/MPQ");
                     UpdateMooegeButton.Enabled = false;
@@ -200,6 +211,7 @@ namespace MadCow
                 }
                 else //With out AutoUpdate:
                 {
+                    DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
                     Console.WriteLine("Updating...");
                     Directory.CreateDirectory(Program.programPath + "/MPQ");
                     UpdateMooegeButton.Enabled = false;
@@ -526,76 +538,81 @@ namespace MadCow
                 Uri uri = new Uri("https://raw.github.com/mooege/mooege/master/src/Mooege/Common/Versions/VersionInfo.cs");
                 client.DownloadStringAsync(uri);
             }
-            catch (Exception Ex)
+            catch
             {
-                Console.WriteLine(Ex);
+                Console.WriteLine("Check yor internet connection");
             }
         }
 
         //After Asyn download complete, we proceed to parse the required version by Mooege in VersionInfo.cs.
         private void Checkversions(Object sender, DownloadStringCompletedEventArgs e)
         {
-            if (File.Exists(Diablo3UserPathSelection.Text))
+            try
             {
-
-                String parseVersion = e.Result;
-                FileVersionInfo d3Version = FileVersionInfo.GetVersionInfo(Diablo3UserPathSelection.Text);
-                Int32 ParsePointer = parseVersion.IndexOf("RequiredPatchVersion = ");
-                String MooegeVersion = parseVersion.Substring(ParsePointer + 23, 4); //Gets required version by Mooege
-                MooegeSupportedVersion = MooegeVersion; //Public String to display over D3 path validation.
-                int CurrentD3VersionSupported = Convert.ToInt32(MooegeVersion);
-                int LocalD3Version = d3Version.FilePrivatePart;
-
-                if (LocalD3Version == CurrentD3VersionSupported)
+                if (File.Exists(Diablo3UserPathSelection.Text))
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Found the correct Mooege supported version of Diablo III [" + CurrentD3VersionSupported + "]");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    PlayDiabloButton.Invoke(new Action(() =>
+                    String parseVersion = e.Result;
+                    FileVersionInfo d3Version = FileVersionInfo.GetVersionInfo(Diablo3UserPathSelection.Text);
+                    Int32 ParsePointer = parseVersion.IndexOf("RequiredPatchVersion = ");
+                    String MooegeVersion = parseVersion.Substring(ParsePointer + 23, 4); //Gets required version by Mooege
+                    MooegeSupportedVersion = MooegeVersion; //Public String to display over D3 path validation.
+                    int CurrentD3VersionSupported = Convert.ToInt32(MooegeVersion);
+                    int LocalD3Version = d3Version.FilePrivatePart;
+
+                    if (LocalD3Version == CurrentD3VersionSupported)
                     {
-                        PlayDiabloButton.Enabled = true;
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Found the correct Mooege supported version of Diablo III [" + CurrentD3VersionSupported + "]");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        PlayDiabloButton.Invoke(new Action(() =>
+                        {
+                            PlayDiabloButton.Enabled = true;
+                        }
+                        ));
+                        CopyMPQButton.Invoke(new Action(() =>
+                        {
+                            CopyMPQButton.Enabled = true;
+                        }
+                        ));
                     }
-                    ));
-                    CopyMPQButton.Invoke(new Action(() =>
+                    //If the versions missmatch:
+                    else if (LocalD3Version != CurrentD3VersionSupported)
                     {
-                        CopyMPQButton.Enabled = true;
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Wrong client version FOUND!");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        MessageBox.Show("You need Diablo III Client version [" + MooegeSupportedVersion + "] in order to play over Mooege.\nPlease Update.", "Warning",
+                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        PlayDiabloButton.Invoke(new Action(() =>
+                        {
+                            PlayDiabloButton.Enabled = false;
+                        }
+                        ));
+                        CopyMPQButton.Invoke(new Action(() =>
+                        {
+                            CopyMPQButton.Enabled = false;
+                        }
+                        ));
                     }
-                    ));
                 }
-                //If the versions missmatch:
-                else if (LocalD3Version != CurrentD3VersionSupported)
+                else //If User removed or changed D3 exe location that was already saved in madcow path, we set madcow.ini paths to default again.
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Wrong client version FOUND!");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    MessageBox.Show("You need Diablo III Client version [" + MooegeSupportedVersion + "] in order to play over Mooege.\nPlease Update.", "Warning",
+                    IConfigSource madcowIni = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                    madcowIni.Configs["DiabloPath"].Set("D3Path", "MODIFY");
+                    madcowIni.Configs["DiabloPath"].Set("MPQpath", "");
+                    madcowIni.ReplaceKeyValues();
+                    madcowIni.Save();
+                    MessageBox.Show("Could not find Diablo III.exe, please select the proper path again.", "Warning",
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    PlayDiabloButton.Invoke(new Action(() =>
-                    {
-                        PlayDiabloButton.Enabled = false;
-                    }
-                    ));
-                    CopyMPQButton.Invoke(new Action(() =>
-                    {
-                        CopyMPQButton.Enabled = false;
-                    }
-                    ));
+                    Diablo3UserPathSelection.Invoke(new Action(() => { this.Diablo3UserPathSelection.Text = "Please Select your Diablo III path."; }));
+                    PlayDiabloButton.Invoke(new Action(() => { PlayDiabloButton.Enabled = false; }));
+                    CopyMPQButton.Invoke(new Action(() => { CopyMPQButton.Enabled = false; }));
                 }
             }
-            else //If User removed or changed D3 exe location that was already saved in madcow path, we set madcow.ini paths to default again.
+            catch
             {
-                IConfigSource madcowIni = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
-                madcowIni.Configs["DiabloPath"].Set("D3Path", "MODIFY");
-                madcowIni.Configs["DiabloPath"].Set("MPQpath", "");
-                madcowIni.ReplaceKeyValues();
-                madcowIni.Save();
-                MessageBox.Show("Could not find Diablo III.exe, please select the proper path again.", "Warning",
-                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                Diablo3UserPathSelection.Invoke(new Action(() => { this.Diablo3UserPathSelection.Text = "Please Select your Diablo III path."; }));
-                PlayDiabloButton.Invoke(new Action(() =>{PlayDiabloButton.Enabled = false;}));
-                CopyMPQButton.Invoke(new Action(() =>{CopyMPQButton.Enabled = false;}));
+                Console.WriteLine("[FATAL] Check your internet connection!");
             }
-
         }
 
         ///////////////////////////////////////////////////////////
