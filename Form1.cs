@@ -294,21 +294,71 @@ namespace MadCow
             {
                 if (ErrorFinder.SearchLogs("Fatal") == true)
                 {
-                    DeleteHelper.Delete(0); //We delete de Log file HERE. Nowhere else!.
-                    var ErrorAnswer = MessageBox.Show(@"Seems your MPQ [" + ErrorFinder.errorFileName + @"] is corrupted." + "\nWould you like MadCow to fix this for you?","Found corrupted file!",
-                        MessageBoxButtons.YesNo,MessageBoxIcon.Stop);
-
-                    if (ErrorAnswer == DialogResult.Yes)
+                    //We delete de Log file HERE. Nowhere else!.
+                    DeleteHelper.Delete(0);
+                    if (ErrorFinder.errorFileName.Contains("d3-update-base-"))
                     {
-                        //We move the user to the Help tab so he can see the progress of the download.
-                        tabControl1.Invoke(new Action(() =>
+                        var ErrorAnswer = MessageBox.Show(@"Seems your MPQ [" + ErrorFinder.errorFileName + @"] is corrupted." + "\nWould you like MadCow to fix this for you?", "Found corrupted file!",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
+
+                        if (ErrorAnswer == DialogResult.Yes)
                         {
-                            this.tabControl1.SelectTab("tabPage4");
+                            //We move the user to the Help tab so he can see the progress of the download.
+                            tabControl1.Invoke(new Action(() =>
+                            {
+                                this.tabControl1.SelectTab("tabPage4");
+                            }
+                            ));
+                            //We execute the procedure to start downloading the corrupted file @ FixMpq();
+                            FixMpq();
                         }
-                        ));
-                        //We execute the procedure to start downloading the corrupted file @ FixMpq();
-                        FixMpq();
                     }
+                    if (ErrorFinder.errorFileName.Contains("CoreData"))
+                    {
+                        var ErrorAnswer = MessageBox.Show(@"Seems your Missing [" + ErrorFinder.errorFileName + @"]." + "\nWould you like MadCow to fix this for you?", "Found missing file!",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
+
+                        if (ErrorAnswer == DialogResult.Yes)
+                        {
+                            //Copy CoreData from Diablo Folder
+                        }
+                    }
+                    if (ErrorFinder.errorFileName.Contains("ClientData"))
+                    {
+                        var ErrorAnswer = MessageBox.Show(@"Seems your Missing [" + ErrorFinder.errorFileName + @"]." + "\nWould you like MadCow to fix this for you?", "Found missing file!",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
+
+                        if (ErrorAnswer == DialogResult.Yes)
+                        {
+                            //Copy ClientData from Diablo Folder
+                        }
+                    }
+                    if (ErrorFinder.errorFileName.Contains("Patch"))
+                    {
+                        var ErrorAnswer = MessageBox.Show(@"Seems your missing some files in base folder." + "\nWould you like MadCow to fix this for you?", "Didn't find patch file(s)!",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
+
+                        if (ErrorAnswer == DialogResult.Yes)
+                        {
+                            //Look up base MPQ that wasnt added
+                            //then add that base file
+                            //alternate route: download/move all patch files.
+                        }
+                    }
+                    if (ErrorFinder.errorFileName.Contains("MPQ"))
+                    {
+                        var ErrorAnswer = MessageBox.Show(@"Seems some major files are corrupted." + "\nWould you like MadCow to fix this for you?", "Found Corrupted File!",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
+
+                        if (ErrorAnswer == DialogResult.Yes)
+                        {
+                            //Redownload ALL MPQs
+                        }
+                    }
+                }
+                else
+                { 
+                    //nothing
                 }
             }
             else
@@ -369,9 +419,86 @@ namespace MadCow
             t.Start();
         }
 
-        public static void ThreadProc2()
+        public void ThreadProc2()
         {
             Application.Run(new RepositorySelectionServer());
+            if (File.Exists(Program.programPath + @"\logs\mooege.log"))
+            {
+                if (ErrorFinder.SearchLogs("Fatal") == true)
+                {
+                    //We delete de Log file HERE. Nowhere else!.
+                    DeleteHelper.Delete(0);
+                    if (ErrorFinder.errorFileName.Contains("d3-update-base-"))
+                    {
+                        var ErrorAnswer = MessageBox.Show(@"Seems your MPQ [" + ErrorFinder.errorFileName + @"] is corrupted." + "\nWould you like MadCow to fix this for you?", "Found corrupted file!",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
+
+                        if (ErrorAnswer == DialogResult.Yes)
+                        {
+                            //We move the user to the Help tab so he can see the progress of the download.
+                            tabControl1.Invoke(new Action(() =>
+                            {
+                                this.tabControl1.SelectTab("tabPage4");
+                            }
+                            ));
+                            //We execute the procedure to start downloading the corrupted file @ FixMpq();
+                            FixMpq();
+                        }
+                    }
+                    if (ErrorFinder.errorFileName.Contains("CoreData"))
+                    {
+                        var ErrorAnswer = MessageBox.Show(@"Seems your Missing [" + ErrorFinder.errorFileName + @"]." + "\nWould you like MadCow to fix this for you?", "Found missing file!",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
+
+                        if (ErrorAnswer == DialogResult.Yes)
+                        {
+                            //Download CoreData because there is no Diablo Launcher(or at least not needed)
+                        }
+                    }
+                    if (ErrorFinder.errorFileName.Contains("ClientData"))
+                    {
+                        var ErrorAnswer = MessageBox.Show(@"Seems your Missing [" + ErrorFinder.errorFileName + @"]." + "\nWould you like MadCow to fix this for you?", "Found missing file!",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
+
+                        if (ErrorAnswer == DialogResult.Yes)
+                        {
+                            //Download ClientData because there is no Diablo Launcher(or at least not needed)
+                        }
+                    }
+                    if (ErrorFinder.errorFileName.Contains("Patch"))
+                    {
+                        var ErrorAnswer = MessageBox.Show(@"Seems your missing some files in base folder." + "\nWould you like MadCow to fix this for you?", "Didn't find patch file(s)!",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
+
+                        if (ErrorAnswer == DialogResult.Yes)
+                        {
+                            //Look up base MPQ that wasnt added
+                            //then add that base file
+                            //alternate route: download/move all patch files.
+                        }
+                    }
+                    if (ErrorFinder.errorFileName.Contains("MPQ"))
+                    {
+                        var ErrorAnswer = MessageBox.Show(@"Seems some major files are corrupted." + "\nWould you like MadCow to fix this for you?", "Found Corrupted File!",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
+
+                        if (ErrorAnswer == DialogResult.Yes)
+                        {
+                            //Redownload ALL MPQs
+                        }
+                    }
+                }
+                else
+                {
+                    //nothing
+                }
+            }
+            else
+            {
+                //Nothing!
+                //If the user closes Repo selection and we already went through fixing the MPQ, then Mooege.log will not exist and
+                //Madcow would crash when trying to read mooege.log.
+            }
         }
 
         ///////////////////////////////////////////////////////////

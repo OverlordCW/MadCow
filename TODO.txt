@@ -6,7 +6,6 @@ Added by Wesko
 
 2. Some tweaking into server control profile handling.
 
-3. Implement fatal exception handling into standalone server launcher
 
 
 Future TODOs
@@ -17,22 +16,6 @@ Future TODOs
 
 Added by Wetwlly
 
-1. handle other fatal exceptions [base file of patch / MPQstorage BS / if somehow you get Cant find MPQs
+1. handle other fatal exceptions [base file of patch->still need to add this one]
 
-//_Mooege Errors that I've seen_
-
-Mooege.Core.GS.Items.ItemGenerator
-
-Mooege.Common.MPQ.MPQStorage
-
-//For above two, its easy to just call download ALL mpqs.
-
-
-Required Patch-chain version _____ is not satisfied.
-Fatal Program: cannot run servers as MPQStorage failed initialization.
-
-[Error] [MPQPatchChain]: Cannot find base MPQ file: CoreData.mpq.
-[Fatal] [Program]: Cannot run servers as MPQStorage failed initialization.
-
-// No idea how these would be called, but in the event that they delete them (does diablo button check??), 
-// look for what MPQs, if one or more is missing -> download them.
+2. Fix up the processes to exception handling
