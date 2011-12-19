@@ -24,7 +24,6 @@ namespace MadCow
     class ErrorFinder
     {
         //TODO: Add other errors, they are similar. and all require downloading all MPQs(my guess).
-        // http://wiki.mooege.org/Project:Current_events
         public static String errorFileName = "";
         //change searchText to FATAL
         public static Boolean SearchLogs(String searchText)
@@ -41,11 +40,60 @@ namespace MadCow
                         {
                             if (System.Text.RegularExpressions.Regex.IsMatch(line, searchText))
                             {
+                                //This one is for Parsing Errors
+                                if (System.Text.RegularExpressions.Regex.IsMatch(oldline, "Applying file:"))
+                                {
                                 var pattern = "Applying file: (?<filename>.*?).mpq";
                                 var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
                                 var match = regex.Match(oldline);
                                 errorFileName = match.Groups["filename"].Value;
-                                return true;                                
+                                return true;  
+                                }
+                                //This one is for Missing CoreData
+                                if (System.Text.RegularExpressions.Regex.IsMatch(oldline, "CoreData.mpq."))
+                                {
+                                var pattern = "Cannot find base MPQ file: CoreData.mpq.";
+                                var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                                var match = regex.Match(oldline);
+                                errorFileName = "CoreData";
+                                return true;
+                                }
+                                //This one is for Missing ClientData
+                                if (System.Text.RegularExpressions.Regex.IsMatch(oldline, "ClientData.mpq."))
+                                {
+                                    var pattern = "Cannot find base MPQ file: ClientData.mpq.";
+                                    var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                                    var match = regex.Match(oldline);
+                                    errorFileName = "ClientData";
+                                    return true;
+                                }
+                                //Missing a base file/folder
+                                if (System.Text.RegularExpressions.Regex.IsMatch(oldline, "Required Patch-chain version"))
+                                {
+                                var pattern = "Required Patch-chain version";
+                                var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                                var match = regex.Match(oldline);
+                                errorFileName = "Patch";
+                                return true;
+                                }
+                                //Need to pretty much redownload all MPQs
+                                if (System.Text.RegularExpressions.Regex.IsMatch(line, "Mooege.Core.GS.Items.ItemGenerator"))
+                                {
+                                    var pattern = "Mooege.Core.GS.Items.ItemGenerator";
+                                    var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                                    var match = regex.Match(line);
+                                    errorFileName = "MPQ";
+                                    return true;
+                                }
+                                //Need to pretty much redownload all MPQs
+                                if (System.Text.RegularExpressions.Regex.IsMatch(line, "Mooege.Common.MPQ.MPQStorage"))
+                                {
+                                    var pattern = "Mooege.Common.MPQ.MPQStorage";
+                                    var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                                    var match = regex.Match(line);
+                                    errorFileName = "MPQ";
+                                    return true;
+                                }
                             }
                             oldline = line;
                         }
