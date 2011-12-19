@@ -7,15 +7,9 @@ Added by Wesko
 2. Some tweaking into server control profile handling.
 
 
-
-Future TODOs
-
-1. Drop-Down Menu of Saved Validated Repositories 
-//This is not implemented, there is a fixed list atm, we need to dynamically add user validates repos to our current list.
-
-
 Added by Wetwlly
 
-1. handle other fatal exceptions [base file of patch->still need to add this one]
-
-2. Fix up the processes to exception handling
+1. handle other fatal exceptions
+1a. Base File Bla bla Resolved -> Redownload CoreData and maybe ClientData?
+1b. If random exception that is unknown to the errorfinder -> a box that is selectable text 
+//  to copy and paste whatever that error is.
