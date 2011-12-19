@@ -111,7 +111,6 @@
             this.backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
-            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -1113,8 +1112,6 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker5;
         public System.Windows.Forms.TextBox txtConsole;
         public System.Windows.Forms.ProgressBar generalProgressBar;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label4;
 
     }
 }
