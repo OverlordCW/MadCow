@@ -66,6 +66,7 @@ namespace MadCow
                     IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
                     string MPQpath = source.Configs["DiabloPath"].Get("MPQpath");
                     Console.WriteLine("Deleting file " + ErrorFinder.errorFileName);
+                    //Bug below (When using standalone server we must not try to delete the file since it doesnt exist (No d3 folder)).
                     File.Delete(MPQpath + @"\base\" + ErrorFinder.errorFileName);
                     break;
             }
