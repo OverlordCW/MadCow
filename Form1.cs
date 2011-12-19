@@ -296,9 +296,9 @@ namespace MadCow
                 {
                     //We delete de Log file HERE. Nowhere else!.
                     DeleteHelper.Delete(0);
-                    if (ErrorFinder.errorFileName.Contains("d3-update-base-"))
+                    if (ErrorFinder.errorFileName.Contains("d3-update-base-")) //This will handle corrupted mpqs and missing mpq files.
                     {
-                        var ErrorAnswer = MessageBox.Show(@"Seems your MPQ [" + ErrorFinder.errorFileName + @"] is corrupted." + "\nWould you like MadCow to fix this for you?", "Found corrupted file!",
+                        var ErrorAnswer = MessageBox.Show(@"Missing or Corrupted file [" + ErrorFinder.errorFileName + @"]" + "\nWould you like MadCow to fix this for you?", "Found corrupted file!",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
 
                         if (ErrorAnswer == DialogResult.Yes)
@@ -315,44 +315,47 @@ namespace MadCow
                     }
                     if (ErrorFinder.errorFileName.Contains("CoreData"))
                     {
-                        var ErrorAnswer = MessageBox.Show(@"Seems your Missing [" + ErrorFinder.errorFileName + @"]." + "\nWould you like MadCow to fix this for you?", "Found missing file!",
+                        var ErrorAnswer = MessageBox.Show(@"Corrupted file [" + ErrorFinder.errorFileName + @".mpq]" + "\nWould you like MadCow to fix this for you?", "Fatal Error!",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
 
                         if (ErrorAnswer == DialogResult.Yes)
                         {
-                            //Copy CoreData from Diablo Folder
+                            tabControl1.Invoke(new Action(() =>
+                            {
+                                this.tabControl1.SelectTab("tabPage4");
+                            }
+                            ));
+                            FixMpq();
                         }
                     }
                     if (ErrorFinder.errorFileName.Contains("ClientData"))
                     {
-                        var ErrorAnswer = MessageBox.Show(@"Seems your Missing [" + ErrorFinder.errorFileName + @"]." + "\nWould you like MadCow to fix this for you?", "Found missing file!",
+                        var ErrorAnswer = MessageBox.Show(@"Corrupted file [" + ErrorFinder.errorFileName + @".mpq]" + "\nWould you like MadCow to fix this for you?", "Fatal Error!",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
 
                         if (ErrorAnswer == DialogResult.Yes)
                         {
-                            //Copy ClientData from Diablo Folder
+                            tabControl1.Invoke(new Action(() =>
+                            {
+                                this.tabControl1.SelectTab("tabPage4");
+                            }
+                            ));
+                            FixMpq();
                         }
                     }
-                    if (ErrorFinder.errorFileName.Contains("Patch"))
+                    if (ErrorFinder.errorFileName.Contains("MajorFailure"))
                     {
-                        var ErrorAnswer = MessageBox.Show(@"Seems your missing some files in base folder." + "\nWould you like MadCow to fix this for you?", "Didn't find patch file(s)!",
+                        var ErrorAnswer = MessageBox.Show(@"Seems some major files are corrupted." + "\nWould you like MadCow to fix this for you?", "Found Corrupted Files!",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
 
                         if (ErrorAnswer == DialogResult.Yes)
                         {
-                            //Look up base MPQ that wasnt added
-                            //then add that base file
-                            //alternate route: download/move all patch files.
-                        }
-                    }
-                    if (ErrorFinder.errorFileName.Contains("MPQ"))
-                    {
-                        var ErrorAnswer = MessageBox.Show(@"Seems some major files are corrupted." + "\nWould you like MadCow to fix this for you?", "Found Corrupted File!",
-                            MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
-
-                        if (ErrorAnswer == DialogResult.Yes)
-                        {
-                            //Redownload ALL MPQs
+                            tabControl1.Invoke(new Action(() =>
+                            {
+                                this.tabControl1.SelectTab("tabPage4");
+                            }
+                            ));
+                            backgroundWorker3.RunWorkerAsync();
                         }
                     }
                 }
@@ -430,7 +433,7 @@ namespace MadCow
                     DeleteHelper.Delete(0);
                     if (ErrorFinder.errorFileName.Contains("d3-update-base-"))
                     {
-                        var ErrorAnswer = MessageBox.Show(@"Seems your MPQ [" + ErrorFinder.errorFileName + @"] is corrupted." + "\nWould you like MadCow to fix this for you?", "Found corrupted file!",
+                        var ErrorAnswer = MessageBox.Show(@"Missing or Corrupted file [" + ErrorFinder.errorFileName + @"]" + "\nWould you like MadCow to fix this for you?", "Found corrupted file!",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
 
                         if (ErrorAnswer == DialogResult.Yes)
@@ -447,44 +450,47 @@ namespace MadCow
                     }
                     if (ErrorFinder.errorFileName.Contains("CoreData"))
                     {
-                        var ErrorAnswer = MessageBox.Show(@"Seems your Missing [" + ErrorFinder.errorFileName + @"]." + "\nWould you like MadCow to fix this for you?", "Found missing file!",
+                        var ErrorAnswer = MessageBox.Show(@"Corrupted file [" + ErrorFinder.errorFileName + @".mpq]" + "\nWould you like MadCow to fix this for you?", "Fatal Error!",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
 
                         if (ErrorAnswer == DialogResult.Yes)
                         {
-                            //Download CoreData because there is no Diablo Launcher(or at least not needed)
+                            tabControl1.Invoke(new Action(() =>
+                            {
+                                this.tabControl1.SelectTab("tabPage4");
+                            }
+                            ));
+                            FixMpq();
                         }
                     }
                     if (ErrorFinder.errorFileName.Contains("ClientData"))
                     {
-                        var ErrorAnswer = MessageBox.Show(@"Seems your Missing [" + ErrorFinder.errorFileName + @"]." + "\nWould you like MadCow to fix this for you?", "Found missing file!",
+                        var ErrorAnswer = MessageBox.Show(@"Corrupted file [" + ErrorFinder.errorFileName + @".mpq]" + "\nWould you like MadCow to fix this for you?", "Fatal Error!",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
 
                         if (ErrorAnswer == DialogResult.Yes)
                         {
-                            //Download ClientData because there is no Diablo Launcher(or at least not needed)
+                            tabControl1.Invoke(new Action(() =>
+                            {
+                                this.tabControl1.SelectTab("tabPage4");
+                            }
+                            ));
+                            FixMpq();
                         }
                     }
-                    if (ErrorFinder.errorFileName.Contains("Patch"))
+                    if (ErrorFinder.errorFileName.Contains("MajorFailure"))
                     {
-                        var ErrorAnswer = MessageBox.Show(@"Seems your missing some files in base folder." + "\nWould you like MadCow to fix this for you?", "Didn't find patch file(s)!",
+                        var ErrorAnswer = MessageBox.Show(@"Seems some major files are corrupted." + "\nWould you like MadCow to fix this for you?", "Found Corrupted Files!",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
 
                         if (ErrorAnswer == DialogResult.Yes)
                         {
-                            //Look up base MPQ that wasnt added
-                            //then add that base file
-                            //alternate route: download/move all patch files.
-                        }
-                    }
-                    if (ErrorFinder.errorFileName.Contains("MPQ"))
-                    {
-                        var ErrorAnswer = MessageBox.Show(@"Seems some major files are corrupted." + "\nWould you like MadCow to fix this for you?", "Found Corrupted File!",
-                            MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
-
-                        if (ErrorAnswer == DialogResult.Yes)
-                        {
-                            //Redownload ALL MPQs
+                            tabControl1.Invoke(new Action(() =>
+                            {
+                                this.tabControl1.SelectTab("tabPage4");
+                            }
+                            ));
+                            backgroundWorker3.RunWorkerAsync();
                         }
                     }
                 }
@@ -1302,11 +1308,15 @@ namespace MadCow
 
         private void DownloadSpecificMPQS(object sender, DoWorkEventArgs e)
         {
-            var downloadFileUrl = "http://ak.worldofwarcraft.com.edgesuite.net/d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/" + ErrorFinder.errorFileName + @".MPQ";
+            var downloadBaseFileUrl = "http://ak.worldofwarcraft.com.edgesuite.net/d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/" + ErrorFinder.errorFileName + @".MPQ";
+            var downloadFileUrl = "http://ak.worldofwarcraft.com.edgesuite.net/d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/" + ErrorFinder.errorFileName + @".mpq";
+
             IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
             String downloadDestination = source.Configs["DiabloPath"].Get("MPQpath");
             Stopwatch speedTimer = new Stopwatch();
 
+            if (ErrorFinder.errorFileName.Contains("CoreData") || ErrorFinder.errorFileName.Contains("ClientData"))
+            {
                 Uri url = new Uri(downloadFileUrl);
                 System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
                 System.Net.HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse();
@@ -1322,6 +1332,64 @@ namespace MadCow
                 using (System.Net.WebClient client = new System.Net.WebClient())
                 {
                     using (System.IO.Stream streamRemote = client.OpenRead(new Uri(downloadFileUrl)))
+                    {
+                        using (Stream streamLocal = new FileStream(downloadDestination + @"\" + name + ext, FileMode.Create, FileAccess.Write, FileShare.None))
+                        {
+                            Console.WriteLine("Starting download...");
+                            speedTimer.Start();
+                            DownloadingFileName.Invoke(new Action(() =>
+                            {
+                                this.DownloadingFileName.Text = "Downloading File: " + name + ext;
+                            }
+                            ));
+
+                            int iByteSize = 0;
+                            byte[] byteBuffer = new byte[iSize];
+                            while ((iByteSize = streamRemote.Read(byteBuffer, 0, byteBuffer.Length)) > 0)
+                            {
+                                streamLocal.Write(byteBuffer, 0, iByteSize);
+                                iRunningByteTotal += iByteSize;
+
+                                double dIndex = (double)(iRunningByteTotal);
+                                double dTotal = (double)byteBuffer.Length;
+                                double dProgressPercentage = (dIndex / dTotal);
+                                int iProgressPercentage = (int)(dProgressPercentage * 100);
+
+                                //We calculate the download speed.
+                                TimeSpan ts = speedTimer.Elapsed;
+                                double bytesReceivedSpeed = (iRunningByteTotal / 1024) / ts.TotalSeconds;
+                                DownloadFileSpeed.Invoke(new Action(() =>
+                                {
+                                    this.DownloadFileSpeed.Text = "Downloading Speed: " + Convert.ToInt32(bytesReceivedSpeed) + "Kbps";
+                                }
+                                ));
+                                backgroundWorker4.ReportProgress(iProgressPercentage);
+                            }
+                            streamLocal.Close();
+                        }
+                        streamRemote.Close();
+                    }
+                } 
+                speedTimer.Stop();
+                File.Copy(downloadDestination + @"\" + ErrorFinder.errorFileName + @".mpq", Program.programPath + @"\MPQ\" + ErrorFinder.errorFileName + @".mpq", true);
+            }
+            else
+            {
+                Uri url = new Uri(downloadBaseFileUrl);
+                System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
+                System.Net.HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse();
+                //Parsing the file name.
+                var fullName = url.LocalPath.TrimStart('/');
+                var name = Path.GetFileNameWithoutExtension(fullName);
+                var ext = Path.GetExtension(fullName);
+                //End Parsing.
+                response.Close();
+                Int64 iSize = response.ContentLength;
+                Int64 iRunningByteTotal = 0;
+
+                using (System.Net.WebClient client = new System.Net.WebClient())
+                {
+                    using (System.IO.Stream streamRemote = client.OpenRead(new Uri(downloadBaseFileUrl)))
                     {
                         using (Stream streamLocal = new FileStream(downloadDestination + @"\base\" + name + ext, FileMode.Create, FileAccess.Write, FileShare.None))
                         {
@@ -1359,7 +1427,10 @@ namespace MadCow
                         }
                         streamRemote.Close();
                     }
-                }speedTimer.Stop();
+                } 
+                speedTimer.Stop();
+                File.Copy(downloadDestination + @"\base\" + ErrorFinder.errorFileName + @".MPQ", Program.programPath + @"\MPQ\" + @"\base\" + ErrorFinder.errorFileName + @".MPQ", true);
+            }
         }
 
         private void downloader_ProgressChanged2(object sender, ProgressChangedEventArgs e)
@@ -1387,8 +1458,8 @@ namespace MadCow
             Console.WriteLine("Download complete.");
             try
             {
-                File.Copy(downloadSource + @"\base\" + ErrorFinder.errorFileName + @".MPQ", downloadDestination + ErrorFinder.errorFileName + @".MPQ", true);
-                Console.WriteLine("Copied new MPQ to MadCow MPQ home Folder.");
+                //File.Copy(downloadSource + @"\base\" + ErrorFinder.errorFileName + @".MPQ", downloadDestination + ErrorFinder.errorFileName + @".MPQ", true);
+                //Console.WriteLine("Copied new MPQ to MadCow MPQ home Folder.");
                 //We give the user an announce of success.
                 DialogResult response = DotNetPerls.BetterDialog.ShowDialog("MadCow Worker",
                 "MadCow succesfully fixed:",

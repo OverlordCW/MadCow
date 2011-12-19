@@ -49,31 +49,22 @@ namespace MadCow
                                 errorFileName = match.Groups["filename"].Value;
                                 return true;  
                                 }
-                                //This one is for Missing CoreData
-                                if (System.Text.RegularExpressions.Regex.IsMatch(oldline, "CoreData.mpq."))
+                                //This one is for Missing CoreData // ClientData
+                                if (System.Text.RegularExpressions.Regex.IsMatch(oldline, "Cannot find base MPQ file:"))
                                 {
-                                var pattern = "Cannot find base MPQ file: CoreData.mpq.";
+                                var pattern = "Cannot find base MPQ file: (?<filename>.*?).mpq";
                                 var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
                                 var match = regex.Match(oldline);
-                                errorFileName = "CoreData";
+                                errorFileName = match.Groups["filename"].Value;
                                 return true;
                                 }
-                                //This one is for Missing ClientData
-                                if (System.Text.RegularExpressions.Regex.IsMatch(oldline, "ClientData.mpq."))
-                                {
-                                    var pattern = "Cannot find base MPQ file: ClientData.mpq.";
-                                    var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                                    var match = regex.Match(oldline);
-                                    errorFileName = "ClientData";
-                                    return true;
-                                }
                                 //Missing a base file/folder
-                                if (System.Text.RegularExpressions.Regex.IsMatch(oldline, "Required Patch-chain version"))
+                                if (System.Text.RegularExpressions.Regex.IsMatch(oldline, "Required patch-chain version"))
                                 {
-                                var pattern = "Required Patch-chain version";
+                                var pattern = "Required patch-chain version (?<Version>\\d+)";
                                 var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
                                 var match = regex.Match(oldline);
-                                errorFileName = "Patch";
+                                errorFileName = "d3-update-base-" + match.Groups["Version"].Value;
                                 return true;
                                 }
                                 //Need to pretty much redownload all MPQs
@@ -82,7 +73,7 @@ namespace MadCow
                                     var pattern = "Mooege.Core.GS.Items.ItemGenerator";
                                     var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
                                     var match = regex.Match(line);
-                                    errorFileName = "MPQ";
+                                    errorFileName = "MajorFailure";
                                     return true;
                                 }
                                 //Need to pretty much redownload all MPQs
@@ -91,7 +82,7 @@ namespace MadCow
                                     var pattern = "Mooege.Common.MPQ.MPQStorage";
                                     var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
                                     var match = regex.Match(line);
-                                    errorFileName = "MPQ";
+                                    errorFileName = "MajorFailure";
                                     return true;
                                 }
                             }

@@ -24,6 +24,7 @@ using System.Windows.Forms;
 using System.IO;
 using Nini.Config;
 using System.Diagnostics;
+using System.Threading;
 
 namespace MadCow
 {
@@ -138,6 +139,12 @@ namespace MadCow
                 Process proc0 = new Process();
                 proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
                 proc0.Start();
+                Thread.Sleep(2000);
+                if (ErrorFinder.SearchLogs("Fatal") == true)
+                {
+                    Console.WriteLine("Closing Mooege due Fatal Exception");
+                    ProcessFinder.KillProcess("Mooege");
+                }
                 this.Close();
             }
         }
