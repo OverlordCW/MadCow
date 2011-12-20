@@ -25,11 +25,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Net;
 using Nini.Config;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
-using ICSharpCode.SharpZipLib.Core;
-using ICSharpCode.SharpZipLib.Zip;
 
 namespace MadCow
 {
@@ -44,7 +40,6 @@ namespace MadCow
         private int Tick;
         //Parsing Console into a textbox
         TextWriter _writer = null;
-        private int _fileCount;
 
         public Form1()
         {
