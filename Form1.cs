@@ -197,6 +197,7 @@ namespace MadCow
                         EnableAutoUpdateBox.Enabled = true;
                         Console.WriteLine("Repository Validated!");
                         RepoListAdd();
+                        RepoListUpdate();
                         }));
                     }
                 }
@@ -1500,6 +1501,8 @@ namespace MadCow
         ////////////////////////////////////////////////////////////////////////
         //Dynamically Add Repos, but also remove duplicates.
         ////////////////////////////////////////////////////////////////////////
+        private Int32 RepoListIndex;
+        
         private void RepoList()
         {
             StreamReader sr = new StreamReader(Program.programPath + @"\Tools\RepoList.txt");
@@ -1509,6 +1512,7 @@ namespace MadCow
             {
                 comboBox1.Items.Add(line);
                 line = sr.ReadLine();
+                RepoListIndex++;
             }
             sr.Close();
         }
@@ -1523,6 +1527,18 @@ namespace MadCow
             StreamWriter str;
             str = File.AppendText(Program.programPath + @"\Tools\RepoList.txt");
             str.WriteLine(comboBox1.Text);
+            str.Close();
+        }
+
+        private void RepoListUpdate()
+        {
+            StreamReader str = new StreamReader(Program.programPath + @"\Tools\RepoList.txt");
+            string[] lines = str.ReadToEnd().Split(new char[] { '\n' });
+            if (lines[RepoListIndex].Length > 0)
+            {
+                comboBox1.Items.Add(lines[RepoListIndex]);
+                RepoListIndex++;
+            }
             str.Close();
         }
 
