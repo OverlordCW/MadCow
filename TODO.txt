@@ -1,5 +1,4 @@
 Added by Wesko
-0. Apply threading to Uncompress/Compile procedure (IMPORTANT!)
 
 1. Polish button visible evenhandlers.
    - Fix "Play Diablo" button to be disabled while repo selector its open
