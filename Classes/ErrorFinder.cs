@@ -85,6 +85,12 @@ namespace MadCow
                                     errorFileName = "MajorFailure";
                                     return true;
                                 }
+                                else
+                                {
+                                    errorFileName = line;
+                                    return true;
+                                }
+
                             }
                             oldline = line;
                         }

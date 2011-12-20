@@ -143,7 +143,7 @@
             // EnableAutoUpdateBox
             // 
             this.EnableAutoUpdateBox.AutoSize = true;
-            this.EnableAutoUpdateBox.Location = new System.Drawing.Point(16, 45);
+            this.EnableAutoUpdateBox.Location = new System.Drawing.Point(9, 43);
             this.EnableAutoUpdateBox.Name = "EnableAutoUpdateBox";
             this.EnableAutoUpdateBox.Size = new System.Drawing.Size(59, 17);
             this.EnableAutoUpdateBox.TabIndex = 3;
@@ -153,7 +153,7 @@
             // 
             // AutoUpdateValue
             // 
-            this.AutoUpdateValue.Location = new System.Drawing.Point(16, 19);
+            this.AutoUpdateValue.Location = new System.Drawing.Point(5, 19);
             this.AutoUpdateValue.Maximum = new decimal(new int[] {
             500,
             0,
@@ -200,9 +200,9 @@
             // 
             this.groupBox2.Controls.Add(this.AutoUpdateValue);
             this.groupBox2.Controls.Add(this.EnableAutoUpdateBox);
-            this.groupBox2.Location = new System.Drawing.Point(229, 6);
+            this.groupBox2.Location = new System.Drawing.Point(245, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(112, 68);
+            this.groupBox2.Size = new System.Drawing.Size(96, 68);
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Auto Updating";
@@ -639,7 +639,7 @@
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Location = new System.Drawing.Point(6, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(217, 68);
+            this.groupBox1.Size = new System.Drawing.Size(233, 68);
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Repository";
@@ -647,16 +647,9 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "https://github.com/mooege/mooege",
-            "https://github.com/Egris/mooege",
-            "https://github.com/DarkLotus/mooege",
-            "https://github.com/angerwin/d3sharp",
-            "https://github.com/Farmy/mooege",
-            "https://github.com/mdz444/mooege"});
-            this.comboBox1.Location = new System.Drawing.Point(3, 18);
+            this.comboBox1.Location = new System.Drawing.Point(6, 18);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(188, 21);
+            this.comboBox1.Size = new System.Drawing.Size(201, 21);
             this.comboBox1.TabIndex = 17;
             this.comboBox1.Text = "https://github.com/mooege/mooege";
             this.comboBox1.TextChanged += new System.EventHandler(this.comboBox1_TextChanged);
@@ -665,7 +658,7 @@
             // 
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(194, 19);
+            this.pictureBox2.Location = new System.Drawing.Point(209, 18);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(17, 20);
             this.pictureBox2.TabIndex = 15;
@@ -676,7 +669,7 @@
             // 
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(194, 19);
+            this.pictureBox1.Location = new System.Drawing.Point(209, 18);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(17, 20);
             this.pictureBox1.TabIndex = 14;
@@ -797,6 +790,7 @@
             // generalProgressBar
             // 
             this.generalProgressBar.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.generalProgressBar.ForeColor = System.Drawing.Color.LimeGreen;
             this.generalProgressBar.Location = new System.Drawing.Point(5, 3);
             this.generalProgressBar.Name = "generalProgressBar";
             this.generalProgressBar.Size = new System.Drawing.Size(308, 11);
@@ -973,6 +967,13 @@
             // backgroundWorker5
             // 
             this.backgroundWorker5.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker5_DoWork);
+            // 
+            // label4
+            // 
+            this.label4.Location = new System.Drawing.Point(3, 16);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(201, 26);
+            this.label4.TabIndex = 16;
             // 
             // Form1
             // 

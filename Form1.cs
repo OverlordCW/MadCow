@@ -80,6 +80,8 @@ namespace MadCow
             toolTip1.SetToolTip(this.RestoreDefaults, "Resets Server Control settings");
             toolTip1.SetToolTip(this.PlayDiabloButton, "Time to play Diablo 3 through Mooege!");
             InitializeFindPath();
+            RepoCheck();
+            RepoList();
         }
 
         ///////////////////////////////////////////////////////////
@@ -195,6 +197,7 @@ namespace MadCow
                         AutoUpdateValue.Enabled = true;
                         EnableAutoUpdateBox.Enabled = true;
                         Console.WriteLine("Repository Validated!");
+                        RepoListAdd();
                         }));
                     }
                 }
@@ -358,6 +361,11 @@ namespace MadCow
                             backgroundWorker3.RunWorkerAsync();
                         }
                     }
+                    else
+                    {
+                        Console.WriteLine("Unknown Exception");
+                        Console.WriteLine(ErrorFinder.errorFileName);
+                    }
                 }
                 else
                 { 
@@ -492,6 +500,11 @@ namespace MadCow
                             ));
                             backgroundWorker3.RunWorkerAsync();
                         }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Unknown Exception");
+                        Console.WriteLine(ErrorFinder.errorFileName);
                     }
                 }
                 else
@@ -1483,6 +1496,35 @@ namespace MadCow
                 Console.WriteLine("Error while copying new MPQ to MadCow MPQ home Folder");
             }
 
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        //Dynamically Add Repos, but also remove duplicates.
+        ////////////////////////////////////////////////////////////////////////
+        public void RepoList()
+        {
+            StreamReader sr = new StreamReader(Program.programPath + @"\Tools\RepoList.txt");
+            string line = sr.ReadLine();
+
+            while (line != null)
+            {
+                comboBox1.Items.Add(line);
+                line = sr.ReadLine();
+            }
+            sr.Close();
+        }
+        public void RepoCheck()
+        {
+            string[] lines = File.ReadAllLines(Program.programPath + @"\Tools\RepoList.txt");
+            File.WriteAllLines(Program.programPath + @"\Tools\RepoList.txt", lines.Distinct().ToArray());
+        }
+
+        public void RepoListAdd()
+        {
+            StreamWriter str;
+            str = File.AppendText(Program.programPath + @"\Tools\RepoList.txt");
+            str.WriteLine(comboBox1.Text);
+            str.Close();
         }
 
         //BE AWARE: CRAP BELOW.

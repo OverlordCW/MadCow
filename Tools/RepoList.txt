@@ -1,0 +1,6 @@
+https://github.com/mooege/mooege
+https://github.com/Egris/mooege
+https://github.com/DarkLotus/mooege
+https://github.com/angerwin/d3sharp
+https://github.com/Farmy/mooege
+https://github.com/mdz444/mooege

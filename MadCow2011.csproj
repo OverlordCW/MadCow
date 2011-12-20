@@ -130,6 +130,9 @@
     <Content Include="Resources\ShortcutCreator.vbs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Tools\RepoList.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Tools\ShortcutCreator.vbs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
