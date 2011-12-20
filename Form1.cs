@@ -80,6 +80,7 @@ namespace MadCow
             InitializeFindPath();
             RepoCheck();
             RepoList();
+            Changelog();
         }
 
         ///////////////////////////////////////////////////////////
@@ -1499,7 +1500,7 @@ namespace MadCow
         ////////////////////////////////////////////////////////////////////////
         //Dynamically Add Repos, but also remove duplicates.
         ////////////////////////////////////////////////////////////////////////
-        public void RepoList()
+        private void RepoList()
         {
             StreamReader sr = new StreamReader(Program.programPath + @"\Tools\RepoList.txt");
             string line = sr.ReadLine();
@@ -1511,18 +1512,34 @@ namespace MadCow
             }
             sr.Close();
         }
-        public void RepoCheck()
+        private void RepoCheck()
         {
             string[] lines = File.ReadAllLines(Program.programPath + @"\Tools\RepoList.txt");
             File.WriteAllLines(Program.programPath + @"\Tools\RepoList.txt", lines.Distinct().ToArray());
         }
 
-        public void RepoListAdd()
+        private void RepoListAdd()
         {
             StreamWriter str;
             str = File.AppendText(Program.programPath + @"\Tools\RepoList.txt");
             str.WriteLine(comboBox1.Text);
             str.Close();
+        }
+
+        private void Changelog()
+        {
+            StreamReader sr = new StreamReader(Program.programPath + @"\Tools\RepoList.txt");
+            string line = sr.ReadLine();
+
+            while (line != null)
+            {
+                string s = line.Replace("https://github.com/", "");
+                string d = s.Replace("/mooege", "");
+                string e = d.Replace("/d3sharp", "");
+                comboBox2.Items.Add(e);
+                line = sr.ReadLine();
+            }
+            sr.Close();
         }
 
         //BE AWARE: CRAP BELOW.
