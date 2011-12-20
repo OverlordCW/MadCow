@@ -1511,7 +1511,7 @@ namespace MadCow
                 comboBox1.Items.Add(line);
                 line = sr.ReadLine();
             }
-
+            sr.Close();
         }
         public void RepoCheck()
         {
