@@ -78,15 +78,6 @@ namespace MadCow
                     Console.WriteLine("Modifying Mooege MPQ storage folder Complete");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
-
-                //Then we create the MPQ folder in MadCow Root Folder.
-                if (Directory.Exists(Program.programPath + "\\MPQ"))
-                {
-                    Directory.Delete(Program.programPath + "\\MPQ", true);
-                    Console.WriteLine("Deleted current MPQ MadCow folder succeedeed");
-                    Directory.CreateDirectory(Program.programPath + "\\MPQ");
-                    Console.WriteLine("Creating new MPQ MadCow folder succeedeed");
-                }
             }
             catch (Exception e)
             {

@@ -20,12 +20,15 @@ using System.IO;
 using System.Windows.Forms;
 using System.Threading;
 using Nini.Config;
+using System.Threading.Tasks;
+using ICSharpCode.SharpZipLib.Core;
+using ICSharpCode.SharpZipLib.Zip;
 
 namespace MadCow
 {
-    class Commands
+    class RepoProcedure
     {
-        public static void RunUpdateMPQ()
+        public static void RunCopyMPQ()
         {
             IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
             String MPQpath = source.Configs["DiabloPath"].Get("MPQpath");
@@ -57,29 +60,46 @@ namespace MadCow
                     }
         }
 
-        public static void RunUpdate() //This is actually the whole process MadCow uses before Downloading source.
+        public static void RunWholeProcedure() //This is actually the whole process MadCow uses after Downloading source.
         {
-            var form = Form.ActiveForm as Form1; //In order to access Form controls.
             Compile.currentMooegeExePath = Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\Mooege.exe";
             Compile.currentMooegeDebugFolderPath = Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\";
             Compile.mooegeINI = Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini";
             Compile.compileArgs = "\"" + Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\build\Mooege-VS2010.sln" + "\"";
+            var form = Form.ActiveForm as Form1; //In order to access Form controls.
+            ZipFile zip = null;
+            var events = new FastZipEvents();
 
-            if(ProcessFinder.FindProcess("Mooege") == true)
+            if (ProcessFinder.FindProcess("Mooege") == true)
             {
                 ProcessFinder.KillProcess("Mooege");
             }
-            Uncompress.UncompressFiles();
-            RefreshDesktop.RefreshDesktopPlease(); //Sends a refresh call to desktop, probably this is working for Windows Explorer too, so i'll leave it there for now -wesko
-            Thread.Sleep(2000); //<-This and ^this is needed for madcow to work on VM XP, you need to wait for Windows Explorer to refresh folders or compiling wont find the new mooege folder just uncompressed.
-            form.generalProgressBar.PerformStep();
-            Compile.CreateBatchCompileFile();
-            Compile.WriteCompileBatch();
-            Compile.ExecuteCommandSync(Program.programPath + @"\Tools\CompileBatch");  //Compile command.         
-            form.generalProgressBar.PerformStep();
-            Compile.ModifyMooegeINI(); //Add MadCow MPQ folder Path to Mooege
-            form.generalProgressBar.PerformStep();
-            form.generalProgressBar.PerformStep();
-        }
+
+            FastZip z = new FastZip(events);
+            Console.WriteLine("Uncompressing...");
+            var stream = new FileStream(Program.programPath + @"\Repositories\" + @"\Mooege.zip", FileMode.Open, FileAccess.Read);
+            zip = new ZipFile(stream);
+            zip.IsStreamOwner = true; //Closes parent stream when ZipFile.Close is called
+            zip.Close();
+
+            var t1 = Task.Factory.StartNew(() => z.ExtractZip(Program.programPath + @"\Repositories\" + @"\Mooege.zip", Program.programPath + @"\" + @"Repositories\", null))
+                .ContinueWith(delegate
+            {
+                //Comenting the lines below because I haven't tested this new way over XP VM or even normal XP.
+                //RefreshDesktop.RefreshDesktopPlease(); //Sends a refresh call to desktop, probably this is working for Windows Explorer too, so i'll leave it there for now -wesko
+                //Thread.Sleep(2000); //<-This and ^this is needed for madcow to work on VM XP, you need to wait for Windows Explorer to refresh folders or compiling wont find the new mooege folder just uncompressed.
+                Console.WriteLine("Uncompress Complete");
+                form.Invoke((MethodInvoker)delegate{form.generalProgressBar.PerformStep();});
+                Compile.CreateBatchCompileFile();
+                form.Invoke((MethodInvoker)delegate { form.generalProgressBar.PerformStep(); });
+                Compile.WriteCompileBatch();
+                form.Invoke((MethodInvoker)delegate { form.generalProgressBar.PerformStep(); });
+                Compile.ExecuteCommandSync(Program.programPath + @"\Tools\CompileBatch");  //Compile command.         
+                form.Invoke((MethodInvoker)delegate { form.generalProgressBar.PerformStep(); });
+                Compile.ModifyMooegeINI(); //Add MadCow MPQ folder Path to Mooege
+                form.Invoke((MethodInvoker)delegate { form.generalProgressBar.PerformStep(); });
+                Console.Write("[PROCESS COMPLETE!]");
+            });
+        }          
     }
 }

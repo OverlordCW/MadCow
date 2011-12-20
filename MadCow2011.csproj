@@ -61,6 +61,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Tools\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Nini">
       <HintPath>Tools\Nini.dll</HintPath>
     </Reference>
@@ -79,7 +83,7 @@
     <Compile Include="Classes\TextBoxStreamWriter.cs" />
     <Compile Include="Classes\ProcessFinder.cs" />
     <Compile Include="Classes\Delete.cs" />
-    <Compile Include="Classes\Commands.cs" />
+    <Compile Include="Classes\RepoProcedure.cs" />
     <Compile Include="Classes\MPQprocedure.cs" />
     <Compile Include="Classes\ParseRevision.cs" />
     <Compile Include="Classes\Compile.cs" />
@@ -117,7 +121,6 @@
       <DependentUpon>RepositorySelectionServer.cs</DependentUpon>
     </Compile>
     <Compile Include="Tools\ZipStorer.cs" />
-    <Compile Include="Classes\Uncompress.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="mooege.ico" />
