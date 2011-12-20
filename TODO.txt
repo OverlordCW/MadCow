@@ -9,7 +9,4 @@ Added by Wesko
 
 Added by Wetwlly
 
-1. handle other fatal exceptions
-1a. Base File Bla bla Resolved -> Redownload CoreData and maybe ClientData?
-1b. If random exception that is unknown to the errorfinder -> a box that is selectable text 
-//  to copy and paste whatever that error is.
+WooHoo!

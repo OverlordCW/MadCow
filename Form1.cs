@@ -361,6 +361,11 @@ namespace MadCow
                             backgroundWorker3.RunWorkerAsync();
                         }
                     }
+                    else
+                    {
+                        Console.WriteLine("Unknown Exception");
+                        Console.WriteLine(ErrorFinder.errorFileName);
+                    }
                 }
                 else
                 { 
@@ -495,6 +500,11 @@ namespace MadCow
                             ));
                             backgroundWorker3.RunWorkerAsync();
                         }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Unknown Exception");
+                        Console.WriteLine(ErrorFinder.errorFileName);
                     }
                 }
                 else
