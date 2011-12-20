@@ -26,7 +26,10 @@ using System.IO;
 using System.Net;
 using Nini.Config;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using ICSharpCode.SharpZipLib.Core;
+using ICSharpCode.SharpZipLib.Zip;
 
 namespace MadCow
 {
@@ -41,7 +44,7 @@ namespace MadCow
         private int Tick;
         //Parsing Console into a textbox
         TextWriter _writer = null;
-        public static double ticker = 0;
+        private int _fileCount;
 
         public Form1()
         {
@@ -244,7 +247,7 @@ namespace MadCow
                     Console.WriteLine("Found default MadCow MPQ folder");
                     DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
                     UpdateMooegeButton.Enabled = false;
-                    Console.WriteLine("Updating...");
+                    Console.WriteLine("Downloading...");
                     backgroundWorker1.RunWorkerAsync();
                 }
                 else //With out AutoUpdate:
@@ -252,7 +255,7 @@ namespace MadCow
                     Console.WriteLine("Found default MadCow MPQ folder");
                     DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
                     UpdateMooegeButton.Enabled = false;
-                    Console.WriteLine("Updating...");
+                    Console.WriteLine("Downloading...");
                     backgroundWorker1.RunWorkerAsync();
                 }
             }
@@ -263,7 +266,7 @@ namespace MadCow
                 {
                     timer1.Stop();
                     DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
-                    Console.WriteLine("Updating...");
+                    Console.WriteLine("Downloading...");
                     Directory.CreateDirectory(Program.programPath + "/MPQ");
                     UpdateMooegeButton.Enabled = false;
                     backgroundWorker1.RunWorkerAsync();
@@ -271,7 +274,7 @@ namespace MadCow
                 else //With out AutoUpdate:
                 {
                     DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
-                    Console.WriteLine("Updating...");
+                    Console.WriteLine("Downloading...");
                     Directory.CreateDirectory(Program.programPath + "/MPQ");
                     UpdateMooegeButton.Enabled = false;
                     backgroundWorker1.RunWorkerAsync();
@@ -386,7 +389,7 @@ namespace MadCow
 
         private void CopyMPQs_Click(object sender, EventArgs e)
         {
-            Commands.RunUpdateMPQ();
+            RepoProcedure.RunCopyMPQ();
         }
 
 
@@ -706,8 +709,8 @@ namespace MadCow
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             generalProgressBar.PerformStep();
-            Commands.RunUpdate();
-            Console.WriteLine("Update Complete!");
+            RepoProcedure.RunWholeProcedure();
+            Console.WriteLine("Download Complete!");
             UpdateMooegeButton.Enabled = true;
             if (EnableAutoUpdateBox.Checked == true)
             {
