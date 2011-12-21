@@ -1532,14 +1532,18 @@ namespace MadCow
 
         private void RepoListUpdate()
         {
-            StreamReader str = new StreamReader(Program.programPath + @"\Tools\RepoList.txt");
-            string[] lines = str.ReadToEnd().Split(new char[] { '\n' });
-            if (lines[RepoListIndex].Length > 0)
+            RepoCheck();
+            comboBox1.Items.Clear();
+            StreamReader sr = new StreamReader(Program.programPath + @"\Tools\RepoList.txt");
+            string line = sr.ReadLine();
+
+            while (line != null)
             {
-                comboBox1.Items.Add(lines[RepoListIndex]);
+                comboBox1.Items.Add(line);
+                line = sr.ReadLine();
                 RepoListIndex++;
             }
-            str.Close();
+            sr.Close();
         }
 
         private void Changelog()
