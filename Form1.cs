@@ -1632,6 +1632,12 @@ namespace MadCow
                     }                       
                 }
             }
+            //We scroll the content up to show latest commits first.
+            textBox1.Invoke(new Action(() =>
+            {
+                textBox1.SelectionStart = 0;
+                textBox1.ScrollToCaret();
+            }));
         }
 
         private void backgroundWorker6_DoWork(object sender, DoWorkEventArgs e)
