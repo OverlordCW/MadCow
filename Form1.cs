@@ -533,6 +533,10 @@ namespace MadCow
                 label1.Text = "Update in " + Tick + " minutes.";
                 timer1.Start();
                 AutoUpdateValue.Enabled = false;
+                comboBox1.Enabled = false;
+                ValidateRepoButton.Enabled = false;
+                UpdateMooegeButton.Visible = false;
+                label1.Visible = true;
             }
 
             else if (EnableAutoUpdateBox.Checked == false)
@@ -540,6 +544,10 @@ namespace MadCow
                 timer1.Stop();
                 label1.Text = " ";
                 AutoUpdateValue.Enabled = true;
+                comboBox1.Enabled = true;
+                ValidateRepoButton.Enabled = true;
+                UpdateMooegeButton.Visible = true;
+                label1.Visible = false;
             }
         }
 
@@ -1560,6 +1568,108 @@ namespace MadCow
                 line = sr.ReadLine();
             }
             sr.Close();
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        //Changelog.
+        ////////////////////////////////////////////////////////////////////////
+
+        private void DisplayChangelog(object sender, AsyncCompletedEventArgs e)
+        {
+            textBox1.Invoke(new Action(() => { textBox1.Clear(); }));
+            using (FileStream fileStream = new FileStream(Program.programPath + @"\Commits.ATOM", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            {
+                using (TextReader reader = new StreamReader(fileStream))
+                {
+                    string line;
+                    int i = 0; //This is to get rid of the first <title> tag.
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        //For commits comment.
+                        if (System.Text.RegularExpressions.Regex.IsMatch(line, "<title>") && i > 0)
+                        {
+                            var regex = new Regex("<title>(.*)</title>");
+                            var match = regex.Match(line);
+                            textBox1.Invoke(new Action(() => { textBox1.AppendText(i + ".-" +match.Groups[1].Value + "\n"); }));
+                            i++;
+                        }
+                        else if (System.Text.RegularExpressions.Regex.IsMatch(line, "<title>") && i == 0)
+                        {
+                            i++;
+                        }
+
+                        //For update date/time.
+                        if (System.Text.RegularExpressions.Regex.IsMatch(line, "<updated>") && i > 1)
+                        {
+                            var regex = new Regex("<updated>(.*)</updated>");
+                            var match = regex.Match(line);
+                            textBox1.Invoke(new Action(() => { textBox1.AppendText("Updated: " + match.Groups[1].Value + "\n"); }));
+                        }
+
+                        //For inside commit comment. (Failed badly!)
+                        /*if (System.Text.RegularExpressions.Regex.IsMatch(line, "81ex'>") && i > 0)
+                        {
+                            //Console.WriteLine(line.StartsWith("</content>");
+                            var regex = new Regex("81ex'>(.*)");
+                            var match = regex.Match(line);
+                            while (line.ToString().Contains("&lt;/pre>") == false)
+                            {
+                                Console.WriteLine(line);
+                                textBox1.Invoke(new Action(() => { textBox1.AppendText("Comment: [" + match.Groups[1].Value + "]\n"); }));
+                                line = reader.ReadLine();
+                            }
+                        }*/
+
+                        //For developer that pushed.
+                        if (System.Text.RegularExpressions.Regex.IsMatch(line, "<name>") && i > 0)
+                        {
+                            var regex = new Regex("<name>(.*)</name>");
+                            var match = regex.Match(line);
+                            textBox1.Invoke(new Action(() => { textBox1.AppendText("Author: " + match.Groups[1].Value + "\n");
+                            textBox1.AppendText(Environment.NewLine);
+                            }));
+                        }
+                    }                       
+                }
+            }
+        }
+
+        private void backgroundWorker6_DoWork(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                WebClient client = new WebClient();
+                client.DownloadFileAsync(new Uri(selectedRepo + "/commits/master.atom"), @"Commits.atom");
+                client.DownloadFileCompleted += new AsyncCompletedEventHandler(DisplayChangelog);
+            }
+            catch
+            {
+                Console.WriteLine("Check yor internet connection");
+            }
+        }
+
+        public String selectedRepo = "";
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //We first parse the repo name selected by the user.
+            selectedRepo = this.comboBox2.Text;
+            
+            //We search for that repo URL over RepoList.txt
+            StreamReader sr = new StreamReader(Program.programPath + @"\Tools\RepoList.txt");
+            string line = sr.ReadLine();
+
+            while (line != null)
+            {
+                if (System.Text.RegularExpressions.Regex.IsMatch(line, selectedRepo))
+                {
+                    //Pass the whole URL to selectedRepo string that we will use to create the new Uri.
+                    selectedRepo = line;
+                }
+                line = sr.ReadLine();
+            }
+            sr.Close();
+            //Proceed to download the commit file and parse.
+            backgroundWorker6.RunWorkerAsync();
         }
 
         //BE AWARE: CRAP BELOW.
