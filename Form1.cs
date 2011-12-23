@@ -198,6 +198,7 @@ namespace MadCow
                         Console.WriteLine("Repository Validated!");
                         RepoListAdd();
                         RepoListUpdate();
+                        ChangelogListUpdate();
                         }));
                     }
                 }
@@ -1554,6 +1555,11 @@ namespace MadCow
             sr.Close();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        //Changelog.
+        ////////////////////////////////////////////////////////////////////////
+
+        //Fill Changelog Repository ComboBox.
         private void Changelog()
         {
             StreamReader sr = new StreamReader(Program.programPath + @"\Tools\RepoList.txt");
@@ -1570,10 +1576,24 @@ namespace MadCow
             sr.Close();
         }
 
-        ////////////////////////////////////////////////////////////////////////
-        //Changelog.
-        ////////////////////////////////////////////////////////////////////////
+        //Update Changelog repository list in real time.
+        private void ChangelogListUpdate()
+        {
+            comboBox2.Items.Clear();
+            StreamReader sr = new StreamReader(Program.programPath + @"\Tools\RepoList.txt");
+            string line = sr.ReadLine();
+            while (line != null)
+            {
+                string s = line.Replace("https://github.com/", "");
+                string d = s.Replace("/mooege", "");
+                string e = d.Replace("/d3sharp", "");
+                comboBox2.Items.Add(e);
+                line = sr.ReadLine();
+            }
+            sr.Close();
+        }
 
+        //Parse commit file and display into the textbox.
         private void DisplayChangelog(object sender, AsyncCompletedEventArgs e)
         {
             textBox1.Invoke(new Action(() => { textBox1.Clear(); }));
