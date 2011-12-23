@@ -62,8 +62,8 @@ namespace MadCow
             Compile.WriteVbsPath();
             // Set up the delays for the ToolTip.
             toolTip1.AutoPopDelay = 1800;
-            toolTip1.InitialDelay = 500;
-            toolTip1.ReshowDelay = 500;
+            toolTip1.InitialDelay = 100;
+            toolTip1.ReshowDelay = 100;
             // Force the ToolTip text to be displayed whether or not the form is active.
             toolTip1.ShowAlways = true;
             // Set up the ToolTip text for the Buttons.
@@ -71,16 +71,16 @@ namespace MadCow
             toolTip1.SetToolTip(this.CopyMPQButton, "Copy MPQ's if you have D3 installed");
             toolTip1.SetToolTip(this.FindDiabloButton, "Find Diablo.exe so MadCow can work properly");
             toolTip1.SetToolTip(this.ValidateRepoButton, "Validate the repository so MadCow can download it");
-            toolTip1.SetToolTip(this.EnableAutoUpdateBox, "Checks for updates to a repository ever 'X' minutes");
+            toolTip1.SetToolTip(this.EnableAutoUpdateBox, "Enable updates to a repository every 'X' minutes");
             toolTip1.SetToolTip(this.RemoteServerButton, "Connects to public server you have entered in");
             toolTip1.SetToolTip(this.ResetRepoFolder, "Resets Repository folder in case of errors");
             toolTip1.SetToolTip(this.DownloadMPQSButton, "Downloads ALL MPQs needed to run Mooege");
             toolTip1.SetToolTip(this.RestoreDefaults, "Resets Server Control settings");
             toolTip1.SetToolTip(this.PlayDiabloButton, "Time to play Diablo 3 through Mooege!");
             InitializeFindPath();
-            RepoCheck();
-            RepoList();
-            Changelog();
+            RepoCheck(); //Checks for duplicities.
+            RepoList(); //Loads Repos from RepoList.txt
+            Changelog(); //Loads Changelog comobox values.
         }
 
         ///////////////////////////////////////////////////////////
