@@ -18,6 +18,7 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Nini.Config;
 
 namespace MadCow
 {
@@ -100,5 +101,20 @@ namespace MadCow
             }
         }
 
+        public static Boolean hasMpqs()
+        {
+            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+            String Src = Program.programPath + @"\MPQ\";
+            String Src2 = Program.programPath + @"\MPQ\base\";      
+            Int32 Files;
+            Files = Directory.GetFileSystemEntries(Src).Length + Directory.GetFileSystemEntries(Src2).Length;
+            if (Files < 12)
+            {
+                Console.WriteLine("You are missing MPQ files.");
+                return false;
+            }
+            else
+            return true;
+        }
     }
 }

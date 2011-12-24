@@ -225,9 +225,9 @@ namespace MadCow
         /////////////////////////////
         private void Update_Mooege_Click(object sender, EventArgs e)
         {
-
-            //if directory exists of developername and branch but not the lastRevision, delete so it can download the newer version. why keep an old revision?
-
+            //We set or "reset" progressbar value to cero.
+            generalProgressBar.Value = 0;
+            generalProgressBar.Update();
             if (Directory.Exists(Program.programPath + @"\Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
             {
                 if (EnableAutoUpdateBox.Checked == true) //Using AutoUpdate:
@@ -719,9 +719,12 @@ namespace MadCow
         //PROCEED WITH THE PROCESS ONCE THE DOWNLOAD ITS COMPLETE
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            //We reset progressbar value after finishing.
+            Console.WriteLine("Download Complete!");
+            progressBar2.Value = 0;
+            progressBar2.Update();
             generalProgressBar.PerformStep();
             MadCowProcedure.RunWholeProcedure();
-            Console.WriteLine("Download Complete!");
             UpdateMooegeButton.Enabled = true;
             if (EnableAutoUpdateBox.Checked == true)
             {

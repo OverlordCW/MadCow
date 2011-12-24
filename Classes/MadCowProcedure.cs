@@ -65,7 +65,7 @@ namespace MadCow
                 Form1.GlobalAccess.Invoke((MethodInvoker)delegate { Form1.GlobalAccess.generalProgressBar.PerformStep(); });
                 Compile.ModifyMooegeINI(); //Add MadCow MPQ folder Path to Mooege
                 Form1.GlobalAccess.Invoke((MethodInvoker)delegate { Form1.GlobalAccess.generalProgressBar.PerformStep(); });
-                Console.Write("[PROCESS COMPLETE!]");
+                Console.WriteLine("[PROCESS COMPLETE!]");
             });
         }
     }
