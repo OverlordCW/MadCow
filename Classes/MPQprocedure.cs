@@ -51,6 +51,11 @@ namespace MadCow
             copyDirectory(Src, Dst);
             //When all the files has been copied then:
             Console.WriteLine("Copying MPQ files to MadCow Folders has completed.");
+            Form1.GlobalAccess.Invoke(new Action(() =>
+            {
+                Form1.GlobalAccess.CopyMPQButton.Enabled = true;
+                Form1.GlobalAccess.PlayDiabloButton.Enabled = true; //We enable Play D3 button again.
+            }));
         }
 
         private static void copyDirectory(String Src, String Dst)

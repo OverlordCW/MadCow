@@ -42,6 +42,7 @@ namespace MadCow
         TextWriter _writer = null;
         //TO access controls from outside classes
         public static Form1 GlobalAccess;
+        private ContextMenu m_menu;
 
         public Form1()
         {
@@ -85,7 +86,8 @@ namespace MadCow
             RepoList(); //Loads Repos from RepoList.txt
             Changelog(); //Loads Changelog comobox values.
             LoadLastUsedProfile(); //We try to Load the last used profile by the user.
-            ErrorFinder.hasMpqs();
+            loadTrayMenu();//Loading the contextMenu for trayIcon
+            
         }
 
         ///////////////////////////////////////////////////////////
@@ -225,6 +227,11 @@ namespace MadCow
         /////////////////////////////
         private void Update_Mooege_Click(object sender, EventArgs e)
         {
+            UpdateMooege();
+        }
+
+        private void UpdateMooege()
+        {
             //We set or "reset" progressbar value to cero.
             generalProgressBar.Value = 0;
             generalProgressBar.Update();
@@ -233,12 +240,14 @@ namespace MadCow
                 if (EnableAutoUpdateBox.Checked == true) //Using AutoUpdate:
                 {
                     Console.WriteLine("You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision);
+                    notifyIcon1.ShowBalloonTip(1000, "MadCow", "You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision, ToolTipIcon.Info);
                     Tick = (int)this.AutoUpdateValue.Value;
                     label1.Text = "Update in " + Tick + " minutes.";
                 }
                 else //With out AutoUpdate:
                 {
                     Console.WriteLine("You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision);
+                    notifyIcon1.ShowBalloonTip(1000, "MadCow", "You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision, ToolTipIcon.Info);
                 }
             }
 
@@ -251,6 +260,7 @@ namespace MadCow
                     DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
                     UpdateMooegeButton.Enabled = false;
                     Console.WriteLine("Downloading...");
+                    Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Downloading...", ToolTipIcon.Info);
                     backgroundWorker1.RunWorkerAsync();
                 }
                 else //With out AutoUpdate:
@@ -259,6 +269,7 @@ namespace MadCow
                     DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
                     UpdateMooegeButton.Enabled = false;
                     Console.WriteLine("Downloading...");
+                    Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Downloading...", ToolTipIcon.Info);
                     backgroundWorker1.RunWorkerAsync();
                 }
             }
@@ -270,6 +281,7 @@ namespace MadCow
                     timer1.Stop();
                     DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
                     Console.WriteLine("Downloading...");
+                    Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Downloading...", ToolTipIcon.Info);
                     Directory.CreateDirectory(Program.programPath + "/MPQ");
                     UpdateMooegeButton.Enabled = false;
                     backgroundWorker1.RunWorkerAsync();
@@ -278,6 +290,7 @@ namespace MadCow
                 {
                     DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
                     Console.WriteLine("Downloading...");
+                    Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Downloading...", ToolTipIcon.Info);
                     Directory.CreateDirectory(Program.programPath + "/MPQ");
                     UpdateMooegeButton.Enabled = false;
                     backgroundWorker1.RunWorkerAsync();
@@ -285,14 +298,30 @@ namespace MadCow
             }
         }
 
-
         ///////////////////////////////////////////////////////////
         //Play Diablo Button
         ///////////////////////////////////////////////////////////
         private void PlayDiablo_Click(object sender, EventArgs e)
         {
-            System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadProc));
-            t.Start();
+            if (ErrorFinder.hasMpqs() == true) //We check for MPQ files count before allowing the user to proceed to play.
+            {
+                System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadProc));
+                t.Start();
+            }
+            else if (Diablo3UserPathSelection != null && ErrorFinder.hasMpqs() == false)
+            {
+                var ErrorAnswer = MessageBox.Show("You haven't copied MPQ files." + "\nWould you like MadCow to fix this for you?", "Fatal Error!",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
+
+                if (ErrorAnswer == DialogResult.Yes)
+                {
+                    MPQprocedure.StartCopyProcedure();
+                    PlayDiabloButton.Enabled = false;
+                    CopyMPQButton.Enabled = false;
+                }
+            }
+            else
+                Console.WriteLine("[FATAL] You are missing MPQ files!" + "\nPlease use CopyMpq button or copy Diablo3 MPQ's folder content into MadCow MPQ folder.");
         }
 
         public void ThreadProc()
@@ -721,6 +750,7 @@ namespace MadCow
         {
             //We reset progressbar value after finishing.
             Console.WriteLine("Download Complete!");
+            Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Download Complete!", ToolTipIcon.Info);
             progressBar2.Value = 0;
             progressBar2.Update();
             generalProgressBar.PerformStep();
@@ -1776,5 +1806,65 @@ namespace MadCow
         private void textBox10_TextChanged(object sender, EventArgs e) { /*Game Server Port*/ }
         private void textBox9_TextChanged(object sender, EventArgs e) { /*Public Server IP*/ }
         private void checkBox3_CheckedChanged(object sender, EventArgs e) { /*enable or disable NAT*/ }
+
+        ////////////////////////////////////////////////////////////////////////
+        //Tray Icon Stuff
+        ////////////////////////////////////////////////////////////////////////
+        public Int32 notifyCount = 0;
+
+        public void loadTrayMenu()
+        {
+            m_menu = new ContextMenu();
+            m_menu.MenuItems.Add(0, new MenuItem("Check Updates", new System.EventHandler(Tray_CheckUpdates)));
+            m_menu.MenuItems.Add(1, new MenuItem("Show", new System.EventHandler(Show_Click)));
+            m_menu.MenuItems.Add(2, new MenuItem("Hide", new System.EventHandler(Hide_Click)));
+            m_menu.MenuItems.Add(3, new MenuItem("Exit", new System.EventHandler(Exit_Click)));
+            notifyIcon1.ContextMenu = m_menu;
+        }
+
+        private void Tray_CheckUpdates(object sender, EventArgs e)
+        {
+            if (UpdateMooegeButton.Enabled == true)
+            {
+                UpdateMooege();
+            }
+            else
+                notifyIcon1.ShowBalloonTip(1000, "MadCow", "You must select and validate a repository first!", ToolTipIcon.Info);
+        }
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            if (FormWindowState.Minimized == WindowState)
+            {
+                Hide();
+                if (notifyCount < 1) //This is to avoid displaying this Balloon everytime the user minimize, it will only show first time.
+                {
+                    notifyIcon1.ShowBalloonTip(1000, "MadCow", "MadCow will continue running minimized.", ToolTipIcon.Info);
+                    notifyCount++;
+                }
+            }
+        }
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
+        {
+            Show();
+            WindowState = FormWindowState.Normal;
+        }
+        protected void Exit_Click(Object sender, System.EventArgs e)
+        {
+            Close();
+        }
+        protected void Hide_Click(Object sender, System.EventArgs e)
+        {
+            Hide();
+            if (notifyCount < 1) //This is to avoid displaying this Balloon everytime the user minimize, it will only show first time.
+            {
+                notifyIcon1.ShowBalloonTip(1000, "MadCow", "MadCow will continue running minimized.", ToolTipIcon.Info);
+                notifyCount++;
+            }
+        }
+        protected void Show_Click(Object sender, System.EventArgs e)
+        {
+            Show();
+            WindowState = FormWindowState.Normal;
+        }
     }
 }

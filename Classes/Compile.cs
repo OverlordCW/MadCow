@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.IO;
 using Nini.Config;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace MadCow
 {
@@ -50,9 +51,8 @@ namespace MadCow
                 Console.WriteLine("Compiling newest [" + ParseRevision.developerName + "] Mooege source...");
                 proc.Start();
                 proc.WaitForExit();
-                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Compiling newest [" + ParseRevision.developerName + "] Mooege source Complete");
-                Console.ForegroundColor = ConsoleColor.White;
+                Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Compiling Complete!", ToolTipIcon.Info);
             }
             catch (Exception e)
             {

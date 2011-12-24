@@ -108,9 +108,8 @@ namespace MadCow
             String Src2 = Program.programPath + @"\MPQ\base\";      
             Int32 Files;
             Files = Directory.GetFileSystemEntries(Src).Length + Directory.GetFileSystemEntries(Src2).Length;
-            if (Files < 12)
+            if (Files < 12) //This is the min file required by Mooege atm. TODO: should not be hardcored to 12.
             {
-                Console.WriteLine("You are missing MPQ files.");
                 return false;
             }
             else
