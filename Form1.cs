@@ -40,10 +40,13 @@ namespace MadCow
         private int Tick;
         //Parsing Console into a textbox
         TextWriter _writer = null;
+        //TO access controls from outside classes
+        public static Form1 GlobalAccess;
 
         public Form1()
         {
             InitializeComponent();
+            GlobalAccess = this;
             AutoUpdateValue.Enabled = false;
             EnableAutoUpdateBox.Enabled = false;
             PlayDiabloButton.Enabled = false;
@@ -81,6 +84,8 @@ namespace MadCow
             RepoCheck(); //Checks for duplicities.
             RepoList(); //Loads Repos from RepoList.txt
             Changelog(); //Loads Changelog comobox values.
+            LoadLastUsedProfile(); //We try to Load the last used profile by the user.
+            ErrorFinder.hasMpqs();
         }
 
         ///////////////////////////////////////////////////////////
@@ -387,7 +392,7 @@ namespace MadCow
 
         private void CopyMPQs_Click(object sender, EventArgs e)
         {
-            RepoProcedure.RunCopyMPQ();
+            MPQprocedure.StartCopyProcedure();
         }
 
 
@@ -637,7 +642,7 @@ namespace MadCow
                     IConfig config1 = source.Configs["DiabloPath"];
                     config1.Set("MPQpath", new FileInfo(Diablo3UserPathSelection.Text).DirectoryName + "\\Data_D3\\PC\\MPQs");
                     source.Save();
-                    Console.WriteLine("MODIFIED MADCOW.INI WITH D3 PATHS");
+                    Console.WriteLine("Correctly applied D3 client path to madcow.ini");
                     Console.WriteLine("Verifying Diablo..");
                 }
 
@@ -715,7 +720,7 @@ namespace MadCow
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             generalProgressBar.PerformStep();
-            RepoProcedure.RunWholeProcedure();
+            MadCowProcedure.RunWholeProcedure();
             Console.WriteLine("Download Complete!");
             UpdateMooegeButton.Enabled = true;
             if (EnableAutoUpdateBox.Checked == true)
@@ -822,7 +827,7 @@ namespace MadCow
             }
             catch
             {
-                Console.WriteLine("[FATAL] Check your internet connection!");
+                Console.WriteLine("[FATAL] Internet connection failed or GitHub site is down!");
             }
         }
 
@@ -955,6 +960,10 @@ namespace MadCow
                     tw.WriteLine(this.NATcheckBox.Checked);
                     tw.Close();
                     Console.Write("Saved profile " + saveProfile.FileName + " succesfully");
+                    //Proceed to save the profile over our INI file.
+                    IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                    source.Configs["Profiles"].Set("Profile", CurrentProfile);
+                    source.Save();
                 }
             }
         }
@@ -1081,6 +1090,52 @@ namespace MadCow
                 this.TickGameServerPort.Visible = true;
                 this.TickPublicServerIp.Visible = true;
                 Console.Write("Loaded Profile " + OpenProfile.FileName + " succesfully");
+                //Proceed to save the profile over our INI file.
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                source.Configs["Profiles"].Set("Profile", CurrentProfile);
+                source.Save();
+            }
+        }
+
+        public void LoadLastUsedProfile()
+        {
+            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+            String currentProfile = source.Configs["Profiles"].Get("Profile");
+
+            if (currentProfile.Length > 0)
+            {
+                TextReader tr = new StreamReader(currentProfile);
+                this.BnetServerIp.Text = tr.ReadLine();
+                this.GameServerIp.Text = tr.ReadLine();
+                this.PublicServerIp.Text = tr.ReadLine();
+                this.BnetServerPort.Text = tr.ReadLine();
+                this.GameServerPort.Text = tr.ReadLine();
+                this.MOTD.Text = tr.ReadLine();
+                if (tr.ReadLine().Contains("True"))
+                {
+                    this.NATcheckBox.Checked = true;
+                }
+                else
+                {
+                    this.NATcheckBox.Checked = false;
+                }
+                tr.Close();
+
+                //Loading a profile means it has the correct values for every box, so first we disable every red cross that might be out there.
+                this.ErrorBnetServerIp.Visible = false;
+                this.ErrorBnetServerPort.Visible = false;
+                this.ErrorGameServerIp.Visible = false;
+                this.ErrorGameServerPort.Visible = false;
+                this.ErrorGameServerPort.Visible = false;
+                this.ErrorPublicServerIp.Visible = false;
+                //Loading a profile means it has the correct values for every box, so we change everything to green ticked.
+                this.TickBnetServerIP.Visible = true;
+                this.TickBnetServerPort.Visible = true;
+                this.TickGameServerIp.Visible = true;
+                this.TickGameServerPort.Visible = true;
+                this.TickGameServerPort.Visible = true;
+                this.TickPublicServerIp.Visible = true;
+                Console.WriteLine("Loaded last used Server profile succesfully");
             }
         }
 

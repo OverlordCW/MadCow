@@ -810,11 +810,12 @@
             // generalProgressBar
             // 
             this.generalProgressBar.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.generalProgressBar.ForeColor = System.Drawing.Color.LimeGreen;
+            this.generalProgressBar.ForeColor = System.Drawing.Color.RoyalBlue;
             this.generalProgressBar.Location = new System.Drawing.Point(5, 3);
             this.generalProgressBar.Name = "generalProgressBar";
             this.generalProgressBar.Size = new System.Drawing.Size(308, 11);
             this.generalProgressBar.Step = 20;
+            this.generalProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.generalProgressBar.TabIndex = 0;
             // 
             // tabControl1
