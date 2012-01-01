@@ -83,7 +83,7 @@
     <Compile Include="Classes\TextBoxStreamWriter.cs" />
     <Compile Include="Classes\ProcessFinder.cs" />
     <Compile Include="Classes\Delete.cs" />
-    <Compile Include="Classes\RepoProcedure.cs" />
+    <Compile Include="Classes\MadCowProcedure.cs" />
     <Compile Include="Classes\MPQprocedure.cs" />
     <Compile Include="Classes\ParseRevision.cs" />
     <Compile Include="Classes\Compile.cs" />
@@ -211,7 +211,7 @@
       <DependentUpon>RepositorySelectionPlay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="RepositorySelectionServer.resx">

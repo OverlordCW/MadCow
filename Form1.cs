@@ -40,10 +40,14 @@ namespace MadCow
         private int Tick;
         //Parsing Console into a textbox
         TextWriter _writer = null;
+        //TO access controls from outside classes
+        public static Form1 GlobalAccess;
+        private ContextMenu m_menu;
 
         public Form1()
         {
             InitializeComponent();
+            GlobalAccess = this;
             AutoUpdateValue.Enabled = false;
             EnableAutoUpdateBox.Enabled = false;
             PlayDiabloButton.Enabled = false;
@@ -62,8 +66,8 @@ namespace MadCow
             Compile.WriteVbsPath();
             // Set up the delays for the ToolTip.
             toolTip1.AutoPopDelay = 1800;
-            toolTip1.InitialDelay = 500;
-            toolTip1.ReshowDelay = 500;
+            toolTip1.InitialDelay = 100;
+            toolTip1.ReshowDelay = 100;
             // Force the ToolTip text to be displayed whether or not the form is active.
             toolTip1.ShowAlways = true;
             // Set up the ToolTip text for the Buttons.
@@ -71,16 +75,19 @@ namespace MadCow
             toolTip1.SetToolTip(this.CopyMPQButton, "Copy MPQ's if you have D3 installed");
             toolTip1.SetToolTip(this.FindDiabloButton, "Find Diablo.exe so MadCow can work properly");
             toolTip1.SetToolTip(this.ValidateRepoButton, "Validate the repository so MadCow can download it");
-            toolTip1.SetToolTip(this.EnableAutoUpdateBox, "Checks for updates to a repository ever 'X' minutes");
+            toolTip1.SetToolTip(this.EnableAutoUpdateBox, "Enable updates to a repository every 'X' minutes");
             toolTip1.SetToolTip(this.RemoteServerButton, "Connects to public server you have entered in");
             toolTip1.SetToolTip(this.ResetRepoFolder, "Resets Repository folder in case of errors");
             toolTip1.SetToolTip(this.DownloadMPQSButton, "Downloads ALL MPQs needed to run Mooege");
             toolTip1.SetToolTip(this.RestoreDefaults, "Resets Server Control settings");
             toolTip1.SetToolTip(this.PlayDiabloButton, "Time to play Diablo 3 through Mooege!");
             InitializeFindPath();
-            RepoCheck();
-            RepoList();
-            Changelog();
+            RepoCheck(); //Checks for duplicities.
+            RepoList(); //Loads Repos from RepoList.txt
+            Changelog(); //Loads Changelog comobox values.
+            LoadLastUsedProfile(); //We try to Load the last used profile by the user.
+            loadTrayMenu();//Loading the contextMenu for trayIcon
+            
         }
 
         ///////////////////////////////////////////////////////////
@@ -197,6 +204,8 @@ namespace MadCow
                         EnableAutoUpdateBox.Enabled = true;
                         Console.WriteLine("Repository Validated!");
                         RepoListAdd();
+                        RepoListUpdate();
+                        ChangelogListUpdate();
                         }));
                     }
                 }
@@ -218,20 +227,27 @@ namespace MadCow
         /////////////////////////////
         private void Update_Mooege_Click(object sender, EventArgs e)
         {
+            UpdateMooege();
+        }
 
-            //if directory exists of developername and branch but not the lastRevision, delete so it can download the newer version. why keep an old revision?
-
+        private void UpdateMooege()
+        {
+            //We set or "reset" progressbar value to cero.
+            generalProgressBar.Value = 0;
+            generalProgressBar.Update();
             if (Directory.Exists(Program.programPath + @"\Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision))
             {
                 if (EnableAutoUpdateBox.Checked == true) //Using AutoUpdate:
                 {
                     Console.WriteLine("You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision);
+                    notifyIcon1.ShowBalloonTip(1000, "MadCow", "You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision, ToolTipIcon.Info);
                     Tick = (int)this.AutoUpdateValue.Value;
                     label1.Text = "Update in " + Tick + " minutes.";
                 }
                 else //With out AutoUpdate:
                 {
                     Console.WriteLine("You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision);
+                    notifyIcon1.ShowBalloonTip(1000, "MadCow", "You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision, ToolTipIcon.Info);
                 }
             }
 
@@ -244,6 +260,7 @@ namespace MadCow
                     DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
                     UpdateMooegeButton.Enabled = false;
                     Console.WriteLine("Downloading...");
+                    Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Downloading...", ToolTipIcon.Info);
                     backgroundWorker1.RunWorkerAsync();
                 }
                 else //With out AutoUpdate:
@@ -252,6 +269,7 @@ namespace MadCow
                     DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
                     UpdateMooegeButton.Enabled = false;
                     Console.WriteLine("Downloading...");
+                    Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Downloading...", ToolTipIcon.Info);
                     backgroundWorker1.RunWorkerAsync();
                 }
             }
@@ -263,6 +281,7 @@ namespace MadCow
                     timer1.Stop();
                     DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
                     Console.WriteLine("Downloading...");
+                    Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Downloading...", ToolTipIcon.Info);
                     Directory.CreateDirectory(Program.programPath + "/MPQ");
                     UpdateMooegeButton.Enabled = false;
                     backgroundWorker1.RunWorkerAsync();
@@ -271,6 +290,7 @@ namespace MadCow
                 {
                     DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
                     Console.WriteLine("Downloading...");
+                    Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Downloading...", ToolTipIcon.Info);
                     Directory.CreateDirectory(Program.programPath + "/MPQ");
                     UpdateMooegeButton.Enabled = false;
                     backgroundWorker1.RunWorkerAsync();
@@ -278,14 +298,30 @@ namespace MadCow
             }
         }
 
-
         ///////////////////////////////////////////////////////////
         //Play Diablo Button
         ///////////////////////////////////////////////////////////
         private void PlayDiablo_Click(object sender, EventArgs e)
         {
-            System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadProc));
-            t.Start();
+            if (ErrorFinder.hasMpqs() == true) //We check for MPQ files count before allowing the user to proceed to play.
+            {
+                System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadProc));
+                t.Start();
+            }
+            else if (Diablo3UserPathSelection != null && ErrorFinder.hasMpqs() == false)
+            {
+                var ErrorAnswer = MessageBox.Show("You haven't copied MPQ files." + "\nWould you like MadCow to fix this for you?", "Fatal Error!",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
+
+                if (ErrorAnswer == DialogResult.Yes)
+                {
+                    MPQprocedure.StartCopyProcedure();
+                    PlayDiabloButton.Enabled = false;
+                    CopyMPQButton.Enabled = false;
+                }
+            }
+            else
+                Console.WriteLine("[FATAL] You are missing MPQ files!" + "\nPlease use CopyMpq button or copy Diablo3 MPQ's folder content into MadCow MPQ folder.");
         }
 
         public void ThreadProc()
@@ -385,7 +421,7 @@ namespace MadCow
 
         private void CopyMPQs_Click(object sender, EventArgs e)
         {
-            RepoProcedure.RunCopyMPQ();
+            MPQprocedure.StartCopyProcedure();
         }
 
 
@@ -532,6 +568,10 @@ namespace MadCow
                 label1.Text = "Update in " + Tick + " minutes.";
                 timer1.Start();
                 AutoUpdateValue.Enabled = false;
+                comboBox1.Enabled = false;
+                ValidateRepoButton.Enabled = false;
+                UpdateMooegeButton.Visible = false;
+                label1.Visible = true;
             }
 
             else if (EnableAutoUpdateBox.Checked == false)
@@ -539,6 +579,10 @@ namespace MadCow
                 timer1.Stop();
                 label1.Text = " ";
                 AutoUpdateValue.Enabled = true;
+                comboBox1.Enabled = true;
+                ValidateRepoButton.Enabled = true;
+                UpdateMooegeButton.Visible = true;
+                label1.Visible = false;
             }
         }
 
@@ -627,7 +671,7 @@ namespace MadCow
                     IConfig config1 = source.Configs["DiabloPath"];
                     config1.Set("MPQpath", new FileInfo(Diablo3UserPathSelection.Text).DirectoryName + "\\Data_D3\\PC\\MPQs");
                     source.Save();
-                    Console.WriteLine("MODIFIED MADCOW.INI WITH D3 PATHS");
+                    Console.WriteLine("Correctly applied D3 client path to madcow.ini");
                     Console.WriteLine("Verifying Diablo..");
                 }
 
@@ -704,9 +748,13 @@ namespace MadCow
         //PROCEED WITH THE PROCESS ONCE THE DOWNLOAD ITS COMPLETE
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            generalProgressBar.PerformStep();
-            RepoProcedure.RunWholeProcedure();
+            //We reset progressbar value after finishing.
             Console.WriteLine("Download Complete!");
+            Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Download Complete!", ToolTipIcon.Info);
+            progressBar2.Value = 0;
+            progressBar2.Update();
+            generalProgressBar.PerformStep();
+            MadCowProcedure.RunWholeProcedure();
             UpdateMooegeButton.Enabled = true;
             if (EnableAutoUpdateBox.Checked == true)
             {
@@ -812,7 +860,7 @@ namespace MadCow
             }
             catch
             {
-                Console.WriteLine("[FATAL] Check your internet connection!");
+                Console.WriteLine("[FATAL] Internet connection failed or GitHub site is down!");
             }
         }
 
@@ -945,6 +993,10 @@ namespace MadCow
                     tw.WriteLine(this.NATcheckBox.Checked);
                     tw.Close();
                     Console.Write("Saved profile " + saveProfile.FileName + " succesfully");
+                    //Proceed to save the profile over our INI file.
+                    IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                    source.Configs["Profiles"].Set("Profile", CurrentProfile);
+                    source.Save();
                 }
             }
         }
@@ -1071,6 +1123,52 @@ namespace MadCow
                 this.TickGameServerPort.Visible = true;
                 this.TickPublicServerIp.Visible = true;
                 Console.Write("Loaded Profile " + OpenProfile.FileName + " succesfully");
+                //Proceed to save the profile over our INI file.
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                source.Configs["Profiles"].Set("Profile", CurrentProfile);
+                source.Save();
+            }
+        }
+
+        public void LoadLastUsedProfile()
+        {
+            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+            String currentProfile = source.Configs["Profiles"].Get("Profile");
+
+            if (currentProfile.Length > 0)
+            {
+                TextReader tr = new StreamReader(currentProfile);
+                this.BnetServerIp.Text = tr.ReadLine();
+                this.GameServerIp.Text = tr.ReadLine();
+                this.PublicServerIp.Text = tr.ReadLine();
+                this.BnetServerPort.Text = tr.ReadLine();
+                this.GameServerPort.Text = tr.ReadLine();
+                this.MOTD.Text = tr.ReadLine();
+                if (tr.ReadLine().Contains("True"))
+                {
+                    this.NATcheckBox.Checked = true;
+                }
+                else
+                {
+                    this.NATcheckBox.Checked = false;
+                }
+                tr.Close();
+
+                //Loading a profile means it has the correct values for every box, so first we disable every red cross that might be out there.
+                this.ErrorBnetServerIp.Visible = false;
+                this.ErrorBnetServerPort.Visible = false;
+                this.ErrorGameServerIp.Visible = false;
+                this.ErrorGameServerPort.Visible = false;
+                this.ErrorGameServerPort.Visible = false;
+                this.ErrorPublicServerIp.Visible = false;
+                //Loading a profile means it has the correct values for every box, so we change everything to green ticked.
+                this.TickBnetServerIP.Visible = true;
+                this.TickBnetServerPort.Visible = true;
+                this.TickGameServerIp.Visible = true;
+                this.TickGameServerPort.Visible = true;
+                this.TickGameServerPort.Visible = true;
+                this.TickPublicServerIp.Visible = true;
+                Console.WriteLine("Loaded last used Server profile succesfully");
             }
         }
 
@@ -1500,6 +1598,8 @@ namespace MadCow
         ////////////////////////////////////////////////////////////////////////
         //Dynamically Add Repos, but also remove duplicates.
         ////////////////////////////////////////////////////////////////////////
+        private Int32 RepoListIndex;
+        
         private void RepoList()
         {
             StreamReader sr = new StreamReader(Program.programPath + @"\Tools\RepoList.txt");
@@ -1509,6 +1609,7 @@ namespace MadCow
             {
                 comboBox1.Items.Add(line);
                 line = sr.ReadLine();
+                RepoListIndex++;
             }
             sr.Close();
         }
@@ -1526,6 +1627,27 @@ namespace MadCow
             str.Close();
         }
 
+        private void RepoListUpdate()
+        {
+            RepoCheck();
+            comboBox1.Items.Clear();
+            StreamReader sr = new StreamReader(Program.programPath + @"\Tools\RepoList.txt");
+            string line = sr.ReadLine();
+
+            while (line != null)
+            {
+                comboBox1.Items.Add(line);
+                line = sr.ReadLine();
+                RepoListIndex++;
+            }
+            sr.Close();
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        //Changelog.
+        ////////////////////////////////////////////////////////////////////////
+
+        //Fill Changelog Repository ComboBox.
         private void Changelog()
         {
             StreamReader sr = new StreamReader(Program.programPath + @"\Tools\RepoList.txt");
@@ -1540,6 +1662,128 @@ namespace MadCow
                 line = sr.ReadLine();
             }
             sr.Close();
+        }
+
+        //Update Changelog repository list in real time.
+        private void ChangelogListUpdate()
+        {
+            comboBox2.Items.Clear();
+            StreamReader sr = new StreamReader(Program.programPath + @"\Tools\RepoList.txt");
+            string line = sr.ReadLine();
+            while (line != null)
+            {
+                string s = line.Replace("https://github.com/", "");
+                string d = s.Replace("/mooege", "");
+                string e = d.Replace("/d3sharp", "");
+                comboBox2.Items.Add(e);
+                line = sr.ReadLine();
+            }
+            sr.Close();
+        }
+
+        //Parse commit file and display into the textbox.
+        private void DisplayChangelog(object sender, AsyncCompletedEventArgs e)
+        {
+            textBox1.Invoke(new Action(() => { textBox1.Clear(); }));
+            using (FileStream fileStream = new FileStream(Program.programPath + @"\Commits.ATOM", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            {
+                using (TextReader reader = new StreamReader(fileStream))
+                {
+                    string line;
+                    int i = 0; //This is to get rid of the first <title> tag.
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        //For commits comment.
+                        if (System.Text.RegularExpressions.Regex.IsMatch(line, "<title>") && i > 0)
+                        {
+                            var regex = new Regex("<title>(.*)</title>");
+                            var match = regex.Match(line);
+                            textBox1.Invoke(new Action(() => { textBox1.AppendText(i + ".-" +match.Groups[1].Value + "\n"); }));
+                            i++;
+                        }
+                        else if (System.Text.RegularExpressions.Regex.IsMatch(line, "<title>") && i == 0)
+                        {
+                            i++;
+                        }
+
+                        //For update date/time.
+                        if (System.Text.RegularExpressions.Regex.IsMatch(line, "<updated>") && i > 1)
+                        {
+                            var regex = new Regex("<updated>(.*)</updated>");
+                            var match = regex.Match(line);
+                            textBox1.Invoke(new Action(() => { textBox1.AppendText("Updated: " + match.Groups[1].Value + "\n"); }));
+                        }
+
+                        //For inside commit comment. (Failed badly!)
+                        /*if (System.Text.RegularExpressions.Regex.IsMatch(line, "81ex'>") && i > 0)
+                        {
+                            //Console.WriteLine(line.StartsWith("</content>");
+                            var regex = new Regex("81ex'>(.*)");
+                            var match = regex.Match(line);
+                            while (line.ToString().Contains("&lt;/pre>") == false)
+                            {
+                                Console.WriteLine(line);
+                                textBox1.Invoke(new Action(() => { textBox1.AppendText("Comment: [" + match.Groups[1].Value + "]\n"); }));
+                                line = reader.ReadLine();
+                            }
+                        }*/
+
+                        //For developer that pushed.
+                        if (System.Text.RegularExpressions.Regex.IsMatch(line, "<name>") && i > 0)
+                        {
+                            var regex = new Regex("<name>(.*)</name>");
+                            var match = regex.Match(line);
+                            textBox1.Invoke(new Action(() => { textBox1.AppendText("Author: " + match.Groups[1].Value + "\n");
+                            textBox1.AppendText(Environment.NewLine);
+                            }));
+                        }
+                    }                       
+                }
+            }
+            //We scroll the content up to show latest commits first.
+            textBox1.Invoke(new Action(() =>
+            {
+                textBox1.SelectionStart = 0;
+                textBox1.ScrollToCaret();
+            }));
+        }
+
+        private void backgroundWorker6_DoWork(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                WebClient client = new WebClient();
+                client.DownloadFileAsync(new Uri(selectedRepo + "/commits/master.atom"), @"Commits.atom");
+                client.DownloadFileCompleted += new AsyncCompletedEventHandler(DisplayChangelog);
+            }
+            catch
+            {
+                Console.WriteLine("Check yor internet connection");
+            }
+        }
+
+        public String selectedRepo = "";
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //We first parse the repo name selected by the user.
+            selectedRepo = this.comboBox2.Text;
+            
+            //We search for that repo URL over RepoList.txt
+            StreamReader sr = new StreamReader(Program.programPath + @"\Tools\RepoList.txt");
+            string line = sr.ReadLine();
+
+            while (line != null)
+            {
+                if (System.Text.RegularExpressions.Regex.IsMatch(line, selectedRepo))
+                {
+                    //Pass the whole URL to selectedRepo string that we will use to create the new Uri.
+                    selectedRepo = line;
+                }
+                line = sr.ReadLine();
+            }
+            sr.Close();
+            //Proceed to download the commit file and parse.
+            backgroundWorker6.RunWorkerAsync();
         }
 
         //BE AWARE: CRAP BELOW.
@@ -1562,5 +1806,65 @@ namespace MadCow
         private void textBox10_TextChanged(object sender, EventArgs e) { /*Game Server Port*/ }
         private void textBox9_TextChanged(object sender, EventArgs e) { /*Public Server IP*/ }
         private void checkBox3_CheckedChanged(object sender, EventArgs e) { /*enable or disable NAT*/ }
+
+        ////////////////////////////////////////////////////////////////////////
+        //Tray Icon Stuff
+        ////////////////////////////////////////////////////////////////////////
+        public Int32 notifyCount = 0;
+
+        public void loadTrayMenu()
+        {
+            m_menu = new ContextMenu();
+            m_menu.MenuItems.Add(0, new MenuItem("Check Updates", new System.EventHandler(Tray_CheckUpdates)));
+            m_menu.MenuItems.Add(1, new MenuItem("Show", new System.EventHandler(Show_Click)));
+            m_menu.MenuItems.Add(2, new MenuItem("Hide", new System.EventHandler(Hide_Click)));
+            m_menu.MenuItems.Add(3, new MenuItem("Exit", new System.EventHandler(Exit_Click)));
+            notifyIcon1.ContextMenu = m_menu;
+        }
+
+        private void Tray_CheckUpdates(object sender, EventArgs e)
+        {
+            if (UpdateMooegeButton.Enabled == true)
+            {
+                UpdateMooege();
+            }
+            else
+                notifyIcon1.ShowBalloonTip(1000, "MadCow", "You must select and validate a repository first!", ToolTipIcon.Info);
+        }
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            if (FormWindowState.Minimized == WindowState)
+            {
+                Hide();
+                if (notifyCount < 1) //This is to avoid displaying this Balloon everytime the user minimize, it will only show first time.
+                {
+                    notifyIcon1.ShowBalloonTip(1000, "MadCow", "MadCow will continue running minimized.", ToolTipIcon.Info);
+                    notifyCount++;
+                }
+            }
+        }
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
+        {
+            Show();
+            WindowState = FormWindowState.Normal;
+        }
+        protected void Exit_Click(Object sender, System.EventArgs e)
+        {
+            Close();
+        }
+        protected void Hide_Click(Object sender, System.EventArgs e)
+        {
+            Hide();
+            if (notifyCount < 1) //This is to avoid displaying this Balloon everytime the user minimize, it will only show first time.
+            {
+                notifyIcon1.ShowBalloonTip(1000, "MadCow", "MadCow will continue running minimized.", ToolTipIcon.Info);
+                notifyCount++;
+            }
+        }
+        protected void Show_Click(Object sender, System.EventArgs e)
+        {
+            Show();
+            WindowState = FormWindowState.Normal;
+        }
     }
 }

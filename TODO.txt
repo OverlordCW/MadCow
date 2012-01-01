@@ -1,11 +1,5 @@
 Added by Wesko
 
-1. Polish button visible evenhandlers.
-   - Fix "Play Diablo" button to be disabled while repo selector its open
-
-2. Some tweaking into server control profile handling.
-
-
 Added by Wetwlly
 
 WooHoo!

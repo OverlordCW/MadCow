@@ -26,47 +26,14 @@ using ICSharpCode.SharpZipLib.Zip;
 
 namespace MadCow
 {
-    class RepoProcedure
+    class MadCowProcedure
     {
-        public static void RunCopyMPQ()
-        {
-            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
-            String MPQpath = source.Configs["DiabloPath"].Get("MPQpath");
-                    
-            if (Directory.Exists(Program.programPath + @"/MPQ"))
-                    {
-                        //Delete Folder if already exists
-                        System.IO.Directory.Delete(Program.programPath + @"/MPQ", true);
-                        Console.WriteLine("Deleted current MPQ MadCow folder succeedeed");
-
-                        if (ProcessFinder.FindProcess("Diablo") == true)
-                        {
-                            ProcessFinder.KillProcess("Diablo");
-                            Thread.Sleep(1000);
-                            //Transfer MPQs
-                            MPQprocedure.MpqTransfer();
-                        }
-                        else
-                        {
-                            //Transfer MPQs
-                            MPQprocedure.MpqTransfer();
-                        }
-                    }
-                    else
-                    {
-                        // DO not need because MPQTransfer creates folder!
-                        //System.IO.Directory.CreateDirectory(Program.programPath + @"/MPQ");
-                        MPQprocedure.MpqTransfer();
-                    }
-        }
-
         public static void RunWholeProcedure() //This is actually the whole process MadCow uses after Downloading source.
         {
             Compile.currentMooegeExePath = Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\Mooege.exe";
             Compile.currentMooegeDebugFolderPath = Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\";
             Compile.mooegeINI = Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini";
             Compile.compileArgs = "\"" + Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\build\Mooege-VS2010.sln" + "\"";
-            var form = Form.ActiveForm as Form1; //In order to access Form controls.
             ZipFile zip = null;
             var events = new FastZipEvents();
 
@@ -89,17 +56,19 @@ namespace MadCow
                 //RefreshDesktop.RefreshDesktopPlease(); //Sends a refresh call to desktop, probably this is working for Windows Explorer too, so i'll leave it there for now -wesko
                 //Thread.Sleep(2000); //<-This and ^this is needed for madcow to work on VM XP, you need to wait for Windows Explorer to refresh folders or compiling wont find the new mooege folder just uncompressed.
                 Console.WriteLine("Uncompress Complete");
-                form.Invoke((MethodInvoker)delegate{form.generalProgressBar.PerformStep();});
+                Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Uncompress Complete!", ToolTipIcon.Info);
+                Form1.GlobalAccess.Invoke((MethodInvoker)delegate { Form1.GlobalAccess.generalProgressBar.PerformStep(); });
                 Compile.CreateBatchCompileFile();
-                form.Invoke((MethodInvoker)delegate { form.generalProgressBar.PerformStep(); });
+                Form1.GlobalAccess.Invoke((MethodInvoker)delegate { Form1.GlobalAccess.generalProgressBar.PerformStep(); });
                 Compile.WriteCompileBatch();
-                form.Invoke((MethodInvoker)delegate { form.generalProgressBar.PerformStep(); });
+                Form1.GlobalAccess.Invoke((MethodInvoker)delegate { Form1.GlobalAccess.generalProgressBar.PerformStep(); });
                 Compile.ExecuteCommandSync(Program.programPath + @"\Tools\CompileBatch");  //Compile command.         
-                form.Invoke((MethodInvoker)delegate { form.generalProgressBar.PerformStep(); });
+                Form1.GlobalAccess.Invoke((MethodInvoker)delegate { Form1.GlobalAccess.generalProgressBar.PerformStep(); });
                 Compile.ModifyMooegeINI(); //Add MadCow MPQ folder Path to Mooege
-                form.Invoke((MethodInvoker)delegate { form.generalProgressBar.PerformStep(); });
-                Console.Write("[PROCESS COMPLETE!]");
+                Form1.GlobalAccess.Invoke((MethodInvoker)delegate { Form1.GlobalAccess.generalProgressBar.PerformStep(); });
+                Console.WriteLine("[PROCESS COMPLETE!]");
+                Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Process Complete!", ToolTipIcon.Info);
             });
-        }          
+        }
     }
 }

@@ -65,9 +65,11 @@ namespace MadCow
                 case 2: //Delete corrupted file thrown by ErrorFinder class.
                     IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
                     string MPQpath = source.Configs["DiabloPath"].Get("MPQpath");
-                    Console.WriteLine("Deleting file " + ErrorFinder.errorFileName);
-                    //Bug below (When using standalone server we must not try to delete the file since it doesnt exist (No d3 folder)).
-                    File.Delete(MPQpath + @"\base\" + ErrorFinder.errorFileName);
+                    if (MPQpath.Length > 0) //This is to avoid deleting a non existant file if user its only using standalone Mooege server without D3 client.
+                    {
+                        Console.WriteLine("Deleting file " + ErrorFinder.errorFileName);
+                        File.Delete(MPQpath + @"\base\" + ErrorFinder.errorFileName);
+                    }
                     break;
             }
         }
