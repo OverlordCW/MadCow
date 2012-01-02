@@ -784,7 +784,7 @@ namespace MadCow
             {
                 WebClient client = new WebClient();
                 client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(Checkversions);
-                Uri uri = new Uri("https://raw.github.com/mooege/mooege/master/src/Mooege/Common/Versions/VersionInfo.cs");
+                Uri uri = new Uri(textBox4.Text);
                 client.DownloadStringAsync(uri);
             }
             catch

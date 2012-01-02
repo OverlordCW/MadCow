@@ -120,6 +120,7 @@
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.textBox4 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -835,6 +836,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.textBox4);
             this.tabPage4.Controls.Add(this.DownloadFileSpeed);
             this.tabPage4.Controls.Add(this.DownloadingFileName);
             this.tabPage4.Controls.Add(this.DownloadMPQSprogressBar);
@@ -1059,6 +1061,15 @@
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
             // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(7, 293);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(332, 20);
+            this.textBox4.TabIndex = 11;
+            this.textBox4.Text = "https://raw.github.com/mooege/mooege/master/src/Mooege/Common/Versions/VersionInf" +
+                "o.cs";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1208,6 +1219,7 @@
         public System.Windows.Forms.NotifyIcon notifyIcon1;
         public System.Windows.Forms.Button PlayDiabloButton;
         public System.Windows.Forms.Button CopyMPQButton;
+        private System.Windows.Forms.TextBox textBox4;
 
     }
 }
