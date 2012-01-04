@@ -80,6 +80,7 @@
   <ItemGroup>
     <Compile Include="Classes\ErrorFinder.cs" />
     <Compile Include="Classes\Diablo.cs" />
+    <Compile Include="Classes\FindBranch.cs" />
     <Compile Include="Classes\TextBoxStreamWriter.cs" />
     <Compile Include="Classes\ProcessFinder.cs" />
     <Compile Include="Classes\Delete.cs" />

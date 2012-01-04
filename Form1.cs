@@ -86,8 +86,7 @@ namespace MadCow
             RepoList(); //Loads Repos from RepoList.txt
             Changelog(); //Loads Changelog comobox values.
             LoadLastUsedProfile(); //We try to Load the last used profile by the user.
-            loadTrayMenu();//Loading the contextMenu for trayIcon
-            
+            loadTrayMenu();//Loading the contextMenu for trayIcon          
         }
 
         ///////////////////////////////////////////////////////////
@@ -206,6 +205,9 @@ namespace MadCow
                         RepoListAdd();
                         RepoListUpdate();
                         ChangelogListUpdate();
+                        FindBranch.findBrach(comboBox1.Text);
+                        label10.Visible = false;
+                        BranchComboBox.Visible = true;
                         }));
                     }
                 }
@@ -567,6 +569,7 @@ namespace MadCow
             {
                 label1.Text = "Update in " + Tick + " minutes.";
                 timer1.Start();
+                BranchComboBox.Enabled = false;
                 AutoUpdateValue.Enabled = false;
                 comboBox1.Enabled = false;
                 ValidateRepoButton.Enabled = false;
@@ -578,6 +581,7 @@ namespace MadCow
             {
                 timer1.Stop();
                 label1.Text = " ";
+                BranchComboBox.Enabled = true;
                 AutoUpdateValue.Enabled = true;
                 comboBox1.Enabled = true;
                 ValidateRepoButton.Enabled = true;
@@ -687,10 +691,12 @@ namespace MadCow
         /////////////////////////////////
         //DOWNLOAD SOURCE FROM REPOSITORY
         /////////////////////////////////
-
+        public static String selectedBranch;
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {     
-            Uri url = new Uri(ParseRevision.revisionUrl + "/zipball/master");
+        {   
+            //We get the selected branch first.
+            BranchComboBox.Invoke(new Action(() => { selectedBranch = BranchComboBox.SelectedItem.ToString(); }));
+            Uri url = new Uri(ParseRevision.revisionUrl + "/zipball/" + selectedBranch);
             System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
             System.Net.HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse();
             response.Close();
@@ -704,7 +710,7 @@ namespace MadCow
             using (System.Net.WebClient client = new System.Net.WebClient())
             {
             // Open the file at the remote path.
-            using (System.IO.Stream streamRemote = client.OpenRead(new Uri(ParseRevision.revisionUrl + "/zipball/master")))
+            using (System.IO.Stream streamRemote = client.OpenRead(new Uri(ParseRevision.revisionUrl + "/zipball/" + selectedBranch)))
             {
             // We write those files into the file system.
                  using (Stream streamLocal = new FileStream(Program.programPath + "/Repositories/Mooege.zip", FileMode.Create, FileAccess.Write, FileShare.None))
@@ -808,7 +814,8 @@ namespace MadCow
                     int CurrentD3VersionSupported = Convert.ToInt32(MooegeVersion);
                     int LocalD3Version = d3Version.FilePrivatePart;
 
-                    if (LocalD3Version == CurrentD3VersionSupported)
+                    //DISABLED MATCHING CLIENT VERSIONS FOR NOW.
+                    if (LocalD3Version == CurrentD3VersionSupported || LocalD3Version != CurrentD3VersionSupported)
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("Found the correct Mooege supported version of Diablo III [" + CurrentD3VersionSupported + "]");
@@ -825,7 +832,7 @@ namespace MadCow
                         ));
                     }
                     //If the versions missmatch:
-                    else if (LocalD3Version != CurrentD3VersionSupported)
+                    /*else if (LocalD3Version != CurrentD3VersionSupported)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Wrong client version FOUND!");
@@ -842,7 +849,7 @@ namespace MadCow
                             CopyMPQButton.Enabled = false;
                         }
                         ));
-                    }
+                    }*/
                 }
                 else //If User removed or changed D3 exe location that was already saved in madcow path, we set madcow.ini paths to default again.
                 {
@@ -1180,6 +1187,8 @@ namespace MadCow
         private void comboBox1_TextChanged(object sender, EventArgs e)
         {
             string currentText = ParseRevision.commitFile;
+            BranchComboBox.Visible = false;
+            label10.Visible = true;
             UpdateMooegeButton.Enabled = false;
             AutoUpdateValue.Enabled = false; //If user is typing a new URL Update and Autoupdate
             EnableAutoUpdateBox.Enabled = false;      //Functions gets disabled
@@ -1328,11 +1337,13 @@ namespace MadCow
                                "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7728.MPQ",
                                "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7841.MPQ",
                                "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7931.MPQ",
+                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-8059.MPQ",
+                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-8101.MPQ",
                                "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/ClientData.mpq",
                                "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/CoreData.mpq"};
 
             //Fixed path implementation for now.
-            String[] mpqDestination = { @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\", @"\MPQ\" };
+            String[] mpqDestination = { @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\", @"\MPQ\" };
 
             Stopwatch speedTimer = new Stopwatch();
             foreach (string value in mpqUrls)
@@ -1865,6 +1876,26 @@ namespace MadCow
         {
             Show();
             WindowState = FormWindowState.Normal;
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
+        // Branching:
+        // BranchComboBox Selected Index Change. We use this to update the revision ID that we need to properly find the folder and compile.
+        //////////////////////////////////////////////////////////////////////////////////////////
+        private void BranchComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BranchComboBox.Invoke(new Action(() => { selectedBranch = BranchComboBox.SelectedItem.ToString(); }));
+            WebClient client = new WebClient();
+            client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(BranchParse);
+            Uri uri = new Uri(comboBox1.Text + "/commits/" + selectedBranch + ".atom");
+            client.DownloadStringAsync(uri);
+        }
+
+        private void BranchParse(object sender, DownloadStringCompletedEventArgs e)
+        {
+            String result = e.Result.ToString();
+            Int32 pos2 = result.IndexOf("Commit/");
+            String revision = result.Substring(pos2 + 7, 7);
+            ParseRevision.lastRevision = result.Substring(pos2 + 7, 7);
         }
     }
 }

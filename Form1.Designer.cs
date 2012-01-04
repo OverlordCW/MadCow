@@ -77,6 +77,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.BranchComboBox = new System.Windows.Forms.ComboBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -654,6 +655,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.BranchComboBox);
             this.groupBox1.Controls.Add(this.comboBox1);
             this.groupBox1.Controls.Add(this.pictureBox2);
             this.groupBox1.Controls.Add(this.pictureBox1);
@@ -665,6 +667,17 @@
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Repository";
+            // 
+            // BranchComboBox
+            // 
+            this.BranchComboBox.FormattingEnabled = true;
+            this.BranchComboBox.Location = new System.Drawing.Point(7, 43);
+            this.BranchComboBox.Name = "BranchComboBox";
+            this.BranchComboBox.Size = new System.Drawing.Size(90, 21);
+            this.BranchComboBox.TabIndex = 18;
+            this.BranchComboBox.Visible = false;
+            this.BranchComboBox.SelectedIndexChanged += new System.EventHandler(this.BranchComboBox_SelectedIndexChanged);
+            this.BranchComboBox.SelectionChangeCommitted += new System.EventHandler(this.BranchComboBox_SelectedIndexChanged);
             // 
             // comboBox1
             // 
@@ -1174,7 +1187,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox MOTD;
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.ComponentModel.BackgroundWorker backgroundWorker2;
         private System.Windows.Forms.Button LoadProfile;
         private System.Windows.Forms.Button SaveProfile;
@@ -1208,6 +1220,8 @@
         public System.Windows.Forms.NotifyIcon notifyIcon1;
         public System.Windows.Forms.Button PlayDiabloButton;
         public System.Windows.Forms.Button CopyMPQButton;
+        public System.Windows.Forms.ComboBox BranchComboBox;
+        public System.Windows.Forms.ComboBox comboBox1;
 
     }
 }
