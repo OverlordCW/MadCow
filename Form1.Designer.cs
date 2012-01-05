@@ -77,6 +77,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.BranchComboBox = new System.Windows.Forms.ComboBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -120,7 +121,6 @@
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.textBox4 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -655,6 +655,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.BranchComboBox);
             this.groupBox1.Controls.Add(this.comboBox1);
             this.groupBox1.Controls.Add(this.pictureBox2);
             this.groupBox1.Controls.Add(this.pictureBox1);
@@ -666,6 +667,17 @@
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Repository";
+            // 
+            // BranchComboBox
+            // 
+            this.BranchComboBox.FormattingEnabled = true;
+            this.BranchComboBox.Location = new System.Drawing.Point(7, 43);
+            this.BranchComboBox.Name = "BranchComboBox";
+            this.BranchComboBox.Size = new System.Drawing.Size(90, 21);
+            this.BranchComboBox.TabIndex = 18;
+            this.BranchComboBox.Visible = false;
+            this.BranchComboBox.SelectedIndexChanged += new System.EventHandler(this.BranchComboBox_SelectedIndexChanged);
+            this.BranchComboBox.SelectionChangeCommitted += new System.EventHandler(this.BranchComboBox_SelectedIndexChanged);
             // 
             // comboBox1
             // 
@@ -836,7 +848,6 @@
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.textBox4);
             this.tabPage4.Controls.Add(this.DownloadFileSpeed);
             this.tabPage4.Controls.Add(this.DownloadingFileName);
             this.tabPage4.Controls.Add(this.DownloadMPQSprogressBar);
@@ -1061,15 +1072,6 @@
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
             // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(7, 293);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(332, 20);
-            this.textBox4.TabIndex = 11;
-            this.textBox4.Text = "https://raw.github.com/mooege/mooege/master/src/Mooege/Common/Versions/VersionInf" +
-                "o.cs";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1185,7 +1187,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox MOTD;
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.ComponentModel.BackgroundWorker backgroundWorker2;
         private System.Windows.Forms.Button LoadProfile;
         private System.Windows.Forms.Button SaveProfile;
@@ -1219,7 +1220,8 @@
         public System.Windows.Forms.NotifyIcon notifyIcon1;
         public System.Windows.Forms.Button PlayDiabloButton;
         public System.Windows.Forms.Button CopyMPQButton;
-        private System.Windows.Forms.TextBox textBox4;
+        public System.Windows.Forms.ComboBox BranchComboBox;
+        public System.Windows.Forms.ComboBox comboBox1;
 
     }
 }
