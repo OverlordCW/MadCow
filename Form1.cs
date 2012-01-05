@@ -683,7 +683,7 @@ namespace MadCow
            Tick--;
            if (Tick == 0)
            {
-                UpdateMooegeButton.PerformClick(); //Runs Update
+                UpdateMooege(); //Runs Update
                 Tick = (int)this.AutoUpdateValue.Value;
            }
            else
@@ -2032,7 +2032,9 @@ namespace MadCow
             ParseRevision.lastRevision = result.Substring(pos2 + 7, 7);
         }
 
-
+        ////////////////////////////////////////////////////////////////////////////////////////
+        // Shortcut Disabler
+        ////////////////////////////////////////////////////////////////////////////////////////
         private void button1_Click(object sender, EventArgs e)
         {
             if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
@@ -2067,6 +2069,9 @@ namespace MadCow
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////
+        // BalloonTips Disabler
+        ////////////////////////////////////////////////////////////////////////////////////////
         private void button2_Click(object sender, EventArgs e)
         {
             if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
