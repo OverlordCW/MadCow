@@ -134,6 +134,9 @@
     <Content Include="Resources\ShortcutCreator.vbs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="ServerProfiles\Do-Not-Save-As-Default.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Tools\RepoList.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
