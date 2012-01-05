@@ -683,7 +683,7 @@ namespace MadCow
            Tick--;
            if (Tick == 0)
            {
-                UpdateMooege(); //Runs Update
+                UpdateMooege(); //Runs Update //This was changed in the previous commit.
                 Tick = (int)this.AutoUpdateValue.Value;
            }
            else
