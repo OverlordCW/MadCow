@@ -26,13 +26,25 @@ namespace MadCow
         //Global used variables.
         public static String programPath = System.IO.Directory.GetCurrentDirectory();
         public static String desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        
+        static System.Threading.Mutex s_mutex = null;
+
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            bool instantiated;
+
+            s_mutex = new System.Threading.Mutex(false, "Binglong.My.Application.Mutex", out instantiated);
+
+            if (instantiated)
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new Form1());
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("MadCow is already open.");
+            }
         }
     }
 }

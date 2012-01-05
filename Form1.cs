@@ -790,7 +790,7 @@ namespace MadCow
             {
                 WebClient client = new WebClient();
                 client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(Checkversions);
-                Uri uri = new Uri(textBox4.Text);
+                Uri uri = new Uri("https://raw.github.com/mooege/mooege/master/src/Mooege/Common/Versions/VersionInfo.cs");
                 client.DownloadStringAsync(uri);
             }
             catch
@@ -1666,9 +1666,9 @@ namespace MadCow
 
             while (line != null)
             {
-                string s = line.Replace("https://github.com/", "");
-                string d = s.Replace("/mooege", "");
-                string e = d.Replace("/d3sharp", "");
+                string s = line.Replace(@"https://github.com/", "");
+                string d = s.Replace(@"/mooege", "");
+                string e = d.Replace(@"/d3sharp", "");
                 comboBox2.Items.Add(e);
                 line = sr.ReadLine();
             }
@@ -1683,9 +1683,9 @@ namespace MadCow
             string line = sr.ReadLine();
             while (line != null)
             {
-                string s = line.Replace("https://github.com/", "");
-                string d = s.Replace("/mooege", "");
-                string e = d.Replace("/d3sharp", "");
+                string s = line.Replace(@"https://github.com/", "");
+                string d = s.Replace(@"/mooege", "");
+                string e = d.Replace(@"/d3sharp", "");
                 comboBox2.Items.Add(e);
                 line = sr.ReadLine();
             }
@@ -1709,7 +1709,7 @@ namespace MadCow
                         {
                             var regex = new Regex("<title>(.*)</title>");
                             var match = regex.Match(line);
-                            textBox1.Invoke(new Action(() => { textBox1.AppendText(i + ".-" +match.Groups[1].Value + "\n"); }));
+                            textBox1.Invoke(new Action(() => { textBox1.AppendText(i + @".-" +match.Groups[1].Value + "\n"); }));
                             i++;
                         }
                         else if (System.Text.RegularExpressions.Regex.IsMatch(line, "<title>") && i == 0)
@@ -1722,7 +1722,7 @@ namespace MadCow
                         {
                             var regex = new Regex("<updated>(.*)</updated>");
                             var match = regex.Match(line);
-                            textBox1.Invoke(new Action(() => { textBox1.AppendText("Updated: " + match.Groups[1].Value + "\n"); }));
+                            textBox1.Invoke(new Action(() => { textBox1.AppendText(@"Updated: " + match.Groups[1].Value + "\n"); }));
                         }
 
                         //For inside commit comment. (Failed badly!)
@@ -1744,7 +1744,7 @@ namespace MadCow
                         {
                             var regex = new Regex("<name>(.*)</name>");
                             var match = regex.Match(line);
-                            textBox1.Invoke(new Action(() => { textBox1.AppendText("Author: " + match.Groups[1].Value + "\n");
+                            textBox1.Invoke(new Action(() => { textBox1.AppendText(@"Author: " + match.Groups[1].Value + "\n");
                             textBox1.AppendText(Environment.NewLine);
                             }));
                         }
@@ -1764,7 +1764,7 @@ namespace MadCow
             try
             {
                 WebClient client = new WebClient();
-                client.DownloadFileAsync(new Uri(selectedRepo + "/commits/master.atom"), @"Commits.atom");
+                client.DownloadFileAsync(new Uri(selectedRepo + @"/commits/master.atom"), @"Commits.atom");
                 client.DownloadFileCompleted += new AsyncCompletedEventHandler(DisplayChangelog);
             }
             catch
@@ -1896,6 +1896,41 @@ namespace MadCow
             Int32 pos2 = result.IndexOf("Commit/");
             String revision = result.Substring(pos2 + 7, 7);
             ParseRevision.lastRevision = result.Substring(pos2 + 7, 7);
+        }
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+            {
+                try
+                {
+                    IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                    String Src = source.Configs["ShortCut"].Get("Shortcut");
+
+                    if (Src.Contains("1"))
+                    {
+                        source.Configs["ShortCut"].Set("Shortcut", 0);
+                        source.Save();
+                        label9.ResetText();
+                        label9.Text = "Disabled";
+                        label9.ForeColor = Color.DimGray;
+                    }
+                    else
+                    {
+                        source.Configs["ShortCut"].Set("Shortcut", 1);
+                        source.Save();
+                        label9.ResetText();
+                        label9.Text = "Enabled";
+                        label9.ForeColor = Color.SeaGreen;
+                    }
+                }
+                catch (Exception Ex)
+                {
+                    Console.WriteLine("Something failed while trying to verify D3 Version or Writting INI");
+                    Console.WriteLine(Ex);
+                }
+            }
         }
     }
 }

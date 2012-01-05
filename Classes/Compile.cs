@@ -130,29 +130,37 @@ namespace MadCow
 
         static public void WriteVbsPath()
         {
-
-            File.Copy(Program.programPath + "\\Resources\\ShortcutCreator.vbs", Program.programPath + "\\Tools\\ShortcutCreator.vbs", true);
-
-            String vbsPath = (Program.programPath + "\\Tools\\ShortcutCreator.vbs");
-            StreamReader reader = new StreamReader(vbsPath);
-            string content = reader.ReadToEnd();
-            reader.Close();
-
-
-            content = Regex.Replace(content, "MODIFY", Program.programPath + @"\MadCow2011.exe");
-            content = Regex.Replace(content, "WESKO", Program.programPath);
-            StreamWriter writer = new StreamWriter(vbsPath);
-            writer.Write(content);
-            writer.Close();
-
-            //Creates shortcut
-            if (File.Exists(Program.desktopPath + "\\MadCow.lnk"))
+            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+            String Src = source.Configs["ShortCut"].Get("Shortcut");
+            if (Src.Contains("1"))
             {
-                File.Delete(Program.desktopPath + "\\MadCow.lnk");
-                System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
+                File.Copy(Program.programPath + "\\Resources\\ShortcutCreator.vbs", Program.programPath + "\\Tools\\ShortcutCreator.vbs", true);
+
+                String vbsPath = (Program.programPath + "\\Tools\\ShortcutCreator.vbs");
+                StreamReader reader = new StreamReader(vbsPath);
+                string content = reader.ReadToEnd();
+                reader.Close();
+
+
+                content = Regex.Replace(content, "MODIFY", Program.programPath + @"\MadCow2011.exe");
+                content = Regex.Replace(content, "WESKO", Program.programPath);
+                StreamWriter writer = new StreamWriter(vbsPath);
+                writer.Write(content);
+                writer.Close();
+
+                //Creates shortcut
+                if (File.Exists(Program.desktopPath + "\\MadCow.lnk"))
+                {
+                    File.Delete(Program.desktopPath + "\\MadCow.lnk");
+                    System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
+                }
+                else
+                    System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
             }
             else
-                System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
+            {
+                //don't create a shortcut
+            }
         }
     }
 }
