@@ -86,7 +86,41 @@ namespace MadCow
             RepoList(); //Loads Repos from RepoList.txt
             Changelog(); //Loads Changelog comobox values.
             LoadLastUsedProfile(); //We try to Load the last used profile by the user.
-            loadTrayMenu();//Loading the contextMenu for trayIcon          
+            loadTrayMenu();//Loading the contextMenu for trayIcon    
+            if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+            {
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                String Src = source.Configs["Balloons"].Get("ShowBalloons");
+
+                label21.ResetText();
+
+                if (Src.Contains("1"))
+                {
+                    label21.Text = "Enabled";
+                    label21.ForeColor = Color.SeaGreen;
+                }
+                else
+                {
+                    label21.Text = "Disabled";
+                    label21.ForeColor = Color.DimGray;
+                }
+
+                IConfigSource ShortCutsource = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                String ShrtCtSrc = source.Configs["ShortCut"].Get("Shortcut");
+
+                label9.ResetText();
+
+                if (ShrtCtSrc.Contains("1"))
+                {
+                    label9.Text = "Enabled";
+                    label9.ForeColor = Color.SeaGreen;
+                }
+                else
+                {
+                    label9.Text = "Disabled";
+                    label9.ForeColor = Color.DimGray;
+                }
+            }
         }
 
         ///////////////////////////////////////////////////////////
