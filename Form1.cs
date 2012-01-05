@@ -242,14 +242,32 @@ namespace MadCow
                 if (EnableAutoUpdateBox.Checked == true) //Using AutoUpdate:
                 {
                     Console.WriteLine("You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision);
-                    notifyIcon1.ShowBalloonTip(1000, "MadCow", "You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision, ToolTipIcon.Info);
+                    if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+                    {
+                        IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                        String Src = source.Configs["Balloons"].Get("ShowBalloons");
+
+                        if (Src.Contains("1"))
+                        {
+                            notifyIcon1.ShowBalloonTip(1000, "MadCow", "You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision, ToolTipIcon.Info);
+                        }
+                    }
                     Tick = (int)this.AutoUpdateValue.Value;
                     label1.Text = "Update in " + Tick + " minutes.";
                 }
                 else //With out AutoUpdate:
                 {
                     Console.WriteLine("You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision);
-                    notifyIcon1.ShowBalloonTip(1000, "MadCow", "You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision, ToolTipIcon.Info);
+                    if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+                    {
+                        IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                        String Src = source.Configs["Balloons"].Get("ShowBalloons");
+
+                        if (Src.Contains("1"))
+                        {
+                            notifyIcon1.ShowBalloonTip(1000, "MadCow", "You have latest [" + ParseRevision.developerName + "] revision: " + ParseRevision.lastRevision, ToolTipIcon.Info);
+                        }
+                    }
                 }
             }
 
@@ -262,7 +280,16 @@ namespace MadCow
                     DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
                     UpdateMooegeButton.Enabled = false;
                     Console.WriteLine("Downloading...");
-                    Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Downloading...", ToolTipIcon.Info);
+                    if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+                    {
+                        IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                        String Src = source.Configs["Balloons"].Get("ShowBalloons");
+
+                        if (Src.Contains("1"))
+                        {
+                            Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Downloading...", ToolTipIcon.Info);
+                        }
+                    }
                     backgroundWorker1.RunWorkerAsync();
                 }
                 else //With out AutoUpdate:
@@ -271,7 +298,16 @@ namespace MadCow
                     DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
                     UpdateMooegeButton.Enabled = false;
                     Console.WriteLine("Downloading...");
-                    Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Downloading...", ToolTipIcon.Info);
+                    if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+                    {
+                        IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                        String Src = source.Configs["Balloons"].Get("ShowBalloons");
+
+                        if (Src.Contains("1"))
+                        {
+                            Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Downloading...", ToolTipIcon.Info);
+                        }
+                    }
                     backgroundWorker1.RunWorkerAsync();
                 }
             }
@@ -283,7 +319,16 @@ namespace MadCow
                     timer1.Stop();
                     DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
                     Console.WriteLine("Downloading...");
-                    Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Downloading...", ToolTipIcon.Info);
+                    if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+                    {
+                        IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                        String Src = source.Configs["Balloons"].Get("ShowBalloons");
+
+                        if (Src.Contains("1"))
+                        {
+                            Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Downloading...", ToolTipIcon.Info);
+                        }
+                    }
                     Directory.CreateDirectory(Program.programPath + "/MPQ");
                     UpdateMooegeButton.Enabled = false;
                     backgroundWorker1.RunWorkerAsync();
@@ -292,7 +337,16 @@ namespace MadCow
                 {
                     DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
                     Console.WriteLine("Downloading...");
-                    Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Downloading...", ToolTipIcon.Info);
+                    if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+                    {
+                        IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                        String Src = source.Configs["Balloons"].Get("ShowBalloons");
+
+                        if (Src.Contains("1"))
+                        {
+                            Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Downloading...", ToolTipIcon.Info);
+                        }
+                    }
                     Directory.CreateDirectory(Program.programPath + "/MPQ");
                     UpdateMooegeButton.Enabled = false;
                     backgroundWorker1.RunWorkerAsync();
@@ -756,7 +810,16 @@ namespace MadCow
         {
             //We reset progressbar value after finishing.
             Console.WriteLine("Download Complete!");
-            Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Download Complete!", ToolTipIcon.Info);
+            if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+            {
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                String Src = source.Configs["Balloons"].Get("ShowBalloons");
+
+                if (Src.Contains("1"))
+                {
+                    Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Download Complete!", ToolTipIcon.Info);
+                }
+            }
             progressBar2.Value = 0;
             progressBar2.Update();
             generalProgressBar.PerformStep();
@@ -1139,43 +1202,53 @@ namespace MadCow
 
         public void LoadLastUsedProfile()
         {
-            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
-            String currentProfile = source.Configs["Profiles"].Get("Profile");
-
-            if (currentProfile.Length > 0)
+           
+            try
             {
-                TextReader tr = new StreamReader(currentProfile);
-                this.BnetServerIp.Text = tr.ReadLine();
-                this.GameServerIp.Text = tr.ReadLine();
-                this.PublicServerIp.Text = tr.ReadLine();
-                this.BnetServerPort.Text = tr.ReadLine();
-                this.GameServerPort.Text = tr.ReadLine();
-                this.MOTD.Text = tr.ReadLine();
-                if (tr.ReadLine().Contains("True"))
-                {
-                    this.NATcheckBox.Checked = true;
-                }
-                else
-                {
-                    this.NATcheckBox.Checked = false;
-                }
-                tr.Close();
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                String currentProfile = source.Configs["Profiles"].Get("Profile");
 
-                //Loading a profile means it has the correct values for every box, so first we disable every red cross that might be out there.
-                this.ErrorBnetServerIp.Visible = false;
-                this.ErrorBnetServerPort.Visible = false;
-                this.ErrorGameServerIp.Visible = false;
-                this.ErrorGameServerPort.Visible = false;
-                this.ErrorGameServerPort.Visible = false;
-                this.ErrorPublicServerIp.Visible = false;
-                //Loading a profile means it has the correct values for every box, so we change everything to green ticked.
-                this.TickBnetServerIP.Visible = true;
-                this.TickBnetServerPort.Visible = true;
-                this.TickGameServerIp.Visible = true;
-                this.TickGameServerPort.Visible = true;
-                this.TickGameServerPort.Visible = true;
-                this.TickPublicServerIp.Visible = true;
-                Console.WriteLine("Loaded last used Server profile succesfully");
+                if (currentProfile.Length > 0)
+                {
+                    TextReader tr = new StreamReader(currentProfile);
+                    this.BnetServerIp.Text = tr.ReadLine();
+                    this.GameServerIp.Text = tr.ReadLine();
+                    this.PublicServerIp.Text = tr.ReadLine();
+                    this.BnetServerPort.Text = tr.ReadLine();
+                    this.GameServerPort.Text = tr.ReadLine();
+                    this.MOTD.Text = tr.ReadLine();
+                    if (tr.ReadLine().Contains("True"))
+                    {
+                        this.NATcheckBox.Checked = true;
+                    }
+                    else
+                    {
+                        this.NATcheckBox.Checked = false;
+                    }
+                    tr.Close();
+
+                    //Loading a profile means it has the correct values for every box, so first we disable every red cross that might be out there.
+                    this.ErrorBnetServerIp.Visible = false;
+                    this.ErrorBnetServerPort.Visible = false;
+                    this.ErrorGameServerIp.Visible = false;
+                    this.ErrorGameServerPort.Visible = false;
+                    this.ErrorGameServerPort.Visible = false;
+                    this.ErrorPublicServerIp.Visible = false;
+                    //Loading a profile means it has the correct values for every box, so we change everything to green ticked.
+                    this.TickBnetServerIP.Visible = true;
+                    this.TickBnetServerPort.Visible = true;
+                    this.TickGameServerIp.Visible = true;
+                    this.TickGameServerPort.Visible = true;
+                    this.TickGameServerPort.Visible = true;
+                    this.TickPublicServerIp.Visible = true;
+                    Console.WriteLine("Loaded last used Server profile succesfully");
+                }
+            }
+            catch
+            {
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                source.Configs["Profiles"].Set("Profile", Program.programPath + @"\ServerProfiles\Default.mdc");
+                source.Save();
             }
         }
 
@@ -1840,17 +1913,35 @@ namespace MadCow
                 UpdateMooege();
             }
             else
-                notifyIcon1.ShowBalloonTip(1000, "MadCow", "You must select and validate a repository first!", ToolTipIcon.Info);
+                if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+                {
+                    IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                    String Src = source.Configs["Balloons"].Get("ShowBalloons");
+
+                    if (Src.Contains("1"))
+                    {
+                        notifyIcon1.ShowBalloonTip(1000, "MadCow", "You must select and validate a repository first!", ToolTipIcon.Info);
+                    }
+                }
         }
         private void Form1_Resize(object sender, EventArgs e)
         {
             if (FormWindowState.Minimized == WindowState)
             {
                 Hide();
-                if (notifyCount < 1) //This is to avoid displaying this Balloon everytime the user minimize, it will only show first time.
+                if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
                 {
-                    notifyIcon1.ShowBalloonTip(1000, "MadCow", "MadCow will continue running minimized.", ToolTipIcon.Info);
-                    notifyCount++;
+                    IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                    String Src = source.Configs["Balloons"].Get("ShowBalloons");
+
+                    if (Src.Contains("1"))
+                    {
+                        if (notifyCount < 1) //This is to avoid displaying this Balloon everytime the user minimize, it will only show first time.
+                        {
+                            notifyIcon1.ShowBalloonTip(1000, "MadCow", "MadCow will continue running minimized.", ToolTipIcon.Info);
+                            notifyCount++;
+                        }
+                    }
                 }
             }
         }
@@ -1866,10 +1957,19 @@ namespace MadCow
         protected void Hide_Click(Object sender, System.EventArgs e)
         {
             Hide();
-            if (notifyCount < 1) //This is to avoid displaying this Balloon everytime the user minimize, it will only show first time.
+            if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
             {
-                notifyIcon1.ShowBalloonTip(1000, "MadCow", "MadCow will continue running minimized.", ToolTipIcon.Info);
-                notifyCount++;
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                String Src = source.Configs["Balloons"].Get("ShowBalloons");
+
+                if (Src.Contains("1"))
+                {
+                    if (notifyCount < 1) //This is to avoid displaying this Balloon everytime the user minimize, it will only show first time.
+                    {
+                        notifyIcon1.ShowBalloonTip(1000, "MadCow", "MadCow will continue running minimized.", ToolTipIcon.Info);
+                        notifyCount++;
+                    }
+                }
             }
         }
         protected void Show_Click(Object sender, System.EventArgs e)
@@ -1923,6 +2023,40 @@ namespace MadCow
                         label9.ResetText();
                         label9.Text = "Enabled";
                         label9.ForeColor = Color.SeaGreen;
+                    }
+                }
+                catch (Exception Ex)
+                {
+                    Console.WriteLine("Something failed while trying to verify D3 Version or Writting INI");
+                    Console.WriteLine(Ex);
+                }
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+            {
+                try
+                {
+                    IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                    String Src = source.Configs["Balloons"].Get("ShowBalloons");
+
+                    if (Src.Contains("1"))
+                    {
+                        source.Configs["Balloons"].Set("ShowBalloons", 0);
+                        source.Save();
+                        label21.ResetText();
+                        label21.Text = "Disabled";
+                        label21.ForeColor = Color.DimGray;
+                    }
+                    else
+                    {
+                        source.Configs["Balloons"].Set("ShowBalloons", 1);
+                        source.Save();
+                        label21.ResetText();
+                        label21.Text = "Enabled";
+                        label21.ForeColor = Color.SeaGreen;
                     }
                 }
                 catch (Exception Ex)

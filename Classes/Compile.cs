@@ -52,7 +52,16 @@ namespace MadCow
                 proc.Start();
                 proc.WaitForExit();
                 Console.WriteLine("Compiling newest [" + ParseRevision.developerName + "] Mooege source Complete");
-                Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Compiling Complete!", ToolTipIcon.Info);
+                if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+                {
+                    IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                    String Src = source.Configs["Balloons"].Get("ShowBalloons");
+
+                    if (Src.Contains("1"))
+                    {
+                        Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Compiling Complete!", ToolTipIcon.Info);
+                    }
+                }
             }
             catch (Exception e)
             {
