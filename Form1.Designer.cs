@@ -1293,11 +1293,11 @@
         public System.Windows.Forms.ComboBox BranchComboBox;
         public System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label19;
+        public System.Windows.Forms.Label label9;
+        public System.Windows.Forms.Label label21;
 
     }
 }
