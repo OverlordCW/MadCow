@@ -1397,7 +1397,14 @@ namespace MadCow
         ////////////////////////////////////////////////////////////////////////
         private void DownloadMPQSButton_Click(object sender, EventArgs e)
         {
-            backgroundWorker3.RunWorkerAsync();
+            System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(MPQThread));
+            t.Start(); 
+            //backgroundWorker3.RunWorkerAsync();
+        }
+
+        private void MPQThread()
+        {
+            Application.Run(new MPQDownloader());
         }
 
         private void DownloadMPQS(object sender, DoWorkEventArgs e)
