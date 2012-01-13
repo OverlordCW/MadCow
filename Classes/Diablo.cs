@@ -21,6 +21,7 @@ using System.Text;
 using System.Diagnostics;
 using System.Threading;
 using Nini.Config;
+using System.IO;
 
 namespace MadCow
 {
@@ -33,23 +34,31 @@ namespace MadCow
             
             if (ProcessFinder.FindProcess("Mooege") == false)
             {
-                Console.WriteLine("Starting Mooege..");
-                Process Mooege = new Process();
-                Mooege.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
-                Mooege.Start();
-                Thread.Sleep(2000);
-                if (ErrorFinder.SearchLogs("Fatal") == true)
+                if (File.Exists(Compile.currentMooegeExePath))
                 {
-                    Console.WriteLine("Closing Mooege due Fatal Exception");
-                    ProcessFinder.KillProcess("Mooege");
+                    Console.WriteLine("Starting Mooege..");
+                    Process Mooege = new Process();
+                    Mooege.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
+                    Mooege.Start();
+                    Thread.Sleep(2000);
+                    if (ErrorFinder.SearchLogs("Fatal") == true)
+                    {
+                        Console.WriteLine("Closing Mooege due Fatal Exception");
+                        ProcessFinder.KillProcess("Mooege");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Starting Diablo..");
+                        Process Diablo3 = new Process();
+                        Diablo3.StartInfo = new ProcessStartInfo(Src);
+                        Diablo3.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
+                        Diablo3.Start();
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Starting Diablo..");
-                    Process Diablo3 = new Process();
-                    Diablo3.StartInfo = new ProcessStartInfo(Src);
-                    Diablo3.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
-                    Diablo3.Start();
+                    Console.WriteLine("[Error] Couldn't find selected repository binaries."
+                    + "\nTry updating the repository again.");
                 }
             }
             else //If Mooege is running we kill it and start it again.
