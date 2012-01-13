@@ -63,7 +63,15 @@ namespace MadCow
             Console.SetOut(_writer);
             Console.WriteLine("Welcome to MadCow!");
             ToolTip toolTip1 = new ToolTip();
-            Compile.WriteVbsPath();
+            if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+            {
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                String Src = source.Configs["ShortCut"].Get("Shortcut");
+                if (Src.Contains("1"))
+                {
+                    ShortCut.Create();
+                }
+            }
             // Set up the delays for the ToolTip.
             toolTip1.AutoPopDelay = 1800;
             toolTip1.InitialDelay = 100;

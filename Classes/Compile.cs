@@ -137,7 +137,7 @@ namespace MadCow
             writer.Close();
         }
 
-        static public void WriteVbsPath()
+        /*static public void WriteVbsPath()
         {
             IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
             String Src = source.Configs["ShortCut"].Get("Shortcut");
@@ -170,6 +170,6 @@ namespace MadCow
             {
                 //don't create a shortcut
             }
-        }
+        }*/
     }
 }
