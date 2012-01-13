@@ -96,6 +96,12 @@
             this.generalProgressBar = new System.Windows.Forms.ProgressBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.DownloadFileSpeed = new System.Windows.Forms.Label();
             this.DownloadingFileName = new System.Windows.Forms.Label();
             this.DownloadMPQSprogressBar = new System.Windows.Forms.ProgressBar();
@@ -848,6 +854,12 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.label21);
+            this.tabPage4.Controls.Add(this.label20);
+            this.tabPage4.Controls.Add(this.button2);
+            this.tabPage4.Controls.Add(this.label19);
+            this.tabPage4.Controls.Add(this.label9);
+            this.tabPage4.Controls.Add(this.button1);
             this.tabPage4.Controls.Add(this.DownloadFileSpeed);
             this.tabPage4.Controls.Add(this.DownloadingFileName);
             this.tabPage4.Controls.Add(this.DownloadMPQSprogressBar);
@@ -862,6 +874,64 @@
             this.tabPage4.TabIndex = 4;
             this.tabPage4.Text = "Help";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.ForeColor = System.Drawing.Color.SeaGreen;
+            this.label21.Location = new System.Drawing.Point(254, 271);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(0, 16);
+            this.label21.TabIndex = 17;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(22, 286);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(198, 13);
+            this.label20.TabIndex = 16;
+            this.label20.Text = "Enable or Disable Balloon Tips from Tray";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(248, 281);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 15;
+            this.button2.Text = "BalloonTips";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(23, 241);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(133, 13);
+            this.label19.TabIndex = 14;
+            this.label19.Text = "Enable or Disable Shortcut";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.Color.SeaGreen;
+            this.label9.Location = new System.Drawing.Point(254, 222);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(0, 16);
+            this.label9.TabIndex = 13;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(248, 236);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "ShortCut";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // DownloadFileSpeed
             // 
@@ -1222,6 +1292,12 @@
         public System.Windows.Forms.Button CopyMPQButton;
         public System.Windows.Forms.ComboBox BranchComboBox;
         public System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label19;
+        public System.Windows.Forms.Label label9;
+        public System.Windows.Forms.Label label21;
 
     }
 }
