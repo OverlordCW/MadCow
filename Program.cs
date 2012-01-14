@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.IO;
 
 namespace MadCow
 {
@@ -24,7 +25,7 @@ namespace MadCow
     class Program
     {
         //Global used variables.
-        public static String programPath = System.IO.Directory.GetCurrentDirectory();
+        public static String programPath = Path.GetDirectoryName(Application.ExecutablePath);
         public static String desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         static System.Threading.Mutex s_mutex = null;
 

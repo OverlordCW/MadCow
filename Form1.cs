@@ -1212,8 +1212,7 @@ namespace MadCow
         }
 
         public void LoadLastUsedProfile()
-        {
-           
+        {        
             try
             {
                 IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
@@ -1257,9 +1256,7 @@ namespace MadCow
             }
             catch
             {
-                IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
-                source.Configs["Profiles"].Set("Profile", Program.programPath + @"\ServerProfiles\Default.mdc");
-                source.Save();
+                Console.WriteLine("[Error] While loading server profile.");
             }
         }
 
@@ -1806,20 +1803,6 @@ namespace MadCow
                             var match = regex.Match(line);
                             textBox1.Invoke(new Action(() => { textBox1.AppendText(@"Updated: " + match.Groups[1].Value + "\n"); }));
                         }
-
-                        //For inside commit comment. (Failed badly!)
-                        /*if (System.Text.RegularExpressions.Regex.IsMatch(line, "81ex'>") && i > 0)
-                        {
-                            //Console.WriteLine(line.StartsWith("</content>");
-                            var regex = new Regex("81ex'>(.*)");
-                            var match = regex.Match(line);
-                            while (line.ToString().Contains("&lt;/pre>") == false)
-                            {
-                                Console.WriteLine(line);
-                                textBox1.Invoke(new Action(() => { textBox1.AppendText("Comment: [" + match.Groups[1].Value + "]\n"); }));
-                                line = reader.ReadLine();
-                            }
-                        }*/
 
                         //For developer that pushed.
                         if (System.Text.RegularExpressions.Regex.IsMatch(line, "<name>") && i > 0)
