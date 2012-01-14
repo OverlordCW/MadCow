@@ -87,5 +87,12 @@ namespace MadCow.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        public static System.Drawing.Bitmap process_chain {
+            get {
+                object obj = ResourceManager.GetObject("process_chain", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

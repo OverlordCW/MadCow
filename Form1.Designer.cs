@@ -75,8 +75,10 @@
             this.BnetServerPort = new System.Windows.Forms.TextBox();
             this.BnetServerIp = new System.Windows.Forms.TextBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label25 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label24 = new System.Windows.Forms.Label();
             this.BranchComboBox = new System.Windows.Forms.ComboBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -96,6 +98,9 @@
             this.generalProgressBar = new System.Windows.Forms.ProgressBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
             this.label23 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.label22 = new System.Windows.Forms.Label();
@@ -130,8 +135,7 @@
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.label24 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
+            this.chain = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -162,6 +166,7 @@
             this.tabControl2.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chain)).BeginInit();
             this.SuspendLayout();
             // 
             // EnableAutoUpdateBox
@@ -212,7 +217,7 @@
             // 
             // LaunchServerButton
             // 
-            this.LaunchServerButton.Location = new System.Drawing.Point(6, 268);
+            this.LaunchServerButton.Location = new System.Drawing.Point(6, 279);
             this.LaunchServerButton.Name = "LaunchServerButton";
             this.LaunchServerButton.Size = new System.Drawing.Size(327, 43);
             this.LaunchServerButton.TabIndex = 9;
@@ -379,7 +384,7 @@
             this.groupBox5.Controls.Add(this.BnetServerIp);
             this.groupBox5.Location = new System.Drawing.Point(3, 6);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(339, 311);
+            this.groupBox5.Size = new System.Drawing.Size(339, 325);
             this.groupBox5.TabIndex = 1;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Server Configuration";
@@ -488,7 +493,7 @@
             // 
             this.LoadProfile.Location = new System.Drawing.Point(109, 220);
             this.LoadProfile.Name = "LoadProfile";
-            this.LoadProfile.Size = new System.Drawing.Size(75, 23);
+            this.LoadProfile.Size = new System.Drawing.Size(75, 42);
             this.LoadProfile.TabIndex = 15;
             this.LoadProfile.Text = "Load Profile";
             this.LoadProfile.UseVisualStyleBackColor = true;
@@ -498,7 +503,7 @@
             // 
             this.SaveProfile.Location = new System.Drawing.Point(11, 220);
             this.SaveProfile.Name = "SaveProfile";
-            this.SaveProfile.Size = new System.Drawing.Size(75, 23);
+            this.SaveProfile.Size = new System.Drawing.Size(75, 42);
             this.SaveProfile.TabIndex = 14;
             this.SaveProfile.Text = "Save Profile";
             this.SaveProfile.UseVisualStyleBackColor = true;
@@ -656,6 +661,18 @@
             this.tabPage1.Text = "Updates";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label25.Location = new System.Drawing.Point(4, 270);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(335, 13);
+            this.label25.TabIndex = 19;
+            this.label25.Text = "Disable \"Remember Last Repository\" to view repo selection list again.";
+            this.toolTip1.SetToolTip(this.label25, "Help Tab -> Remember Last Repository");
+            this.label25.Visible = false;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -680,6 +697,18 @@
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Repository";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label24.Location = new System.Drawing.Point(103, 47);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(104, 13);
+            this.label24.TabIndex = 19;
+            this.label24.Text = "Branch Selection";
+            this.label24.Visible = false;
             // 
             // BranchComboBox
             // 
@@ -861,6 +890,10 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.chain);
+            this.tabPage4.Controls.Add(this.label27);
+            this.tabPage4.Controls.Add(this.label26);
+            this.tabPage4.Controls.Add(this.button4);
             this.tabPage4.Controls.Add(this.label23);
             this.tabPage4.Controls.Add(this.button3);
             this.tabPage4.Controls.Add(this.label22);
@@ -885,30 +918,59 @@
             this.tabPage4.Text = "Help";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.ForeColor = System.Drawing.Color.SeaGreen;
+            this.label27.Location = new System.Drawing.Point(274, 271);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(0, 13);
+            this.label27.TabIndex = 23;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(22, 271);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(83, 13);
+            this.label26.TabIndex = 22;
+            this.label26.Text = "Minimize to Tray";
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(179, 265);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 25);
+            this.button4.TabIndex = 21;
+            this.button4.Text = "On/Off";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // label23
             // 
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label23.ForeColor = System.Drawing.Color.SeaGreen;
-            this.label23.Location = new System.Drawing.Point(274, 271);
+            this.label23.Location = new System.Drawing.Point(274, 241);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(0, 13);
             this.label23.TabIndex = 20;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(179, 265);
+            this.button3.Location = new System.Drawing.Point(179, 235);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 25);
             this.button3.TabIndex = 19;
-            this.button3.Text = "Change";
+            this.button3.Text = "On/Off";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(22, 271);
+            this.label22.Location = new System.Drawing.Point(22, 241);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(134, 13);
             this.label22.TabIndex = 18;
@@ -939,14 +1001,14 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 15;
-            this.button2.Text = "Change";
+            this.button2.Text = "On/Off";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(22, 241);
+            this.label19.Location = new System.Drawing.Point(22, 211);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(106, 13);
             this.label19.TabIndex = 14;
@@ -957,18 +1019,18 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.SeaGreen;
-            this.label9.Location = new System.Drawing.Point(274, 241);
+            this.label9.Location = new System.Drawing.Point(274, 211);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(0, 13);
             this.label9.TabIndex = 13;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(179, 235);
+            this.button1.Location = new System.Drawing.Point(179, 205);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 25);
             this.button1.TabIndex = 12;
-            this.button1.Text = "Change";
+            this.button1.Text = "On/Off";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -1181,29 +1243,15 @@
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
             // 
-            // label24
+            // chain
             // 
-            this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label24.Location = new System.Drawing.Point(103, 47);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(104, 13);
-            this.label24.TabIndex = 19;
-            this.label24.Text = "Branch Selection";
-            this.label24.Visible = false;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label25.Location = new System.Drawing.Point(4, 270);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(335, 13);
-            this.label25.TabIndex = 19;
-            this.label25.Text = "Disable \"Remember Last Repository\" to view repo selection list again.";
-            this.toolTip1.SetToolTip(this.label25, "Help Tab -> Remember Last Repository");
-            this.label25.Visible = false;
+            this.chain.Image = global::MadCow.Properties.Resources.process_chain;
+            this.chain.Location = new System.Drawing.Point(292, 286);
+            this.chain.Name = "chain";
+            this.chain.Size = new System.Drawing.Size(18, 14);
+            this.chain.TabIndex = 24;
+            this.chain.TabStop = false;
+            this.chain.Visible = false;
             // 
             // Form1
             // 
@@ -1259,6 +1307,7 @@
             this.tabPage6.PerformLayout();
             this.tabPage7.ResumeLayout(false);
             this.tabPage7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chain)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1366,6 +1415,10 @@
         public System.Windows.Forms.Label label25;
         public System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
+        public System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.PictureBox chain;
 
     }
 }

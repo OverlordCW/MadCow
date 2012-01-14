@@ -144,6 +144,7 @@
     <Content Include="Repositories\ReposGoHere.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\process_chain.png" />
     <Content Include="ServerProfiles\Do-Not-Save-As-Default.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

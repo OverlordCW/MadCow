@@ -19,6 +19,7 @@ using System.IO;
 using Nini.Config;
 using Microsoft.Build.Evaluation;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MadCow
 {
@@ -44,12 +45,26 @@ namespace MadCow
             if (compileMooegeTask.Result == false)
                 Console.WriteLine("[Fatal] Failed to compile.");
             else
+            {
                 Console.WriteLine("Compiling Complete.");
+                if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+                {
+                    IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                    String Src = source.Configs["Balloons"].Get("ShowBalloons");
+                    if (Src.Contains("1")) { Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Compiling Complete!", ToolTipIcon.Info); }
+                }
+            }
         }
 
         private static bool CompileLibMooNet(string libmoonetPath)
         {
             Console.WriteLine("Compiling LibMoonet...");
+            if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+            {
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                String Src = source.Configs["Balloons"].Get("ShowBalloons");
+                if (Src.Contains("1")) { Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Compiling LibMoonet...", ToolTipIcon.Info); }
+            }
             var libmoonetProject = new Project(libmoonetPath);
             return libmoonetProject.Build(new Microsoft.Build.Logging.FileLogger());
         }
@@ -59,6 +74,12 @@ namespace MadCow
             if (LibMooNetStatus)
             {
                 Console.WriteLine("Compiling Mooege...");
+                if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+                {
+                    IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                    String Src = source.Configs["Balloons"].Get("ShowBalloons");
+                    if (Src.Contains("1")) { Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Compiling Mooege......", ToolTipIcon.Info); }
+                }
                 var mooegeProject = new Project(mooegePath);
                 return mooegeProject.Build(new Microsoft.Build.Logging.FileLogger());
             }

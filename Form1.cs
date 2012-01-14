@@ -95,7 +95,6 @@ namespace MadCow
             RepoList(); //Loads Repos from RepoList.txt
             Changelog(); //Loads Changelog comobox values.
             LoadLastUsedProfile(); //We try to Load the last used profile by the user.
-            loadTrayMenu();//Loading the contextMenu for trayIcon    
             Helper.Helpers();//Loads the correct nameplate for shortcut/balloon/LastRepo enabled/disabled
             TestMPQ.getfileList(); //Load MPQ list from Blizz server. Todo: This might slow down a bit MadCow loading, maybe we could place it somewhere else?.
         }
@@ -1943,20 +1942,24 @@ namespace MadCow
         }
         private void Form1_Resize(object sender, EventArgs e)
         {
+            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+            String Balloons = source.Configs["Balloons"].Get("ShowBalloons");
+            String TrayIcon = source.Configs["Tray"].Get("Enabled");
+
             if (FormWindowState.Minimized == WindowState)
             {
-                Hide();
-                if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+                if (TrayIcon.Contains("1"))
                 {
-                    IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
-                    String Src = source.Configs["Balloons"].Get("ShowBalloons");
-
-                    if (Src.Contains("1"))
+                    Hide();
+                    if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
                     {
-                        if (notifyCount < 1) //This is to avoid displaying this Balloon everytime the user minimize, it will only show first time.
+                        if (Balloons.Contains("1"))
                         {
-                            notifyIcon1.ShowBalloonTip(1000, "MadCow", "MadCow will continue running minimized.", ToolTipIcon.Info);
-                            notifyCount++;
+                            if (notifyCount < 1) //This is to avoid displaying this Balloon everytime the user minimize, it will only show first time.
+                            {
+                                notifyIcon1.ShowBalloonTip(1000, "MadCow", "MadCow will continue running minimized.", ToolTipIcon.Info);
+                                notifyCount++;
+                            }
                         }
                     }
                 }
@@ -2070,6 +2073,7 @@ namespace MadCow
                         label21.ResetText();
                         label21.Text = "Disabled";
                         label21.ForeColor = Color.DimGray;
+                        chain.Visible = false;
                     }
                     else
                     {
@@ -2078,6 +2082,13 @@ namespace MadCow
                         label21.ResetText();
                         label21.Text = "Enabled";
                         label21.ForeColor = Color.SeaGreen;
+                        //Tray Icon (We need Tray Icon Enabled)
+                        source.Configs["Tray"].Set("Enabled", 1);
+                        source.Save();
+                        label27.ResetText();
+                        label27.Text = "Enabled";
+                        label27.ForeColor = Color.SeaGreen;
+                        chain.Visible = true;
                     }
                 }
                 catch
@@ -2107,6 +2118,7 @@ namespace MadCow
                         label23.Text = "Disabled";
                         label23.ForeColor = Color.DimGray;
                         label25.Visible = false;
+                        chain.Visible = false;
                     }
                     else
                     {
@@ -2116,6 +2128,53 @@ namespace MadCow
                         label23.Text = "Enabled";
                         label23.ForeColor = Color.SeaGreen;
                         label25.Visible = true;
+                        chain.Visible = false;
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("[Error] At LastRepository Disabler.");
+                }
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+        // Tray Icon Disabler
+        ////////////////////////////////////////////////////////////////////////////////////////
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+            {
+                try
+                {
+                    IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                    String Src = source.Configs["Tray"].Get("Enabled");
+
+                    if (Src.Contains("1"))
+                    {
+                        //Tray Icon Functionality.
+                        source.Configs["Tray"].Set("Enabled", 0);
+                        source.Save();
+                        label27.ResetText();
+                        label27.Text = "Disabled";
+                        label27.ForeColor = Color.DimGray;
+                        //Balloons (We dont want balloons if we dont want tray icon)
+                        source.Configs["Balloons"].Set("ShowBalloons", 0);
+                        source.Save();
+                        label21.ResetText();
+                        label21.Text = "Disabled";
+                        label21.ForeColor = Color.DimGray;
+                        chain.Visible = true;
+
+                    }
+                    else
+                    {
+                        source.Configs["Tray"].Set("Enabled", 1);
+                        source.Save();
+                        label27.ResetText();
+                        label27.Text = "Enabled";
+                        label27.ForeColor = Color.SeaGreen;
+                        chain.Visible = false;
                     }
                 }
                 catch
