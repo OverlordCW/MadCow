@@ -1418,8 +1418,7 @@ namespace MadCow
 
         private void DownloadMPQS(object sender, DoWorkEventArgs e)
         {
-            int i = 0; //Used as a counter to move forward into the string array values.
-            
+            int i = 0; //We use this variable to select save path destination.            
             //Will use this to determinate the correct save path.
             String[] mpqDestination = {@"\MPQ\base\", @"\MPQ\"};
             Stopwatch speedTimer = new Stopwatch();
