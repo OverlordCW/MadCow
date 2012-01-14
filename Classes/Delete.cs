@@ -46,7 +46,7 @@ namespace MadCow
                     }
                     break;
 
-                case 1: //Delete/Recreate Repository Folders.
+                case 1: //Delete \Repositories\ subfolders.
                     if (System.IO.Directory.Exists(Program.programPath + @"/Repositories"))
                     {
                         string[] FoldersArray = Directory.GetDirectories(Program.programPath + @"\" + @"Repositories\");
