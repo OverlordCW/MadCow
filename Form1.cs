@@ -42,6 +42,7 @@ namespace MadCow
         TextWriter _writer = null;
         //TO access controls from outside classes
         public static Form1 GlobalAccess;
+        //For tray icon
         private ContextMenu m_menu;
 
         public Form1()

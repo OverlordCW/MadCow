@@ -20,6 +20,7 @@ using System.IO;
 using Nini.Config;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace MadCow
 {
@@ -32,7 +33,7 @@ namespace MadCow
         public static String compileArgs = "";
         //This paths dont change.
         public static String madcowINI = Program.programPath + @"\Tools\\Settings.ini";
-        public static String msbuildPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.System) + @"\..\Microsoft.NET\Framework\v4.0.30319\msbuild.exe";
+        public static String msbuildPath = RuntimeEnvironment.GetRuntimeDirectory() + @"\msbuild.exe";
 
         public static void ExecuteCommandSync(String command)
         {
