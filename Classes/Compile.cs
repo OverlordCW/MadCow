@@ -15,10 +15,10 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using Nini.Config;
-using System.Text.RegularExpressions;
+using Microsoft.Build.Evaluation;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MadCow
@@ -29,52 +29,68 @@ namespace MadCow
         public static String currentMooegeExePath = "";
         public static String currentMooegeDebugFolderPath = "";
         public static String mooegeINI = "";
-        public static String compileArgs = "";
         //This paths dont change.
         public static String madcowINI = Program.programPath + @"\Tools\\Settings.ini";
-        public static String msbuildPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.System) + @"\..\Microsoft.NET\Framework\v4.0.30319\msbuild.exe";
 
-        public static void ExecuteCommandSync(String command)
+        public static void compileSource()
         {
-            try
-            {
-                System.Diagnostics.ProcessStartInfo procStartInformation =
-                new System.Diagnostics.ProcessStartInfo(command);
-            
-                //procStartInformation.RedirectStandardOutput = true;
-                //procStartInformation.UseShellExecute = false;
-                procStartInformation.CreateNoWindow = true;
-                procStartInformation.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            var libmoonetPath = Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\LibMooNet\LibMooNet.csproj";
+            var mooegePath = Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\Mooege-VS2010.csproj";
 
-                System.Diagnostics.Process proc = new System.Diagnostics.Process();
-                proc.StartInfo = procStartInformation;
-                Console.WriteLine("Compiling newest [" + ParseRevision.developerName + "] Mooege source...");
-                proc.Start();
-                proc.WaitForExit();
-                Console.WriteLine("Compiling newest [" + ParseRevision.developerName + "] Mooege source Complete");
+            var compileLibMooNetTask = Task<bool>.Factory.StartNew(() => CompileLibMooNet(libmoonetPath));
+            var compileMooegeTask = compileLibMooNetTask.ContinueWith<bool>((x) => CompileMooege(mooegePath, x.Result));
+
+            Task.WaitAll(compileMooegeTask);
+
+            if (compileMooegeTask.Result == false)
+                Console.WriteLine("[Fatal] Failed to compile.");
+            else
+            {
+                Console.WriteLine("Compiling Complete.");
                 if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
                 {
                     IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
                     String Src = source.Configs["Balloons"].Get("ShowBalloons");
-
-                    if (Src.Contains("1"))
-                    {
-                        Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Compiling Complete!", ToolTipIcon.Info);
-                    }
+                    if (Src.Contains("1")) { Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Compiling Complete!", ToolTipIcon.Info); }
                 }
             }
-            catch (Exception e)
+        }
+
+        private static bool CompileLibMooNet(string libmoonetPath)
+        {
+            Console.WriteLine("Compiling LibMoonet...");
+            if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
             {
-                Console.WriteLine("Error while compiling!");
-                Console.WriteLine(e);
+                IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                String Src = source.Configs["Balloons"].Get("ShowBalloons");
+                if (Src.Contains("1")) { Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Compiling LibMoonet...", ToolTipIcon.Info); }
             }
+            var libmoonetProject = new Project(libmoonetPath);
+            return libmoonetProject.Build(new Microsoft.Build.Logging.FileLogger());
+        }
+
+        private static bool CompileMooege(string mooegePath, bool LibMooNetStatus)
+        {
+            if (LibMooNetStatus)
+            {
+                Console.WriteLine("Compiling Mooege...");
+                if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+                {
+                    IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                    String Src = source.Configs["Balloons"].Get("ShowBalloons");
+                    if (Src.Contains("1")) { Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Compiling Mooege......", ToolTipIcon.Info); }
+                }
+                var mooegeProject = new Project(mooegePath);
+                return mooegeProject.Build(new Microsoft.Build.Logging.FileLogger());
+            }
+            return false;
         }
 
         public static void ModifyMooegeINI()
         {
             try
             {
-                //First we modify the Mooege INI storage path.
+                //After compiling we modify Mooege INI config file with the correct Storage path.
                 IConfigSource source = new IniConfigSource(Compile.mooegeINI);
                 string fileName = source.Configs["Storage"].Get("MPQRoot");
                 if (fileName.Contains("${Root}"))
@@ -84,92 +100,14 @@ namespace MadCow
                     config.Set("MPQRoot", Program.programPath + "\\MPQ");
                     source.Save();
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Modifying Mooege MPQ storage folder Complete");
+                    Console.WriteLine("Modifying Mooege MPQ storage folder Complete.");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
             }
-            catch (Exception e)
+            catch
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Could not modify Mooege INI FILE");
-                Console.WriteLine(e);
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("[Fatal] Could not modify Mooege INI config file.");
             }
         }
-
-        public static void CreateBatchCompileFile() 
-        //This build up the compile batch file that fixed long path issue.
-        {
-            String val = "CompileBatch.bat";
-            if (File.Exists(Program.programPath + "\\Tools\\" + val))
-            {
-                File.Delete(Program.programPath + "\\Tools\\" + val);
-                Console.WriteLine("Deleting Batch File..");
-                FileInfo fi = new FileInfo(Program.programPath + "\\Tools\\" + val);
-                StreamWriter sw = fi.CreateText();
-                sw.WriteLine(@"cd C:\Windows\Microsoft.NET\Framework\v4.0.30319\");
-                sw.WriteLine("MSBUILD MODIFY");
-                sw.Close();
-                Console.WriteLine("Created Batch File.");
-            }
-            else
-            {
-                FileInfo fi = new FileInfo(Program.programPath + "\\Tools\\" + val);
-                StreamWriter sw = fi.CreateText();
-                sw.WriteLine(@"cd C:\Windows\Microsoft.NET\Framework\v4.0.30319\");
-                sw.WriteLine("MSBUILD MODIFY");
-                sw.Close();
-                Console.WriteLine("Created Batch File.");
-            }
-        }
-
-        public static void WriteCompileBatch()
-        //This modifieds the batch to the respective repository selected by the user.
-        {
-            String CompileBatch = (Program.programPath + "\\Tools\\CompileBatch.bat");
-            StreamReader reader = new StreamReader(CompileBatch);
-            string content = reader.ReadToEnd();
-            reader.Close();
-
-            content = Regex.Replace(content, "MODIFY", Compile.compileArgs);
-            StreamWriter writer = new StreamWriter(CompileBatch);
-            writer.Write(content);
-            writer.Close();
-        }
-
-        /*static public void WriteVbsPath()
-        {
-            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
-            String Src = source.Configs["ShortCut"].Get("Shortcut");
-            if (Src.Contains("1"))
-            {
-                File.Copy(Program.programPath + "\\Resources\\ShortcutCreator.vbs", Program.programPath + "\\Tools\\ShortcutCreator.vbs", true);
-
-                String vbsPath = (Program.programPath + "\\Tools\\ShortcutCreator.vbs");
-                StreamReader reader = new StreamReader(vbsPath);
-                string content = reader.ReadToEnd();
-                reader.Close();
-
-
-                content = Regex.Replace(content, "MODIFY", Program.programPath + @"\MadCow2011.exe");
-                content = Regex.Replace(content, "WESKO", Program.programPath);
-                StreamWriter writer = new StreamWriter(vbsPath);
-                writer.Write(content);
-                writer.Close();
-
-                //Creates shortcut
-                if (File.Exists(Program.desktopPath + "\\MadCow.lnk"))
-                {
-                    File.Delete(Program.desktopPath + "\\MadCow.lnk");
-                    System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
-                }
-                else
-                    System.Diagnostics.Process.Start(Program.programPath + "\\Tools\\ShortcutCreator.vbs");
-            }
-            else
-            {
-                //don't create a shortcut
-            }
-        }*/
     }
 }

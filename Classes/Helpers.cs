@@ -49,6 +49,37 @@ namespace MadCow
                     Form1.GlobalAccess.label9.Text = "Disabled";
                     Form1.GlobalAccess.label9.ForeColor = Color.DimGray;
                 }
+
+                String LastRepo = source.Configs["LastPlay"].Get("Enabled");
+                Form1.GlobalAccess.label23.ResetText();
+
+                if (LastRepo.Contains("1"))
+                {
+                    Form1.GlobalAccess.label23.Text = "Enabled";
+                    Form1.GlobalAccess.label23.ForeColor = Color.SeaGreen;
+                    Form1.GlobalAccess.label25.Visible = true;
+                }
+                else
+                {
+                    Form1.GlobalAccess.label23.Text = "Disabled";
+                    Form1.GlobalAccess.label23.ForeColor = Color.DimGray;
+                    Form1.GlobalAccess.label25.Visible = false;
+                }
+
+                String TrayIcon = source.Configs["Tray"].Get("Enabled");
+                Form1.GlobalAccess.label27.ResetText();
+
+                if (TrayIcon.Contains("1"))
+                {
+                    Form1.GlobalAccess.label27.Text = "Enabled";
+                    Form1.GlobalAccess.label27.ForeColor = Color.SeaGreen;
+                    Form1.GlobalAccess.loadTrayMenu();//Loading the contextMenu for trayIcon    
+                }
+                else
+                {
+                    Form1.GlobalAccess.label27.Text = "Disabled";
+                    Form1.GlobalAccess.label27.ForeColor = Color.DimGray;
+                }
             }
         }
     }

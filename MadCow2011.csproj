@@ -11,7 +11,8 @@
     <RootNamespace>MadCow</RootNamespace>
     <AssemblyName>MadCow2011</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -65,6 +66,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Tools\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Build" />
+    <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Nini">
       <HintPath>Tools\Nini.dll</HintPath>
@@ -84,6 +87,7 @@
     <Compile Include="Classes\ErrorFinder.cs" />
     <Compile Include="Classes\Diablo.cs" />
     <Compile Include="Classes\FindBranch.cs" />
+    <Compile Include="Classes\TestMPQ.cs" />
     <Compile Include="Classes\TextBoxStreamWriter.cs" />
     <Compile Include="Classes\ProcessFinder.cs" />
     <Compile Include="Classes\Delete.cs" />
@@ -140,16 +144,11 @@
     <Content Include="Repositories\ReposGoHere.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\ShortcutCreator.vbs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <None Include="Resources\process_chain.png" />
     <Content Include="ServerProfiles\Do-Not-Save-As-Default.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Tools\RepoList.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tools\ShortcutCreator.vbs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\correct.png" />
@@ -186,9 +185,6 @@
     <None Include="app.config" />
     <None Include="app.manifest" />
     <Content Include="ServerProfiles\ProfilesGoHere.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tools\CompileBatch.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Tools\madcow.ini">

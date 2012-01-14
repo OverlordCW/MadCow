@@ -42,6 +42,7 @@ namespace MadCow
         TextWriter _writer = null;
         //TO access controls from outside classes
         public static Form1 GlobalAccess;
+        //For tray icon
         private ContextMenu m_menu;
 
         public Form1()
@@ -89,13 +90,13 @@ namespace MadCow
             toolTip1.SetToolTip(this.DownloadMPQSButton, "Downloads ALL MPQs needed to run Mooege");
             toolTip1.SetToolTip(this.RestoreDefaults, "Resets Server Control settings");
             toolTip1.SetToolTip(this.PlayDiabloButton, "Time to play Diablo 3 through Mooege!");
-            InitializeFindPath();
+            InitializeFindPath(); //Search if a Diablo client path already exist.
             RepoCheck(); //Checks for duplicities.
             RepoList(); //Loads Repos from RepoList.txt
             Changelog(); //Loads Changelog comobox values.
             LoadLastUsedProfile(); //We try to Load the last used profile by the user.
-            loadTrayMenu();//Loading the contextMenu for trayIcon    
-            Helper.Helpers();//Loads the correct nameplate for shortcut and balloon enabled/disabled
+            Helper.Helpers();//Loads the correct nameplate for shortcut/balloon/LastRepo enabled/disabled
+            TestMPQ.getfileList(); //Load MPQ list from Blizz server. Todo: This might slow down a bit MadCow loading, maybe we could place it somewhere else?.
         }
 
         ///////////////////////////////////////////////////////////
@@ -217,6 +218,7 @@ namespace MadCow
                         FindBranch.findBrach(comboBox1.Text);
                         label10.Visible = false;
                         BranchComboBox.Visible = true;
+                        label24.Visible = true;
                         }));
                     }
                 }
@@ -368,6 +370,18 @@ namespace MadCow
         ///////////////////////////////////////////////////////////
         private void PlayDiablo_Click(object sender, EventArgs e)
         {
+            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+            String LastRepo = source.Configs["LastPlay"].Get("Enabled");
+
+            if (LastRepo.Contains("1"))
+            {
+                label25.Visible = true;
+            }
+            else
+            {
+                label25.Visible = false;
+            }
+
             if (ErrorFinder.hasMpqs() == true) //We check for MPQ files count before allowing the user to proceed to play.
             {
                 System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadProc));
@@ -390,8 +404,19 @@ namespace MadCow
         }
 
         public void ThreadProc()
-        {
-            Application.Run(new RepositorySelectionPlay());
+        {   
+            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+            String LastRepo = source.Configs["LastPlay"].Get("Enabled");
+
+            if (RepositorySelectionPlay.LastPlayed() == true && LastRepo.Contains("1"))
+            {
+                Diablo.Play();
+            }
+
+            else
+            {
+                Application.Run(new RepositorySelectionPlay());
+            }
             //We add ErrorFinder call here, in order to know if Mooege had issues loading.
             if(File.Exists(Program.programPath + @"\logs\mooege.log"))
             {
@@ -1210,8 +1235,7 @@ namespace MadCow
         }
 
         public void LoadLastUsedProfile()
-        {
-           
+        {        
             try
             {
                 IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
@@ -1255,9 +1279,7 @@ namespace MadCow
             }
             catch
             {
-                IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
-                source.Configs["Profiles"].Set("Profile", Program.programPath + @"\ServerProfiles\Default.mdc");
-                source.Save();
+                Console.WriteLine("[Error] While loading server profile.");
             }
         }
 
@@ -1271,6 +1293,7 @@ namespace MadCow
             string currentText = ParseRevision.commitFile;
             BranchComboBox.Visible = false;
             label10.Visible = true;
+            label24.Visible = false;
             UpdateMooegeButton.Enabled = false;
             AutoUpdateValue.Enabled = false; //If user is typing a new URL Update and Autoupdate
             EnableAutoUpdateBox.Enabled = false;      //Functions gets disabled
@@ -1401,13 +1424,12 @@ namespace MadCow
         }
 
         ////////////////////////////////////////////////////////////////////////
-        //Download ALL Mpq files needed by Mooege ATM.
+        //Download MPQs selected by the user.
         ////////////////////////////////////////////////////////////////////////
         private void DownloadMPQSButton_Click(object sender, EventArgs e)
         {
             System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(MPQThread));
             t.Start(); 
-            //backgroundWorker3.RunWorkerAsync();
         }
 
         private void MPQThread()
@@ -1417,41 +1439,32 @@ namespace MadCow
 
         private void DownloadMPQS(object sender, DoWorkEventArgs e)
         {
-            int i = 0; //Used as a counter to move forward into the string array values.
-            String[] mpqUrls = {"http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7170.MPQ",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7200.MPQ",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7318.MPQ",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7338.MPQ",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7447.MPQ",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7728.MPQ",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7841.MPQ",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7931.MPQ",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-8059.MPQ",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-8101.MPQ",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/ClientData.mpq",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/CoreData.mpq"};
-
-            //Fixed path implementation for now.
-            String[] mpqDestination = { @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\", @"\MPQ\" };
-
+            int i = 0; //We use this variable to select save path destination.            
+            //Will use this to determinate the correct save path.
+            String[] mpqDestination = {@"\MPQ\base\", @"\MPQ\"};
             Stopwatch speedTimer = new Stopwatch();
-            foreach (string value in mpqUrls)
+            foreach (string value in MPQDownloader.mpqSelection)
             {
-                Uri url = new Uri(mpqUrls[i]);
+                Uri url = new Uri(value);
                 System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
                 System.Net.HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse();
+                
                 //Parsing the file name.
                 var fullName = url.LocalPath.TrimStart('/');
                 var name = Path.GetFileNameWithoutExtension(fullName);
                 var ext = Path.GetExtension(fullName);
-                //End Parsing.
+                //End Parsing.              
                 response.Close();
+                //Setting save path
+                if (name == "CoreData" || name == "ClientData") i = 1; //Path \MPQ\
+                else i = 0; //Path \MPQ\base\
+
                 Int64 iSize = response.ContentLength;
                 Int64 iRunningByteTotal = 0;
 
                 using (System.Net.WebClient client = new System.Net.WebClient())
                 {
-                    using (System.IO.Stream streamRemote = client.OpenRead(new Uri(mpqUrls[i])))
+                    using (System.IO.Stream streamRemote = client.OpenRead(new Uri(value)))
                     {
                         using (Stream streamLocal = new FileStream(Program.programPath + mpqDestination[i] + name + ext, FileMode.Create, FileAccess.Write, FileShare.None))
                         {
@@ -1489,7 +1502,7 @@ namespace MadCow
                         }
                         streamRemote.Close();
                     }
-                } i++;
+                }
             } speedTimer.Stop();
         }
 
@@ -1504,7 +1517,8 @@ namespace MadCow
         {
             DownloadingFileName.Visible = false;
             DownloadFileSpeed.Visible = false;
-            System.Console.WriteLine("Download complete.");
+            MPQDownloader.mpqSelection.Clear();//Reset the Array values after downloading.
+            Console.WriteLine("Download complete.");
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1814,20 +1828,6 @@ namespace MadCow
                             textBox1.Invoke(new Action(() => { textBox1.AppendText(@"Updated: " + match.Groups[1].Value + "\n"); }));
                         }
 
-                        //For inside commit comment. (Failed badly!)
-                        /*if (System.Text.RegularExpressions.Regex.IsMatch(line, "81ex'>") && i > 0)
-                        {
-                            //Console.WriteLine(line.StartsWith("</content>");
-                            var regex = new Regex("81ex'>(.*)");
-                            var match = regex.Match(line);
-                            while (line.ToString().Contains("&lt;/pre>") == false)
-                            {
-                                Console.WriteLine(line);
-                                textBox1.Invoke(new Action(() => { textBox1.AppendText("Comment: [" + match.Groups[1].Value + "]\n"); }));
-                                line = reader.ReadLine();
-                            }
-                        }*/
-
                         //For developer that pushed.
                         if (System.Text.RegularExpressions.Regex.IsMatch(line, "<name>") && i > 0)
                         {
@@ -1942,20 +1942,24 @@ namespace MadCow
         }
         private void Form1_Resize(object sender, EventArgs e)
         {
+            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+            String Balloons = source.Configs["Balloons"].Get("ShowBalloons");
+            String TrayIcon = source.Configs["Tray"].Get("Enabled");
+
             if (FormWindowState.Minimized == WindowState)
             {
-                Hide();
-                if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+                if (TrayIcon.Contains("1"))
                 {
-                    IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
-                    String Src = source.Configs["Balloons"].Get("ShowBalloons");
-
-                    if (Src.Contains("1"))
+                    Hide();
+                    if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
                     {
-                        if (notifyCount < 1) //This is to avoid displaying this Balloon everytime the user minimize, it will only show first time.
+                        if (Balloons.Contains("1"))
                         {
-                            notifyIcon1.ShowBalloonTip(1000, "MadCow", "MadCow will continue running minimized.", ToolTipIcon.Info);
-                            notifyCount++;
+                            if (notifyCount < 1) //This is to avoid displaying this Balloon everytime the user minimize, it will only show first time.
+                            {
+                                notifyIcon1.ShowBalloonTip(1000, "MadCow", "MadCow will continue running minimized.", ToolTipIcon.Info);
+                                notifyCount++;
+                            }
                         }
                     }
                 }
@@ -2043,10 +2047,9 @@ namespace MadCow
                         label9.ForeColor = Color.SeaGreen;
                     }
                 }
-                catch (Exception Ex)
+                catch
                 {
-                    Console.WriteLine("Something failed while trying to verify D3 Version or Writting INI");
-                    Console.WriteLine(Ex);
+                    Console.WriteLine("[Error] At ShortCut Disabler.");
                 }
             }
         }
@@ -2070,6 +2073,7 @@ namespace MadCow
                         label21.ResetText();
                         label21.Text = "Disabled";
                         label21.ForeColor = Color.DimGray;
+                        chain.Visible = false;
                     }
                     else
                     {
@@ -2078,12 +2082,104 @@ namespace MadCow
                         label21.ResetText();
                         label21.Text = "Enabled";
                         label21.ForeColor = Color.SeaGreen;
+                        //Tray Icon (We need Tray Icon Enabled)
+                        source.Configs["Tray"].Set("Enabled", 1);
+                        source.Save();
+                        label27.ResetText();
+                        label27.Text = "Enabled";
+                        label27.ForeColor = Color.SeaGreen;
+                        chain.Visible = true;
                     }
                 }
-                catch (Exception Ex)
+                catch
                 {
-                    Console.WriteLine("Something failed while trying to verify D3 Version or Writting INI");
-                    Console.WriteLine(Ex);
+                    Console.WriteLine("[Error] At ShowBalloons Disabler.");
+                }
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+        // Remember LastRepository Disabler
+        ////////////////////////////////////////////////////////////////////////////////////////
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+            {
+                try
+                {
+                    IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                    String Src = source.Configs["LastPlay"].Get("Enabled");
+
+                    if (Src.Contains("1"))
+                    {
+                        source.Configs["LastPlay"].Set("Enabled", 0);
+                        source.Save();
+                        label23.ResetText();
+                        label23.Text = "Disabled";
+                        label23.ForeColor = Color.DimGray;
+                        label25.Visible = false;
+                        chain.Visible = false;
+                    }
+                    else
+                    {
+                        source.Configs["LastPlay"].Set("Enabled", 1);
+                        source.Save();
+                        label23.ResetText();
+                        label23.Text = "Enabled";
+                        label23.ForeColor = Color.SeaGreen;
+                        label25.Visible = true;
+                        chain.Visible = false;
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("[Error] At LastRepository Disabler.");
+                }
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+        // Tray Icon Disabler
+        ////////////////////////////////////////////////////////////////////////////////////////
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+            {
+                try
+                {
+                    IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                    String Src = source.Configs["Tray"].Get("Enabled");
+
+                    if (Src.Contains("1"))
+                    {
+                        //Tray Icon Functionality.
+                        source.Configs["Tray"].Set("Enabled", 0);
+                        source.Save();
+                        label27.ResetText();
+                        label27.Text = "Disabled";
+                        label27.ForeColor = Color.DimGray;
+                        //Balloons (We dont want balloons if we dont want tray icon)
+                        source.Configs["Balloons"].Set("ShowBalloons", 0);
+                        source.Save();
+                        label21.ResetText();
+                        label21.Text = "Disabled";
+                        label21.ForeColor = Color.DimGray;
+                        chain.Visible = true;
+
+                    }
+                    else
+                    {
+                        source.Configs["Tray"].Set("Enabled", 1);
+                        source.Save();
+                        label27.ResetText();
+                        label27.Text = "Enabled";
+                        label27.ForeColor = Color.SeaGreen;
+                        chain.Visible = false;
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("[Error] At LastRepository Disabler.");
                 }
             }
         }
