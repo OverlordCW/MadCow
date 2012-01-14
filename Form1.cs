@@ -90,13 +90,14 @@ namespace MadCow
             toolTip1.SetToolTip(this.DownloadMPQSButton, "Downloads ALL MPQs needed to run Mooege");
             toolTip1.SetToolTip(this.RestoreDefaults, "Resets Server Control settings");
             toolTip1.SetToolTip(this.PlayDiabloButton, "Time to play Diablo 3 through Mooege!");
-            InitializeFindPath();
+            InitializeFindPath(); //Search if a Diablo client path already exist.
             RepoCheck(); //Checks for duplicities.
             RepoList(); //Loads Repos from RepoList.txt
             Changelog(); //Loads Changelog comobox values.
             LoadLastUsedProfile(); //We try to Load the last used profile by the user.
             loadTrayMenu();//Loading the contextMenu for trayIcon    
             Helper.Helpers();//Loads the correct nameplate for shortcut and balloon enabled/disabled
+            TestMPQ.getfileList(); //Load MPQ list from Blizz server. Todo: This might slow down a bit MadCow loading, maybe we could place it somewhere else?.
         }
 
         ///////////////////////////////////////////////////////////
@@ -1402,13 +1403,12 @@ namespace MadCow
         }
 
         ////////////////////////////////////////////////////////////////////////
-        //Download ALL Mpq files needed by Mooege ATM.
+        //Download MPQs selected by the user.
         ////////////////////////////////////////////////////////////////////////
         private void DownloadMPQSButton_Click(object sender, EventArgs e)
         {
             System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(MPQThread));
             t.Start(); 
-            //backgroundWorker3.RunWorkerAsync();
         }
 
         private void MPQThread()
@@ -1419,40 +1419,32 @@ namespace MadCow
         private void DownloadMPQS(object sender, DoWorkEventArgs e)
         {
             int i = 0; //Used as a counter to move forward into the string array values.
-            String[] mpqUrls = {"http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7170.MPQ",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7200.MPQ",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7318.MPQ",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7338.MPQ",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7447.MPQ",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7728.MPQ",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7841.MPQ",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-7931.MPQ",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-8059.MPQ",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/d3-update-base-8101.MPQ",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/ClientData.mpq",
-                               "http://ak.worldofwarcraft.com.edgesuite.net//d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/CoreData.mpq"};
-
-            //Fixed path implementation for now.
-            String[] mpqDestination = { @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\base\", @"\MPQ\", @"\MPQ\" };
-
+            
+            //Will use this to determinate the correct save path.
+            String[] mpqDestination = {@"\MPQ\base\", @"\MPQ\"};
             Stopwatch speedTimer = new Stopwatch();
-            foreach (string value in mpqUrls)
+            foreach (string value in MPQDownloader.mpqSelection)
             {
-                Uri url = new Uri(mpqUrls[i]);
+                Uri url = new Uri(value);
                 System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
                 System.Net.HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse();
+                
                 //Parsing the file name.
                 var fullName = url.LocalPath.TrimStart('/');
                 var name = Path.GetFileNameWithoutExtension(fullName);
                 var ext = Path.GetExtension(fullName);
-                //End Parsing.
+                //End Parsing.              
                 response.Close();
+                //Setting save path
+                if (name == "CoreData" || name == "ClientData") i = 1; //Path \MPQ\
+                else i = 0; //Path \MPQ\base\
+
                 Int64 iSize = response.ContentLength;
                 Int64 iRunningByteTotal = 0;
 
                 using (System.Net.WebClient client = new System.Net.WebClient())
                 {
-                    using (System.IO.Stream streamRemote = client.OpenRead(new Uri(mpqUrls[i])))
+                    using (System.IO.Stream streamRemote = client.OpenRead(new Uri(value)))
                     {
                         using (Stream streamLocal = new FileStream(Program.programPath + mpqDestination[i] + name + ext, FileMode.Create, FileAccess.Write, FileShare.None))
                         {
@@ -1490,7 +1482,7 @@ namespace MadCow
                         }
                         streamRemote.Close();
                     }
-                } i++;
+                }
             } speedTimer.Stop();
         }
 
@@ -1505,7 +1497,8 @@ namespace MadCow
         {
             DownloadingFileName.Visible = false;
             DownloadFileSpeed.Visible = false;
-            System.Console.WriteLine("Download complete.");
+            MPQDownloader.mpqSelection.Clear();//Reset the Array values after downloading.
+            Console.WriteLine("Download complete.");
         }
 
         ////////////////////////////////////////////////////////////////////////

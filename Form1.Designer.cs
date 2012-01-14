@@ -880,7 +880,7 @@
             this.label21.AutoSize = true;
             this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label21.ForeColor = System.Drawing.Color.SeaGreen;
-            this.label21.Location = new System.Drawing.Point(254, 271);
+            this.label21.Location = new System.Drawing.Point(254, 262);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(0, 16);
             this.label21.TabIndex = 17;
@@ -918,7 +918,7 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.SeaGreen;
-            this.label9.Location = new System.Drawing.Point(254, 222);
+            this.label9.Location = new System.Drawing.Point(254, 217);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(0, 16);
             this.label9.TabIndex = 13;
@@ -1273,7 +1273,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button DownloadMPQSButton;
         public System.Windows.Forms.ProgressBar DownloadMPQSprogressBar;
-        private System.ComponentModel.BackgroundWorker backgroundWorker3;
         private System.Windows.Forms.Label DownloadingFileName;
         private System.Windows.Forms.Label DownloadFileSpeed;
         private System.ComponentModel.BackgroundWorker backgroundWorker4;
@@ -1298,6 +1297,7 @@
         private System.Windows.Forms.Label label19;
         public System.Windows.Forms.Label label9;
         public System.Windows.Forms.Label label21;
+        public System.ComponentModel.BackgroundWorker backgroundWorker3;
 
     }
 }

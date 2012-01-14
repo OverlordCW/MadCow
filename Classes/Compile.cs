@@ -66,7 +66,6 @@ namespace MadCow
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error while compiling!");
                 Console.WriteLine(e);
             }
         }
@@ -99,7 +98,7 @@ namespace MadCow
         }
 
         public static void CreateBatchCompileFile() 
-        //This build up the compile batch file that fixed long path issue.
+        //This build up the compile batch file, this let us compile multiple repostiories by writing repositories source path.
         {
             String val = "CompileBatch.bat";
             if (File.Exists(Program.programPath + "\\Tools\\" + val))
