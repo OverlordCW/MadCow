@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using Nini.Config;
 
 namespace MadCow
 {
@@ -79,6 +80,23 @@ namespace MadCow
 
                 return;
             }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+        // Last Played Repository
+        ////////////////////////////////////////////////////////////////////////////////////////
+        public static Boolean LastPlayed()
+        {
+            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+            String LastPlayedRepo = source.Configs["LastPlay"].Get("Repository");
+
+            if (LastPlayedRepo != null)
+            {
+                Compile.currentMooegeExePath = LastPlayedRepo;
+                return true;
+            }
+            else
+                return false;
         }
     }
 }

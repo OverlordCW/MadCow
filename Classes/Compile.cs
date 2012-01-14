@@ -83,7 +83,7 @@ namespace MadCow
                     Console.ForegroundColor = ConsoleColor.White;
                 }
             }
-            catch (Exception e)
+            catch
             {
                 Console.WriteLine("[Fatal] Could not modify Mooege INI config file.");
             }

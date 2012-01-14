@@ -53,6 +53,9 @@ namespace MadCow
                         Diablo3.StartInfo = new ProcessStartInfo(Src);
                         Diablo3.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
                         Diablo3.Start();
+                        //We save this repository for LastPlayed function.
+                        source.Configs["LastPlay"].Set("Repository", Compile.currentMooegeExePath);
+                        source.Save();
                     }
                 }
                 else

@@ -127,6 +127,9 @@
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.label22 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
+            this.label23 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -199,7 +202,7 @@
             this.PlayDiabloButton.Enabled = false;
             this.PlayDiabloButton.Location = new System.Drawing.Point(10, 271);
             this.PlayDiabloButton.Name = "PlayDiabloButton";
-            this.PlayDiabloButton.Size = new System.Drawing.Size(329, 43);
+            this.PlayDiabloButton.Size = new System.Drawing.Size(326, 43);
             this.PlayDiabloButton.TabIndex = 7;
             this.PlayDiabloButton.Text = "Play Diablo (Local)";
             this.PlayDiabloButton.UseVisualStyleBackColor = false;
@@ -854,6 +857,9 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.label23);
+            this.tabPage4.Controls.Add(this.button3);
+            this.tabPage4.Controls.Add(this.label22);
             this.tabPage4.Controls.Add(this.label21);
             this.tabPage4.Controls.Add(this.label20);
             this.tabPage4.Controls.Add(this.button2);
@@ -878,58 +884,58 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label21.ForeColor = System.Drawing.Color.SeaGreen;
-            this.label21.Location = new System.Drawing.Point(254, 262);
+            this.label21.Location = new System.Drawing.Point(274, 301);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(0, 16);
+            this.label21.Size = new System.Drawing.Size(0, 13);
             this.label21.TabIndex = 17;
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(22, 286);
+            this.label20.Location = new System.Drawing.Point(22, 301);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(198, 13);
+            this.label20.Size = new System.Drawing.Size(89, 13);
             this.label20.TabIndex = 16;
-            this.label20.Text = "Enable or Disable Balloon Tips from Tray";
+            this.label20.Text = "Tray Notifications";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(248, 281);
+            this.button2.Location = new System.Drawing.Point(179, 296);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 15;
-            this.button2.Text = "BalloonTips";
+            this.button2.Text = "Change";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(23, 241);
+            this.label19.Location = new System.Drawing.Point(22, 241);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(133, 13);
+            this.label19.Size = new System.Drawing.Size(106, 13);
             this.label19.TabIndex = 14;
-            this.label19.Text = "Enable or Disable Shortcut";
+            this.label19.Text = "Shortcut Auto Create";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.SeaGreen;
-            this.label9.Location = new System.Drawing.Point(254, 217);
+            this.label9.Location = new System.Drawing.Point(274, 241);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(0, 16);
+            this.label9.Size = new System.Drawing.Size(0, 13);
             this.label9.TabIndex = 13;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(248, 236);
+            this.button1.Location = new System.Drawing.Point(179, 235);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(75, 25);
             this.button1.TabIndex = 12;
-            this.button1.Text = "ShortCut";
+            this.button1.Text = "Change";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -1142,6 +1148,35 @@
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
             // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(22, 271);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(134, 13);
+            this.label22.TabIndex = 18;
+            this.label22.Text = "Remember Last Repository";
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(179, 265);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 25);
+            this.button3.TabIndex = 19;
+            this.button3.Text = "Change";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.ForeColor = System.Drawing.Color.SeaGreen;
+            this.label23.Location = new System.Drawing.Point(274, 271);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(0, 13);
+            this.label23.TabIndex = 20;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1298,6 +1333,9 @@
         public System.Windows.Forms.Label label9;
         public System.Windows.Forms.Label label21;
         public System.ComponentModel.BackgroundWorker backgroundWorker3;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Button button3;
+        public System.Windows.Forms.Label label23;
 
     }
 }

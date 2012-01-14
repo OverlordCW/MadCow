@@ -49,6 +49,20 @@ namespace MadCow
                     Form1.GlobalAccess.label9.Text = "Disabled";
                     Form1.GlobalAccess.label9.ForeColor = Color.DimGray;
                 }
+
+                String LastRepo = source.Configs["LastPlay"].Get("Enabled");
+                Form1.GlobalAccess.label23.ResetText();
+
+                if (LastRepo.Contains("1"))
+                {
+                    Form1.GlobalAccess.label23.Text = "Enabled";
+                    Form1.GlobalAccess.label23.ForeColor = Color.SeaGreen;
+                }
+                else
+                {
+                    Form1.GlobalAccess.label23.Text = "Disabled";
+                    Form1.GlobalAccess.label23.ForeColor = Color.DimGray;
+                }
             }
         }
     }

@@ -392,8 +392,19 @@ namespace MadCow
         }
 
         public void ThreadProc()
-        {
-            Application.Run(new RepositorySelectionPlay());
+        {   
+            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+            String LastRepo = source.Configs["LastPlay"].Get("Enabled");
+
+            if (RepositorySelectionPlay.LastPlayed() == true && LastRepo.Contains("1"))
+            {
+                Diablo.Play();
+            }
+
+            else
+            {
+                Application.Run(new RepositorySelectionPlay());
+            }
             //We add ErrorFinder call here, in order to know if Mooege had issues loading.
             if(File.Exists(Program.programPath + @"\logs\mooege.log"))
             {
@@ -2019,10 +2030,9 @@ namespace MadCow
                         label9.ForeColor = Color.SeaGreen;
                     }
                 }
-                catch (Exception Ex)
+                catch
                 {
-                    Console.WriteLine("Something failed while trying to verify D3 Version or Writting INI");
-                    Console.WriteLine(Ex);
+                    Console.WriteLine("[Error] At ShortCut Disabler.");
                 }
             }
         }
@@ -2056,10 +2066,45 @@ namespace MadCow
                         label21.ForeColor = Color.SeaGreen;
                     }
                 }
-                catch (Exception Ex)
+                catch
                 {
-                    Console.WriteLine("Something failed while trying to verify D3 Version or Writting INI");
-                    Console.WriteLine(Ex);
+                    Console.WriteLine("[Error] At ShowBalloons Disabler.");
+                }
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+        // Remember LastRepository Disabler
+        ////////////////////////////////////////////////////////////////////////////////////////
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+            {
+                try
+                {
+                    IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                    String Src = source.Configs["LastPlay"].Get("Enabled");
+
+                    if (Src.Contains("1"))
+                    {
+                        source.Configs["LastPlay"].Set("Enabled", 0);
+                        source.Save();
+                        label23.ResetText();
+                        label23.Text = "Disabled";
+                        label23.ForeColor = Color.DimGray;
+                    }
+                    else
+                    {
+                        source.Configs["LastPlay"].Set("Enabled", 1);
+                        source.Save();
+                        label23.ResetText();
+                        label23.Text = "Enabled";
+                        label23.ForeColor = Color.SeaGreen;
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("[Error] At LastRepository Disabler.");
                 }
             }
         }
