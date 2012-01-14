@@ -57,11 +57,13 @@ namespace MadCow
                 {
                     Form1.GlobalAccess.label23.Text = "Enabled";
                     Form1.GlobalAccess.label23.ForeColor = Color.SeaGreen;
+                    Form1.GlobalAccess.label25.Visible = true;
                 }
                 else
                 {
                     Form1.GlobalAccess.label23.Text = "Disabled";
                     Form1.GlobalAccess.label23.ForeColor = Color.DimGray;
+                    Form1.GlobalAccess.label25.Visible = false;
                 }
             }
         }

@@ -96,6 +96,9 @@
             this.generalProgressBar = new System.Windows.Forms.ProgressBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label23 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
+            this.label22 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
@@ -127,9 +130,8 @@
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.label22 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
-            this.label23 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -200,9 +202,9 @@
             // 
             this.PlayDiabloButton.BackColor = System.Drawing.Color.Transparent;
             this.PlayDiabloButton.Enabled = false;
-            this.PlayDiabloButton.Location = new System.Drawing.Point(10, 271);
+            this.PlayDiabloButton.Location = new System.Drawing.Point(9, 286);
             this.PlayDiabloButton.Name = "PlayDiabloButton";
-            this.PlayDiabloButton.Size = new System.Drawing.Size(326, 43);
+            this.PlayDiabloButton.Size = new System.Drawing.Size(327, 42);
             this.PlayDiabloButton.TabIndex = 7;
             this.PlayDiabloButton.Text = "Play Diablo (Local)";
             this.PlayDiabloButton.UseVisualStyleBackColor = false;
@@ -248,7 +250,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(345, 320);
+            this.tabPage3.Size = new System.Drawing.Size(345, 334);
             this.tabPage3.TabIndex = 3;
             this.tabPage3.Text = "Remote Server";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -341,7 +343,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(345, 320);
+            this.tabPage2.Size = new System.Drawing.Size(345, 334);
             this.tabPage2.TabIndex = 2;
             this.tabPage2.Text = "Server Control";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -634,6 +636,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label25);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Controls.Add(this.FindDiabloButton);
@@ -648,7 +651,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(345, 320);
+            this.tabPage1.Size = new System.Drawing.Size(345, 334);
             this.tabPage1.TabIndex = 1;
             this.tabPage1.Text = "Updates";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -664,6 +667,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label24);
             this.groupBox1.Controls.Add(this.BranchComboBox);
             this.groupBox1.Controls.Add(this.comboBox1);
             this.groupBox1.Controls.Add(this.pictureBox2);
@@ -852,7 +856,7 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(353, 346);
+            this.tabControl1.Size = new System.Drawing.Size(353, 360);
             this.tabControl1.TabIndex = 13;
             // 
             // tabPage4
@@ -876,10 +880,39 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(345, 320);
+            this.tabPage4.Size = new System.Drawing.Size(345, 334);
             this.tabPage4.TabIndex = 4;
             this.tabPage4.Text = "Help";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.ForeColor = System.Drawing.Color.SeaGreen;
+            this.label23.Location = new System.Drawing.Point(274, 271);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(0, 13);
+            this.label23.TabIndex = 20;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(179, 265);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 25);
+            this.button3.TabIndex = 19;
+            this.button3.Text = "Change";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(22, 271);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(134, 13);
+            this.label22.TabIndex = 18;
+            this.label22.Text = "Remember Last Repository";
             // 
             // label21
             // 
@@ -1010,7 +1043,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(345, 320);
+            this.tabPage5.Size = new System.Drawing.Size(345, 334);
             this.tabPage5.TabIndex = 5;
             this.tabPage5.Text = "Credits";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -1044,7 +1077,7 @@
             this.txtConsole.Name = "txtConsole";
             this.txtConsole.ReadOnly = true;
             this.txtConsole.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtConsole.Size = new System.Drawing.Size(301, 308);
+            this.txtConsole.Size = new System.Drawing.Size(301, 322);
             this.txtConsole.TabIndex = 16;
             // 
             // backgroundWorker2
@@ -1079,7 +1112,7 @@
             this.tabControl2.Multiline = true;
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(318, 346);
+            this.tabControl2.Size = new System.Drawing.Size(318, 360);
             this.tabControl2.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl2.TabIndex = 17;
             // 
@@ -1089,7 +1122,7 @@
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(310, 320);
+            this.tabPage6.Size = new System.Drawing.Size(310, 334);
             this.tabPage6.TabIndex = 0;
             this.tabPage6.Text = "Output";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -1102,21 +1135,21 @@
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(310, 320);
+            this.tabPage7.Size = new System.Drawing.Size(310, 334);
             this.tabPage7.TabIndex = 1;
             this.tabPage7.Text = "Changelog";
             this.tabPage7.UseVisualStyleBackColor = true;
             // 
             // textBox1
             // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.textBox1.BackColor = System.Drawing.SystemColors.Control;
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.Location = new System.Drawing.Point(8, 37);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(295, 276);
+            this.textBox1.Size = new System.Drawing.Size(295, 291);
             this.textBox1.TabIndex = 2;
             // 
             // label3
@@ -1148,40 +1181,35 @@
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
             // 
-            // label22
+            // label24
             // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(22, 271);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(134, 13);
-            this.label22.TabIndex = 18;
-            this.label22.Text = "Remember Last Repository";
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label24.Location = new System.Drawing.Point(103, 47);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(104, 13);
+            this.label24.TabIndex = 19;
+            this.label24.Text = "Branch Selection";
+            this.label24.Visible = false;
             // 
-            // button3
+            // label25
             // 
-            this.button3.Location = new System.Drawing.Point(179, 265);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 25);
-            this.button3.TabIndex = 19;
-            this.button3.Text = "Change";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.ForeColor = System.Drawing.Color.SeaGreen;
-            this.label23.Location = new System.Drawing.Point(274, 271);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(0, 13);
-            this.label23.TabIndex = 20;
+            this.label25.AutoSize = true;
+            this.label25.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label25.Location = new System.Drawing.Point(4, 270);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(335, 13);
+            this.label25.TabIndex = 19;
+            this.label25.Text = "Disable \"Remember Last Repository\" to view repo selection list again.";
+            this.toolTip1.SetToolTip(this.label25, "Help Tab -> Remember Last Repository");
+            this.label25.Visible = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(681, 352);
+            this.ClientSize = new System.Drawing.Size(681, 362);
             this.Controls.Add(this.tabControl2);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -1258,13 +1286,11 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TextBox BnetServerPort;
         private System.Windows.Forms.TextBox BnetServerIp;
-        private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TabPage tabPage4;
@@ -1336,6 +1362,10 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Button button3;
         public System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label24;
+        public System.Windows.Forms.Label label25;
+        public System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
 
     }
 }

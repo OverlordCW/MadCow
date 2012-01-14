@@ -96,7 +96,7 @@ namespace MadCow
             Changelog(); //Loads Changelog comobox values.
             LoadLastUsedProfile(); //We try to Load the last used profile by the user.
             loadTrayMenu();//Loading the contextMenu for trayIcon    
-            Helper.Helpers();//Loads the correct nameplate for shortcut and balloon enabled/disabled
+            Helper.Helpers();//Loads the correct nameplate for shortcut/balloon/LastRepo enabled/disabled
             TestMPQ.getfileList(); //Load MPQ list from Blizz server. Todo: This might slow down a bit MadCow loading, maybe we could place it somewhere else?.
         }
 
@@ -219,6 +219,7 @@ namespace MadCow
                         FindBranch.findBrach(comboBox1.Text);
                         label10.Visible = false;
                         BranchComboBox.Visible = true;
+                        label24.Visible = true;
                         }));
                     }
                 }
@@ -370,6 +371,18 @@ namespace MadCow
         ///////////////////////////////////////////////////////////
         private void PlayDiablo_Click(object sender, EventArgs e)
         {
+            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+            String LastRepo = source.Configs["LastPlay"].Get("Enabled");
+
+            if (LastRepo.Contains("1"))
+            {
+                label25.Visible = true;
+            }
+            else
+            {
+                label25.Visible = false;
+            }
+
             if (ErrorFinder.hasMpqs() == true) //We check for MPQ files count before allowing the user to proceed to play.
             {
                 System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadProc));
@@ -1281,6 +1294,7 @@ namespace MadCow
             string currentText = ParseRevision.commitFile;
             BranchComboBox.Visible = false;
             label10.Visible = true;
+            label24.Visible = false;
             UpdateMooegeButton.Enabled = false;
             AutoUpdateValue.Enabled = false; //If user is typing a new URL Update and Autoupdate
             EnableAutoUpdateBox.Enabled = false;      //Functions gets disabled
@@ -2092,6 +2106,7 @@ namespace MadCow
                         label23.ResetText();
                         label23.Text = "Disabled";
                         label23.ForeColor = Color.DimGray;
+                        label25.Visible = false;
                     }
                     else
                     {
@@ -2100,6 +2115,7 @@ namespace MadCow
                         label23.ResetText();
                         label23.Text = "Enabled";
                         label23.ForeColor = Color.SeaGreen;
+                        label25.Visible = true;
                     }
                 }
                 catch
