@@ -101,19 +101,17 @@ namespace MadCow
             }
         }
 
-        public static Boolean hasMpqs()
+       public static Boolean hasMpqs()
         {
-            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
-            String Src = Program.programPath + @"\MPQ\";
-            String Src2 = Program.programPath + @"\MPQ\base\";      
-            Int32 Files;
-            Files = Directory.GetFileSystemEntries(Src).Length + Directory.GetFileSystemEntries(Src2).Length;
-            if (Files < TestMPQ.mpqList.Count-1) //-1 For people using previous supported version.
+            String Destination = Program.programPath + @"\MPQ\";
+            string[] files2 = Directory.GetFiles(Destination, "*.mpq", SearchOption.AllDirectories);
+
+            if (files2.Length < TestMPQ.mpqList.Count - 1) //-1 For people using previous supported version.
             {
                 return false;
             }
             else
-            return true;
+                return true;
         }
     }
 }
