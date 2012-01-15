@@ -46,20 +46,22 @@ namespace MadCow
                     }
                     break;
 
-                case 1: //Delete/Recreate Repository Folders.
+                case 1: //Delete \Repositories\ subfolders.
                     if (System.IO.Directory.Exists(Program.programPath + @"/Repositories"))
                     {
-                        try
+                        string[] FoldersArray = Directory.GetDirectories(Program.programPath + @"\" + @"Repositories\");
+                        if (FoldersArray.Length > 0)
                         {
-                            System.IO.Directory.Delete(Program.programPath + @"/Repositories", true);
-                            Console.WriteLine("Deleted Repositories Folder");
-                            Directory.CreateDirectory(Program.programPath + @"/Repositories");
+                            Console.WriteLine("Deleting Saved Repositories...");
                         }
-                        catch (System.IO.IOException e)
+                        foreach (string folder in FoldersArray)
                         {
-                            Console.WriteLine(e.Message);
+                            DirectoryInfo info = new DirectoryInfo(folder);
+                            Directory.Delete(info.FullName,true);
+                            Console.WriteLine("Deleted: {0}", info.Name);
                         }
                     }
+
                     break;
 
                 case 2: //Delete corrupted file thrown by ErrorFinder class.
