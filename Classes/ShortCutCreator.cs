@@ -17,6 +17,7 @@
 using System;
 using System.Windows.Forms;
 using IWshRuntimeLibrary;
+using System.IO;
 
 namespace MadCow
 {
@@ -31,6 +32,7 @@ namespace MadCow
 
             MyShortcut = (IWshRuntimeLibrary.IWshShortcut)WshShell.CreateShortcut(@Environment.GetEnvironmentVariable("USERPROFILE") + "\\Desktop\\MadCow.lnk");
             MyShortcut.TargetPath = Application.ExecutablePath;
+            MyShortcut.RelativePath = Path.GetDirectoryName(Application.ExecutablePath);
             MyShortcut.Description = "MadCow";
             MyShortcut.Save();
 
