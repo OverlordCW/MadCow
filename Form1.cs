@@ -60,6 +60,7 @@ namespace MadCow
         ///////////////////////////////////////////////////////////
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.VersionLabel.Text = Application.ProductVersion;
             _writer = new TextBoxStreamWriter(txtConsole);
             Console.SetOut(_writer);
             Console.WriteLine("Welcome to MadCow!");
@@ -98,6 +99,7 @@ namespace MadCow
             Helper.Helpers();//Loads the correct nameplate for shortcut/balloon/LastRepo enabled/disabled
             TestMPQ.getfileList(); //Load MPQ list from Blizz server. Todo: This might slow down a bit MadCow loading, maybe we could place it somewhere else?.
             Helper.KillUpdater();
+            
         }
 
         ///////////////////////////////////////////////////////////

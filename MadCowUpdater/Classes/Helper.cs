@@ -29,6 +29,22 @@ namespace MadCowUpdater
             }
         }
 
+        public static void DeleteZipFile()
+        {
+            if (File.Exists(Path.GetTempPath() + @"\MadCow.zip"))
+            {
+                File.Delete(Path.GetTempPath() + @"\MadCow.zip");
+            }
+        }
+
+        public static void DeleteTempFolder()
+        {
+            if (Directory.Exists(Path.GetTempPath() + @"\MadCow\"))
+            {
+                Directory.Delete(Path.GetTempPath() + @"\MadCow\", true);
+            }
+        }
+
         public static bool CopyDirectory(string SourcePath, string DestinationPath, bool overwriteexisting)
         {
             bool ret = false;

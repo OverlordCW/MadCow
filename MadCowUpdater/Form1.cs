@@ -95,10 +95,8 @@ namespace MadCowUpdater
             {
                 ProcessFinder.KillProcess("MadCow2011");
             }
-            if (Directory.Exists(Path.GetTempPath() + @"\MadCow\"))
-            {
-                Directory.Delete(Path.GetTempPath() + @"\MadCow\", true);
-            }
+            Helper.DeleteTempFolder();
+            Helper.DeleteZipFile();
             backgroundWorker2.RunWorkerAsync();
             this.UpdateButton.Enabled = false;
         }
