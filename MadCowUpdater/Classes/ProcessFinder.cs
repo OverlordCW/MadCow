@@ -44,7 +44,7 @@ namespace MadCowUpdater
         {
             foreach (Process clsProcess in Process.GetProcesses())
             {
-                    if (clsProcess.ProcessName.Contains(AppKillName))
+                    if (clsProcess.ProcessName.Contains(AppKillName) && clsProcess.ProcessName.Contains("Updater")==false)
                     {
                         // Kill Kill Kill
                         clsProcess.Kill();
