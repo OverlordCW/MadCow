@@ -82,5 +82,13 @@ namespace MadCow
                 }
             }
         }
+
+        public static void KillUpdater()
+        {
+            if (ProcessFinder.FindProcess("MadCowUpdater") == true)
+            {
+                ProcessFinder.KillProcess("MadCowUpdater");
+            }
+        }
     }
 }
