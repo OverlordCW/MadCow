@@ -22,53 +22,61 @@ namespace MadCowUpdater
         private void Form1_Load(object sender, EventArgs e)
         {
             Check.GetCurrentUserVersion();
-            backgroundWorker1.RunWorkerAsync();
+            StartCheckProcedure();
         }
 
-        //Parsing for Latest Version.
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        //We download both AssemblyInfo.cs from Wesko and Wetwlly for further comparison. Hardcoded? Kinda :P.
+        public void StartCheckProcedure()
         {
-            String[] commiters = { "Wesko", "wetwlly" };              
+            String[] commiters = { "Wesko", "wetwlly" };
             foreach (string commiter in commiters)
             {
                 try
                 {
-                    WebClient client = new WebClient();         
+                    WebClient client = new WebClient();
                     Uri uri = new Uri("https://raw.github.com/" + commiter + "/MadCow/master/Properties/AssemblyInfo.cs");
-                    client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(Checkversions);
-                    client.DownloadStringAsync(uri);
+                    parsed.Add(client.DownloadString(uri));
+                    client.Dispose();
                 }
                 catch
                 {
                     MessageBox.Show("Check yor internet connection");
                 }
             }
+            ParseVersions();
         }
 
-        public static int i = 0;
-        public static String[] parsed = new String[2];
-        public static Int32[] LastVersions = new Int32[2];
-        public Int32 LatestVersionFound;
-        
-        private void Checkversions(Object sender, DownloadStringCompletedEventArgs e)
+        public List<String> parsed = new List<string>();
+        public List<Int32> LastVersion = new List<Int32>();
+        //We add each version found on each branch to our LastVersion List.
+        public void ParseVersions()
         {
-            parsed[i] = e.Result;
-            i++;
-            
-            char[] r = { '"' };
-            string[] arr = parsed[i-1].Split(r);
-            LastVersions[i-1] = int.Parse(arr[23].Replace(".", ""));
-            //We execute comparison here.
-            if (i == 2)
+            int i = 0;
+            foreach (string element in parsed)
             {
-                CompareLastVersion();
+                char[] r = { '"' };
+                string[] arr = element.Split(r);
+                LastVersion.Add(int.Parse(arr[23].Replace(".", "")));
+                i++;
             }
+            CompareLastVersion();
         }
 
+        public Int32 LatestVersionFound = 0;       
+        public String LastCommiter = "";
+        //We take the max version out of the List and assign the correct developer for URI use.
         public void CompareLastVersion()
         {
-            LatestVersionFound = Math.Max(LastVersions[0], LastVersions[1]);
-            //MessageBox.Show(LatestVersionFound.ToString());
+            LatestVersionFound = Math.Max(LastVersion[0], LastVersion[1]);
+                      
+            if (LastVersion[0] > LastVersion[1])
+            {
+                LastCommiter = "Wesko";
+            }
+            else
+            {
+                LastCommiter = "wetwlly";
+            }
             Compare();
         }
         //Comparison Between User/Github Version.
@@ -78,14 +86,12 @@ namespace MadCowUpdater
             {
                 this.NoUpdateLabel.Visible = true;
                 this.pictureBox2.Visible = true;
-                this.Update();
             }
             else
             {
                 this.UpdateFound.Visible = true;
                 this.pictureBox1.Visible = true;
                 this.UpdateButton.Enabled = true;
-                this.Update();
             }
         }
 
@@ -101,17 +107,9 @@ namespace MadCowUpdater
             this.UpdateButton.Enabled = false;
         }
 
-        //Downloading Latest Version
+        //Downloading Latest Version from assigned developer.
         private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
         {
-            String LastCommiter = "";
-            if (LastVersions[0] > LastVersions[1])
-            {
-                LastCommiter = "Wesko";
-            }
-            else
-                LastCommiter = "wetwlly";
-
             Uri url = new Uri("https://github.com/" + LastCommiter + "/MadCow/zipball/master");
             System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
             System.Net.HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse();
@@ -167,20 +165,15 @@ namespace MadCowUpdater
 
         private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            //When the download is complete, we execute the uncompress/delete/copy procedures.
             UpdaterProcedures.RunWholeProcedure();
             this.UpdateComplete.Visible = true;
             this.UpdateButton.Visible = false;
-            this.Update();
             timer1.Enabled = true;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            //TODO: Fucking process hangs over task manager after exit I dunno why, must be checked!.
-            backgroundWorker1.CancelAsync();
-            backgroundWorker2.CancelAsync();
-            backgroundWorker1.Dispose();
-            backgroundWorker2.Dispose();
             Application.Exit();
         }
 

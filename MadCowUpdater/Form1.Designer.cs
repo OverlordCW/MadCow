@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.NoUpdateLabel = new System.Windows.Forms.Label();
             this.UpdateFound = new System.Windows.Forms.Label();
             this.UpdateButton = new System.Windows.Forms.Button();
@@ -43,11 +42,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // backgroundWorker1
-            // 
-            this.backgroundWorker1.WorkerSupportsCancellation = true;
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
             // NoUpdateLabel
             // 
@@ -166,7 +160,6 @@
 
         #endregion
 
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Label NoUpdateLabel;
         private System.Windows.Forms.Label UpdateFound;
         private System.Windows.Forms.PictureBox pictureBox1;
