@@ -97,6 +97,7 @@ namespace MadCow
             LoadLastUsedProfile(); //We try to Load the last used profile by the user.
             Helper.Helpers();//Loads the correct nameplate for shortcut/balloon/LastRepo enabled/disabled
             TestMPQ.getfileList(); //Load MPQ list from Blizz server. Todo: This might slow down a bit MadCow loading, maybe we could place it somewhere else?.
+            Helper.KillUpdater();
         }
 
         ///////////////////////////////////////////////////////////
@@ -2182,6 +2183,13 @@ namespace MadCow
                     Console.WriteLine("[Error] At LastRepository Disabler.");
                 }
             }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Process firstProc = new Process();
+            firstProc.StartInfo.FileName = @"MadCowUpdater\MadCowUpdater.exe";
+            firstProc.Start();
         }
     }
 }
