@@ -120,6 +120,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.ResetRepoFolder = new System.Windows.Forms.Button();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.VersionLabel = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
@@ -137,8 +139,7 @@
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.VersionLabel = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -167,10 +168,10 @@
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chain)).BeginInit();
             this.tabPage5.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
-            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // EnableAutoUpdateBox
@@ -894,6 +895,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.label28);
             this.tabPage4.Controls.Add(this.button5);
             this.tabPage4.Controls.Add(this.chain);
             this.tabPage4.Controls.Add(this.label27);
@@ -1091,9 +1093,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(18, 61);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(193, 13);
+            this.label2.Size = new System.Drawing.Size(190, 13);
             this.label2.TabIndex = 7;
-            this.label2.Text = "Download all MPQ needed by Mooege.";
+            this.label2.Text = "Download all MPQ needed by Mooege";
             // 
             // DownloadMPQSButton
             // 
@@ -1135,6 +1137,24 @@
             this.tabPage5.TabIndex = 5;
             this.tabPage5.Text = "About";
             this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.VersionLabel);
+            this.groupBox7.Location = new System.Drawing.Point(73, 21);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(200, 100);
+            this.groupBox7.TabIndex = 2;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Version";
+            // 
+            // VersionLabel
+            // 
+            this.VersionLabel.AutoSize = true;
+            this.VersionLabel.Location = new System.Drawing.Point(76, 45);
+            this.VersionLabel.Name = "VersionLabel";
+            this.VersionLabel.Size = new System.Drawing.Size(0, 13);
+            this.VersionLabel.TabIndex = 0;
             // 
             // timer1
             // 
@@ -1269,23 +1289,14 @@
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
             // 
-            // groupBox7
+            // label28
             // 
-            this.groupBox7.Controls.Add(this.VersionLabel);
-            this.groupBox7.Location = new System.Drawing.Point(73, 21);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(200, 100);
-            this.groupBox7.TabIndex = 2;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Version";
-            // 
-            // VersionLabel
-            // 
-            this.VersionLabel.AutoSize = true;
-            this.VersionLabel.Location = new System.Drawing.Point(76, 45);
-            this.VersionLabel.Name = "VersionLabel";
-            this.VersionLabel.Size = new System.Drawing.Size(0, 13);
-            this.VersionLabel.TabIndex = 0;
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(18, 103);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(112, 13);
+            this.label28.TabIndex = 26;
+            this.label28.Text = "Auto Update MadCow";
             // 
             // Form1
             // 
@@ -1337,13 +1348,13 @@
             this.tabPage4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chain)).EndInit();
             this.tabPage5.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.tabControl2.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
             this.tabPage7.ResumeLayout(false);
             this.tabPage7.PerformLayout();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1458,6 +1469,7 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Label VersionLabel;
+        private System.Windows.Forms.Label label28;
 
     }
 }

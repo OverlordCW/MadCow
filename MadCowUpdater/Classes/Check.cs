@@ -14,7 +14,7 @@ namespace MadCowUpdater
         public static void GetCurrentUserVersion()
         {
             var MadCowPath = Directory.GetParent(Program.path);
-            FileVersionInfo myFI = FileVersionInfo.GetVersionInfo(MadCowPath + @"\MadCow2011.exe");
+            FileVersionInfo myFI = FileVersionInfo.GetVersionInfo(MadCowPath + @"\MadCow.exe");
             String StringVersion = myFI.ProductVersion;
             UserVersion = int.Parse(StringVersion.Replace(".", ""));
         }

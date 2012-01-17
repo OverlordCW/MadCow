@@ -61,7 +61,7 @@ namespace MadCowUpdater
         {
             var MadCowPath = Directory.GetParent(Program.path);
             Process firstProc = new Process();
-            firstProc.StartInfo.FileName = MadCowPath + @"\MadCow2011.exe";
+            firstProc.StartInfo.FileName = MadCowPath + @"\MadCow.exe";
             firstProc.Start();
         }
     }

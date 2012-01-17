@@ -26,7 +26,7 @@ namespace MadCowUpdater
     {
         public static void compileSource()
         {
-            var madcowPath = Path.GetTempPath() + @"\MadCow\NewMadCow\MadCow2011.csproj";
+            var madcowPath = Path.GetTempPath() + @"\MadCow\NewMadCow\MadCow.csproj";
 
             var compilemadcowTask = Task<bool>.Factory.StartNew(() => CompileMadcow(madcowPath));
             Task.WaitAll(compilemadcowTask);

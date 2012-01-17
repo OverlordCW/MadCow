@@ -14,19 +14,23 @@ namespace MadCowUpdater
 {
     public partial class Form1 : Form
     {
+        public static Form1 GlobalAccess;
+
         public Form1()
         {
+            GlobalAccess = this;
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.SearchLabel.Visible = true;
             Check.GetCurrentUserVersion();
-            StartCheckProcedure();
+            backgroundWorker1.RunWorkerAsync();
         }
 
         //We download both AssemblyInfo.cs from Wesko and Wetwlly for further comparison. Hardcoded? Kinda :P.
-        public void StartCheckProcedure()
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             String[] commiters = { "Wesko", "wetwlly" };
             foreach (string commiter in commiters)
@@ -79,27 +83,29 @@ namespace MadCowUpdater
             }
             Compare();
         }
-        //Comparison Between User/Github Version.
+        //Comparison Between User/Github Version.      
         public void Compare()
         {
+            this.SearchLabel.Invoke((MethodInvoker)delegate { this.SearchLabel.Visible = false; });
             if (Check.UserVersion == LatestVersionFound)
             {
-                this.NoUpdateLabel.Visible = true;
-                this.pictureBox2.Visible = true;
+                this.NoUpdateLabel.Invoke((MethodInvoker)delegate { this.NoUpdateLabel.Visible = true; });
+                this.NoUpdateLabel.Invoke((MethodInvoker)delegate { this.pictureBox2.Visible = true; });
+                Form1.GlobalAccess.Invoke((MethodInvoker)delegate { this.timer1.Enabled = true;});
             }
             else
             {
-                this.UpdateFound.Visible = true;
-                this.pictureBox1.Visible = true;
-                this.UpdateButton.Enabled = true;
+                this.UpdateFound.Invoke((MethodInvoker)delegate { this.UpdateFound.Visible = true; });
+                this.pictureBox1.Invoke((MethodInvoker)delegate { this.pictureBox1.Visible = true; });
+                this.UpdateButton.Invoke((MethodInvoker)delegate { this.UpdateButton.Enabled = true; });
             }
         }
-
+        //Update Button Clic Event.
         private void UpdateButton_Click(object sender, EventArgs e)
         {
-            if (ProcessFinder.FindProcess("MadCow2011") == true)
+            if (ProcessFinder.FindProcess("MadCow") == true)
             {
-                ProcessFinder.KillProcess("MadCow2011");
+                ProcessFinder.KillProcess("MadCow");
             }
             Helper.DeleteTempFolder();
             Helper.DeleteZipFile();
@@ -172,9 +178,10 @@ namespace MadCowUpdater
             timer1.Enabled = true;
         }
 
+        //Timer tick event, if no update found or update progress finishes this will happen just to close the updater app.
         private void timer1_Tick(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
