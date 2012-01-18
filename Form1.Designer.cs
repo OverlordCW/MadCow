@@ -98,6 +98,8 @@
             this.generalProgressBar = new System.Windows.Forms.ProgressBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.button5 = new System.Windows.Forms.Button();
+            this.chain = new System.Windows.Forms.PictureBox();
             this.label27 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
@@ -118,6 +120,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.ResetRepoFolder = new System.Windows.Forms.Button();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.VersionLabel = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
@@ -135,7 +139,7 @@
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.chain = new System.Windows.Forms.PictureBox();
+            this.label28 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -162,11 +166,12 @@
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chain)).BeginInit();
             this.tabPage5.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chain)).BeginInit();
             this.SuspendLayout();
             // 
             // EnableAutoUpdateBox
@@ -335,7 +340,7 @@
             this.label12.BackColor = System.Drawing.Color.Transparent;
             this.label12.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.label12.Location = new System.Drawing.Point(6, 61);
+            this.label12.Location = new System.Drawing.Point(5, 133);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(334, 186);
             this.label12.TabIndex = 1;
@@ -890,6 +895,8 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.label28);
+            this.tabPage4.Controls.Add(this.button5);
             this.tabPage4.Controls.Add(this.chain);
             this.tabPage4.Controls.Add(this.label27);
             this.tabPage4.Controls.Add(this.label26);
@@ -918,12 +925,32 @@
             this.tabPage4.Text = "Help";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(218, 92);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(108, 35);
+            this.button5.TabIndex = 25;
+            this.button5.Text = "Update MadCow";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // chain
+            // 
+            this.chain.Image = global::MadCow.Properties.Resources.process_chain;
+            this.chain.Location = new System.Drawing.Point(292, 296);
+            this.chain.Name = "chain";
+            this.chain.Size = new System.Drawing.Size(18, 14);
+            this.chain.TabIndex = 24;
+            this.chain.TabStop = false;
+            this.chain.Visible = false;
+            // 
             // label27
             // 
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label27.ForeColor = System.Drawing.Color.SeaGreen;
-            this.label27.Location = new System.Drawing.Point(274, 271);
+            this.label27.Location = new System.Drawing.Point(274, 281);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(0, 13);
             this.label27.TabIndex = 23;
@@ -931,7 +958,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(22, 271);
+            this.label26.Location = new System.Drawing.Point(22, 281);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(83, 13);
             this.label26.TabIndex = 22;
@@ -939,7 +966,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(179, 265);
+            this.button4.Location = new System.Drawing.Point(179, 275);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 25);
             this.button4.TabIndex = 21;
@@ -952,14 +979,14 @@
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label23.ForeColor = System.Drawing.Color.SeaGreen;
-            this.label23.Location = new System.Drawing.Point(274, 241);
+            this.label23.Location = new System.Drawing.Point(274, 251);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(0, 13);
             this.label23.TabIndex = 20;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(179, 235);
+            this.button3.Location = new System.Drawing.Point(179, 245);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 25);
             this.button3.TabIndex = 19;
@@ -970,7 +997,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(22, 241);
+            this.label22.Location = new System.Drawing.Point(22, 251);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(134, 13);
             this.label22.TabIndex = 18;
@@ -981,7 +1008,7 @@
             this.label21.AutoSize = true;
             this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label21.ForeColor = System.Drawing.Color.SeaGreen;
-            this.label21.Location = new System.Drawing.Point(274, 301);
+            this.label21.Location = new System.Drawing.Point(274, 311);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(0, 13);
             this.label21.TabIndex = 17;
@@ -989,7 +1016,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(22, 301);
+            this.label20.Location = new System.Drawing.Point(22, 311);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(89, 13);
             this.label20.TabIndex = 16;
@@ -997,7 +1024,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(179, 296);
+            this.button2.Location = new System.Drawing.Point(179, 306);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 15;
@@ -1008,7 +1035,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(22, 211);
+            this.label19.Location = new System.Drawing.Point(22, 221);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(106, 13);
             this.label19.TabIndex = 14;
@@ -1019,14 +1046,14 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.SeaGreen;
-            this.label9.Location = new System.Drawing.Point(274, 211);
+            this.label9.Location = new System.Drawing.Point(274, 221);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(0, 13);
             this.label9.TabIndex = 13;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(179, 205);
+            this.button1.Location = new System.Drawing.Point(179, 215);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 25);
             this.button1.TabIndex = 12;
@@ -1037,7 +1064,7 @@
             // DownloadFileSpeed
             // 
             this.DownloadFileSpeed.AutoSize = true;
-            this.DownloadFileSpeed.Location = new System.Drawing.Point(23, 160);
+            this.DownloadFileSpeed.Location = new System.Drawing.Point(23, 189);
             this.DownloadFileSpeed.Name = "DownloadFileSpeed";
             this.DownloadFileSpeed.Size = new System.Drawing.Size(95, 13);
             this.DownloadFileSpeed.TabIndex = 10;
@@ -1047,7 +1074,7 @@
             // DownloadingFileName
             // 
             this.DownloadingFileName.AutoSize = true;
-            this.DownloadingFileName.Location = new System.Drawing.Point(23, 147);
+            this.DownloadingFileName.Location = new System.Drawing.Point(23, 176);
             this.DownloadingFileName.Name = "DownloadingFileName";
             this.DownloadingFileName.Size = new System.Drawing.Size(94, 13);
             this.DownloadingFileName.TabIndex = 9;
@@ -1056,7 +1083,7 @@
             // 
             // DownloadMPQSprogressBar
             // 
-            this.DownloadMPQSprogressBar.Location = new System.Drawing.Point(25, 115);
+            this.DownloadMPQSprogressBar.Location = new System.Drawing.Point(25, 144);
             this.DownloadMPQSprogressBar.Name = "DownloadMPQSprogressBar";
             this.DownloadMPQSprogressBar.Size = new System.Drawing.Size(301, 29);
             this.DownloadMPQSprogressBar.TabIndex = 8;
@@ -1064,15 +1091,15 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(18, 72);
+            this.label2.Location = new System.Drawing.Point(18, 61);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(193, 13);
+            this.label2.Size = new System.Drawing.Size(190, 13);
             this.label2.TabIndex = 7;
-            this.label2.Text = "Download all MPQ needed by Mooege.";
+            this.label2.Text = "Download all MPQ needed by Mooege";
             // 
             // DownloadMPQSButton
             // 
-            this.DownloadMPQSButton.Location = new System.Drawing.Point(218, 59);
+            this.DownloadMPQSButton.Location = new System.Drawing.Point(218, 48);
             this.DownloadMPQSButton.Name = "DownloadMPQSButton";
             this.DownloadMPQSButton.Size = new System.Drawing.Size(108, 38);
             this.DownloadMPQSButton.TabIndex = 6;
@@ -1101,14 +1128,33 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.groupBox7);
             this.tabPage5.Controls.Add(this.label12);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage5.Size = new System.Drawing.Size(345, 334);
             this.tabPage5.TabIndex = 5;
-            this.tabPage5.Text = "Credits";
+            this.tabPage5.Text = "About";
             this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.VersionLabel);
+            this.groupBox7.Location = new System.Drawing.Point(73, 21);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(200, 100);
+            this.groupBox7.TabIndex = 2;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Version";
+            // 
+            // VersionLabel
+            // 
+            this.VersionLabel.AutoSize = true;
+            this.VersionLabel.Location = new System.Drawing.Point(76, 45);
+            this.VersionLabel.Name = "VersionLabel";
+            this.VersionLabel.Size = new System.Drawing.Size(0, 13);
+            this.VersionLabel.TabIndex = 0;
             // 
             // timer1
             // 
@@ -1243,15 +1289,14 @@
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
             // 
-            // chain
+            // label28
             // 
-            this.chain.Image = global::MadCow.Properties.Resources.process_chain;
-            this.chain.Location = new System.Drawing.Point(292, 286);
-            this.chain.Name = "chain";
-            this.chain.Size = new System.Drawing.Size(18, 14);
-            this.chain.TabIndex = 24;
-            this.chain.TabStop = false;
-            this.chain.Visible = false;
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(18, 103);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(112, 13);
+            this.label28.TabIndex = 26;
+            this.label28.Text = "Auto Update MadCow";
             // 
             // Form1
             // 
@@ -1301,13 +1346,15 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chain)).EndInit();
             this.tabPage5.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.tabControl2.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
             this.tabPage7.ResumeLayout(false);
             this.tabPage7.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chain)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1419,6 +1466,10 @@
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.PictureBox chain;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Label VersionLabel;
+        private System.Windows.Forms.Label label28;
 
     }
 }
