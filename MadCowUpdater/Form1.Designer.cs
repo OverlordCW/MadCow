@@ -41,6 +41,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.SearchLabel = new System.Windows.Forms.Label();
+            this.UpdatingLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -140,12 +141,23 @@
             // 
             this.SearchLabel.AutoSize = true;
             this.SearchLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SearchLabel.Location = new System.Drawing.Point(35, 7);
+            this.SearchLabel.Location = new System.Drawing.Point(32, 6);
             this.SearchLabel.Name = "SearchLabel";
             this.SearchLabel.Size = new System.Drawing.Size(90, 16);
             this.SearchLabel.TabIndex = 7;
             this.SearchLabel.Text = "Searching...";
             this.SearchLabel.Visible = false;
+            // 
+            // UpdatingLabel
+            // 
+            this.UpdatingLabel.AutoSize = true;
+            this.UpdatingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UpdatingLabel.Location = new System.Drawing.Point(39, 6);
+            this.UpdatingLabel.Name = "UpdatingLabel";
+            this.UpdatingLabel.Size = new System.Drawing.Size(83, 16);
+            this.UpdatingLabel.TabIndex = 8;
+            this.UpdatingLabel.Text = "Updating...";
+            this.UpdatingLabel.Visible = false;
             // 
             // Form1
             // 
@@ -161,6 +173,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.UpdateFound);
             this.Controls.Add(this.NoUpdateLabel);
+            this.Controls.Add(this.UpdatingLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -189,6 +202,7 @@
         public System.Windows.Forms.Label UpdateComplete;
         private System.Windows.Forms.Label SearchLabel;
         public System.Windows.Forms.Timer timer1;
+        public System.Windows.Forms.Label UpdatingLabel;
 
 
     }

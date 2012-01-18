@@ -63,6 +63,7 @@ namespace MadCowUpdater
             Process firstProc = new Process();
             firstProc.StartInfo.FileName = MadCowPath + @"\MadCow.exe";
             firstProc.Start();
+            //Form1.GlobalAccess.timer1.Enabled = true;
         }
     }
 }

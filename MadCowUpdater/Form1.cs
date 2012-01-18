@@ -111,6 +111,8 @@ namespace MadCowUpdater
             Helper.DeleteZipFile();
             backgroundWorker2.RunWorkerAsync();
             this.UpdateButton.Enabled = false;
+            this.UpdatingLabel.Visible = true;
+            this.UpdateFound.Visible = false;
         }
 
         //Downloading Latest Version from assigned developer.
@@ -174,11 +176,11 @@ namespace MadCowUpdater
             //When the download is complete, we execute the uncompress/delete/copy procedures.
             UpdaterProcedures.RunWholeProcedure();
             this.UpdateComplete.Visible = true;
+            this.UpdatingLabel.Visible = false;
             this.UpdateButton.Visible = false;
-            timer1.Enabled = true;
         }
 
-        //Timer tick event, if no update found or update progress finishes this will happen just to close the updater app.
+        //Timer tick event, if no update found just to close the updater app.
         private void timer1_Tick(object sender, EventArgs e)
         {
             this.Close();
