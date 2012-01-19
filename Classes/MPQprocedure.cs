@@ -43,9 +43,18 @@ namespace MadCow
                 ProcessFinder.KillProcess("Diablo");
                 Console.WriteLine("Killed Diablo3 Process");
             }
-            Console.WriteLine("Creating MadCow MPQ folder...");
-            Directory.CreateDirectory(Dst);
-            Console.WriteLine("Creating MadCow MPQ folder Complete");
+            if(Directory.Exists(Dst)==false)
+            {
+                Console.WriteLine("Creating MPQ folder...");
+                Directory.CreateDirectory(Dst);
+                Console.WriteLine("Created MPQ folder over:" + Dst);
+            }
+            if (Directory.Exists(Path.Combine(source.Configs["DiabloPath"].Get("MPQDest"), @"base\")) == false)
+            {
+                Console.WriteLine("Creating MPQ base folder...");
+                Directory.CreateDirectory(Dst);
+                Console.WriteLine("Created MPQ base folder over:" + Dst + @"\base\");
+            }
             //Proceeds to copy data
             Console.WriteLine("Copying MPQ files to MadCow Folders...");
             copyDirectory(Src, Dst);

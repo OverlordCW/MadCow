@@ -103,9 +103,13 @@ namespace MadCow
 
        public static Boolean hasMpqs()
         {
-            String Destination = Program.programPath + @"\MPQ\";
-            string[] files2 = Directory.GetFiles(Destination, "*.mpq", SearchOption.AllDirectories);
-
+           IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.iniii");
+           String Destination = Path.Combine(source.Configs["DiabloPath"].Get("MPQDest"),"base");
+           string[] files2 = Directory.GetFiles(Destination, "*.mpq", SearchOption.TopDirectoryOnly);
+           Console.WriteLine(Destination);
+           Console.WriteLine(TestMPQ.mpqList.Count);
+           Console.WriteLine(files2.Length);
+           
             if (files2.Length < TestMPQ.mpqList.Count - 1) //-1 For people using previous supported version.
             {
                 return false;

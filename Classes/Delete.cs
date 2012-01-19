@@ -86,7 +86,7 @@ namespace MadCow
 
         public static void DeleteOldRepoVersion(string developerName)
         {
-            Console.WriteLine("Looking for [{0}] old repository", developerName);
+            Console.WriteLine("Looking for [{0}] existing repository.", developerName);
             String directoryString = Program.programPath + @"\Repositories\";
             Int32 i = directoryString.LastIndexOf('\\');
             directoryString = directoryString.Remove(i, directoryString.Length - i);
@@ -102,7 +102,7 @@ namespace MadCow
                         folderName[j] = dinfo.Name;
                         folderName[j + 1] = directory;
                         Directory.Delete(folderName[1], true);
-                        Console.WriteLine("Deleted Old Version of : {0} revision.", folderName[0]);
+                        Console.WriteLine("Deleted Old Version of : {0} repository.", folderName[0]);
                     }
             }
         }

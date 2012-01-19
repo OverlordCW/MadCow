@@ -484,22 +484,12 @@ namespace MadCow
                     }
                     if (ErrorFinder.errorFileName.Contains("MajorFailure"))
                     {
-                        var ErrorAnswer = MessageBox.Show(@"Seems some major files are corrupted." + "\nWould you like MadCow to fix this for you?", "Found Corrupted Files!",
-                            MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
-
-                        if (ErrorAnswer == DialogResult.Yes)
-                        {
-                            tabControl1.Invoke(new Action(() =>
-                            {
-                                this.tabControl1.SelectTab("tabPage4");
-                            }
-                            ));
-                            backgroundWorker3.RunWorkerAsync();
-                        }
+                        var ErrorAnswer = MessageBox.Show(@"One or more MPQ files are corrupted and MadCow is unable to detect which file/s are causing this." + "\nPlease visit Mooege Forum or Irc and ask for support.", "Found Corrupted Files!",
+                            MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     }
                     else
                     {
-                        Console.WriteLine("Unknown Exception");
+                        Console.WriteLine("[ERROR] Mooege can't run and MadCow was unable to handle the exception.");
                         Console.WriteLine(ErrorFinder.errorFileName);
                     }
                 }
@@ -1454,7 +1444,7 @@ namespace MadCow
             int i = 0; //We use this variable to select save path destination.            
             //Will use this to determinate the correct save path.
             String[] mpqDestination = {
-                                          Path.Combine(source.Configs["DiabloPath"].Get("MPQDest"), "base"),
+                                          Path.Combine(source.Configs["DiabloPath"].Get("MPQDest"), @"base\"),
                                           source.Configs["DiabloPath"].Get("MPQDest")
                                       };
             Stopwatch speedTimer = new Stopwatch();
@@ -1481,7 +1471,7 @@ namespace MadCow
                 {
                     using (System.IO.Stream streamRemote = client.OpenRead(new Uri(value)))
                     {
-                        using (Stream streamLocal = new FileStream(Program.programPath + mpqDestination[i] + name + ext, FileMode.Create, FileAccess.Write, FileShare.None))
+                        using (Stream streamLocal = new FileStream(mpqDestination[i] + @"\" + name + ext, FileMode.Create, FileAccess.Write, FileShare.None))
                         {
                             //We start the timer to measure speed - This still needs testing not sure if speed its accuarate. - wesko
                             speedTimer.Start();
@@ -1687,7 +1677,7 @@ namespace MadCow
         {
             IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
             String downloadSource = source.Configs["DiabloPath"].Get("MPQpath");
-            String downloadDestination = Program.programPath + @"\MPQ\base\";
+            String downloadDestination = Path.Combine(source.Configs["DiabloPath"].Get("MPQDest"), @"base\");
             DownloadingFileName.Invoke(new Action(() =>
             {
                 DownloadingFileName.Visible = false;
@@ -1827,7 +1817,7 @@ namespace MadCow
                         {
                             var regex = new Regex("<title>(.*)</title>");
                             var match = regex.Match(line);
-                            textBox1.Invoke(new Action(() => { textBox1.AppendText(i + @".-" + match.Groups[1].Value + "\n"); }));
+                            textBox1.Invoke(new Action(() => { textBox1.AppendText(i + @".-" + match.Groups[1].Value + "\n\r"); }));
                             i++;
                         }
                         else if (System.Text.RegularExpressions.Regex.IsMatch(line, "<title>") && i == 0)
@@ -1850,7 +1840,8 @@ namespace MadCow
                             var match = regex.Match(line);
                             textBox1.Invoke(new Action(() =>
                             {
-                                textBox1.AppendText(@"Author: " + match.Groups[1].Value + "\n");
+                                textBox1.AppendText(@"Author: " + match.Groups[1].Value + "\n\r");
+                                textBox1.AppendText(Environment.NewLine);
                                 textBox1.AppendText(Environment.NewLine);
                             }));
                         }
@@ -2216,6 +2207,12 @@ namespace MadCow
                 source.Configs["DiabloPath"].Set("MPQDest", folderBrowserDialog1.SelectedPath);
                 source.Save();
                 MPQDestTextBox.Text = folderBrowserDialog1.SelectedPath;
+                //We create the base folder here, else MadCow will cry somewhere.
+                if (Directory.Exists(folderBrowserDialog1.SelectedPath + @"\base")==false)
+                {
+                    Directory.CreateDirectory(folderBrowserDialog1.SelectedPath + @"\base");
+                    Console.WriteLine("Created base folder.");
+                }
             }
         }
 
