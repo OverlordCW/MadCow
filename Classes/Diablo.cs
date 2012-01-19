@@ -36,6 +36,8 @@ namespace MadCow
             {
                 if (File.Exists(Compile.currentMooegeExePath))
                 {
+                    //Update MooegeIni to ensure settings are applied.
+                    Compile.ModifyMooegeINI();
                     Console.WriteLine("Starting Mooege..");
                     Process Mooege = new Process();
                     Mooege.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
