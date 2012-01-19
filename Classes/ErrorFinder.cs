@@ -103,7 +103,7 @@ namespace MadCow
 
        public static Boolean hasMpqs()
         {
-           IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.iniii");
+           IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
            String Destination = Path.Combine(source.Configs["DiabloPath"].Get("MPQDest"),"base");
            string[] files2 = Directory.GetFiles(Destination, "*.mpq", SearchOption.TopDirectoryOnly);
            Console.WriteLine(Destination);
