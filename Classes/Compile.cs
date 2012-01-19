@@ -16,10 +16,11 @@
 
 using System;
 using System.IO;
+using System.Windows.Forms;
+
 using Nini.Config;
 using Microsoft.Build.Evaluation;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace MadCow
 {
@@ -86,21 +87,43 @@ namespace MadCow
             return false;
         }
 
+        // Should probably somewhere else.
         public static void ModifyMooegeINI()
         {
             try
             {
                 //After compiling we modify Mooege INI config file with the correct Storage path.
                 IConfigSource source = new IniConfigSource(Compile.mooegeINI);
-                string fileName = source.Configs["Storage"].Get("MPQRoot");
+                var fileName = source.Configs["Storage"].Get("MPQRoot");
                 if (fileName.Contains("${Root}"))
                 {
-                    Console.WriteLine("Modifying Mooege MPQ storage folder...");
-                    IConfig config = source.Configs["Storage"];
-                    config.Set("MPQRoot", Program.programPath + "\\MPQ");
+                    Console.WriteLine("Modifying settings...");
+                    source.Configs["Storage"].Set("MPQRoot", Form1.GlobalAccess.MPQDestTextBox.Text);
+                    source.Configs["ServerLog"].Set("Enabled", Form1.GlobalAccess.SettingsCheckedListBox.GetItemChecked(0));
+                    source.Configs["PacketLog"].Set("Enabled", Form1.GlobalAccess.SettingsCheckedListBox.GetItemChecked(1));
+
+                    TextReader tr = new StreamReader(Form1.CurrentProfile);
+                    //The next values are set in an SPECIFIC ORDER, changing the order will make INI modifying FAIL.
+                    //MooNet-Server IP
+                    source.Configs["MooNet-Server"].Set("BindIP", tr.ReadLine());
+                    //Game-Server IP
+                    source.Configs["Game-Server"].Set("BindIP", tr.ReadLine());
+                    //Public IP
+                    source.Configs["NAT"].Set("PublicIP", tr.ReadLine());
+                    //MooNet-Server Port
+                    source.Configs["MooNet-Server"].Set("Port", tr.ReadLine());
+                    //Game-Server Port
+                    source.Configs["Game-Server"].Set("Port", tr.ReadLine());
+                    //MOTD
+                    source.Configs["MooNet-Server"].Set("MOTD", tr.ReadLine());
+                    //NAT
+                    source.Configs["NAT"].Set("Enabled", tr.ReadLine());
+                    Console.WriteLine("Set Mooege config.ini according to your profile - Complete");
                     source.Save();
+                    tr.Close();
+
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Modifying Mooege MPQ storage folder Complete.");
+                    Console.WriteLine("Modifying Mooege settings Complete.");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
             }

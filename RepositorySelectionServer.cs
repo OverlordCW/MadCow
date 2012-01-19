@@ -67,34 +67,7 @@ namespace MadCow
                 if (answer == DialogResult.Yes)
                 {
                     ProcessFinder.KillProcess("Mooege");
-                    TextReader tr = new StreamReader(Form1.CurrentProfile);
-                    IConfigSource source = new IniConfigSource(Compile.mooegeINI);
-                    //The next values are set in an SPECIFIC ORDER, changing the order will make INI modifying FAIL.
-                    //MooNet-Server IP
-                    IConfig config = source.Configs["MooNet-Server"];
-                    config.Set("BindIP", tr.ReadLine());
-                    //Game-Server IP
-                    IConfig config2 = source.Configs["Game-Server"];
-                    config2.Set("BindIP", tr.ReadLine());
-                    //Public IP
-                    IConfig config4 = source.Configs["NAT"];
-                    config4.Set("PublicIP", tr.ReadLine());
-                    //MooNet-Server Port
-                    IConfig config1 = source.Configs["MooNet-Server"];
-                    config1.Set("Port", tr.ReadLine());
-                    //Game-Server Port
-                    IConfig config3 = source.Configs["Game-Server"];
-                    config3.Set("Port", tr.ReadLine());
-                    //MOTD
-                    IConfig config7 = source.Configs["MooNet-Server"];
-                    config7.Set("MOTD", tr.ReadLine());
-                    //NAT
-                    IConfig config5 = source.Configs["NAT"];
-                    config5.Set("Enabled", tr.ReadLine());
-                    Console.WriteLine("Set Mooege config.ini according to your profile - Complete");
-                    source.Save();
-                    tr.Close();
-
+                    Compile.ModifyMooegeINI();
                     Process proc0 = new Process();
                     proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
                     proc0.Start();
@@ -108,34 +81,7 @@ namespace MadCow
             else
             {
                 ProcessFinder.KillProcess("Mooege");
-                TextReader tr = new StreamReader(Form1.CurrentProfile);
-                IConfigSource source = new IniConfigSource(Compile.mooegeINI);
-                //The next values are set in an SPECIFIC ORDER, changing the order will make INI modifying FAIL.
-                //MooNet-Server IP
-                IConfig config = source.Configs["MooNet-Server"];
-                config.Set("BindIP", tr.ReadLine());
-                //Game-Server IP
-                IConfig config2 = source.Configs["Game-Server"];
-                config2.Set("BindIP", tr.ReadLine());
-                //Public IP
-                IConfig config4 = source.Configs["NAT"];
-                config4.Set("PublicIP", tr.ReadLine());
-                //MooNet-Server Port
-                IConfig config1 = source.Configs["MooNet-Server"];
-                config1.Set("Port", tr.ReadLine());
-                //Game-Server Port
-                IConfig config3 = source.Configs["Game-Server"];
-                config3.Set("Port", tr.ReadLine());
-                //MOTD
-                IConfig config7 = source.Configs["MooNet-Server"];
-                config7.Set("MOTD", tr.ReadLine());
-                //NAT
-                IConfig config5 = source.Configs["NAT"];
-                config5.Set("Enabled", tr.ReadLine());
-                Console.WriteLine("Set Mooege config.ini according to your profile - Complete");
-                source.Save();
-                tr.Close();
-
+                Compile.ModifyMooegeINI();
                 Process proc0 = new Process();
                 proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
                 proc0.Start();
