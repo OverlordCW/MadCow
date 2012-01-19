@@ -123,6 +123,12 @@
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.VersionLabel = new System.Windows.Forms.Label();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.SettingsCheckedListBox = new System.Windows.Forms.CheckedListBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.BrowseMPQPathButton = new System.Windows.Forms.Button();
+            this.MPQDestTextBox = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
@@ -141,12 +147,6 @@
             this.backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.tabPage8 = new System.Windows.Forms.TabPage();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.MPQDestTextBox = new System.Windows.Forms.TextBox();
-            this.BrowseMPQPathButton = new System.Windows.Forms.Button();
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.SettingsCheckedListBox = new System.Windows.Forms.CheckedListBox();
             ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -176,12 +176,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.chain)).BeginInit();
             this.tabPage5.SuspendLayout();
             this.groupBox7.SuspendLayout();
+            this.tabPage8.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
-            this.tabPage8.SuspendLayout();
-            this.groupBox8.SuspendLayout();
-            this.groupBox9.SuspendLayout();
             this.SuspendLayout();
             // 
             // EnableAutoUpdateBox
@@ -1176,6 +1176,69 @@
             this.VersionLabel.Size = new System.Drawing.Size(0, 13);
             this.VersionLabel.TabIndex = 0;
             // 
+            // tabPage8
+            // 
+            this.tabPage8.Controls.Add(this.groupBox9);
+            this.tabPage8.Controls.Add(this.groupBox8);
+            this.tabPage8.Location = new System.Drawing.Point(4, 22);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage8.Size = new System.Drawing.Size(345, 334);
+            this.tabPage8.TabIndex = 6;
+            this.tabPage8.Text = "Mooege";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.SettingsCheckedListBox);
+            this.groupBox9.Location = new System.Drawing.Point(6, 66);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(333, 262);
+            this.groupBox9.TabIndex = 1;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "INI Settings";
+            // 
+            // SettingsCheckedListBox
+            // 
+            this.SettingsCheckedListBox.FormattingEnabled = true;
+            this.SettingsCheckedListBox.Items.AddRange(new object[] {
+            "Enable File Logging",
+            "Enable Packet Logging"});
+            this.SettingsCheckedListBox.Location = new System.Drawing.Point(6, 19);
+            this.SettingsCheckedListBox.Name = "SettingsCheckedListBox";
+            this.SettingsCheckedListBox.Size = new System.Drawing.Size(321, 49);
+            this.SettingsCheckedListBox.TabIndex = 0;
+            this.SettingsCheckedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.SettingsCheckedListBox_ItemCheck);
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.BrowseMPQPathButton);
+            this.groupBox8.Controls.Add(this.MPQDestTextBox);
+            this.groupBox8.Location = new System.Drawing.Point(6, 6);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(333, 54);
+            this.groupBox8.TabIndex = 0;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "MPQ Destination";
+            // 
+            // BrowseMPQPathButton
+            // 
+            this.BrowseMPQPathButton.Location = new System.Drawing.Point(303, 17);
+            this.BrowseMPQPathButton.Name = "BrowseMPQPathButton";
+            this.BrowseMPQPathButton.Size = new System.Drawing.Size(24, 23);
+            this.BrowseMPQPathButton.TabIndex = 1;
+            this.BrowseMPQPathButton.Text = "...";
+            this.BrowseMPQPathButton.UseVisualStyleBackColor = true;
+            this.BrowseMPQPathButton.Click += new System.EventHandler(this.BrowseMPQPathButton_Click);
+            // 
+            // MPQDestTextBox
+            // 
+            this.MPQDestTextBox.Location = new System.Drawing.Point(6, 19);
+            this.MPQDestTextBox.Name = "MPQDestTextBox";
+            this.MPQDestTextBox.ReadOnly = true;
+            this.MPQDestTextBox.Size = new System.Drawing.Size(291, 20);
+            this.MPQDestTextBox.TabIndex = 0;
+            // 
             // timer1
             // 
             this.timer1.Interval = 60000;
@@ -1313,69 +1376,6 @@
             // 
             this.folderBrowserDialog1.Description = "Select the MPQ destination.";
             // 
-            // tabPage8
-            // 
-            this.tabPage8.Controls.Add(this.groupBox9);
-            this.tabPage8.Controls.Add(this.groupBox8);
-            this.tabPage8.Location = new System.Drawing.Point(4, 22);
-            this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(345, 334);
-            this.tabPage8.TabIndex = 6;
-            this.tabPage8.Text = "Mooege";
-            this.tabPage8.UseVisualStyleBackColor = true;
-            // 
-            // groupBox8
-            // 
-            this.groupBox8.Controls.Add(this.BrowseMPQPathButton);
-            this.groupBox8.Controls.Add(this.MPQDestTextBox);
-            this.groupBox8.Location = new System.Drawing.Point(6, 6);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(333, 54);
-            this.groupBox8.TabIndex = 0;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "MPQ Destination";
-            // 
-            // MPQDestTextBox
-            // 
-            this.MPQDestTextBox.Location = new System.Drawing.Point(6, 19);
-            this.MPQDestTextBox.Name = "MPQDestTextBox";
-            this.MPQDestTextBox.ReadOnly = true;
-            this.MPQDestTextBox.Size = new System.Drawing.Size(291, 20);
-            this.MPQDestTextBox.TabIndex = 0;
-            // 
-            // BrowseMPQPathButton
-            // 
-            this.BrowseMPQPathButton.Location = new System.Drawing.Point(303, 17);
-            this.BrowseMPQPathButton.Name = "BrowseMPQPathButton";
-            this.BrowseMPQPathButton.Size = new System.Drawing.Size(24, 23);
-            this.BrowseMPQPathButton.TabIndex = 1;
-            this.BrowseMPQPathButton.Text = "...";
-            this.BrowseMPQPathButton.UseVisualStyleBackColor = true;
-            this.BrowseMPQPathButton.Click += new System.EventHandler(this.BrowseMPQPathButton_Click);
-            // 
-            // groupBox9
-            // 
-            this.groupBox9.Controls.Add(this.SettingsCheckedListBox);
-            this.groupBox9.Location = new System.Drawing.Point(6, 66);
-            this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(333, 262);
-            this.groupBox9.TabIndex = 1;
-            this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "INI Settings";
-            // 
-            // SettingsCheckedListBox
-            // 
-            this.SettingsCheckedListBox.FormattingEnabled = true;
-            this.SettingsCheckedListBox.Items.AddRange(new object[] {
-            "Enable File Logging",
-            "Enable Packet Logging"});
-            this.SettingsCheckedListBox.Location = new System.Drawing.Point(6, 19);
-            this.SettingsCheckedListBox.Name = "SettingsCheckedListBox";
-            this.SettingsCheckedListBox.Size = new System.Drawing.Size(321, 49);
-            this.SettingsCheckedListBox.TabIndex = 0;
-            this.SettingsCheckedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.SettingsCheckedListBox_ItemCheck);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1429,15 +1429,15 @@
             this.tabPage5.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
+            this.tabPage8.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
             this.tabControl2.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
             this.tabPage7.ResumeLayout(false);
             this.tabPage7.PerformLayout();
-            this.tabPage8.ResumeLayout(false);
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
-            this.groupBox9.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
