@@ -15,7 +15,7 @@ namespace MadCowUpdater
         {
             String Destination = Path.GetTempPath() + @"\MadCow";
             string[] files2 = Directory.GetDirectories(Destination);
-            foreach(string directory in files2)
+            foreach (string directory in files2)
             {
                 Directory.Move(directory, Path.GetTempPath() + @"\MadCow\NewMadCow");
             }
@@ -25,7 +25,7 @@ namespace MadCowUpdater
         {
             if (Directory.Exists(Path.GetTempPath() + @"\MadCow\NewMadCow\bin\Debug\MadCowUpdater"))
             {
-                Directory.Delete(Path.GetTempPath() + @"\MadCow\NewMadCow\bin\Debug\MadCowUpdater",true);
+                Directory.Delete(Path.GetTempPath() + @"\MadCow\NewMadCow\bin\Debug\MadCowUpdater", true);
             }
         }
 
@@ -72,11 +72,11 @@ namespace MadCowUpdater
                 }
                 ret = true;
             }
-            catch (Exception ex)
+            catch
             {
                 ret = false;
             }
             return ret;
-        }  
+        }
     }
 }

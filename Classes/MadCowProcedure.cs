@@ -28,11 +28,14 @@ namespace MadCow
 {
     class MadCowProcedure
     {
-        public static void RunWholeProcedure() //This is actually the whole process MadCow uses after Downloading source.
+        //This is actually the whole process MadCow uses after Downloading source.
+        #region RunProcedure
+        public static void RunWholeProcedure()
         {
             Compile.currentMooegeExePath = Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\Mooege.exe";
             Compile.currentMooegeDebugFolderPath = Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\";
             Compile.mooegeINI = Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini";
+
             ZipFile zip = null;
             var events = new FastZipEvents();
 
@@ -55,34 +58,33 @@ namespace MadCow
                 //RefreshDesktop.RefreshDesktopPlease(); //Sends a refresh call to desktop, probably this is working for Windows Explorer too, so i'll leave it there for now -wesko
                 //Thread.Sleep(2000); //<-This and ^this is needed for madcow to work on VM XP, you need to wait for Windows Explorer to refresh folders or compiling wont find the new mooege folder just uncompressed.
                 Console.WriteLine("Uncompress Complete.");
-                if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+                if (File.Exists(Program.madcowINI))
                 {
-                    IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                    IConfigSource source = new IniConfigSource(Program.madcowINI);
                     String Src = source.Configs["Balloons"].Get("ShowBalloons");
 
                     if (Src.Contains("1"))
                     {
-                        Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Uncompress Complete!", ToolTipIcon.Info);
+                        Form1.GlobalAccess.MadCowTrayIcon.ShowBalloonTip(1000, "MadCow", "Uncompress Complete!", ToolTipIcon.Info);
                     }
                 }
                 Form1.GlobalAccess.Invoke((MethodInvoker)delegate { Form1.GlobalAccess.generalProgressBar.PerformStep(); });
                 Compile.compileSource(); //Compile solution projects.
                 Form1.GlobalAccess.Invoke((MethodInvoker)delegate { Form1.GlobalAccess.generalProgressBar.PerformStep(); });
-                // Is now done before starting to facilitate other settings.
-                //Compile.ModifyMooegeINI(); //Add MadCow MPQ folder Path to Mooege.
                 Form1.GlobalAccess.Invoke((MethodInvoker)delegate { Form1.GlobalAccess.generalProgressBar.PerformStep(); });
                 Console.WriteLine("[Process Complete!]");
-                if (File.Exists(Program.programPath + "\\Tools\\" + "madcow.ini"))
+                if (File.Exists(Program.madcowINI))
                 {
-                    IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+                    IConfigSource source = new IniConfigSource(Program.madcowINI);
                     String Src = source.Configs["Balloons"].Get("ShowBalloons");
 
                     if (Src.Contains("1"))
                     {
-                        Form1.GlobalAccess.notifyIcon1.ShowBalloonTip(1000, "MadCow", "Process Complete!", ToolTipIcon.Info);
+                        Form1.GlobalAccess.MadCowTrayIcon.ShowBalloonTip(1000, "MadCow", "Process Complete!", ToolTipIcon.Info);
                     }
                 }
             });
         }
+        #endregion
     }
 }

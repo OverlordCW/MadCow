@@ -44,29 +44,29 @@ namespace MadCow
                                 //This one is for Parsing Errors
                                 if (System.Text.RegularExpressions.Regex.IsMatch(oldline, "Applying file:"))
                                 {
-                                var pattern = "Applying file: (?<filename>.*?).mpq";
-                                var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                                var match = regex.Match(oldline);
-                                errorFileName = match.Groups["filename"].Value;
-                                return true;  
+                                    var pattern = "Applying file: (?<filename>.*?).mpq";
+                                    var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                                    var match = regex.Match(oldline);
+                                    errorFileName = match.Groups["filename"].Value;
+                                    return true;
                                 }
                                 //This one is for Missing CoreData // ClientData
                                 if (System.Text.RegularExpressions.Regex.IsMatch(oldline, "Cannot find base MPQ file:"))
                                 {
-                                var pattern = "Cannot find base MPQ file: (?<filename>.*?).mpq";
-                                var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                                var match = regex.Match(oldline);
-                                errorFileName = match.Groups["filename"].Value;
-                                return true;
+                                    var pattern = "Cannot find base MPQ file: (?<filename>.*?).mpq";
+                                    var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                                    var match = regex.Match(oldline);
+                                    errorFileName = match.Groups["filename"].Value;
+                                    return true;
                                 }
                                 //Missing a base file/folder
                                 if (System.Text.RegularExpressions.Regex.IsMatch(oldline, "Required patch-chain version"))
                                 {
-                                var pattern = "Required patch-chain version (?<Version>\\d+)";
-                                var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                                var match = regex.Match(oldline);
-                                errorFileName = "d3-update-base-" + match.Groups["Version"].Value;
-                                return true;
+                                    var pattern = "Required patch-chain version (?<Version>\\d+)";
+                                    var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                                    var match = regex.Match(oldline);
+                                    errorFileName = "d3-update-base-" + match.Groups["Version"].Value;
+                                    return true;
                                 }
                                 //Need to pretty much redownload all MPQs
                                 if (System.Text.RegularExpressions.Regex.IsMatch(line, "Mooege.Core.GS.Items.ItemGenerator"))
@@ -101,15 +101,13 @@ namespace MadCow
             }
         }
 
-       public static Boolean hasMpqs()
+        public static Boolean hasMpqs()
         {
-           IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
-           String Destination = Path.Combine(source.Configs["DiabloPath"].Get("MPQDest"),"base");
-           string[] files2 = Directory.GetFiles(Destination, "*.mpq", SearchOption.TopDirectoryOnly);
-           Console.WriteLine(Destination);
-           Console.WriteLine(TestMPQ.mpqList.Count);
-           Console.WriteLine(files2.Length);
-           
+            //Here we compare onle base mpqs from Diablo Client & our destinations MPQ Path.
+            IConfigSource source = new IniConfigSource(Program.madcowINI);
+            String Destination = Path.Combine(source.Configs["DiabloPath"].Get("MPQDest"), "base");
+            string[] files2 = Directory.GetFiles(Destination, "*.mpq", SearchOption.TopDirectoryOnly);
+
             if (files2.Length < TestMPQ.mpqList.Count - 1) //-1 For people using previous supported version.
             {
                 return false;

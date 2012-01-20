@@ -34,8 +34,8 @@ namespace MadCowUpdater
 
         private static bool CompileMadcow(string madcowPath)
         {
-                var madcowProject = new Project(madcowPath);
-                return madcowProject.Build(new Microsoft.Build.Logging.FileLogger());
+            var madcowProject = new Project(madcowPath);
+            return madcowProject.Build(new Microsoft.Build.Logging.FileLogger());
         }
     }
 }

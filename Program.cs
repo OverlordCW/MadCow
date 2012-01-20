@@ -28,9 +28,10 @@ namespace MadCow
     class Program
     {
         //Global used variables.
+        public static String madcowINI = Path.GetDirectoryName(Application.ExecutablePath) + @"\Tools\madcow.ini";
         public static String programPath = Path.GetDirectoryName(Application.ExecutablePath);
         public static String desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        static System.Threading.Mutex s_mutex = null;    
+        static System.Threading.Mutex s_mutex = null;
 
         [STAThread]
         static void Main()

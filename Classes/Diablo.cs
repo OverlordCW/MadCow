@@ -29,20 +29,18 @@ namespace MadCow
     {
         public static void Play()
         {
-            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
+            IConfigSource source = new IniConfigSource(Program.madcowINI);
             String Src = source.Configs["DiabloPath"].Get("D3Path");
-            
+
             if (ProcessFinder.FindProcess("Mooege") == false)
             {
                 if (File.Exists(Compile.currentMooegeExePath))
                 {
-                    //Update MooegeIni to ensure settings are applied.
-                    Compile.ModifyMooegeINI();
                     Console.WriteLine("Starting Mooege..");
                     Process Mooege = new Process();
                     Mooege.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
                     Mooege.Start();
-                    Thread.Sleep(2000);
+                    Thread.Sleep(2000); //We sleep so our ErrorFinder has time to parse Mooege logs.
                     if (ErrorFinder.SearchLogs("Fatal") == true)
                     {
                         Console.WriteLine("Closing Mooege due Fatal Exception");

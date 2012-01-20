@@ -47,10 +47,37 @@ namespace MadCow
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int selected = checkedListBox1.SelectedIndex;           
+            int selected = checkedListBox1.SelectedIndex;
             if (selected != -1)
             {
                 Compile.currentMooegeExePath = Program.programPath + @"\" + @"Repositories\" + checkedListBox1.Items[selected].ToString() + @"\src\Mooege\bin\Debug\Mooege.exe";
+                var _repoINIpath = Program.programPath + @"\" + @"Repositories\" + checkedListBox1.Items[selected].ToString() + @"\src\Mooege\bin\Debug\config.ini";
+                IConfigSource repoINIpath = new IniConfigSource(_repoINIpath);
+                //For each selection we set the correct MPQ storage path & PacketLog|ServerLog settings on the config INI, this is the best way I could think to have the paths updated at everytime
+                //We CANNOT call variable Compile.mooegeINI because that variable only saves latest compiled ini path for INSTANT writting after compiling a repository.
+                //WE do not need to write different IPS / PORTS for this since its LOCAL function, We do that over RepositorySelectionSERVER.
+                #region SetSettings
+                repoINIpath.Configs["Storage"].Set("MPQRoot", Form1.GlobalAccess.MPQDestTextBox.Text);
+                repoINIpath.Configs["ServerLog"].Set("Enabled", Form1.GlobalAccess.SettingsCheckedListBox.GetItemChecked(0));
+                repoINIpath.Configs["PacketLog"].Set("Enabled", Form1.GlobalAccess.SettingsCheckedListBox.GetItemChecked(1));
+                repoINIpath.Configs["Storage"].Set("EnableTasks", Form1.GlobalAccess.SettingsCheckedListBox.GetItemChecked(2));
+                repoINIpath.Configs["Storage"].Set("LazyLoading", Form1.GlobalAccess.SettingsCheckedListBox.GetItemChecked(3));
+                repoINIpath.Configs["Authentication"].Set("DisablePasswordChecks", Form1.GlobalAccess.SettingsCheckedListBox.GetItemChecked(4));
+                //We set the server variables IP/PORTS/NAT back to Local configuration in case the user used the same repository over Server Mode only in the past.
+
+                repoINIpath.Configs["MooNet-Server"].Set("BindIP", "0.0.0.0");
+                repoINIpath.Configs["Game-Server"].Set("BindIP", "0.0.0.0");
+                repoINIpath.Configs["NAT"].Set("PublicIP", "0.0.0.0");
+                repoINIpath.Configs["MooNet-Server"].Set("Port", "1345");
+                repoINIpath.Configs["Game-Server"].Set("Port", "1999");
+                repoINIpath.Configs["MooNet-Server"].Set("MOTD", "Welcome to mooege development server!");
+                repoINIpath.Configs["NAT"].Set("Enabled", "false");
+                repoINIpath.Save();
+                #endregion
+
+                Console.WriteLine("Set default LAN settings for Mooege config.ini");
+                Console.WriteLine(checkedListBox1.Items[selected].ToString() + " is ready to go.");
+                repoINIpath.Save();
                 LaunchDiabloButton.Enabled = true;
             }
         }
@@ -77,20 +104,18 @@ namespace MadCow
                     checkedListBox1.SetItemChecked(checkedItemIndex, false);
                     checkedListBox1.ItemCheck += checkedListBox1_ItemCheck;
                 }
-
                 return;
             }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////
-        // Last Played Repository
+        // Last Played Repository | If its enabled, this function will set a value for currentMooegeExePath which we need to launch Mooege without actually selecting a repository from a list.
         ////////////////////////////////////////////////////////////////////////////////////////
         public static Boolean LastPlayed()
         {
-            IConfigSource source = new IniConfigSource(Program.programPath + @"\Tools\madcow.ini");
-            String LastPlayedRepo = source.Configs["LastPlay"].Get("Repository");
-
-            if (LastPlayedRepo != null)
+            IConfigSource source = new IniConfigSource(Program.madcowINI);
+            var LastPlayedRepo = source.Configs["LastPlay"].Get("Repository");
+            if (LastPlayedRepo.Length > 0)
             {
                 Compile.currentMooegeExePath = LastPlayedRepo;
                 return true;

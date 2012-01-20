@@ -49,9 +49,9 @@ namespace MadCow
             Int32 LastPointer = revisionUrl.Length;
             Int32 FirstPointer = revisionUrl.IndexOf(developerName);
             Int32 DeveloperNameLength = developerName.Length;
-            Int32 BranchNameLength = LastPointer-(FirstPointer+DeveloperNameLength)-1; //+1 or -1 are to get rid of "/".
+            Int32 BranchNameLength = LastPointer - (FirstPointer + DeveloperNameLength) - 1; //+1 or -1 are to get rid of "/".
             branchName = revisionUrl.Substring(FirstPointer + DeveloperNameLength + 1, BranchNameLength);
-        }          
-      }
+        }
     }
+}
 

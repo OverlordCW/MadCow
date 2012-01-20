@@ -66,13 +66,13 @@ namespace MadCowUpdater
             CompareLastVersion();
         }
 
-        public Int32 LatestVersionFound = 0;       
+        public Int32 LatestVersionFound = 0;
         public String LastCommiter = "";
         //We take the max version out of the List and assign the correct developer for URI use.
         public void CompareLastVersion()
         {
             LatestVersionFound = Math.Max(LastVersion[0], LastVersion[1]);
-                      
+
             if (LastVersion[0] > LastVersion[1])
             {
                 LastCommiter = "Wesko";
@@ -91,7 +91,7 @@ namespace MadCowUpdater
             {
                 this.NoUpdateLabel.Invoke((MethodInvoker)delegate { this.NoUpdateLabel.Visible = true; });
                 this.NoUpdateLabel.Invoke((MethodInvoker)delegate { this.pictureBox2.Visible = true; });
-                Form1.GlobalAccess.Invoke((MethodInvoker)delegate { this.timer1.Enabled = true;});
+                Form1.GlobalAccess.Invoke((MethodInvoker)delegate { this.timer1.Enabled = true; });
             }
             else
             {
@@ -132,7 +132,7 @@ namespace MadCowUpdater
             using (System.Net.WebClient client = new System.Net.WebClient())
             {
                 // Open the file at the remote path.
-                using (System.IO.Stream streamRemote = client.OpenRead(new Uri("https://github.com/" +LastCommiter+ "/MadCow/zipball/master")))
+                using (System.IO.Stream streamRemote = client.OpenRead(new Uri("https://github.com/" + LastCommiter + "/MadCow/zipball/master")))
                 {
                     // We write those files into the file system.
                     using (Stream streamLocal = new FileStream(Path.GetTempPath() + "/MadCow.zip", FileMode.Create, FileAccess.Write, FileShare.None))

@@ -44,11 +44,11 @@ namespace MadCow
         {
             foreach (Process clsProcess in Process.GetProcesses())
             {
-                    if (clsProcess.ProcessName.Contains(AppKillName))
-                    {
-                        // Kill Kill Kill
-                        clsProcess.Kill();
-                    }
+                if (clsProcess.ProcessName.Contains(AppKillName))
+                {
+                    // Kill Kill Kill
+                    clsProcess.Kill();
+                }
             }
         }
 

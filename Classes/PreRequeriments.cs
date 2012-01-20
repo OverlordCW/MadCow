@@ -52,7 +52,7 @@ namespace MadCow
             else
             {
                 Console.WriteLine("Please update .NET Framework to"
-                                 +" version 4!");
+                                 + " version 4!");
                 Console.ReadKey();
                 Environment.Exit(0);
             }
@@ -60,11 +60,11 @@ namespace MadCow
 
         private static Boolean LoadSQLLiteAssembly()
         {
-     
-         string response;
-         var exist = AssemblyExist("System.Data.SQLite", out response);
-         return exist;
-            
+
+            string response;
+            var exist = AssemblyExist("System.Data.SQLite", out response);
+            return exist;
+
         }
 
         private static bool AssemblyExist(string assemblyname, out string response)
@@ -83,7 +83,7 @@ namespace MadCow
 
         private static String QueryAssemblyInfo(string assemblyName)
         {
-            var assembyInfo = new AssemblyInfo {cchBuf = 512};
+            var assembyInfo = new AssemblyInfo { cchBuf = 512 };
             assembyInfo.currentAssemblyPath = new String('C', assembyInfo.cchBuf);
 
             IAssemblyCache assemblyCache;

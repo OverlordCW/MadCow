@@ -27,7 +27,7 @@ namespace MadCow
     class TestMPQ
     {
         //This function will ask and retrieve latest file list from Blizzard server.
-        public static void getfileList() 
+        public static void getfileList()
         {
             WebRequest request = WebRequest.Create("http://enus.patch.battle.net:1119/patch");
 
@@ -111,7 +111,7 @@ namespace MadCow
                                 var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
                                 var match = regex.Match(line);
 
-                                if(match.Groups["name"].Value.ToString().Contains("d3-update-base-"))
+                                if (match.Groups["name"].Value.ToString().Contains("d3-update-base-"))
                                 {
                                     mpqList.Add(match.Groups["name"].Value);
                                     i++;
