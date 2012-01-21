@@ -65,9 +65,6 @@ namespace MadCow
             if (proxyStatus == "1")
             {
                 Program.proxyEnabled = true;
-                source.Configs["Proxy"].Get("ProxyUrl");
-                source.Configs["Proxy"].Get("Password");
-                source.Configs["Proxy"].Get("Username");
             }
         }
 
