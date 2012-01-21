@@ -12,8 +12,17 @@ namespace MadCow
     {
         public static void findBrach(String Url)
         {
+            var proxy = new WebProxy();
+            if (Proxy.proxyEnabled)
+            {
+                proxy.Address = new Uri(Proxy.currentProxyUrl);
+                proxy.Credentials = new NetworkCredential(Proxy.username, Proxy.password);
+            }
+
             Uri uri = new Uri(Url + "/branches");
             WebClient client = new WebClient();
+            if (Proxy.proxyEnabled)
+                client.Proxy = proxy;
             client.DownloadFile(new Uri(Url + "/branches"), @"Branch.txt");
             searchBranch();
         }

@@ -82,6 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Proxy.cs" />
     <Compile Include="Classes\ShortCutCreator.cs" />
     <Compile Include="Classes\Helpers.cs" />
     <Compile Include="Classes\ErrorFinder.cs" />
@@ -114,6 +115,12 @@
     </Compile>
     <Compile Include="MPQDownloader.Designer.cs">
       <DependentUpon>MPQDownloader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProxyForm\ProxyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProxyForm\ProxyForm.Designer.cs">
+      <DependentUpon>ProxyForm.cs</DependentUpon>
     </Compile>
     <Compile Include="RepositorySelectionPlay.cs">
       <SubType>Form</SubType>
@@ -227,6 +234,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MPQDownloader.resx">
       <DependentUpon>MPQDownloader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProxyForm\ProxyForm.resx">
+      <DependentUpon>ProxyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RepositorySelectionPlay.resx">
       <DependentUpon>RepositorySelectionPlay.cs</DependentUpon>

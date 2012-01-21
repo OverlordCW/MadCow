@@ -29,7 +29,16 @@ namespace MadCow
         //This function will ask and retrieve latest file list from Blizzard server.
         public static void getfileList()
         {
+            var proxy = new WebProxy();
+            if (Proxy.proxyEnabled)
+            {
+                proxy.Address = new Uri(Proxy.currentProxyUrl);
+                proxy.Credentials = new NetworkCredential(Proxy.username, Proxy.password);
+            }
+
             WebRequest request = WebRequest.Create("http://enus.patch.battle.net:1119/patch");
+            if (Proxy.proxyEnabled)
+                request.Proxy = proxy;
 
             ((HttpWebRequest)request).UserAgent = "Blizzard Web Client";
             request.Method = "POST";
@@ -70,6 +79,8 @@ namespace MadCow
             response.Close();
 
             var wc = new WebClient();
+            if (Proxy.proxyEnabled)
+                wc.Proxy = proxy;
             //We put up the .mfil path which contains the fileList.
             var mfil = "d3-" + D3Data[3] + "-" + D3Data[2] + ".mfil";
 
