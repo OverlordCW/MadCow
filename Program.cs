@@ -31,6 +31,7 @@ namespace MadCow
         public static String madcowINI = Path.GetDirectoryName(Application.ExecutablePath) + @"\Tools\madcow.ini";
         public static String programPath = Path.GetDirectoryName(Application.ExecutablePath);
         public static String desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        public static Boolean proxyEnabled;
         static System.Threading.Mutex s_mutex = null;
 
         [STAThread]

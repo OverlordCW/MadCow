@@ -82,13 +82,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Proxy.cs" />
     <Compile Include="Classes\ShortCutCreator.cs" />
     <Compile Include="Classes\Helpers.cs" />
     <Compile Include="Classes\ErrorFinder.cs" />
     <Compile Include="Classes\Diablo.cs" />
     <Compile Include="Classes\FindBranch.cs" />
-    <Compile Include="Classes\TestMPQ.cs" />
+    <Compile Include="Classes\RetrieveMpqList.cs" />
     <Compile Include="Classes\TextBoxStreamWriter.cs" />
     <Compile Include="Classes\ProcessFinder.cs" />
     <Compile Include="Classes\Delete.cs" />
@@ -115,12 +114,6 @@
     </Compile>
     <Compile Include="MPQDownloader.Designer.cs">
       <DependentUpon>MPQDownloader.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ProxyForm\ProxyForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ProxyForm\ProxyForm.Designer.cs">
-      <DependentUpon>ProxyForm.cs</DependentUpon>
     </Compile>
     <Compile Include="RepositorySelectionPlay.cs">
       <SubType>Form</SubType>
@@ -234,9 +227,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MPQDownloader.resx">
       <DependentUpon>MPQDownloader.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ProxyForm\ProxyForm.resx">
-      <DependentUpon>ProxyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RepositorySelectionPlay.resx">
       <DependentUpon>RepositorySelectionPlay.cs</DependentUpon>

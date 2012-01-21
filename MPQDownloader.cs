@@ -24,7 +24,7 @@ namespace MadCow
 
         public void AddAvailableFiles() //Adds available repos to the list.
         {
-            foreach (string element in TestMPQ.mpqList)
+            foreach (string element in RetrieveMpqList.mpqList)
             {
                 int pointer = element.LastIndexOf("-");
                 //We get the MPQ version ID only e.g(8081).

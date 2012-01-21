@@ -1,5 +1,4 @@
 For compiling open MadCow2011.sln over VIsualStudio -> Press F5.
 
 For Proxy use:
-Proxy configuration windows will come up the first time MadCow detects an http proxy being used.
-For changing the proxy configs at a later point modify Proxy settings over \Tools\Madcow.ini file.
+For changing the proxy configs set Proxy settings over \Tools\Madcow.ini file.
