@@ -50,42 +50,9 @@ namespace MadCow
         {
             InitializeComponent();
             GlobalAccess = this;
-            CheckForProxy();
             //DeleteHelper.HideFile();
         }
 
-        ///////////////////////////////////////////////////////////
-        //Proxy
-        ///////////////////////////////////////////////////////////
-        public void CheckForProxy()
-        {
-            IConfigSource source = new IniConfigSource(Program.madcowINI);
-            var proxyStatus = source.Configs["Proxy"].Get("Enabled");
-
-            if (proxyStatus == "1")
-            {
-                Program.proxyEnabled = true;
-            }
-        }
-
-        //We use this to get the values when we need to use a proxy.
-        public string Proxy(String setting)
-        {
-            IConfigSource source = new IniConfigSource(Program.madcowINI);
-            switch (setting)
-            {
-                case "password":
-                    var password = source.Configs["Proxy"].Get("Password");
-                    return password;
-                case "username":
-                    var username = source.Configs["Proxy"].Get("Username");
-                    return username;
-                case "proxyUrl":
-                    var proxyUrl = source.Configs["Proxy"].Get("ProxyUrl");
-                    return proxyUrl;
-            }
-            return "Ok";
-        }
         ///////////////////////////////////////////////////////////
         //Form Load
         ///////////////////////////////////////////////////////////
@@ -142,16 +109,16 @@ namespace MadCow
         private void backgroundWorker5_DoWork(object sender, DoWorkEventArgs e)
         {
             var proxy = new WebProxy();
-            if (Program.proxyEnabled)
+            if (Proxy.proxyStatus)
             {
-                proxy.Address = new Uri(Proxy("proxyUrl"));
-                proxy.Credentials = new NetworkCredential(Proxy("username"), Proxy("password"));
+                proxy.Address = new Uri(Proxy.proxyUrl);
+                proxy.Credentials = new NetworkCredential(Proxy.username, Proxy.password);
             }
             comboBox1.Invoke(new Action(() => { ParseRevision.revisionUrl = this.comboBox1.Text; }));
             try
             {
                 WebClient client = new WebClient();
-                if (Program.proxyEnabled)
+                if (Proxy.proxyStatus)
                     client.Proxy = proxy;
                 client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(backgroundWorker5_RunWorkerCompleted);
                 try
@@ -820,16 +787,16 @@ namespace MadCow
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             var proxy = new WebProxy();
-            if (Program.proxyEnabled)
+            if (Proxy.proxyStatus)
             {
-                proxy.Address = new Uri(Proxy("proxyUrl"));
-                proxy.Credentials = new NetworkCredential(Proxy("username"), Proxy("password"));
+                proxy.Address = new Uri(Proxy.proxyUrl);
+                proxy.Credentials = new NetworkCredential(Proxy.username, Proxy.password);
             }
             //We get the selected branch first.
             BranchComboBox.Invoke(new Action(() => { selectedBranch = BranchComboBox.SelectedItem.ToString(); }));
             Uri url = new Uri(ParseRevision.revisionUrl + "/zipball/" + selectedBranch);
             System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
-            if (Program.proxyEnabled)
+            if (Proxy.proxyStatus)
                 request.Proxy = proxy;
             System.Net.HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse();
             response.Close();
@@ -842,7 +809,7 @@ namespace MadCow
             // Open Webclient.
             using (System.Net.WebClient client = new System.Net.WebClient())
             {
-                if (Program.proxyEnabled)
+                if (Proxy.proxyStatus)
                     client.Proxy = proxy;
                 // Open the file at the remote path.
                 using (System.IO.Stream streamRemote = client.OpenRead(new Uri(ParseRevision.revisionUrl + "/zipball/" + selectedBranch)))
@@ -931,16 +898,16 @@ namespace MadCow
         private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
         {
             var proxy = new WebProxy();
-            if (Program.proxyEnabled)
+            if (Proxy.proxyStatus)
             {
-                proxy.Address = new Uri(Proxy("proxyUrl"));
-                proxy.Credentials = new NetworkCredential(Proxy("username"), Proxy("password"));
+                proxy.Address = new Uri(Proxy.proxyUrl);
+                proxy.Credentials = new NetworkCredential(Proxy.username, Proxy.password);
             }
 
             try
             {
                 WebClient client = new WebClient();
-                if (Program.proxyEnabled)
+                if (Proxy.proxyStatus)
                     client.Proxy = proxy;
                 client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(Checkversions);
                 Uri uri = new Uri("https://raw.github.com/mooege/mooege/master/src/Mooege/Common/Versions/VersionInfo.cs");
@@ -1503,10 +1470,10 @@ namespace MadCow
         private void DownloadMPQS(object sender, DoWorkEventArgs e)
         {
             var proxy = new WebProxy();
-            if (Program.proxyEnabled)
+            if (Proxy.proxyStatus)
             {
-                proxy.Address = new Uri(Proxy("proxyUrl"));
-                proxy.Credentials = new NetworkCredential(Proxy("username"), Proxy("password"));
+                proxy.Address = new Uri(Proxy.proxyUrl);
+                proxy.Credentials = new NetworkCredential(Proxy.username, Proxy.password);
             }
             IConfigSource source = new IniConfigSource(Program.madcowINI);
             int i = 0; //We use this variable to select save path destination.            
@@ -1520,7 +1487,7 @@ namespace MadCow
             {
                 Uri url = new Uri(value);
                 System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
-                if (Program.proxyEnabled)
+                if (Proxy.proxyStatus)
                     request.Proxy = proxy;
                 System.Net.HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse();
 
@@ -1539,7 +1506,7 @@ namespace MadCow
 
                 using (System.Net.WebClient client = new System.Net.WebClient())
                 {
-                    if (Program.proxyEnabled)
+                    if (Proxy.proxyStatus)
                         client.Proxy = proxy;
                     using (System.IO.Stream streamRemote = client.OpenRead(new Uri(value)))
                     {
@@ -1612,10 +1579,10 @@ namespace MadCow
         private void DownloadSpecificMPQS(object sender, DoWorkEventArgs e)
         {
             var proxy = new WebProxy();
-            if (Program.proxyEnabled)
+            if (Proxy.proxyStatus)
             {
-                proxy.Address = new Uri(Proxy("proxyUrl"));
-                proxy.Credentials = new NetworkCredential(Proxy("username"), Proxy("password"));
+                proxy.Address = new Uri(Proxy.proxyUrl);
+                proxy.Credentials = new NetworkCredential(Proxy.username, Proxy.password);
             }
 
             var downloadBaseFileUrl = "http://ak.worldofwarcraft.com.edgesuite.net/d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/" + ErrorFinder.errorFileName + @".MPQ";
@@ -1629,7 +1596,7 @@ namespace MadCow
             {
                 Uri url = new Uri(downloadFileUrl);
                 System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
-                if (Program.proxyEnabled)
+                if (Proxy.proxyStatus)
                     request.Proxy = proxy;
                 System.Net.HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse();
                 //Parsing the file name.
@@ -1643,7 +1610,7 @@ namespace MadCow
 
                 using (System.Net.WebClient client = new System.Net.WebClient())
                 {
-                    if (Program.proxyEnabled)
+                    if (Proxy.proxyStatus)
                         client.Proxy = proxy;
                     using (System.IO.Stream streamRemote = client.OpenRead(new Uri(downloadFileUrl)))
                     {
@@ -1691,7 +1658,7 @@ namespace MadCow
             {
                 Uri url = new Uri(downloadBaseFileUrl);
                 System.Net.HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
-                if (Program.proxyEnabled)
+                if (Proxy.proxyStatus)
                     request.Proxy = proxy;
                 System.Net.HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse();
                 //Parsing the file name.
@@ -1705,7 +1672,7 @@ namespace MadCow
 
                 using (System.Net.WebClient client = new System.Net.WebClient())
                 {
-                    if (Program.proxyEnabled)
+                    if (Proxy.proxyStatus)
                         client.Proxy = proxy;
                     using (System.IO.Stream streamRemote = client.OpenRead(new Uri(downloadBaseFileUrl)))
                     {
@@ -1950,16 +1917,16 @@ namespace MadCow
         private void backgroundWorker6_DoWork(object sender, DoWorkEventArgs e)
         {
             var proxy = new WebProxy();
-            if (Program.proxyEnabled)
+            if (Proxy.proxyStatus)
             {
-                proxy.Address = new Uri(Proxy("proxyUrl"));
-                proxy.Credentials = new NetworkCredential(Proxy("username"), Proxy("password"));
+                proxy.Address = new Uri(Proxy.proxyUrl);
+                proxy.Credentials = new NetworkCredential(Proxy.username, Proxy.password);
             }
 
             try
             {
                 WebClient client = new WebClient();
-                if (Program.proxyEnabled)
+                if (Proxy.proxyStatus)
                     client.Proxy = proxy;
                 client.DownloadFileAsync(new Uri(selectedRepo + @"/commits/master.atom"), @"Commits.atom");
                 client.DownloadFileCompleted += new AsyncCompletedEventHandler(DisplayChangelog);
@@ -2096,15 +2063,15 @@ namespace MadCow
         private void BranchComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             var proxy = new WebProxy();
-            if (Program.proxyEnabled)
+            if (Proxy.proxyStatus)
             {
-                proxy.Address = new Uri(Proxy("proxyUrl"));
-                proxy.Credentials = new NetworkCredential(Proxy("username"), Proxy("password"));
+                proxy.Address = new Uri(Proxy.proxyUrl);
+                proxy.Credentials = new NetworkCredential(Proxy.username, Proxy.password);
             }
 
             BranchComboBox.Invoke(new Action(() => { selectedBranch = BranchComboBox.SelectedItem.ToString(); }));
             WebClient client = new WebClient();
-            if (Program.proxyEnabled)
+            if (Proxy.proxyStatus)
                 client.Proxy = proxy;
             client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(BranchParse);
             Uri uri = new Uri(comboBox1.Text + "/commits/" + selectedBranch + ".atom");

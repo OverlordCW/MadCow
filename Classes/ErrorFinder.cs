@@ -108,7 +108,7 @@ namespace MadCow
             String Destination = Path.Combine(source.Configs["DiabloPath"].Get("MPQDest"), "base");
             string[] files2 = Directory.GetFiles(Destination, "*.mpq", SearchOption.TopDirectoryOnly);
 
-            if (files2.Length < TestMPQ.mpqList.Count - 1) //-1 For people using previous supported version.
+            if (files2.Length < RetrieveMpqList.mpqList.Count - 1) //-1 For people using previous supported version.
             {
                 return false;
             }

@@ -82,6 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Proxy.cs" />
     <Compile Include="Classes\ShortCutCreator.cs" />
     <Compile Include="Classes\Helpers.cs" />
     <Compile Include="Classes\ErrorFinder.cs" />
