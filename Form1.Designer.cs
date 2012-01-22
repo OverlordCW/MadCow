@@ -208,7 +208,7 @@
             0,
             0});
             this.AutoUpdateValue.Name = "AutoUpdateValue";
-            this.AutoUpdateValue.Size = new System.Drawing.Size(86, 21);
+            this.AutoUpdateValue.Size = new System.Drawing.Size(81, 21);
             this.AutoUpdateValue.TabIndex = 4;
             this.AutoUpdateValue.Value = new decimal(new int[] {
             1,
@@ -245,7 +245,7 @@
             this.groupBox2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(245, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(96, 68);
+            this.groupBox2.Size = new System.Drawing.Size(91, 68);
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Auto Update";
@@ -1268,6 +1268,11 @@
             // 
             // ConsoleOutputTxtBox
             // 
+            this.ConsoleOutputTxtBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ConsoleOutputTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ConsoleOutputTxtBox.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.ConsoleOutputTxtBox.Font = new System.Drawing.Font("Lucida Console", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ConsoleOutputTxtBox.ForeColor = System.Drawing.Color.White;
             this.ConsoleOutputTxtBox.Location = new System.Drawing.Point(6, 6);
             this.ConsoleOutputTxtBox.Multiline = true;
             this.ConsoleOutputTxtBox.Name = "ConsoleOutputTxtBox";
@@ -1305,22 +1310,22 @@
             this.tabControl2.Controls.Add(this.OutPutTab);
             this.tabControl2.Controls.Add(this.ChaneglogTab);
             this.tabControl2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.tabControl2.ItemSize = new System.Drawing.Size(96, 16);
+            this.tabControl2.HotTrack = true;
+            this.tabControl2.ItemSize = new System.Drawing.Size(96, 18);
             this.tabControl2.Location = new System.Drawing.Point(358, 0);
-            this.tabControl2.Multiline = true;
             this.tabControl2.Name = "tabControl2";
+            this.tabControl2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.tabControl2.SelectedIndex = 0;
             this.tabControl2.Size = new System.Drawing.Size(330, 360);
-            this.tabControl2.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl2.TabIndex = 17;
             // 
             // OutPutTab
             // 
             this.OutPutTab.Controls.Add(this.ConsoleOutputTxtBox);
-            this.OutPutTab.Location = new System.Drawing.Point(4, 20);
+            this.OutPutTab.Location = new System.Drawing.Point(4, 22);
             this.OutPutTab.Name = "OutPutTab";
             this.OutPutTab.Padding = new System.Windows.Forms.Padding(3);
-            this.OutPutTab.Size = new System.Drawing.Size(322, 336);
+            this.OutPutTab.Size = new System.Drawing.Size(322, 334);
             this.OutPutTab.TabIndex = 0;
             this.OutPutTab.Text = "Output";
             this.OutPutTab.UseVisualStyleBackColor = true;
@@ -1330,10 +1335,10 @@
             this.ChaneglogTab.Controls.Add(this.ChangeLogTxtBox);
             this.ChaneglogTab.Controls.Add(this.SelectRepositoryChngLogLabel);
             this.ChaneglogTab.Controls.Add(this.SelectRepoChngLogComboBox);
-            this.ChaneglogTab.Location = new System.Drawing.Point(4, 20);
+            this.ChaneglogTab.Location = new System.Drawing.Point(4, 22);
             this.ChaneglogTab.Name = "ChaneglogTab";
             this.ChaneglogTab.Padding = new System.Windows.Forms.Padding(3);
-            this.ChaneglogTab.Size = new System.Drawing.Size(322, 336);
+            this.ChaneglogTab.Size = new System.Drawing.Size(322, 334);
             this.ChaneglogTab.TabIndex = 1;
             this.ChaneglogTab.Text = "Changelog";
             this.ChaneglogTab.UseVisualStyleBackColor = true;

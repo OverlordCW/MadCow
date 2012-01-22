@@ -2318,11 +2318,18 @@ namespace MadCow
             if (!File.Exists(Program.madcowINI)) return;
             var source = new IniConfigSource(Program.madcowINI);
             var src = source.Configs["ShortCut"].Get("Shortcut");
+            var dest = source.Configs["DiabloPath"].Get("MPQDest");
             if (src.Contains("1"))
             {
                 ShortCut.Create();
             }
-            MPQDestTextBox.Text = source.Configs["DiabloPath"].Get("MPQDest", Path.Combine(Program.programPath, "MPQ"));
+            if (dest.Length > 0)
+            {
+                MPQDestTextBox.Text = source.Configs["DiabloPath"].Get("MPQDest");
+            }
+            else
+                MPQDestTextBox.Text = Program.programPath + @"\MPQ";
+
             SettingsCheckedListBox.SetItemChecked(0, Convert.ToBoolean(source.Configs["Mooege"].Get("FileLogging", "true")));
             SettingsCheckedListBox.SetItemChecked(1, Convert.ToBoolean(source.Configs["Mooege"].Get("PacketLogging", "false")));
             SettingsCheckedListBox.SetItemChecked(2, Convert.ToBoolean(source.Configs["Mooege"].Get("Tasks", "true")));
