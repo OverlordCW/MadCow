@@ -2197,6 +2197,9 @@ namespace MadCow
                         LastPlayedRepoReminderLabel.Visible = false;
                         ChainPicture.Visible = false;
                         BrowseMPQPathButton.Enabled = true;
+                        MPQDestTextBox.Visible = true;
+                        BrowseMPQPathButton.Visible = true;
+                        mpqDestinationDisableLabel.Visible = false;
                         MPQDestTextBox.Text = source.Configs["DiabloPath"].Get("MPQDest");
                     }
                     else
@@ -2209,7 +2212,8 @@ namespace MadCow
                         LastPlayedRepoReminderLabel.Visible = true;
                         ChainPicture.Visible = false;
                         BrowseMPQPathButton.Enabled = false;
-                        MPQDestTextBox.Text = "To modify this, disable Remember Last Repository over Help.";
+                        mpqDestinationDisableLabel.Visible = true;
+                        //MPQDestTextBox.Text = "To modify this, disable Remember Last Repository over Help.";
                     }
                 }
                 catch

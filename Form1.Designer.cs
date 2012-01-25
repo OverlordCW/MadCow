@@ -146,6 +146,7 @@
             this.ChangelogDownloader = new System.ComponentModel.BackgroundWorker();
             this.MadCowTrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.MpqPathBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.mpqDestinationDisableLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.RemoteServerTab.SuspendLayout();
@@ -945,6 +946,7 @@
             // 
             this.groupBox8.Controls.Add(this.BrowseMPQPathButton);
             this.groupBox8.Controls.Add(this.MPQDestTextBox);
+            this.groupBox8.Controls.Add(this.mpqDestinationDisableLabel);
             this.groupBox8.Location = new System.Drawing.Point(6, 6);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(333, 54);
@@ -1388,6 +1390,19 @@
             // 
             this.MpqPathBrowserDialog.Description = "Select the MPQ destination.";
             // 
+            // mpqDestinationDisableLabel
+            // 
+            this.mpqDestinationDisableLabel.AutoSize = true;
+            this.mpqDestinationDisableLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mpqDestinationDisableLabel.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.mpqDestinationDisableLabel.Location = new System.Drawing.Point(15, 38);
+            this.mpqDestinationDisableLabel.Name = "mpqDestinationDisableLabel";
+            this.mpqDestinationDisableLabel.Size = new System.Drawing.Size(301, 13);
+            this.mpqDestinationDisableLabel.TabIndex = 20;
+            this.mpqDestinationDisableLabel.Text = "Disable \"Remember Last Repository\" to enable this.";
+            this.ToolTips.SetToolTip(this.mpqDestinationDisableLabel, "Help Tab -> Remember Last Repository");
+            this.mpqDestinationDisableLabel.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1571,6 +1586,7 @@
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.Button BrowseMPQPathButton;
         public System.Windows.Forms.TextBox MPQDestTextBox;
+        public System.Windows.Forms.Label mpqDestinationDisableLabel;
 
     }
 }
