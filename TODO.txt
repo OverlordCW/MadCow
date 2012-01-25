@@ -1,5 +1,9 @@
 Added by Wesko
+-Fix Remember Last Repository
+-Check for Internet Connection?
+-Multi-Language
+-New downloader form.
+
+
 
 Added by Wetwlly
-
-WooHoo!
