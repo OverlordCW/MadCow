@@ -37,7 +37,8 @@ namespace MadCow
                 proxy.Credentials = new NetworkCredential(Proxy.username, Proxy.password);
             }
 
-            WebRequest request = WebRequest.Create("http://enus.patch.battle.net:1119/patch");
+            //WebRequest request = WebRequest.Create("http://enus.patch.battle.net:1119/patch"); //Up to 8101.
+            WebRequest request = WebRequest.Create("http://public-test.patch.battle.net:1119");
             if (Proxy.proxyStatus)
                 request.Proxy = proxy;
 
@@ -45,7 +46,8 @@ namespace MadCow
             request.Method = "POST";
             request.ContentType = "text/html";
 
-            var postData = "<version program=\"D3\"><record program=\"Bnet\" component=\"Win\" version=\"1\" /><record program=\"D3\" component=\"enUS\" version=\"1\" /></version>";
+            //var postData = "<version program=\"D3\"><record program=\"Bnet\" component=\"Win\" version=\"1\" /><record program=\"D3\" component=\"enUS\" version=\"1\" /></version>";//Up to 8101
+            var postData = "<version program=\"D3B\"><record program=\"Bnet\" component=\"Win\" version=\"1\" /><record program=\"D3B\" component=\"enUS\" version=\"3\"/></version>";
             var byteArray = ASCIIEncoding.UTF8.GetBytes(postData);
             request.ContentLength = byteArray.Length;
 
@@ -56,8 +58,9 @@ namespace MadCow
             WebResponse response = request.GetResponse();
 
             Stream ReceiveStream = response.GetResponseStream();
-            StreamReader readStream = new StreamReader(ReceiveStream, Encoding.GetEncoding("utf-8"));
-
+            
+            StreamReader readStream = new StreamReader(ReceiveStream, Encoding.GetEncoding("utf-8"));         
+            
             var xml = new XmlTextReader(readStream);
             string[] D3Data = new string[0];
 
@@ -67,7 +70,7 @@ namespace MadCow
                 {
                     case "record":
                         xml.MoveToAttribute("program");
-                        if (xml.Value == "D3")
+                        if (xml.Value == "D3B")
                         {
                             xml.Read();
                             D3Data = xml.Value.Trim().Split(';');
@@ -83,7 +86,7 @@ namespace MadCow
             if (Proxy.proxyStatus)
                 wc.Proxy = proxy;
             //We put up the .mfil path which contains the fileList.
-            var mfil = "d3-" + D3Data[3] + "-" + D3Data[2] + ".mfil";
+            var mfil = "d3b-" + D3Data[3] + "-" + D3Data[2] + ".mfil";
 
             var config = wc.DownloadString(D3Data[0]);
             var rdr = System.Xml.XmlReader.Create(new StringReader(config));
@@ -129,14 +132,6 @@ namespace MadCow
                                     i++;
                                 }
                             }
-
-                            /*if (System.Text.RegularExpressions.Regex.IsMatch(line, "size"))
-                            {
-                                var pattern = "size=(?<size>\\d+)";
-                                var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                                var match = regex.Match(line);
-                                Console.WriteLine("Size: " + match.Groups["size"].Value);
-                            }*/
                             oldline = line;
                         }
                     }
