@@ -15,31 +15,26 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.IO;
-using System.Windows.Forms;
-
-using Nini.Config;
-using Microsoft.Build.Evaluation;
 using System.Threading.Tasks;
-using System.Globalization;
-using System.Threading;
+using System.Windows.Forms;
+using Microsoft.Build.Evaluation;
 
 namespace MadCow
 {
     class Compile
     {
         //This paths may change depending on which repository ur trying to retrieve, they are set over ParseRevision.cs
-        public static String currentMooegeExePath = "";
-        public static String currentMooegeDebugFolderPath = "";
-        public static String mooegeINI = "";
+        public static String CurrentMooegeExePath = "";
+        public static String CurrentMooegeDebugFolderPath = "";
+        public static String MooegeINI = "";
 
-        public static void compileSource()
+        public static void CompileSource()
         {
             var libmoonetPath = Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\LibMooNet\LibMooNet.csproj";
             var mooegePath = Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\Mooege-VS2010.csproj";
 
             var compileLibMooNetTask = Task<bool>.Factory.StartNew(() => CompileLibMooNet(libmoonetPath));
-            var compileMooegeTask = compileLibMooNetTask.ContinueWith<bool>((x) => CompileMooege(mooegePath, x.Result));
+            var compileMooegeTask = compileLibMooNetTask.ContinueWith(x => CompileMooege(mooegePath, x.Result));
 
             Task.WaitAll(compileMooegeTask);
 
@@ -48,11 +43,9 @@ namespace MadCow
             else
             {
                 Console.WriteLine("Compiling Complete.");
-                if (File.Exists(Program.madcowINI))
+                if (Configuration.MadCow.TrayNotificationsEnabled)
                 {
-                    IConfigSource source = new IniConfigSource(Program.madcowINI);
-                    String Src = source.Configs["Balloons"].Get("ShowBalloons");
-                    if (Src.Contains("1")) { Form1.GlobalAccess.MadCowTrayIcon.ShowBalloonTip(1000, "MadCow", "Compiling Complete!", ToolTipIcon.Info); }
+                    Form1.GlobalAccess.MadCowTrayIcon.ShowBalloonTip(1000, "MadCow", "Compiling Complete!", ToolTipIcon.Info);
                 }
             }
         }
@@ -60,11 +53,9 @@ namespace MadCow
         private static bool CompileLibMooNet(string libmoonetPath)
         {
             Console.WriteLine("Compiling LibMoonet...");
-            if (File.Exists(Program.madcowINI))
+            if (Configuration.MadCow.TrayNotificationsEnabled)
             {
-                IConfigSource source = new IniConfigSource(Program.madcowINI);
-                String Src = source.Configs["Balloons"].Get("ShowBalloons");
-                if (Src.Contains("1")) { Form1.GlobalAccess.MadCowTrayIcon.ShowBalloonTip(1000, "MadCow", "Compiling LibMoonet...", ToolTipIcon.Info); }
+                Form1.GlobalAccess.MadCowTrayIcon.ShowBalloonTip(1000, "MadCow", "Compiling LibMoonet...", ToolTipIcon.Info);
             }
             var libmoonetProject = new Project(libmoonetPath);
             return libmoonetProject.Build(new Microsoft.Build.Logging.FileLogger());
@@ -75,11 +66,9 @@ namespace MadCow
             if (LibMooNetStatus)
             {
                 Console.WriteLine("Compiling Mooege...");
-                if (File.Exists(Program.madcowINI))
+                if (Configuration.MadCow.TrayNotificationsEnabled)
                 {
-                    IConfigSource source = new IniConfigSource(Program.madcowINI);
-                    String Src = source.Configs["Balloons"].Get("ShowBalloons");
-                    if (Src.Contains("1")) { Form1.GlobalAccess.MadCowTrayIcon.ShowBalloonTip(1000, "MadCow", "Compiling Mooege......", ToolTipIcon.Info); }
+                    Form1.GlobalAccess.MadCowTrayIcon.ShowBalloonTip(1000, "MadCow", "Compiling Mooege......", ToolTipIcon.Info);
                 }
                 var mooegeProject = new Project(mooegePath);
                 return mooegeProject.Build(new Microsoft.Build.Logging.FileLogger());

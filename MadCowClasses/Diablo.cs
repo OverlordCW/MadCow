@@ -15,12 +15,8 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Diagnostics;
 using System.Threading;
-using Nini.Config;
 using System.IO;
 
 namespace MadCow
@@ -29,55 +25,20 @@ namespace MadCow
     {
         public static void Play()
         {
-            if (File.Exists(Program.madcowINI))
+            try
             {
-                try
-                {
-                    IConfigSource source = new IniConfigSource(Program.madcowINI);
-                    String Src = source.Configs["DiabloPath"].Get("D3Path");
+                var src = Configuration.MadCow.DiabloPath;
 
-                    if (ProcessFinder.FindProcess("Mooege") == false)
+                if (ProcessFinder.FindProcess("Mooege") == false)
+                {
+                    if (File.Exists(Compile.CurrentMooegeExePath))
                     {
-                        if (File.Exists(Compile.currentMooegeExePath))
-                        {
-                            Console.WriteLine("Starting Mooege..");
-                            Process Mooege = new Process();
-                            Mooege.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
-                            Mooege.Start();
-                            Thread.Sleep(3000); //We sleep so our ErrorFinder has time to parse Mooege logs.
-                            if (ErrorFinder.SearchLogs("Fatal") == true)
-                            {
-                                Console.WriteLine("Closing Mooege due Fatal Exception");
-                                ProcessFinder.KillProcess("Mooege");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Starting Diablo..");
-                                Process Diablo3 = new Process();
-                                Diablo3.StartInfo = new ProcessStartInfo(Src);
-                                Diablo3.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
-                                Diablo3.Start();
-                                //We save this repository for LastPlayed function.
-                                source.Configs["LastPlay"].Set("Repository", Compile.currentMooegeExePath);
-                                source.Save();
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("[Error] Couldn't find selected repository binaries."
-                            + "\nTry updating the repository again.");
-                        }
-                    }
-                    else //If Mooege is running we kill it and start it again.
-                    {
-                        Console.WriteLine("Killing Mooege Process..");
-                        ProcessFinder.KillProcess("Mooege");
                         Console.WriteLine("Starting Mooege..");
-                        Process Mooege = new Process();
-                        Mooege.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
-                        Mooege.Start();
-                        Thread.Sleep(3000);
-                        if (ErrorFinder.SearchLogs("Fatal") == true)
+                        var mooege = new Process();
+                        mooege.StartInfo = new ProcessStartInfo(Compile.CurrentMooegeExePath);
+                        mooege.Start();
+                        Thread.Sleep(3000); //We sleep so our ErrorFinder has time to parse Mooege logs.
+                        if (ErrorFinder.SearchLogs("Fatal"))
                         {
                             Console.WriteLine("Closing Mooege due Fatal Exception");
                             ProcessFinder.KillProcess("Mooege");
@@ -85,22 +46,48 @@ namespace MadCow
                         else
                         {
                             Console.WriteLine("Starting Diablo..");
-                            Process Diablo3 = new Process();
-                            Diablo3.StartInfo = new ProcessStartInfo(Src);
+                            var Diablo3 = new Process();
+                            Diablo3.StartInfo = new ProcessStartInfo(src);
                             Diablo3.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
                             Diablo3.Start();
+                            //We save this repository for LastPlayed function.
+                            Configuration.MadCow.LastRepository = Compile.CurrentMooegeExePath;
                         }
                     }
+                    else
+                    {
+                        Console.WriteLine("[Error] Couldn't find selected repository binaries."
+                        + "\nTry updating the repository again.");
+                    }
                 }
-                catch
+                else //If Mooege is running we kill it and start it again.
                 {
-                    Console.WriteLine("[ERROR] Could not launch Diablo. (Diablo.cs)" + "\nPlease report this error in the forum.");
+                    Console.WriteLine("Killing Mooege Process..");
+                    ProcessFinder.KillProcess("Mooege");
+                    Console.WriteLine("Starting Mooege..");
+                    var mooege = new Process();
+                    mooege.StartInfo = new ProcessStartInfo(Compile.CurrentMooegeExePath);
+                    mooege.Start();
+                    Thread.Sleep(3000);
+                    if (ErrorFinder.SearchLogs("Fatal"))
+                    {
+                        Console.WriteLine("Closing Mooege due Fatal Exception");
+                        ProcessFinder.KillProcess("Mooege");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Starting Diablo..");
+                        var Diablo3 = new Process();
+                        Diablo3.StartInfo = new ProcessStartInfo(src);
+                        Diablo3.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
+                        Diablo3.Start();
+                    }
                 }
             }
-            //If madcow.ini aint found.
-            else
+            catch
             {
-                Console.WriteLine("[ERROR] Could not find MadCow config file. (Diablo.cs)" + "\nPlease report this error in the forum.");
+                Console.WriteLine("[ERROR] Could not launch Diablo. (Diablo.cs)" +
+                                  "\nPlease report this error in the forum.");
             }
         }
     }

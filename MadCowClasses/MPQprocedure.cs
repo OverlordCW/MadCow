@@ -15,19 +15,16 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-using System.Windows.Forms;
-using Nini.Config;
 
 namespace MadCow
 {
-    class MPQprocedure
+    class MpqProcedure
     {
         public static void StartCopyProcedure()
         {
-            Thread copyThread = new Thread(MpqTransfer);
+            var copyThread = new Thread(MpqTransfer);
             copyThread.Start();
         }
 
@@ -36,24 +33,23 @@ namespace MadCow
             //Takes Diablo Path from Ini, which gets it from finding diablo3.exe 
             if (File.Exists(Program.madcowINI))
             {
-                IConfigSource source = new IniConfigSource(Program.madcowINI);
-                string Src = source.Configs["DiabloPath"].Get("MPQpath");
-                String Dst = source.Configs["DiabloPath"].Get("MPQDest");
+                var src = Configuration.MadCow.MpqDiablo;
+                var dst = Configuration.MadCow.MpqServer;
 
-                if (ProcessFinder.FindProcess("Diablo") == true)
+                if (ProcessFinder.FindProcess("Diablo"))
                 {
                     ProcessFinder.KillProcess("Diablo");
                     Console.WriteLine("Killed Diablo3 Process");
                 }
-                if (Directory.Exists(Dst) == false)
+                if (!Directory.Exists(dst))
                 {
                     Console.WriteLine("Creating MPQ folder...");
-                    Directory.CreateDirectory(Dst);
-                    Console.WriteLine("Created MPQ folder over:" + Dst);
+                    Directory.CreateDirectory(dst);
+                    Console.WriteLine("Created MPQ folder over:" + dst);
                 }
                 //Proceeds to copy data
                 Console.WriteLine("Copying MPQ files to MadCow Folders...");
-                copyDirectory(Src, Dst);
+                CopyDirectory(src, dst);
                 //When all the files has been copied then:
                 Console.WriteLine("Copying MPQ files to MadCow Folders has completed.");
                 Form1.GlobalAccess.Invoke(new Action(() =>
@@ -66,42 +62,41 @@ namespace MadCow
                 Console.WriteLine("MadCow could not find your Diablo III Mpq Folder");
         }
 
-        private static void copyDirectory(String Src, String Dst)
+        private static void CopyDirectory(String src, String dst)
         {
             try
             {
-                String[] Files;
-                if (Dst[Dst.Length - 1] != Path.DirectorySeparatorChar)
-                    Dst += Path.DirectorySeparatorChar;
-                if (!Directory.Exists(Dst)) Directory.CreateDirectory(Dst);
-                Files = Directory.GetFileSystemEntries(Src);
-                foreach (String Element in Files)
+                if (dst[dst.Length - 1] != Path.DirectorySeparatorChar)
+                    dst += Path.DirectorySeparatorChar;
+                if (!Directory.Exists(dst)) Directory.CreateDirectory(dst);
+                var files = Directory.GetFileSystemEntries(src);
+                foreach (var element in files)
                 {
                     //Filter for non needed MPQ's
-                    if (Directory.Exists(Element) && Element.Contains("enUS") || Element.Contains("Cache")
-                        || Element.Contains("Win") || Element.Contains("enUS_Audio")
-                        || Element.Contains("enUS_Cutscene") || Element.Contains("enUS_Text")
-                        || Element.Contains("Sound") || Element.Contains("Texture")
-                        || Element.Contains("HLSLShaders") || Element.Contains("lock"))
+                    if (Directory.Exists(element) && element.Contains("enUS") || element.Contains("Cache")
+                        || element.Contains("Win") || element.Contains("enUS_Audio")
+                        || element.Contains("enUS_Cutscene") || element.Contains("enUS_Text")
+                        || element.Contains("Sound") || element.Contains("Texture")
+                        || element.Contains("HLSLShaders") || element.Contains("lock"))
                     {
-                        Console.WriteLine("Skipped: " + Path.GetFileName(Element));
+                        Console.WriteLine("Skipped: " + Path.GetFileName(element));
                     }
 
                     //If not Filtered
-                    else if (Directory.Exists(Element))
+                    else if (Directory.Exists(element))
                     {
-                        copyDirectory(Element, Dst + Path.GetFileName(Element));
+                        CopyDirectory(element, dst + Path.GetFileName(element));
                     }
                     //Copy the files from not filtered folders
                     else
                     {
-                        File.Copy(Element, Dst + Path.GetFileName(Element), true);
-                        Console.WriteLine("Copied: " + Path.GetFileName(Element));
+                        File.Copy(element, dst + Path.GetFileName(element), true);
+                        Console.WriteLine("Copied: " + Path.GetFileName(element));
                     }
 
                 }
             }
-            catch
+            catch(Exception e)
             {
                 Console.WriteLine("[ERROR] Unable to copy MPQ files. (MPQprocedures.cs)");
             }

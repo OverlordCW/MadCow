@@ -54,7 +54,7 @@ namespace MadCow
             int selected = checkedListBox1.SelectedIndex;
             if (selected != -1)
             {   //We set the correct values into the Mooege config.ini of the selected repository. According to the profile loaded.       
-                Compile.currentMooegeExePath = Program.programPath + @"\" + @"Repositories\" + checkedListBox1.Items[selected].ToString() + @"\src\Mooege\bin\Debug\Mooege.exe";
+                Compile.CurrentMooegeExePath = Program.programPath + @"\" + @"Repositories\" + checkedListBox1.Items[selected].ToString() + @"\src\Mooege\bin\Debug\Mooege.exe";
                 var _repoINIpath = Program.programPath + @"\" + @"Repositories\" + checkedListBox1.Items[selected].ToString() + @"\src\Mooege\bin\Debug\config.ini";
                 IConfigSource repoINIpath = new IniConfigSource(_repoINIpath);
                 //Global settings:
@@ -102,7 +102,7 @@ namespace MadCow
                 {
                     ProcessFinder.KillProcess("Mooege");
                     Process proc0 = new Process();
-                    proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
+                    proc0.StartInfo = new ProcessStartInfo(Compile.CurrentMooegeExePath);
                     proc0.Start();
                     this.Close();
                 }
@@ -115,7 +115,7 @@ namespace MadCow
             {
                 ProcessFinder.KillProcess("Mooege");
                 Process proc0 = new Process();
-                proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
+                proc0.StartInfo = new ProcessStartInfo(Compile.CurrentMooegeExePath);
                 proc0.Start();
                 Thread.Sleep(3000);
                 if (ErrorFinder.SearchLogs("Fatal") == true)

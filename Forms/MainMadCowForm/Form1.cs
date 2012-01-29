@@ -357,7 +357,7 @@ namespace MadCow
 
                 if (ErrorAnswer == DialogResult.Yes)
                 {
-                    MPQprocedure.StartCopyProcedure();
+                    MpqProcedure.StartCopyProcedure();
                     PlayDiabloButton.Enabled = false;
                     CopyMPQButton.Enabled = false;
                 }
@@ -382,9 +382,9 @@ namespace MadCow
             if (!ErrorFinder.SearchLogs("Fatal")) return;
             //We delete de Log file HERE. Nowhere else!.
             DeleteHelper.Delete(0);
-            if (ErrorFinder.errorFileName.Contains("d3-update-base-")) //This will handle corrupted mpqs and missing mpq files.
+            if (ErrorFinder.ErrorFileName.Contains("d3-update-base-")) //This will handle corrupted mpqs and missing mpq files.
             {
-                var errorAnswer = MessageBox.Show(string.Format("Missing or Corrupted file [{0}]" + "\nWould you like MadCow to fix this for you?", ErrorFinder.errorFileName), "Found corrupted file!",
+                var errorAnswer = MessageBox.Show(string.Format("Missing or Corrupted file [{0}]" + "\nWould you like MadCow to fix this for you?", ErrorFinder.ErrorFileName), "Found corrupted file!",
                                                   MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
 
                 if (errorAnswer == DialogResult.Yes)
@@ -395,9 +395,9 @@ namespace MadCow
                     FixMpq();
                 }
             }
-            if (ErrorFinder.errorFileName.Contains("CoreData"))
+            if (ErrorFinder.ErrorFileName.Contains("CoreData"))
             {
-                var errorAnswer = MessageBox.Show(string.Format("Corrupted file [{0}.mpq]" + "\nWould you like MadCow to fix this for you?", ErrorFinder.errorFileName), "Fatal Error!",
+                var errorAnswer = MessageBox.Show(string.Format("Corrupted file [{0}.mpq]" + "\nWould you like MadCow to fix this for you?", ErrorFinder.ErrorFileName), "Fatal Error!",
                                                   MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
 
                 if (errorAnswer == DialogResult.Yes)
@@ -406,9 +406,9 @@ namespace MadCow
                     FixMpq();
                 }
             }
-            if (ErrorFinder.errorFileName.Contains("ClientData"))
+            if (ErrorFinder.ErrorFileName.Contains("ClientData"))
             {
-                var errorAnswer = MessageBox.Show(string.Format("Corrupted file [{0}.mpq]" + "\nWould you like MadCow to fix this for you?", ErrorFinder.errorFileName), "Fatal Error!",
+                var errorAnswer = MessageBox.Show(string.Format("Corrupted file [{0}.mpq]" + "\nWould you like MadCow to fix this for you?", ErrorFinder.ErrorFileName), "Fatal Error!",
                                                   MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
 
                 if (errorAnswer == DialogResult.Yes)
@@ -417,7 +417,7 @@ namespace MadCow
                     FixMpq();
                 }
             }
-            if (ErrorFinder.errorFileName.Contains("MajorFailure"))
+            if (ErrorFinder.ErrorFileName.Contains("MajorFailure"))
             {
                 var errorAnswer = MessageBox.Show("One or more MPQ files are corrupted and MadCow is unable" +
                                                   " to detect which file/s are causing this.\nPlease visit" +
@@ -428,7 +428,7 @@ namespace MadCow
             else
             {
                 Console.WriteLine("[ERROR] Mooege can't run and MadCow was unable to handle the exception.");
-                Console.WriteLine(ErrorFinder.errorFileName);
+                Console.WriteLine(ErrorFinder.ErrorFileName);
             }
             //If the user closes Repo selection and we already went through fixing the MPQ, then Mooege.log will not exist and
             //Madcow would crash when trying to read mooege.log.
@@ -440,7 +440,7 @@ namespace MadCow
         ///////////////////////////////////////////////////////////
         private void CopyMPQs_Click(object sender, EventArgs e)
         {
-            MPQprocedure.StartCopyProcedure();
+            MpqProcedure.StartCopyProcedure();
         }
 
         ///////////////////////////////////////////////////////////
@@ -491,9 +491,9 @@ namespace MadCow
             if (!ErrorFinder.SearchLogs("Fatal")) return;
             //We delete de Log file HERE. Nowhere else!.
             DeleteHelper.Delete(0);
-            if (ErrorFinder.errorFileName.Contains("d3-update-base-"))
+            if (ErrorFinder.ErrorFileName.Contains("d3-update-base-"))
             {
-                var errorAnswer = MessageBox.Show(@"Missing or Corrupted file [" + ErrorFinder.errorFileName + @"]" + "\nWould you like MadCow to fix this for you?", "Found corrupted file!",
+                var errorAnswer = MessageBox.Show(@"Missing or Corrupted file [" + ErrorFinder.ErrorFileName + @"]" + "\nWould you like MadCow to fix this for you?", "Found corrupted file!",
                                                   MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
 
                 if (errorAnswer == DialogResult.Yes)
@@ -504,9 +504,9 @@ namespace MadCow
                     FixMpq();
                 }
             }
-            if (ErrorFinder.errorFileName.Contains("CoreData"))
+            if (ErrorFinder.ErrorFileName.Contains("CoreData"))
             {
-                var errorAnswer = MessageBox.Show(@"Corrupted file [" + ErrorFinder.errorFileName + @".mpq]" + "\nWould you like MadCow to fix this for you?", "Fatal Error!",
+                var errorAnswer = MessageBox.Show(@"Corrupted file [" + ErrorFinder.ErrorFileName + @".mpq]" + "\nWould you like MadCow to fix this for you?", "Fatal Error!",
                                                   MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
 
                 if (errorAnswer == DialogResult.Yes)
@@ -515,9 +515,9 @@ namespace MadCow
                     FixMpq();
                 }
             }
-            if (ErrorFinder.errorFileName.Contains("ClientData"))
+            if (ErrorFinder.ErrorFileName.Contains("ClientData"))
             {
-                var errorAnswer = MessageBox.Show(@"Corrupted file [" + ErrorFinder.errorFileName + @".mpq]" + "\nWould you like MadCow to fix this for you?", "Fatal Error!",
+                var errorAnswer = MessageBox.Show(@"Corrupted file [" + ErrorFinder.ErrorFileName + @".mpq]" + "\nWould you like MadCow to fix this for you?", "Fatal Error!",
                                                   MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
 
                 if (errorAnswer == DialogResult.Yes)
@@ -526,7 +526,7 @@ namespace MadCow
                     FixMpq();
                 }
             }
-            if (ErrorFinder.errorFileName.Contains("MajorFailure"))
+            if (ErrorFinder.ErrorFileName.Contains("MajorFailure"))
             {
                 var errorAnswer = MessageBox.Show(@"Seems some major files are corrupted." + "\nWould you like MadCow to fix this for you?", "Found Corrupted Files!",
                                                   MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
@@ -540,7 +540,7 @@ namespace MadCow
             else
             {
                 Console.WriteLine("Unknown Exception");
-                Console.WriteLine(ErrorFinder.errorFileName);
+                Console.WriteLine(ErrorFinder.ErrorFileName);
             }
         }
         #endregion
@@ -658,7 +658,7 @@ namespace MadCow
                 Configuration.MadCow.DiabloPath = findD3Exe.FileName;
                 Configuration.MadCow.MpqDiablo = Path.Combine(new[]
                                                                   {
-                                                                      findD3Exe.FileName,
+                                                                      dirName,
                                                                       "Data_D3",
                                                                       "PC",
                                                                       "MPQs"
@@ -1450,19 +1450,19 @@ namespace MadCow
                 proxy.Credentials = new NetworkCredential(Proxy.username, Proxy.password);
             }
 
-            var downloadBaseFileUrl = "http://ak.worldofwarcraft.com.edgesuite.net/d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/" + ErrorFinder.errorFileName + ".mpq";
-            var downloadFileUrl = "http://ak.worldofwarcraft.com.edgesuite.net/d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/" + ErrorFinder.errorFileName + ".mpq";
+            var downloadBaseFileUrl = "http://ak.worldofwarcraft.com.edgesuite.net/d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/base/" + ErrorFinder.ErrorFileName + ".mpq";
+            var downloadFileUrl = "http://ak.worldofwarcraft.com.edgesuite.net/d3-pod/20FB5BE9/NA/7162.direct/Data_D3/PC/MPQs/" + ErrorFinder.ErrorFileName + ".mpq";
             var speedTimer = new Stopwatch();
 
             //TODO should be simplified somehow.
             //Parsing the file name.
-            var url = ErrorFinder.errorFileName.Contains("CoreData") ||
-                      ErrorFinder.errorFileName.Contains("ClientData")
+            var url = ErrorFinder.ErrorFileName.Contains("CoreData") ||
+                      ErrorFinder.ErrorFileName.Contains("ClientData")
                           ? new Uri(downloadFileUrl)
                           : new Uri(downloadBaseFileUrl);
             //var fullName = url.LocalPath.TrimStart('/');
-            var dest = ErrorFinder.errorFileName.Contains("CoreData") ||
-                       ErrorFinder.errorFileName.Contains("ClientData")
+            var dest = ErrorFinder.ErrorFileName.Contains("CoreData") ||
+                       ErrorFinder.ErrorFileName.Contains("ClientData")
                            ? Path.Combine(Configuration.MadCow.MpqDiablo, Path.GetFileName(url.AbsolutePath))
                            : Path.Combine(new[]
                                               {
@@ -1471,23 +1471,23 @@ namespace MadCow
                                                   Path.GetFileName(url.AbsolutePath)
                                               });
 
-            var copy = ErrorFinder.errorFileName.Contains("CoreData") ||
-                       ErrorFinder.errorFileName.Contains("ClientData")
+            var copy = ErrorFinder.ErrorFileName.Contains("CoreData") ||
+                       ErrorFinder.ErrorFileName.Contains("ClientData")
                            ? Path.Combine(Configuration.MadCow.MpqDiablo, Path.GetFileName(url.AbsolutePath))
                            : Path.Combine(new[]
                                               {
                                                   Configuration.MadCow.MpqDiablo,
                                                   "base",
-                                                  ErrorFinder.errorFileName + ".mpq"
+                                                  ErrorFinder.ErrorFileName + ".mpq"
                                               });
-            var copyDest = ErrorFinder.errorFileName.Contains("CoreData") ||
-                           ErrorFinder.errorFileName.Contains("ClientData")
+            var copyDest = ErrorFinder.ErrorFileName.Contains("CoreData") ||
+                           ErrorFinder.ErrorFileName.Contains("ClientData")
                                ? Path.Combine(Configuration.MadCow.MpqDiablo, Path.GetFileName(url.AbsolutePath))
                                : Path.Combine(new[]
                                                   {
                                                       Configuration.MadCow.MpqServer,
                                                       "base",
-                                                      ErrorFinder.errorFileName + ".mpq"
+                                                      ErrorFinder.ErrorFileName + ".mpq"
                                                   });
 
             //End Parsing.
@@ -1583,7 +1583,7 @@ namespace MadCow
                 //Console.WriteLine("Copied new MPQ to MadCow MPQ home Folder.");
                 //We give the user an announce of success.
                 DialogResult response = MessageBox.Show("MadCow Fixer",
-		        "MadCow succesfully fixed:" + ErrorFinder.errorFileName + @".MPQ",MessageBoxButtons.OK,MessageBoxIcon.Information);
+		        "MadCow succesfully fixed:" + ErrorFinder.ErrorFileName + @".MPQ",MessageBoxButtons.OK,MessageBoxIcon.Information);
 
                 if (response == DialogResult.OK) //We take this as the OK response.
                 {

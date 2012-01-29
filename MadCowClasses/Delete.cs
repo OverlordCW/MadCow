@@ -15,11 +15,8 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Windows.Forms;
 using System.Linq;
-using Nini.Config;
 
 namespace MadCow
 {
@@ -31,11 +28,11 @@ namespace MadCow
             {
                 case 0:
                     // Delelete/Recreate Logs Folder
-                    if (System.IO.Directory.Exists(Program.programPath + @"/logs"))
+                    if (Directory.Exists(Program.programPath + @"/logs"))
                     {
                         try
                         {
-                            System.IO.Directory.Delete(Program.programPath + @"/logs", true);
+                            Directory.Delete(Program.programPath + @"/logs", true);
                             Console.WriteLine("Deleted Logs Folder");
                             Directory.CreateDirectory(Program.programPath + @"/logs");
                         }
@@ -48,18 +45,17 @@ namespace MadCow
                     break;
 
                 case 1: //Delete \Repositories\ subfolders.
-                    if (System.IO.Directory.Exists(Program.programPath + @"/Repositories"))
+                    if (Directory.Exists(Program.programPath + @"/Repositories"))
                     {
                         try
                         {
-                            string[] FoldersArray = Directory.GetDirectories(Program.programPath + @"\" + @"Repositories\");
-                            if (FoldersArray.Length > 0)
+                            var foldersArray = Directory.GetDirectories(Program.programPath + @"\" + @"Repositories\");
+                            if (foldersArray.Length > 0)
                             {
                                 Console.WriteLine("Deleting Saved Repositories...");
                             }
-                            foreach (string folder in FoldersArray)
+                            foreach (var info in foldersArray.Select(folder => new DirectoryInfo(folder)))
                             {
-                                DirectoryInfo info = new DirectoryInfo(folder);
                                 Directory.Delete(info.FullName, true);
                                 Console.WriteLine("Deleted: {0}", info.Name);
                             }
@@ -74,50 +70,41 @@ namespace MadCow
                     break;
 
                 case 2: //Delete corrupted file thrown by ErrorFinder class.
-                    if (File.Exists(Program.madcowINI))
+                    try
                     {
-                        try
+                        var mpQpath = Configuration.MadCow.MpqDiablo;
+                        if (mpQpath.Length > 0) //This is to avoid deleting a non existant file if user its only using standalone Mooege server without D3 client.
                         {
-                            IConfigSource source = new IniConfigSource(Program.madcowINI);
-                            string MPQpath = source.Configs["DiabloPath"].Get("MPQpath");
-                            if (MPQpath.Length > 0) //This is to avoid deleting a non existant file if user its only using standalone Mooege server without D3 client.
-                            {
-                                Console.WriteLine("Deleting file " + ErrorFinder.errorFileName);
-                                File.Delete(MPQpath + @"\base\" + ErrorFinder.errorFileName);
-                            }
-                        }
-                        catch
-                        {
-                            Console.WriteLine("[ERROR] Could not delete corrupted file. (Delete.cs)" +"\nPlease report this error in the forum.");
-                            break; 
+                            Console.WriteLine("Deleting file " + ErrorFinder.ErrorFileName);
+                            File.Delete(Path.Combine(mpQpath, "base", ErrorFinder.ErrorFileName));
                         }
                     }
-                        //If madcow.ini aint found.
-                    else
+                    catch
                     {
-                        Console.WriteLine("[ERROR] Could not find MadCow config file. (Delete.cs)" + "\nPlease report this error in the forum.");
+                        Console.WriteLine("[ERROR] Could not delete corrupted file. (Delete.cs)" + "\nPlease report this error in the forum.");
+                        break;
                     }
-                    break;                                   
+                    break;
             }
         }
 
         public static void DeleteOldRepoVersion(string developerName)
         {
-            if (Directory.Exists(Program.programPath + @"\Repositories\"))
+            if (Directory.Exists(Path.Combine(Program.programPath, "Repositories")))
             {
                 try
                 {
                     Console.WriteLine("Looking for [{0}] existing repository.", developerName);
-                    String directoryString = Program.programPath + @"\Repositories\";
-                    Int32 i = directoryString.LastIndexOf('\\');
+                    var directoryString = Path.Combine(Program.programPath, "Repositories");
+                    var i = directoryString.LastIndexOf('\\');
                     directoryString = directoryString.Remove(i, directoryString.Length - i);
-                    string[] directories = Directory.GetDirectories(directoryString);
-                    string[] folderName = new string[2];
-                    Int32 j = 0;
+                    var directories = Directory.GetDirectories(directoryString);
+                    var folderName = new string[2];
+                    var j = 0;
 
-                    foreach (string directory in directories)
+                    foreach (var directory in directories)
                     {
-                        DirectoryInfo dinfo = new DirectoryInfo(directory);
+                        var dinfo = new DirectoryInfo(directory);
                         if (directory.Contains(developerName) && dinfo.Name.StartsWith(developerName)) //We avoid deleting all folder that contains Mooege when we are just trying to get rid of Master branch.
                         {
                             folderName[j] = dinfo.Name;
@@ -129,12 +116,14 @@ namespace MadCow
                 }
                 catch
                 {
-                    Console.WriteLine("[ERROR] Could not delete Repositories. (Delete.cs)" + "\nPlease report this error in the forum.");
+                    Console.WriteLine("[ERROR] Could not delete Repositories. (Delete.cs)" +
+                                      "\nPlease report this error in the forum.");
                 }
             }
             else
             {
-                Console.WriteLine("[ERROR] Could not find Repositories folder. (Delete.cs)" + "\nPlease report this error in the forum.");
+                Console.WriteLine("[ERROR] Could not find Repositories folder. (Delete.cs)" +
+                                  "\nPlease report this error in the forum.");
             }
         }
     }

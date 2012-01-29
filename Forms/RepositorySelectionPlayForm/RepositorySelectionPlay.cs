@@ -14,14 +14,9 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 using Nini.Config;
 
 namespace MadCow
@@ -37,74 +32,70 @@ namespace MadCow
 
         public void AddAvailableRepositories() //Adds available repos to the list.
         {
-            string[] FoldersArray = Directory.GetDirectories(Program.programPath + @"\" + @"Repositories\");
-            foreach (string name in FoldersArray)
+            var foldersArray = Directory.GetDirectories(Program.programPath + @"\" + @"Repositories\");
+            foreach (var info in foldersArray.Select(name => new DirectoryInfo(name)))
             {
-                DirectoryInfo info = new DirectoryInfo(name);
-                this.checkedListBox1.Items.Add(info.Name);
+                checkedListBox1.Items.Add(info.Name);
             }
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int selected = checkedListBox1.SelectedIndex;
-            if (selected != -1)
-            {
-                Compile.currentMooegeExePath = Program.programPath + @"\" + @"Repositories\" + checkedListBox1.Items[selected].ToString() + @"\src\Mooege\bin\Debug\Mooege.exe";
-                var _repoINIpath = Program.programPath + @"\" + @"Repositories\" + checkedListBox1.Items[selected].ToString() + @"\src\Mooege\bin\Debug\config.ini";
-                IConfigSource repoINIpath = new IniConfigSource(_repoINIpath);
-                //For each selection we set the correct MPQ storage path & PacketLog|ServerLog settings on the config INI, this is the best way I could think to have the paths updated at everytime
-                //We CANNOT call variable Compile.mooegeINI because that variable only saves latest compiled ini path for INSTANT writting after compiling a repository.
-                //WE do not need to write different IPS / PORTS for this since its LOCAL function, We do that over RepositorySelectionSERVER.
-                #region SetSettings
-                repoINIpath.Configs["Storage"].Set("MPQRoot", Form1.GlobalAccess.MPQDestTextBox.Text);
-                repoINIpath.Configs["ServerLog"].Set("Enabled", Form1.GlobalAccess.SettingsCheckedListBox.GetItemChecked(0));
-                repoINIpath.Configs["PacketLog"].Set("Enabled", Form1.GlobalAccess.SettingsCheckedListBox.GetItemChecked(1));
-                repoINIpath.Configs["Storage"].Set("EnableTasks", Form1.GlobalAccess.SettingsCheckedListBox.GetItemChecked(2));
-                repoINIpath.Configs["Storage"].Set("LazyLoading", Form1.GlobalAccess.SettingsCheckedListBox.GetItemChecked(3));
-                repoINIpath.Configs["Authentication"].Set("DisablePasswordChecks", Form1.GlobalAccess.SettingsCheckedListBox.GetItemChecked(4));
-                //We set the server variables IP/PORTS/NAT back to Local configuration in case the user used the same repository over Server Mode only in the past.
+            var selected = checkedListBox1.SelectedIndex;
+            if (selected == -1) return;
 
-                repoINIpath.Configs["MooNet-Server"].Set("BindIP", "0.0.0.0");
-                repoINIpath.Configs["Game-Server"].Set("BindIP", "0.0.0.0");
-                repoINIpath.Configs["NAT"].Set("PublicIP", "0.0.0.0");
-                repoINIpath.Configs["MooNet-Server"].Set("Port", "1345");
-                repoINIpath.Configs["Game-Server"].Set("Port", "1999");
-                repoINIpath.Configs["MooNet-Server"].Set("MOTD", "Welcome to mooege development server!");
-                repoINIpath.Configs["NAT"].Set("Enabled", "false");
-                repoINIpath.Save();
-                #endregion
+            Compile.CurrentMooegeExePath = Program.programPath + @"\" + @"Repositories\" + checkedListBox1.Items[selected] + @"\src\Mooege\bin\Debug\Mooege.exe";
+            var _repoINIpath = Program.programPath + @"\" + @"Repositories\" + checkedListBox1.Items[selected] + @"\src\Mooege\bin\Debug\config.ini";
+            IConfigSource repoINIpath = new IniConfigSource(_repoINIpath);
+            //For each selection we set the correct MPQ storage path & PacketLog|ServerLog settings on the config INI, this is the best way I could think to have the paths updated at everytime
+            //We CANNOT call variable Compile.mooegeINI because that variable only saves latest compiled ini path for INSTANT writting after compiling a repository.
+            //WE do not need to write different IPS / PORTS for this since its LOCAL function, We do that over RepositorySelectionSERVER.
+            #region SetSettings
+            repoINIpath.Configs["Storage"].Set("MPQRoot", Form1.GlobalAccess.MPQDestTextBox.Text);
+            repoINIpath.Configs["ServerLog"].Set("Enabled", Form1.GlobalAccess.SettingsCheckedListBox.GetItemChecked(0));
+            repoINIpath.Configs["PacketLog"].Set("Enabled", Form1.GlobalAccess.SettingsCheckedListBox.GetItemChecked(1));
+            repoINIpath.Configs["Storage"].Set("EnableTasks", Form1.GlobalAccess.SettingsCheckedListBox.GetItemChecked(2));
+            repoINIpath.Configs["Storage"].Set("LazyLoading", Form1.GlobalAccess.SettingsCheckedListBox.GetItemChecked(3));
+            repoINIpath.Configs["Authentication"].Set("DisablePasswordChecks", Form1.GlobalAccess.SettingsCheckedListBox.GetItemChecked(4));
+            //We set the server variables IP/PORTS/NAT back to Local configuration in case the user used the same repository over Server Mode only in the past.
 
-                Console.WriteLine("Set default LAN settings for Mooege config.ini");
-                Console.WriteLine(checkedListBox1.Items[selected].ToString() + " is ready to go.");
-                repoINIpath.Save();
-                LaunchDiabloButton.Enabled = true;
-            }
+            repoINIpath.Configs["MooNet-Server"].Set("BindIP", "0.0.0.0");
+            repoINIpath.Configs["Game-Server"].Set("BindIP", "0.0.0.0");
+            repoINIpath.Configs["NAT"].Set("PublicIP", "0.0.0.0");
+            repoINIpath.Configs["MooNet-Server"].Set("Port", "1345");
+            repoINIpath.Configs["Game-Server"].Set("Port", "1999");
+            repoINIpath.Configs["MooNet-Server"].Set("MOTD", "Welcome to mooege development server!");
+            repoINIpath.Configs["NAT"].Set("Enabled", "false");
+            repoINIpath.Save();
+            #endregion
+
+            Console.WriteLine("Set default LAN settings for Mooege config.ini");
+            Console.WriteLine("{0} is ready to go.", checkedListBox1.Items[selected]);
+            repoINIpath.Save();
+            LaunchDiabloButton.Enabled = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             Diablo.Play();
-            this.Close();
+            Close();
         }
 
         private void checkedListBox1_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (checkedListBox1.CheckedItems.Count == 1)
+            if (checkedListBox1.CheckedItems.Count != 1) return;
+
+            var isCheckedItemBeingUnchecked = (e.CurrentValue == CheckState.Checked);
+            if (isCheckedItemBeingUnchecked)
             {
-                Boolean isCheckedItemBeingUnchecked = (e.CurrentValue == CheckState.Checked);
-                if (isCheckedItemBeingUnchecked)
-                {
-                    e.NewValue = CheckState.Checked;
-                }
-                else
-                {
-                    Int32 checkedItemIndex = checkedListBox1.CheckedIndices[0];
-                    checkedListBox1.ItemCheck -= checkedListBox1_ItemCheck;
-                    checkedListBox1.SetItemChecked(checkedItemIndex, false);
-                    checkedListBox1.ItemCheck += checkedListBox1_ItemCheck;
-                }
-                return;
+                e.NewValue = CheckState.Checked;
+            }
+            else
+            {
+                var checkedItemIndex = checkedListBox1.CheckedIndices[0];
+                checkedListBox1.ItemCheck -= checkedListBox1_ItemCheck;
+                checkedListBox1.SetItemChecked(checkedItemIndex, false);
+                checkedListBox1.ItemCheck += checkedListBox1_ItemCheck;
             }
         }
 
@@ -113,15 +104,12 @@ namespace MadCow
         ////////////////////////////////////////////////////////////////////////////////////////
         public static Boolean LastPlayed()
         {
-            IConfigSource source = new IniConfigSource(Program.madcowINI);
-            var LastPlayedRepo = source.Configs["LastPlay"].Get("Repository");
-            if (LastPlayedRepo.Length > 0)
+            if (!string.IsNullOrEmpty(Configuration.MadCow.LastRepository))
             {
-                Compile.currentMooegeExePath = LastPlayedRepo;
+                Compile.CurrentMooegeExePath = Configuration.MadCow.LastRepository;
                 return true;
             }
-            else
-                return false;
+            return false;
         }
     }
 }

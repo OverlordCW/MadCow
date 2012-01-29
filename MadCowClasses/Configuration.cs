@@ -19,7 +19,7 @@ namespace MadCow
             {
                 File.Create(Program.madcowINI);
             }
-            Source = new IniConfigSource(Program.madcowINI);
+            Source = new IniConfigSource(Program.madcowINI) { AutoSave = true };
             MadCowConfig = Source.Configs["MadCow"];
             MooegeConfig = Source.Configs["Mooege"];
         }
@@ -32,32 +32,38 @@ namespace MadCow
         {
             public static bool TrayEnabled
             {
-                get { return Convert.ToBoolean(MadCowConfig.Get("Tray", "true")); }
+                get { return Convert.ToBoolean(MadCowConfig.Get("Tray", "True")); }
                 set { MadCowConfig.Set("Tray", value); }
             }
 
             public static bool TrayNotificationsEnabled
             {
-                get { return Convert.ToBoolean(MadCowConfig.Get("TrayNotifications", "true")); }
+                get { return Convert.ToBoolean(MadCowConfig.Get("TrayNotifications", "True")); }
                 set { MadCowConfig.Set("TrayNotifications", value); }
             }
 
             public static bool ShortcutEnabled
             {
-                get { return Convert.ToBoolean(MadCowConfig.Get("Shortcut", "true")); }
+                get { return Convert.ToBoolean(MadCowConfig.Get("Shortcut", "True")); }
                 set { MadCowConfig.Set("Shortcut", value); }
-            }
-
-            public static bool RememberLastRepository
-            {
-                get { return Convert.ToBoolean(MadCowConfig.Get("RememberLastRepository", "true")); }
-                set { MadCowConfig.Set("RememberLastRepository", value); }
             }
 
             public static bool BackupAccountDatabase
             {
-                get { return Convert.ToBoolean(MadCowConfig.Get("BackupAccountDatabase", "true")); }
+                get { return Convert.ToBoolean(MadCowConfig.Get("BackupAccountDatabase", "True")); }
                 set { MadCowConfig.Set("BackupAccountDatabase", value); }
+            }
+
+            public static bool RememberLastRepository
+            {
+                get { return Convert.ToBoolean(MadCowConfig.Get("RememberLastRepository", "True")); }
+                set { MadCowConfig.Set("RememberLastRepository", value); }
+            }
+
+            public static string LastRepository
+            {
+                get { return MadCowConfig.Get("LastRepository"); }
+                set { MadCowConfig.Set("LastRepository", value); }
             }
 
             public static string DiabloPath
@@ -92,31 +98,31 @@ namespace MadCow
         {
             public static bool FileLogging
             {
-                get { return Convert.ToBoolean(MooegeConfig.Get("FileLogging")); }
+                get { return Convert.ToBoolean(MooegeConfig.Get("FileLogging", "True")); }
                 set { MooegeConfig.Set("FileLogging", value); }
             }
 
             public static bool PacketLogging
             {
-                get { return Convert.ToBoolean(MooegeConfig.Get("PacketLogging")); }
+                get { return Convert.ToBoolean(MooegeConfig.Get("PacketLogging", "False")); }
                 set { MooegeConfig.Set("PacketLogging", value); }
             }
 
             public static bool Tasks
             {
-                get { return Convert.ToBoolean(MooegeConfig.Get("Tasks")); }
+                get { return Convert.ToBoolean(MooegeConfig.Get("Tasks", "True")); }
                 set { MooegeConfig.Set("Tasks", value); }
             }
 
             public static bool LazyLoading
             {
-                get { return Convert.ToBoolean(MooegeConfig.Get("LazyLoading", "true")); }
+                get { return Convert.ToBoolean(MooegeConfig.Get("LazyLoading", "True")); }
                 set { MooegeConfig.Set("LazyLoading", value); }
             }
 
             public static bool PasswordCheck
             {
-                get { return Convert.ToBoolean(MooegeConfig.Get("PasswordCheck", "true")); }
+                get { return Convert.ToBoolean(MooegeConfig.Get("PasswordCheck", "True")); }
                 set { MooegeConfig.Set("PasswordCheck", value); }
             }
         }
