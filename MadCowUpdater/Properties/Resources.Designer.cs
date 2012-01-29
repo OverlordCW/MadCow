@@ -74,6 +74,13 @@ namespace MadCowUpdater.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap green_dot {
+            get {
+                object obj = ResourceManager.GetObject("green_dot", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap green_tick {
             get {
                 object obj = ResourceManager.GetObject("green_tick", resourceCulture);

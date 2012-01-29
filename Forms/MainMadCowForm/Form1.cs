@@ -28,6 +28,7 @@ using System.Net;
 using Nini.Config;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace MadCow
 {
@@ -2372,9 +2373,9 @@ namespace MadCow
         public static Thread ircThread;       
         private void ConnectButton_Click(object sender, EventArgs e)
         {
-            if (ircThread != null)
+            if (ircThread != null) //This is temporary to prevent connecting again and IRC malfunctioning.
             {
-                MessageBox.Show("There is a bug with current IRC implementation." + "\nIn order to connect again you need to restart MadCow." + "\nSorry for the inconvenience. -Wesko");
+                MessageBox.Show("There is a bug with current IRC implementation \nthat i'm not able to takle." + "\nIn order to connect again you need to restart MadCow." + "\nSorry for the inconvenience. -Wesko","Notice",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
             else
             {
@@ -2445,6 +2446,9 @@ namespace MadCow
 
         private void DisconnectButton_Click(object sender, EventArgs e)
         {
+            ChatUsersBox.Clear();
+            ChatDisplayBox.Clear();
+            ChatMessageBox.Clear();
             Client.irc.Disconnect();
         }
         #endregion

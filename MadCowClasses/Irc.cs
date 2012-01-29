@@ -23,6 +23,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Collections;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace MadCow
 {
@@ -32,6 +34,7 @@ namespace MadCow
         public static String fixedNickname;
         public static String channel = "#mooege.chat";
         public static String server = "downtown.tx.us.synirc.net";
+        public static Int32 port = 6667;
 
         public static void Run()
         {
@@ -46,23 +49,30 @@ namespace MadCow
             irc.OnNickChange += new NickChangeEventHandler(OnNickChange);
             irc.OnDisconnected += new SimpleEventHandler(OnDisconnected);
 
-            string[] serverlist;
-            serverlist = new string[] { "downtown.tx.us.synirc.net" };
+            Task<bool> task = Task<bool>.Factory.StartNew(() => irc.Connect(server, port));
+            task.Wait();
+            bool result = task.Result;
 
-            int port = 6667;
-            if (irc.Connect(serverlist, port) == true)
+             if (result == true)
             {
-                irc.Login(fixedNickname, "MadCow Live Help Client");
-                irc.Join(channel);
-                Connected();
-                irc.Listen();
+                try
+                {
+                    irc.Login(fixedNickname, "MadCow Live Help Client");
+                    irc.Join(channel);
+                    Connected();
+                    irc.Listen();
+                }
+                catch (Exception ircex)
+                {
+                    Console.WriteLine("[ERROR] Urc.cs - Line 55\n" + ircex);
+                }
             }
             else
             {
                 Console.WriteLine("[ERROR] Irc Client could not connect.");
             }
         }
-
+        
         public static void OnDisconnected()
         {
             Form1.GlobalAccess.Invoke(new Action(() => 
@@ -85,15 +95,16 @@ namespace MadCow
                 Form1.GlobalAccess.Advertencia.Visible = true;
                 Form1.GlobalAccess.ConnectButton.Visible = true;
                 //Kill Thread.
-                Form1.ircThread.Abort();
+                //Form1.ircThread.Abort();
             }));
         }
 
         public static void OnNickChange(string oldnickname, string newnickname, Data ircdata)
         {
-            //Todo: Update User List on ChatUsersBox.
+            //Todo: Update User List on ChatUsersBox OnNickChange.
         }
 
+        //Todo: Fix userlist loading.
         public static void OnNames(string channel, string[] userlist, Meebey.SmartIrc4net.Data ircdata)
         {
             Array.Sort(userlist);

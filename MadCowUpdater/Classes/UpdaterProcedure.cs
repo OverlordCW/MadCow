@@ -20,6 +20,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Build.Evaluation;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
 using System.Diagnostics;
@@ -28,51 +29,74 @@ namespace MadCowUpdater
 {
     class UpdaterProcedures
     {
-        public static void RunWholeProcedure() //This is actually the whole process MadCow uses after Downloading source.
+        public static void Uncompress() //This is actually the whole process MadCow uses after Downloading source.
         {
             ZipFile zip = null;
             var events = new FastZipEvents();
 
             FastZip z = new FastZip(events);
-            Console.WriteLine("Uncompressing zip file...");
             var stream = new FileStream(Path.GetTempPath() + @"\MadCow.zip", FileMode.Open, FileAccess.Read);
             zip = new ZipFile(stream);
             zip.IsStreamOwner = true; //Closes parent stream when ZipFile.Close is called
             zip.Close();
 
-            var t1 = Task.Factory.StartNew(() => z.ExtractZip(Path.GetTempPath() + @"\MadCow.zip", Path.GetTempPath() + @"\" + @"MadCow\", null))
-                .ContinueWith(delegate
+            Task task = Task.Factory.StartNew(() => z.ExtractZip(Path.GetTempPath() + @"\MadCow.zip", Path.GetTempPath() + @"\" + @"MadCow\",null));
+            task.Wait();
+
+            Form1.GlobalAccess.Invoke(new Action(() =>
             {
-                Continue();
-            });
+                Form1.GlobalAccess.UncompressSuccessDot.Visible = true;
+                Form1.GlobalAccess.UncompressingLabel.ForeColor = System.Drawing.Color.Green;
+            }));
         }
 
-        private static void Continue()
+        public static void CopyFiles()
         {
             var MadCowPath = Directory.GetParent(Program.path);
-            Helper.ModifyFolderName();
-            Compile.compileSource(); //Compile solution projects.
-            Helper.DeleteUpdaterFiles();
-            bool copy2 = Helper.CopyDirectory(Path.GetTempPath() + @"\MadCow\NewMadCow\bin\Debug\", MadCowPath.ToString(), true);
-            while (copy2 == false)
+            Task<bool> task = Task<bool>.Factory.StartNew(() => Helper.CopyDirectory(Path.GetTempPath() + @"\MadCow\NewMadCow\bin\MadCowDebug\", MadCowPath.ToString(), true));
+            bool result = task.Result;
+            task.Wait();
+
+            if (result == false)
             {
-                MessageBox.Show("Copying...");
-            }
-            if (copy2 == true)
-            {
-                Finish();
+                MessageBox.Show("[Fatal] Failed to copy files.");
             }
             else
-                MessageBox.Show("Error while copying new files.");
+            {
+                Form1.GlobalAccess.Invoke(new Action(() =>
+                {
+                    Form1.GlobalAccess.CopySuccessDot.Visible = true;
+                    Form1.GlobalAccess.CopyingLabel.ForeColor = System.Drawing.Color.Green;
+                }));
+            }
         }
 
-        private static void Finish()
+        public static void CompileSource()
         {
-            var MadCowPath = Directory.GetParent(Program.path);
-            Process firstProc = new Process();
-            firstProc.StartInfo.FileName = MadCowPath + @"\MadCow.exe";
-            firstProc.Start();
-            //Form1.GlobalAccess.timer1.Enabled = true;
+            var madcowPath = Path.GetTempPath() + @"\MadCow\NewMadCow\MadCow.csproj";
+
+            Task<bool> task = Task<bool>.Factory.StartNew(() => CompileMadcow(madcowPath));
+            bool result = task.Result;
+            task.Wait();
+
+            if (result == false)
+            {
+                MessageBox.Show("[Fatal] Failed to compile.");
+            }
+            else
+            {
+                Form1.GlobalAccess.Invoke(new Action(() =>
+                {
+                    Form1.GlobalAccess.CompilingSuccessDot.Visible = true;
+                    Form1.GlobalAccess.CompilingLabel.ForeColor = System.Drawing.Color.Green;
+                }));
+            }
+        }
+
+        private static bool CompileMadcow(string madcowPath)
+        {
+            var madcowProject = new Project(madcowPath);
+            return madcowProject.Build(new Microsoft.Build.Logging.FileLogger());
         }
     }
 }

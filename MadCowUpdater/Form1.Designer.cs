@@ -37,47 +37,43 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.UpdateComplete = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.SearchLabel = new System.Windows.Forms.Label();
             this.UpdatingLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.DownloadingLabel = new System.Windows.Forms.Label();
+            this.UncompressingLabel = new System.Windows.Forms.Label();
+            this.CompilingLabel = new System.Windows.Forms.Label();
+            this.CopyingLabel = new System.Windows.Forms.Label();
+            this.CopySuccessDot = new System.Windows.Forms.PictureBox();
+            this.CompilingSuccessDot = new System.Windows.Forms.PictureBox();
+            this.UncompressSuccessDot = new System.Windows.Forms.PictureBox();
+            this.DownloadSuccessDot = new System.Windows.Forms.PictureBox();
+            this.NoUpdateCross = new System.Windows.Forms.PictureBox();
+            this.UpdateFoundTick = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.CopySuccessDot)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CompilingSuccessDot)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.UncompressSuccessDot)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DownloadSuccessDot)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NoUpdateCross)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.UpdateFoundTick)).BeginInit();
             this.SuspendLayout();
             // 
             // NoUpdateLabel
             // 
-            this.NoUpdateLabel.AutoSize = true;
-            this.NoUpdateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            resources.ApplyResources(this.NoUpdateLabel, "NoUpdateLabel");
             this.NoUpdateLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.NoUpdateLabel.Location = new System.Drawing.Point(10, 9);
             this.NoUpdateLabel.Name = "NoUpdateLabel";
-            this.NoUpdateLabel.Size = new System.Drawing.Size(132, 13);
-            this.NoUpdateLabel.TabIndex = 0;
-            this.NoUpdateLabel.Text = "No update was found!";
-            this.NoUpdateLabel.Visible = false;
             // 
             // UpdateFound
             // 
-            this.UpdateFound.AutoSize = true;
-            this.UpdateFound.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            resources.ApplyResources(this.UpdateFound, "UpdateFound");
             this.UpdateFound.ForeColor = System.Drawing.Color.Green;
-            this.UpdateFound.Location = new System.Drawing.Point(31, 9);
             this.UpdateFound.Name = "UpdateFound";
-            this.UpdateFound.Size = new System.Drawing.Size(91, 13);
-            this.UpdateFound.TabIndex = 1;
-            this.UpdateFound.Text = "Update Found!";
-            this.UpdateFound.Visible = false;
             // 
             // UpdateButton
             // 
-            this.UpdateButton.Enabled = false;
-            this.UpdateButton.Location = new System.Drawing.Point(13, 95);
+            resources.ApplyResources(this.UpdateButton, "UpdateButton");
             this.UpdateButton.Name = "UpdateButton";
-            this.UpdateButton.Size = new System.Drawing.Size(130, 50);
-            this.UpdateButton.TabIndex = 3;
-            this.UpdateButton.Text = "Update";
             this.UpdateButton.UseVisualStyleBackColor = true;
             this.UpdateButton.Click += new System.EventHandler(this.UpdateButton_Click);
             // 
@@ -91,47 +87,19 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(13, 81);
+            resources.ApplyResources(this.progressBar1, "progressBar1");
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(129, 10);
-            this.progressBar1.TabIndex = 5;
             // 
             // UpdateComplete
             // 
-            this.UpdateComplete.AutoSize = true;
-            this.UpdateComplete.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UpdateComplete.ForeColor = System.Drawing.Color.Green;
-            this.UpdateComplete.Location = new System.Drawing.Point(10, 110);
+            resources.ApplyResources(this.UpdateComplete, "UpdateComplete");
+            this.UpdateComplete.ForeColor = System.Drawing.Color.ForestGreen;
             this.UpdateComplete.Name = "UpdateComplete";
-            this.UpdateComplete.Size = new System.Drawing.Size(138, 18);
-            this.UpdateComplete.TabIndex = 6;
-            this.UpdateComplete.Text = "Update Complete";
-            this.UpdateComplete.Visible = false;
             // 
             // timer1
             // 
             this.timer1.Interval = 1500;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::MadCowUpdater.Properties.Resources.cross_error;
-            this.pictureBox2.Location = new System.Drawing.Point(50, 25);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(57, 50);
-            this.pictureBox2.TabIndex = 4;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Visible = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::MadCowUpdater.Properties.Resources.green_tick;
-            this.pictureBox1.Location = new System.Drawing.Point(50, 25);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(57, 50);
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Visible = false;
             // 
             // backgroundWorker1
             // 
@@ -139,51 +107,112 @@
             // 
             // SearchLabel
             // 
-            this.SearchLabel.AutoSize = true;
-            this.SearchLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SearchLabel.Location = new System.Drawing.Point(32, 6);
+            resources.ApplyResources(this.SearchLabel, "SearchLabel");
             this.SearchLabel.Name = "SearchLabel";
-            this.SearchLabel.Size = new System.Drawing.Size(90, 16);
-            this.SearchLabel.TabIndex = 7;
-            this.SearchLabel.Text = "Searching...";
-            this.SearchLabel.Visible = false;
             // 
             // UpdatingLabel
             // 
-            this.UpdatingLabel.AutoSize = true;
-            this.UpdatingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UpdatingLabel.Location = new System.Drawing.Point(39, 6);
+            resources.ApplyResources(this.UpdatingLabel, "UpdatingLabel");
+            this.UpdatingLabel.ForeColor = System.Drawing.Color.DeepSkyBlue;
             this.UpdatingLabel.Name = "UpdatingLabel";
-            this.UpdatingLabel.Size = new System.Drawing.Size(83, 16);
-            this.UpdatingLabel.TabIndex = 8;
-            this.UpdatingLabel.Text = "Updating...";
-            this.UpdatingLabel.Visible = false;
+            // 
+            // DownloadingLabel
+            // 
+            resources.ApplyResources(this.DownloadingLabel, "DownloadingLabel");
+            this.DownloadingLabel.Name = "DownloadingLabel";
+            // 
+            // UncompressingLabel
+            // 
+            resources.ApplyResources(this.UncompressingLabel, "UncompressingLabel");
+            this.UncompressingLabel.Name = "UncompressingLabel";
+            // 
+            // CompilingLabel
+            // 
+            resources.ApplyResources(this.CompilingLabel, "CompilingLabel");
+            this.CompilingLabel.Name = "CompilingLabel";
+            // 
+            // CopyingLabel
+            // 
+            resources.ApplyResources(this.CopyingLabel, "CopyingLabel");
+            this.CopyingLabel.Name = "CopyingLabel";
+            // 
+            // CopySuccessDot
+            // 
+            this.CopySuccessDot.Image = global::MadCowUpdater.Properties.Resources.green_dot;
+            resources.ApplyResources(this.CopySuccessDot, "CopySuccessDot");
+            this.CopySuccessDot.Name = "CopySuccessDot";
+            this.CopySuccessDot.TabStop = false;
+            // 
+            // CompilingSuccessDot
+            // 
+            this.CompilingSuccessDot.Image = global::MadCowUpdater.Properties.Resources.green_dot;
+            resources.ApplyResources(this.CompilingSuccessDot, "CompilingSuccessDot");
+            this.CompilingSuccessDot.Name = "CompilingSuccessDot";
+            this.CompilingSuccessDot.TabStop = false;
+            // 
+            // UncompressSuccessDot
+            // 
+            this.UncompressSuccessDot.Image = global::MadCowUpdater.Properties.Resources.green_dot;
+            resources.ApplyResources(this.UncompressSuccessDot, "UncompressSuccessDot");
+            this.UncompressSuccessDot.Name = "UncompressSuccessDot";
+            this.UncompressSuccessDot.TabStop = false;
+            // 
+            // DownloadSuccessDot
+            // 
+            this.DownloadSuccessDot.Image = global::MadCowUpdater.Properties.Resources.green_dot;
+            resources.ApplyResources(this.DownloadSuccessDot, "DownloadSuccessDot");
+            this.DownloadSuccessDot.Name = "DownloadSuccessDot";
+            this.DownloadSuccessDot.TabStop = false;
+            // 
+            // NoUpdateCross
+            // 
+            this.NoUpdateCross.Image = global::MadCowUpdater.Properties.Resources.cross_error;
+            resources.ApplyResources(this.NoUpdateCross, "NoUpdateCross");
+            this.NoUpdateCross.Name = "NoUpdateCross";
+            this.NoUpdateCross.TabStop = false;
+            // 
+            // UpdateFoundTick
+            // 
+            this.UpdateFoundTick.Image = global::MadCowUpdater.Properties.Resources.green_tick;
+            resources.ApplyResources(this.UpdateFoundTick, "UpdateFoundTick");
+            this.UpdateFoundTick.Name = "UpdateFoundTick";
+            this.UpdateFoundTick.TabStop = false;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(154, 151);
-            this.Controls.Add(this.SearchLabel);
+            this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.CopySuccessDot);
+            this.Controls.Add(this.CompilingSuccessDot);
+            this.Controls.Add(this.UncompressSuccessDot);
+            this.Controls.Add(this.DownloadSuccessDot);
+            this.Controls.Add(this.CopyingLabel);
+            this.Controls.Add(this.CompilingLabel);
+            this.Controls.Add(this.UncompressingLabel);
+            this.Controls.Add(this.DownloadingLabel);
             this.Controls.Add(this.UpdateComplete);
             this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.UpdateButton);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.UpdateFoundTick);
+            this.Controls.Add(this.UpdatingLabel);
+            this.Controls.Add(this.NoUpdateCross);
+            this.Controls.Add(this.SearchLabel);
             this.Controls.Add(this.UpdateFound);
             this.Controls.Add(this.NoUpdateLabel);
-            this.Controls.Add(this.UpdatingLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Form1";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MadCow Updater";
+            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CopySuccessDot)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CompilingSuccessDot)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.UncompressSuccessDot)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DownloadSuccessDot)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NoUpdateCross)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.UpdateFoundTick)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -196,13 +225,21 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         public System.Windows.Forms.Label NoUpdateLabel;
         public System.Windows.Forms.Label UpdateFound;
-        public System.Windows.Forms.PictureBox pictureBox1;
+        public System.Windows.Forms.PictureBox UpdateFoundTick;
         public System.Windows.Forms.Button UpdateButton;
-        public System.Windows.Forms.PictureBox pictureBox2;
+        public System.Windows.Forms.PictureBox NoUpdateCross;
         public System.Windows.Forms.Label UpdateComplete;
         private System.Windows.Forms.Label SearchLabel;
         public System.Windows.Forms.Timer timer1;
         public System.Windows.Forms.Label UpdatingLabel;
+        public System.Windows.Forms.Label DownloadingLabel;
+        public System.Windows.Forms.Label UncompressingLabel;
+        public System.Windows.Forms.Label CompilingLabel;
+        public System.Windows.Forms.Label CopyingLabel;
+        public System.Windows.Forms.PictureBox DownloadSuccessDot;
+        public System.Windows.Forms.PictureBox UncompressSuccessDot;
+        public System.Windows.Forms.PictureBox CompilingSuccessDot;
+        public System.Windows.Forms.PictureBox CopySuccessDot;
 
 
     }

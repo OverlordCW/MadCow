@@ -74,7 +74,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Check.cs" />
-    <Compile Include="Classes\Compile.cs" />
     <Compile Include="Classes\Helper.cs" />
     <Compile Include="Classes\UpdaterProcedure.cs" />
     <Compile Include="Form1.cs">
@@ -86,6 +85,9 @@
     <Compile Include="Classes\ProcessFinder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form1.af.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -102,6 +104,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="mooege.ico" />
+    <None Include="Resources\green_dot.png" />
+    <None Include="Resources\smalltick.png" />
+    <None Include="Resources\smalltick.jpg" />
     <None Include="Resources\close-cross-delete-error-output-icone-5011-96_50x50.png" />
     <None Include="Resources\1195445190322000997molumen_red_round_error_warning_icon.svg.hi_50x50.png" />
     <None Include="Resources\green_tick-555px_50x50.png" />

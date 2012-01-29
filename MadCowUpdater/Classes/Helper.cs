@@ -14,18 +14,21 @@ namespace MadCowUpdater
         public static void ModifyFolderName()
         {
             String Destination = Path.GetTempPath() + @"\MadCow";
-            string[] files2 = Directory.GetDirectories(Destination);
-            foreach (string directory in files2)
+            if (Directory.Exists(Destination))
             {
-                Directory.Move(directory, Path.GetTempPath() + @"\MadCow\NewMadCow");
+                string[] files2 = Directory.GetDirectories(Destination);
+                foreach (string directory in files2)
+                {
+                    Directory.Move(directory, Path.GetTempPath() + @"\MadCow\NewMadCow");
+                }
             }
         }
 
-        public static void DeleteUpdaterFiles()
+        public static void DeleteMadCowUpdaterFiles()
         {
-            if (Directory.Exists(Path.GetTempPath() + @"\MadCow\NewMadCow\bin\Debug\MadCowUpdater"))
+            if (Directory.Exists(Path.GetTempPath() + @"\MadCow\NewMadCow\bin\MadCowDebug\MadCowUpdater"))
             {
-                Directory.Delete(Path.GetTempPath() + @"\MadCow\NewMadCow\bin\Debug\MadCowUpdater", true);
+                Directory.Delete(Path.GetTempPath() + @"\MadCow\NewMadCow\bin\MadCowDebug\MadCowUpdater", true);
             }
         }
 

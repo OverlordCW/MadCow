@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using System.Net;
 using System.IO;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace MadCowUpdater
 {
@@ -90,13 +92,13 @@ namespace MadCowUpdater
             if (Check.UserVersion == LatestVersionFound)
             {
                 this.NoUpdateLabel.Invoke((MethodInvoker)delegate { this.NoUpdateLabel.Visible = true; });
-                this.NoUpdateLabel.Invoke((MethodInvoker)delegate { this.pictureBox2.Visible = true; });
+                this.NoUpdateLabel.Invoke((MethodInvoker)delegate { this.NoUpdateCross.Visible = true; });
                 Form1.GlobalAccess.Invoke((MethodInvoker)delegate { this.timer1.Enabled = true; });
             }
             else
             {
                 this.UpdateFound.Invoke((MethodInvoker)delegate { this.UpdateFound.Visible = true; });
-                this.pictureBox1.Invoke((MethodInvoker)delegate { this.pictureBox1.Visible = true; });
+                this.UpdateFoundTick.Invoke((MethodInvoker)delegate { this.UpdateFoundTick.Visible = true; });
                 this.UpdateButton.Invoke((MethodInvoker)delegate { this.UpdateButton.Enabled = true; });
             }
         }
@@ -109,10 +111,20 @@ namespace MadCowUpdater
             }
             Helper.DeleteTempFolder();
             Helper.DeleteZipFile();
-            backgroundWorker2.RunWorkerAsync();
-            this.UpdateButton.Enabled = false;
+
+            //Procedure Descriptors.
+            this.DownloadingLabel.Visible = true;
+            this.UncompressingLabel.Visible = true;
+            this.CopyingLabel.Visible = true;
+            this.CompilingLabel.Visible = true;
             this.UpdatingLabel.Visible = true;
+
+            //Hide previous images and disable the Update Button.
+            this.UpdateFoundTick.Visible = false;
             this.UpdateFound.Visible = false;
+            this.UpdateButton.Enabled = false;
+            this.UpdateFound.Visible = false;
+            backgroundWorker2.RunWorkerAsync();
         }
 
         //Downloading Latest Version from assigned developer.
@@ -173,16 +185,40 @@ namespace MadCowUpdater
 
         private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            this.DownloadSuccessDot.Visible = true;
+            this.DownloadingLabel.ForeColor = Color.Green;
             //When the download is complete, we execute the uncompress/delete/copy procedures.
-            UpdaterProcedures.RunWholeProcedure();
-            this.UpdateComplete.Visible = true;
-            this.UpdatingLabel.Visible = false;
-            this.UpdateButton.Visible = false;
+            UpdaterProcedures.Uncompress();
+            Helper.ModifyFolderName();
+            //We delete the MadCowUpdater files in the new folder.
+            Helper.DeleteMadCowUpdaterFiles();
+            //Compile
+            UpdaterProcedures.CompileSource();
+            //Copy Files
+            UpdaterProcedures.CopyFiles();
+            //Clean downloaded/generated files.         
+            Helper.DeleteTempFolder();
+            Helper.DeleteZipFile();
+            Form1.GlobalAccess.Invoke(new Action(() => 
+            {
+            UpdateComplete.Visible = true;
+            UpdatingLabel.Visible = false;
+            UpdateButton.Visible = false;
+            }));
+
+            //We launch MadCow.
+            Task.WaitAll();
+            this.timer1.Interval = 3000;
+            this.timer1.Enabled = true;
         }
 
         //Timer tick event, if no update found just to close the updater app.
         private void timer1_Tick(object sender, EventArgs e)
         {
+            var MadCowPath = Directory.GetParent(Program.path);
+            Process firstProc = new Process();
+            firstProc.StartInfo.FileName = MadCowPath + @"\MadCow.exe";
+            firstProc.Start();
             this.Close();
         }
 

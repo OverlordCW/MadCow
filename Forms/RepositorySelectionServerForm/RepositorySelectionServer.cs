@@ -117,7 +117,7 @@ namespace MadCow
                 Process proc0 = new Process();
                 proc0.StartInfo = new ProcessStartInfo(Compile.currentMooegeExePath);
                 proc0.Start();
-                Thread.Sleep(2000);
+                Thread.Sleep(3000);
                 if (ErrorFinder.SearchLogs("Fatal") == true)
                 {
                     Console.WriteLine("Closing Mooege due Fatal Exception");
