@@ -32,69 +32,69 @@ namespace MadCow
         //For MadCow configuration loading settings.
         public static void Helpers()
         {
-            if (File.Exists(Program.madcowINI))
-            {
-                IConfigSource source = new IniConfigSource(Program.madcowINI);
-                String BalloonTips = source.Configs["Balloons"].Get("ShowBalloons");
+            //if (File.Exists(Program.madcowINI))
+            //{
+            //    IConfigSource source = new IniConfigSource(Program.madcowINI);
+            //    String BalloonTips = source.Configs["Balloons"].Get("ShowBalloons");
 
-                Form1.GlobalAccess.TrayNotificationsStatusLabel.ResetText();
+            //    Form1.GlobalAccess.TrayNotificationsStatusLabel.ResetText();
 
-                if (BalloonTips.Contains("1"))
-                {
-                    Form1.GlobalAccess.TrayNotificationsStatusLabel.Text = "Enabled";
-                    Form1.GlobalAccess.TrayNotificationsStatusLabel.ForeColor = Color.SeaGreen;
-                }
-                else
-                {
-                    Form1.GlobalAccess.TrayNotificationsStatusLabel.Text = "Disabled";
-                    Form1.GlobalAccess.TrayNotificationsStatusLabel.ForeColor = Color.DimGray;
-                }
+            //    if (BalloonTips.Contains("1"))
+            //    {
+            //        Form1.GlobalAccess.TrayNotificationsStatusLabel.Text = "Enabled";
+            //        Form1.GlobalAccess.TrayNotificationsStatusLabel.ForeColor = Color.SeaGreen;
+            //    }
+            //    else
+            //    {
+            //        Form1.GlobalAccess.TrayNotificationsStatusLabel.Text = "Disabled";
+            //        Form1.GlobalAccess.TrayNotificationsStatusLabel.ForeColor = Color.DimGray;
+            //    }
 
-                String Shorcut = source.Configs["ShortCut"].Get("Shortcut");
-                Form1.GlobalAccess.SrtCutStatusLabel.ResetText();
+            //    String Shorcut = source.Configs["ShortCut"].Get("Shortcut");
+            //    Form1.GlobalAccess.SrtCutStatusLabel.ResetText();
 
-                if (Shorcut.Contains("1"))
-                {
-                    Form1.GlobalAccess.SrtCutStatusLabel.Text = "Enabled";
-                    Form1.GlobalAccess.SrtCutStatusLabel.ForeColor = Color.SeaGreen;
-                }
-                else
-                {
-                    Form1.GlobalAccess.SrtCutStatusLabel.Text = "Disabled";
-                    Form1.GlobalAccess.SrtCutStatusLabel.ForeColor = Color.DimGray;
-                }
+            //    if (Shorcut.Contains("1"))
+            //    {
+            //        Form1.GlobalAccess.SrtCutStatusLabel.Text = "Enabled";
+            //        Form1.GlobalAccess.SrtCutStatusLabel.ForeColor = Color.SeaGreen;
+            //    }
+            //    else
+            //    {
+            //        Form1.GlobalAccess.SrtCutStatusLabel.Text = "Disabled";
+            //        Form1.GlobalAccess.SrtCutStatusLabel.ForeColor = Color.DimGray;
+            //    }
 
-                String LastRepo = source.Configs["LastPlay"].Get("Enabled");
-                Form1.GlobalAccess.RememberLastRepoStatusLabel.ResetText();
+            //    String LastRepo = source.Configs["LastPlay"].Get("Enabled");
+            //    Form1.GlobalAccess.RememberLastRepoStatusLabel.ResetText();
 
-                if (LastRepo.Contains("1"))
-                {
-                    Form1.GlobalAccess.RememberLastRepoStatusLabel.Text = "Enabled";
-                    Form1.GlobalAccess.RememberLastRepoStatusLabel.ForeColor = Color.SeaGreen;
-                    Form1.GlobalAccess.LastPlayedRepoReminderLabel.Visible = true;
-                }
-                else
-                {
-                    Form1.GlobalAccess.RememberLastRepoStatusLabel.Text = "Disabled";
-                    Form1.GlobalAccess.RememberLastRepoStatusLabel.ForeColor = Color.DimGray;
-                    Form1.GlobalAccess.LastPlayedRepoReminderLabel.Visible = false;
-                }
+            //    if (LastRepo.Contains("1"))
+            //    {
+            //        Form1.GlobalAccess.RememberLastRepoStatusLabel.Text = "Enabled";
+            //        Form1.GlobalAccess.RememberLastRepoStatusLabel.ForeColor = Color.SeaGreen;
+            //        Form1.GlobalAccess.LastPlayedRepoReminderLabel.Visible = true;
+            //    }
+            //    else
+            //    {
+            //        Form1.GlobalAccess.RememberLastRepoStatusLabel.Text = "Disabled";
+            //        Form1.GlobalAccess.RememberLastRepoStatusLabel.ForeColor = Color.DimGray;
+            //        Form1.GlobalAccess.LastPlayedRepoReminderLabel.Visible = false;
+            //    }
 
-                String TrayIcon = source.Configs["Tray"].Get("Enabled");
-                Form1.GlobalAccess.MinimizeTrayStatusLabel.ResetText();
+            //    String TrayIcon = source.Configs["Tray"].Get("Enabled");
+            //    Form1.GlobalAccess.MinimizeTrayStatusLabel.ResetText();
 
-                if (TrayIcon.Contains("1"))
-                {
-                    Form1.GlobalAccess.MinimizeTrayStatusLabel.Text = "Enabled";
-                    Form1.GlobalAccess.MinimizeTrayStatusLabel.ForeColor = Color.SeaGreen;
-                    Form1.GlobalAccess.loadTrayMenu();//Loading the contextMenu for trayIcon    
-                }
-                else
-                {
-                    Form1.GlobalAccess.MinimizeTrayStatusLabel.Text = "Disabled";
-                    Form1.GlobalAccess.MinimizeTrayStatusLabel.ForeColor = Color.DimGray;
-                }
-            }
+            //    if (TrayIcon.Contains("1"))
+            //    {
+            //        Form1.GlobalAccess.MinimizeTrayStatusLabel.Text = "Enabled";
+            //        Form1.GlobalAccess.MinimizeTrayStatusLabel.ForeColor = Color.SeaGreen;
+            //        Form1.GlobalAccess.loadTrayMenu();//Loading the contextMenu for trayIcon    
+            //    }
+            //    else
+            //    {
+            //        Form1.GlobalAccess.MinimizeTrayStatusLabel.Text = "Disabled";
+            //        Form1.GlobalAccess.MinimizeTrayStatusLabel.ForeColor = Color.DimGray;
+            //    }
+            //}
         }
 
         //MadCowUpdater process killer.
@@ -125,7 +125,7 @@ namespace MadCow
                 }
                 if (notReturned == sitesList.Length)
                 {
-                    _success = false;                    
+                    _success = false;
                 }
                 else
                 {
@@ -145,7 +145,10 @@ namespace MadCow
             //If we were unable to ping the server, we warn the user about repercutions!.
             if (!isConnectionAvailable())
             {
-                MessageBox.Show("There is no Internet connection, MadCow will NOT be able to perform correctly." + "\n\nBe aware: Fatal errors might happen:" + "\nMadCow has an strong Internet dependency.","Warning - No Internet Connection was found",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show("There is no Internet connection, MadCow will NOT be able to perform correctly."
+                    + "\n\nBe aware: Fatal errors might happen:"
+                    + "\nMadCow has an strong Internet dependency.",
+                    "Warning - No Internet Connection was found", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

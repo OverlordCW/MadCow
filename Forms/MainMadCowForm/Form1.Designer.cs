@@ -45,7 +45,6 @@
             this.RemoteHost = new System.Windows.Forms.Label();
             this.remotePortTxtBox = new System.Windows.Forms.TextBox();
             this.remoteHostTxtBox = new System.Windows.Forms.TextBox();
-            this.MadCowCreditsLabel = new System.Windows.Forms.Label();
             this.ServerControlTab = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.TickGameServerPort = new System.Windows.Forms.PictureBox();
@@ -108,18 +107,6 @@
             this.ProblemsCompilingLabel = new System.Windows.Forms.Label();
             this.AutoUpdateMadcowLabel = new System.Windows.Forms.Label();
             this.UpdateMadcowButton = new System.Windows.Forms.Button();
-            this.MinimizeTrayStatusLabel = new System.Windows.Forms.Label();
-            this.MinimizeTrayLabel = new System.Windows.Forms.Label();
-            this.MinTrayOnOfButton = new System.Windows.Forms.Button();
-            this.RememberLastRepoStatusLabel = new System.Windows.Forms.Label();
-            this.LastRepoOnOfButton = new System.Windows.Forms.Button();
-            this.RememberLastRepoLabel = new System.Windows.Forms.Label();
-            this.TrayNotificationsStatusLabel = new System.Windows.Forms.Label();
-            this.TrayNotificationsLabel = new System.Windows.Forms.Label();
-            this.TrayNotifOnOfButton = new System.Windows.Forms.Button();
-            this.ShortcutLabel = new System.Windows.Forms.Label();
-            this.SrtCutStatusLabel = new System.Windows.Forms.Label();
-            this.ShrtCutOnOfButton = new System.Windows.Forms.Button();
             this.DownloadSpeedLabel = new System.Windows.Forms.Label();
             this.DownloadFileNameLabel = new System.Windows.Forms.Label();
             this.DownloadMPQSprogressBar = new System.Windows.Forms.ProgressBar();
@@ -127,10 +114,6 @@
             this.DownloadMPQSButton = new System.Windows.Forms.Button();
             this.ResetMooegeReposLabel = new System.Windows.Forms.Label();
             this.ResetRepoFolder = new System.Windows.Forms.Button();
-            this.ChainPicture = new System.Windows.Forms.PictureBox();
-            this.AboutTab = new System.Windows.Forms.TabPage();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.VersionLabel = new System.Windows.Forms.Label();
             this.DownloadSpeedTimer = new System.Windows.Forms.Timer(this.components);
             this.DiabloPathFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.DownloadRepository = new System.ComponentModel.BackgroundWorker();
@@ -164,6 +147,17 @@
             this.ChangelogDownloader = new System.ComponentModel.BackgroundWorker();
             this.MadCowTrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.MpqPathBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.madCowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enableTrayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enableTrayNotificationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rememberLastRepositoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.desktopShortcutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mooegeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.RemoteServerTab.SuspendLayout();
@@ -193,15 +187,13 @@
             this.groupBox9.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.HelpTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ChainPicture)).BeginInit();
-            this.AboutTab.SuspendLayout();
-            this.groupBox7.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.OutPutTab.SuspendLayout();
             this.ChaneglogTab.SuspendLayout();
             this.LiveHelpTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Advertencia)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BotonAlerta)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // EnableAutoUpdateBox
@@ -366,18 +358,6 @@
             this.remoteHostTxtBox.Size = new System.Drawing.Size(197, 20);
             this.remoteHostTxtBox.TabIndex = 0;
             this.remoteHostTxtBox.Text = "0.0.0.0";
-            // 
-            // MadCowCreditsLabel
-            // 
-            this.MadCowCreditsLabel.BackColor = System.Drawing.Color.Transparent;
-            this.MadCowCreditsLabel.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MadCowCreditsLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.MadCowCreditsLabel.Location = new System.Drawing.Point(5, 133);
-            this.MadCowCreditsLabel.Name = "MadCowCreditsLabel";
-            this.MadCowCreditsLabel.Size = new System.Drawing.Size(334, 186);
-            this.MadCowCreditsLabel.TabIndex = 1;
-            this.MadCowCreditsLabel.Text = resources.GetString("MadCowCreditsLabel.Text");
-            this.MadCowCreditsLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // ServerControlTab
             // 
@@ -914,10 +894,9 @@
             this.Tabs.Controls.Add(this.RemoteServerTab);
             this.Tabs.Controls.Add(this.MooegeTab);
             this.Tabs.Controls.Add(this.HelpTab);
-            this.Tabs.Controls.Add(this.AboutTab);
             this.Tabs.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Tabs.HotTrack = true;
-            this.Tabs.Location = new System.Drawing.Point(3, 0);
+            this.Tabs.Location = new System.Drawing.Point(3, 27);
             this.Tabs.Name = "Tabs";
             this.Tabs.SelectedIndex = 0;
             this.Tabs.Size = new System.Drawing.Size(353, 360);
@@ -960,7 +939,7 @@
             this.SettingsCheckedListBox.Name = "SettingsCheckedListBox";
             this.SettingsCheckedListBox.Size = new System.Drawing.Size(321, 79);
             this.SettingsCheckedListBox.TabIndex = 0;
-            this.SettingsCheckedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.SettingsCheckedListBox_ItemCheck);
+            this.SettingsCheckedListBox.SelectedIndexChanged += new System.EventHandler(this.SettingsCheckedListBox_SelectedIndexChanged);
             // 
             // groupBox8
             // 
@@ -1012,18 +991,6 @@
             this.HelpTab.Controls.Add(this.ProblemsCompilingLabel);
             this.HelpTab.Controls.Add(this.AutoUpdateMadcowLabel);
             this.HelpTab.Controls.Add(this.UpdateMadcowButton);
-            this.HelpTab.Controls.Add(this.MinimizeTrayStatusLabel);
-            this.HelpTab.Controls.Add(this.MinimizeTrayLabel);
-            this.HelpTab.Controls.Add(this.MinTrayOnOfButton);
-            this.HelpTab.Controls.Add(this.RememberLastRepoStatusLabel);
-            this.HelpTab.Controls.Add(this.LastRepoOnOfButton);
-            this.HelpTab.Controls.Add(this.RememberLastRepoLabel);
-            this.HelpTab.Controls.Add(this.TrayNotificationsStatusLabel);
-            this.HelpTab.Controls.Add(this.TrayNotificationsLabel);
-            this.HelpTab.Controls.Add(this.TrayNotifOnOfButton);
-            this.HelpTab.Controls.Add(this.ShortcutLabel);
-            this.HelpTab.Controls.Add(this.SrtCutStatusLabel);
-            this.HelpTab.Controls.Add(this.ShrtCutOnOfButton);
             this.HelpTab.Controls.Add(this.DownloadSpeedLabel);
             this.HelpTab.Controls.Add(this.DownloadFileNameLabel);
             this.HelpTab.Controls.Add(this.DownloadMPQSprogressBar);
@@ -1031,7 +998,6 @@
             this.HelpTab.Controls.Add(this.DownloadMPQSButton);
             this.HelpTab.Controls.Add(this.ResetMooegeReposLabel);
             this.HelpTab.Controls.Add(this.ResetRepoFolder);
-            this.HelpTab.Controls.Add(this.ChainPicture);
             this.HelpTab.Cursor = System.Windows.Forms.Cursors.Hand;
             this.HelpTab.Location = new System.Drawing.Point(4, 22);
             this.HelpTab.Name = "HelpTab";
@@ -1084,126 +1050,6 @@
             this.ToolTips.SetToolTip(this.UpdateMadcowButton, "Searchs and Autoupdate MadCow");
             this.UpdateMadcowButton.UseVisualStyleBackColor = true;
             this.UpdateMadcowButton.Click += new System.EventHandler(this.button5_Click);
-            // 
-            // MinimizeTrayStatusLabel
-            // 
-            this.MinimizeTrayStatusLabel.AutoSize = true;
-            this.MinimizeTrayStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MinimizeTrayStatusLabel.ForeColor = System.Drawing.Color.SeaGreen;
-            this.MinimizeTrayStatusLabel.Location = new System.Drawing.Point(274, 281);
-            this.MinimizeTrayStatusLabel.Name = "MinimizeTrayStatusLabel";
-            this.MinimizeTrayStatusLabel.Size = new System.Drawing.Size(0, 13);
-            this.MinimizeTrayStatusLabel.TabIndex = 23;
-            // 
-            // MinimizeTrayLabel
-            // 
-            this.MinimizeTrayLabel.AutoSize = true;
-            this.MinimizeTrayLabel.Location = new System.Drawing.Point(22, 281);
-            this.MinimizeTrayLabel.Name = "MinimizeTrayLabel";
-            this.MinimizeTrayLabel.Size = new System.Drawing.Size(83, 13);
-            this.MinimizeTrayLabel.TabIndex = 22;
-            this.MinimizeTrayLabel.Text = "Minimize to Tray";
-            // 
-            // MinTrayOnOfButton
-            // 
-            this.MinTrayOnOfButton.Location = new System.Drawing.Point(179, 275);
-            this.MinTrayOnOfButton.Name = "MinTrayOnOfButton";
-            this.MinTrayOnOfButton.Size = new System.Drawing.Size(75, 25);
-            this.MinTrayOnOfButton.TabIndex = 21;
-            this.MinTrayOnOfButton.Text = "On/Off";
-            this.ToolTips.SetToolTip(this.MinTrayOnOfButton, "Disable/Enable Minimize to tray icon functionality.");
-            this.MinTrayOnOfButton.UseVisualStyleBackColor = true;
-            this.MinTrayOnOfButton.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // RememberLastRepoStatusLabel
-            // 
-            this.RememberLastRepoStatusLabel.AutoSize = true;
-            this.RememberLastRepoStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RememberLastRepoStatusLabel.ForeColor = System.Drawing.Color.SeaGreen;
-            this.RememberLastRepoStatusLabel.Location = new System.Drawing.Point(274, 251);
-            this.RememberLastRepoStatusLabel.Name = "RememberLastRepoStatusLabel";
-            this.RememberLastRepoStatusLabel.Size = new System.Drawing.Size(0, 13);
-            this.RememberLastRepoStatusLabel.TabIndex = 20;
-            // 
-            // LastRepoOnOfButton
-            // 
-            this.LastRepoOnOfButton.Location = new System.Drawing.Point(179, 245);
-            this.LastRepoOnOfButton.Name = "LastRepoOnOfButton";
-            this.LastRepoOnOfButton.Size = new System.Drawing.Size(75, 25);
-            this.LastRepoOnOfButton.TabIndex = 19;
-            this.LastRepoOnOfButton.Text = "On/Off";
-            this.ToolTips.SetToolTip(this.LastRepoOnOfButton, "If enabled Diablo launches right on clic PLAY.");
-            this.LastRepoOnOfButton.UseVisualStyleBackColor = true;
-            this.LastRepoOnOfButton.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // RememberLastRepoLabel
-            // 
-            this.RememberLastRepoLabel.AutoSize = true;
-            this.RememberLastRepoLabel.Location = new System.Drawing.Point(22, 251);
-            this.RememberLastRepoLabel.Name = "RememberLastRepoLabel";
-            this.RememberLastRepoLabel.Size = new System.Drawing.Size(134, 13);
-            this.RememberLastRepoLabel.TabIndex = 18;
-            this.RememberLastRepoLabel.Text = "Remember Last Repository";
-            // 
-            // TrayNotificationsStatusLabel
-            // 
-            this.TrayNotificationsStatusLabel.AutoSize = true;
-            this.TrayNotificationsStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TrayNotificationsStatusLabel.ForeColor = System.Drawing.Color.SeaGreen;
-            this.TrayNotificationsStatusLabel.Location = new System.Drawing.Point(274, 311);
-            this.TrayNotificationsStatusLabel.Name = "TrayNotificationsStatusLabel";
-            this.TrayNotificationsStatusLabel.Size = new System.Drawing.Size(0, 13);
-            this.TrayNotificationsStatusLabel.TabIndex = 17;
-            // 
-            // TrayNotificationsLabel
-            // 
-            this.TrayNotificationsLabel.AutoSize = true;
-            this.TrayNotificationsLabel.Location = new System.Drawing.Point(22, 311);
-            this.TrayNotificationsLabel.Name = "TrayNotificationsLabel";
-            this.TrayNotificationsLabel.Size = new System.Drawing.Size(89, 13);
-            this.TrayNotificationsLabel.TabIndex = 16;
-            this.TrayNotificationsLabel.Text = "Tray Notifications";
-            // 
-            // TrayNotifOnOfButton
-            // 
-            this.TrayNotifOnOfButton.Location = new System.Drawing.Point(179, 306);
-            this.TrayNotifOnOfButton.Name = "TrayNotifOnOfButton";
-            this.TrayNotifOnOfButton.Size = new System.Drawing.Size(75, 23);
-            this.TrayNotifOnOfButton.TabIndex = 15;
-            this.TrayNotifOnOfButton.Text = "On/Off";
-            this.ToolTips.SetToolTip(this.TrayNotifOnOfButton, "Enable/Disable Tray Icon notifications.");
-            this.TrayNotifOnOfButton.UseVisualStyleBackColor = true;
-            this.TrayNotifOnOfButton.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // ShortcutLabel
-            // 
-            this.ShortcutLabel.AutoSize = true;
-            this.ShortcutLabel.Location = new System.Drawing.Point(22, 221);
-            this.ShortcutLabel.Name = "ShortcutLabel";
-            this.ShortcutLabel.Size = new System.Drawing.Size(106, 13);
-            this.ShortcutLabel.TabIndex = 14;
-            this.ShortcutLabel.Text = "Shortcut Auto Create";
-            // 
-            // SrtCutStatusLabel
-            // 
-            this.SrtCutStatusLabel.AutoSize = true;
-            this.SrtCutStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SrtCutStatusLabel.ForeColor = System.Drawing.Color.SeaGreen;
-            this.SrtCutStatusLabel.Location = new System.Drawing.Point(274, 221);
-            this.SrtCutStatusLabel.Name = "SrtCutStatusLabel";
-            this.SrtCutStatusLabel.Size = new System.Drawing.Size(0, 13);
-            this.SrtCutStatusLabel.TabIndex = 13;
-            // 
-            // ShrtCutOnOfButton
-            // 
-            this.ShrtCutOnOfButton.Location = new System.Drawing.Point(179, 215);
-            this.ShrtCutOnOfButton.Name = "ShrtCutOnOfButton";
-            this.ShrtCutOnOfButton.Size = new System.Drawing.Size(75, 25);
-            this.ShrtCutOnOfButton.TabIndex = 12;
-            this.ShrtCutOnOfButton.Text = "On/Off";
-            this.ToolTips.SetToolTip(this.ShrtCutOnOfButton, "Disable/Enable desktop shortcut creation.");
-            this.ShrtCutOnOfButton.UseVisualStyleBackColor = true;
-            this.ShrtCutOnOfButton.Click += new System.EventHandler(this.button1_Click);
             // 
             // DownloadSpeedLabel
             // 
@@ -1270,47 +1116,6 @@
             this.ResetRepoFolder.UseVisualStyleBackColor = true;
             this.ResetRepoFolder.Click += new System.EventHandler(this.ResetRepoFolder_Click);
             // 
-            // ChainPicture
-            // 
-            this.ChainPicture.Image = global::MadCow.Properties.Resources.process_chain;
-            this.ChainPicture.Location = new System.Drawing.Point(292, 296);
-            this.ChainPicture.Name = "ChainPicture";
-            this.ChainPicture.Size = new System.Drawing.Size(18, 14);
-            this.ChainPicture.TabIndex = 24;
-            this.ChainPicture.TabStop = false;
-            this.ChainPicture.Visible = false;
-            // 
-            // AboutTab
-            // 
-            this.AboutTab.BackColor = System.Drawing.Color.White;
-            this.AboutTab.Controls.Add(this.groupBox7);
-            this.AboutTab.Controls.Add(this.MadCowCreditsLabel);
-            this.AboutTab.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.AboutTab.Location = new System.Drawing.Point(4, 22);
-            this.AboutTab.Name = "AboutTab";
-            this.AboutTab.Padding = new System.Windows.Forms.Padding(3);
-            this.AboutTab.Size = new System.Drawing.Size(345, 334);
-            this.AboutTab.TabIndex = 5;
-            this.AboutTab.Text = "About";
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.VersionLabel);
-            this.groupBox7.Location = new System.Drawing.Point(73, 21);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(200, 100);
-            this.groupBox7.TabIndex = 2;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Version";
-            // 
-            // VersionLabel
-            // 
-            this.VersionLabel.AutoSize = true;
-            this.VersionLabel.Location = new System.Drawing.Point(76, 45);
-            this.VersionLabel.Name = "VersionLabel";
-            this.VersionLabel.Size = new System.Drawing.Size(0, 13);
-            this.VersionLabel.TabIndex = 0;
-            // 
             // DownloadSpeedTimer
             // 
             this.DownloadSpeedTimer.Interval = 60000;
@@ -1375,7 +1180,7 @@
             this.tabControl2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.tabControl2.HotTrack = true;
             this.tabControl2.ItemSize = new System.Drawing.Size(96, 18);
-            this.tabControl2.Location = new System.Drawing.Point(358, 0);
+            this.tabControl2.Location = new System.Drawing.Point(358, 27);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.tabControl2.SelectedIndex = 0;
@@ -1641,11 +1446,105 @@
             // 
             this.MpqPathBrowserDialog.Description = "Select the MPQ destination.";
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.optionsToolStripMenuItem,
+            this.aboutToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(736, 24);
+            this.menuStrip1.TabIndex = 18;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "&File";
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.exitToolStripMenuItem.Text = "E&xit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.madCowToolStripMenuItem,
+            this.mooegeToolStripMenuItem});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Text = "&Options";
+            // 
+            // madCowToolStripMenuItem
+            // 
+            this.madCowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.enableTrayToolStripMenuItem,
+            this.enableTrayNotificationsToolStripMenuItem,
+            this.rememberLastRepositoryToolStripMenuItem,
+            this.desktopShortcutToolStripMenuItem});
+            this.madCowToolStripMenuItem.Name = "madCowToolStripMenuItem";
+            this.madCowToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.madCowToolStripMenuItem.Text = "Mad&Cow";
+            // 
+            // enableTrayToolStripMenuItem
+            // 
+            this.enableTrayToolStripMenuItem.CheckOnClick = true;
+            this.enableTrayToolStripMenuItem.Name = "enableTrayToolStripMenuItem";
+            this.enableTrayToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.enableTrayToolStripMenuItem.Text = "Enable Tray";
+            this.enableTrayToolStripMenuItem.CheckedChanged += new System.EventHandler(this.enableTrayToolStripMenuItem_CheckedChanged);
+            // 
+            // enableTrayNotificationsToolStripMenuItem
+            // 
+            this.enableTrayNotificationsToolStripMenuItem.CheckOnClick = true;
+            this.enableTrayNotificationsToolStripMenuItem.Name = "enableTrayNotificationsToolStripMenuItem";
+            this.enableTrayNotificationsToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.enableTrayNotificationsToolStripMenuItem.Text = "Enable Tray Notifications";
+            this.enableTrayNotificationsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.enableTrayNotificationsToolStripMenuItem_CheckedChanged);
+            // 
+            // rememberLastRepositoryToolStripMenuItem
+            // 
+            this.rememberLastRepositoryToolStripMenuItem.CheckOnClick = true;
+            this.rememberLastRepositoryToolStripMenuItem.Name = "rememberLastRepositoryToolStripMenuItem";
+            this.rememberLastRepositoryToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.rememberLastRepositoryToolStripMenuItem.Text = "Remember Last Repository";
+            this.rememberLastRepositoryToolStripMenuItem.CheckedChanged += new System.EventHandler(this.rememberLastRepositoryToolStripMenuItem_CheckedChanged);
+            // 
+            // desktopShortcutToolStripMenuItem
+            // 
+            this.desktopShortcutToolStripMenuItem.CheckOnClick = true;
+            this.desktopShortcutToolStripMenuItem.Name = "desktopShortcutToolStripMenuItem";
+            this.desktopShortcutToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.desktopShortcutToolStripMenuItem.Text = "Desktop Shortcut";
+            this.desktopShortcutToolStripMenuItem.CheckedChanged += new System.EventHandler(this.desktopShortcutToolStripMenuItem_CheckedChanged);
+            // 
+            // mooegeToolStripMenuItem
+            // 
+            this.mooegeToolStripMenuItem.Enabled = false;
+            this.mooegeToolStripMenuItem.Name = "mooegeToolStripMenuItem";
+            this.mooegeToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.mooegeToolStripMenuItem.Text = "&Mooege";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.aboutToolStripMenuItem.Text = "&About...";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(736, 362);
+            this.ClientSize = new System.Drawing.Size(736, 389);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.tabControl2);
             this.Controls.Add(this.Tabs);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -1694,10 +1593,6 @@
             this.groupBox8.PerformLayout();
             this.HelpTab.ResumeLayout(false);
             this.HelpTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ChainPicture)).EndInit();
-            this.AboutTab.ResumeLayout(false);
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
             this.tabControl2.ResumeLayout(false);
             this.OutPutTab.ResumeLayout(false);
             this.OutPutTab.PerformLayout();
@@ -1707,7 +1602,10 @@
             this.LiveHelpTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Advertencia)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BotonAlerta)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -1719,7 +1617,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button RemoteServerLaunchButton;
         private System.Windows.Forms.TabPage RemoteServerTab;
-        private System.Windows.Forms.Label MadCowCreditsLabel;
         private System.Windows.Forms.TabPage ServerControlTab;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.LinkLabel RestoreDefaultsLabel;
@@ -1761,7 +1658,6 @@
         public System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button ResetRepoFolder;
         private System.Windows.Forms.Label ResetMooegeReposLabel;
-        private System.Windows.Forms.TabPage AboutTab;
         private System.Windows.Forms.Label RemoteServerTip;
         private System.Windows.Forms.Label MotdLabel;
         private System.Windows.Forms.TextBox MotdTxtBox;
@@ -1799,27 +1695,12 @@
         public System.Windows.Forms.Button CopyMPQButton;
         public System.Windows.Forms.ComboBox BranchComboBox;
         public System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Button ShrtCutOnOfButton;
-        private System.Windows.Forms.Label TrayNotificationsLabel;
-        private System.Windows.Forms.Button TrayNotifOnOfButton;
-        private System.Windows.Forms.Label ShortcutLabel;
-        public System.Windows.Forms.Label SrtCutStatusLabel;
-        public System.Windows.Forms.Label TrayNotificationsStatusLabel;
         public System.ComponentModel.BackgroundWorker DownloadSelectedMpqs;
-        private System.Windows.Forms.Label RememberLastRepoLabel;
-        private System.Windows.Forms.Button LastRepoOnOfButton;
-        public System.Windows.Forms.Label RememberLastRepoStatusLabel;
         private System.Windows.Forms.Label BranchSelectionLabel;
         public System.Windows.Forms.Label LastPlayedRepoReminderLabel;
         public System.Windows.Forms.TabControl Tabs;
         private System.Windows.Forms.TabPage UpdatesTab;
-        public System.Windows.Forms.Label MinimizeTrayStatusLabel;
-        private System.Windows.Forms.Label MinimizeTrayLabel;
-        private System.Windows.Forms.Button MinTrayOnOfButton;
-        private System.Windows.Forms.PictureBox ChainPicture;
         private System.Windows.Forms.Button UpdateMadcowButton;
-        private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.Label VersionLabel;
         private System.Windows.Forms.Label AutoUpdateMadcowLabel;
         private System.Windows.Forms.FolderBrowserDialog MpqPathBrowserDialog;
         private System.Windows.Forms.TabPage MooegeTab;
@@ -1846,6 +1727,17 @@
         public System.Windows.Forms.TextBox Rules;
         public System.Windows.Forms.PictureBox Advertencia;
         public System.Windows.Forms.Button DisconnectButton;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem madCowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem enableTrayToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem enableTrayNotificationsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rememberLastRepositoryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem desktopShortcutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mooegeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 
     }
 }

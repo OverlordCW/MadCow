@@ -66,7 +66,7 @@ namespace MadCow
                 repoINIpath.Configs["Storage"].Set("LazyLoading", Form1.GlobalAccess.SettingsCheckedListBox.GetItemChecked(3));
                 repoINIpath.Configs["Authentication"].Set("DisablePasswordChecks", Form1.GlobalAccess.SettingsCheckedListBox.GetItemChecked(4));
                 //We set the server variables:
-                TextReader tr = new StreamReader(Form1.CurrentProfile);
+                TextReader tr = new StreamReader(Configuration.MadCow.CurrentProfile);
                 //The next values are set in an SPECIFIC ORDER, changing the order will make INI modifying FAIL.
                 //MooNet-Server IP
                 repoINIpath.Configs["MooNet-Server"].Set("BindIP", tr.ReadLine());
@@ -85,8 +85,8 @@ namespace MadCow
                 repoINIpath.Save();
                 tr.Close();
                 #endregion
-                Console.WriteLine("Current Profile: " + Path.GetFileName(Form1.CurrentProfile));
-                Console.WriteLine("Set Mooege config.ini according to your profile " + Path.GetFileName(Form1.CurrentProfile));
+                Console.WriteLine("Current Profile: " + Path.GetFileName(Configuration.MadCow.CurrentProfile));
+                Console.WriteLine("Set Mooege config.ini according to your profile " + Path.GetFileName(Configuration.MadCow.CurrentProfile));
                 Console.WriteLine(checkedListBox1.Items[selected].ToString() + " is ready to go.");
             }
             LaunchServerButton.Enabled = true;

@@ -120,21 +120,6 @@
   <metadata name="ToolTips.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>362, 17</value>
   </metadata>
-  <data name="MadCowCreditsLabel.Text" xml:space="preserve">
-    <value>MadCow Credits:
-
-Wesko, Wetwlly, Egris, Overlord, JohnMC
-
-Mooege Credits:
-
-raistlinthewiz, komiga, fasbat, Farmy, DarkLotus, 
-BoyC, tehCm, BackAndForward, Shadow^Dancer, 
-dark0ne, Egris, dustinconrad, mdz444, [TOM_RUS], 
-Wetwlly, Cubido, angerwin, xsochor, thesinx, 
-HDANILO, Swiftsmoke, flippy, PeteGet27, Tharuler, 
-farces, fortenbt, rafal, sqoou, Xpload, YasRavenheart, 
-raptium, DrakeFish, Reelix, sku</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="pictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1744,6 +1729,9 @@ raptium, DrakeFish, Reelix, sku</value>
   <metadata name="DownloadRepository.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>188, 17</value>
   </metadata>
+  <metadata name="ToolTips.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>362, 17</value>
+  </metadata>
   <metadata name="VerifyDiablo3Version.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>442, 17</value>
   </metadata>
@@ -1892,6 +1880,9 @@ raptium, DrakeFish, Reelix, sku</value>
   </data>
   <metadata name="MpqPathBrowserDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>476, 55</value>
+  </metadata>
+  <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>772, 55</value>
   </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
