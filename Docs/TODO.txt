@@ -1,0 +1,8 @@
+Added by Wesko
+-Multi-Language
+-New downloader form.
+-Rewrite MadCowUpdater
+
+
+
+Added by Wetwlly
