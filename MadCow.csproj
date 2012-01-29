@@ -144,7 +144,6 @@
     <Compile Include="Forms\SplashScreenForm\SpashScreen.Designer.cs">
       <DependentUpon>SpashScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tools\ZipStorer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Docs\README">

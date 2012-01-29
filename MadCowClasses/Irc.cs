@@ -30,7 +30,7 @@ namespace MadCow
     {
         public static IrcClient irc = new IrcClient();
         public static String fixedNickname;
-        public static String channel = "#wesko";
+        public static String channel = "#mooege.chat";
         public static String server = "downtown.tx.us.synirc.net";
 
         public static void Run()
