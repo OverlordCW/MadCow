@@ -1,9 +1,0 @@
-Added by Wesko
--Check for Internet Connection?
--Multi-Language
--New downloader form.
--Rewrite MadCowUpdater
-
-
-
-Added by Wetwlly

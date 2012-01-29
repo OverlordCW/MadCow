@@ -1,3 +1,0 @@
-﻿WARNING: This folder is intended to be used by MadCow,
- placing repositories here manualy can cause MadCow to 
- malfunction.
