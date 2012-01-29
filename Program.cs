@@ -15,7 +15,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.IO;
 using System.Threading;
@@ -31,14 +30,14 @@ namespace MadCow
         public static String madcowINI = Path.GetDirectoryName(Application.ExecutablePath) + @"\Tools\madcow.ini";
         public static String programPath = Path.GetDirectoryName(Application.ExecutablePath);
         public static String desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        static System.Threading.Mutex s_mutex = null;
+        static Mutex s_mutex;
 
         [STAThread]
         static void Main()
         {
             bool instantiated;
 
-            s_mutex = new System.Threading.Mutex(false, "Binglong.My.Application.Mutex", out instantiated);
+            s_mutex = new Mutex(false, "{F9E6DEE0-70F5-46E4-97F8-962F5F829CC9}", out instantiated);
 
             if (instantiated)
             {
@@ -50,7 +49,7 @@ namespace MadCow
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("MadCow is already open.");
+                MessageBox.Show("MadCow is already open.");
             }
         }
     }

@@ -1694,7 +1694,7 @@ namespace MadCow
         private void DisplayChangelog(object sender, AsyncCompletedEventArgs e)
         {
             ChangeLogTxtBox.Invoke(new Action(() => ChangeLogTxtBox.Clear()));
-            using (var fileStream = new FileStream(Path.Combine(Program.programPath, "Commits.ATOM"), FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var fileStream = new FileStream(Path.Combine(Program.programPath, "RunTimeDownloads", "Commits.ATOM"), FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 using (TextReader reader = new StreamReader(fileStream))
                 {

@@ -86,7 +86,7 @@ namespace MadCow
 
             public static string CurrentProfile
             {
-                get { return MadCowConfig.Get("Profile", @"\ServerProfiles\Default.mdc"); }
+                get { return MadCowConfig.Get("Profile", Path.Combine(Program.programPath, "ServerProfiles", "Default.mdc")); }
                 set { MadCowConfig.Set("Profile", value); }
             }
         }
