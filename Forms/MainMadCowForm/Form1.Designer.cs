@@ -1558,11 +1558,12 @@
             // 
             // ConnectButton
             // 
+            this.ConnectButton.Enabled = false;
             this.ConnectButton.Location = new System.Drawing.Point(14, 286);
             this.ConnectButton.Name = "ConnectButton";
             this.ConnectButton.Size = new System.Drawing.Size(339, 42);
             this.ConnectButton.TabIndex = 9;
-            this.ConnectButton.Text = "Connect";
+            this.ConnectButton.Text = "Connect (DISABLED TILL BUG FIXING)";
             this.ConnectButton.UseVisualStyleBackColor = true;
             this.ConnectButton.Click += new System.EventHandler(this.ConnectButton_Click);
             // 
