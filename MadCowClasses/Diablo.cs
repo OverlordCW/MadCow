@@ -23,7 +23,7 @@ namespace MadCow
 {
     class Diablo
     {
-        public static void Play()
+        public static void Play(Repository repository)
         {
             try
             {

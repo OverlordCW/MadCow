@@ -57,8 +57,8 @@
             this.ErrorPublicServerIp = new System.Windows.Forms.PictureBox();
             this.ErrorGameServerIp = new System.Windows.Forms.PictureBox();
             this.ErrorBnetServerIp = new System.Windows.Forms.PictureBox();
-            this.LoadProfile = new System.Windows.Forms.Button();
-            this.SaveProfile = new System.Windows.Forms.Button();
+            this.loadProfileButton = new System.Windows.Forms.Button();
+            this.saveProfileButton = new System.Windows.Forms.Button();
             this.MotdTxtBox = new System.Windows.Forms.TextBox();
             this.MotdLabel = new System.Windows.Forms.Label();
             this.RestoreDefaultsLabel = new System.Windows.Forms.LinkLabel();
@@ -156,9 +156,10 @@
             this.enableTrayNotificationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rememberLastRepositoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.desktopShortcutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mooegeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.compileAsDebugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mooegeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.repositoriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.RemoteServerTab.SuspendLayout();
@@ -384,8 +385,8 @@
             this.groupBox5.Controls.Add(this.ErrorPublicServerIp);
             this.groupBox5.Controls.Add(this.ErrorGameServerIp);
             this.groupBox5.Controls.Add(this.ErrorBnetServerIp);
-            this.groupBox5.Controls.Add(this.LoadProfile);
-            this.groupBox5.Controls.Add(this.SaveProfile);
+            this.groupBox5.Controls.Add(this.loadProfileButton);
+            this.groupBox5.Controls.Add(this.saveProfileButton);
             this.groupBox5.Controls.Add(this.MotdTxtBox);
             this.groupBox5.Controls.Add(this.MotdLabel);
             this.groupBox5.Controls.Add(this.RestoreDefaultsLabel);
@@ -508,25 +509,25 @@
             this.ErrorBnetServerIp.TabStop = false;
             this.ErrorBnetServerIp.Visible = false;
             // 
-            // LoadProfile
+            // loadProfileButton
             // 
-            this.LoadProfile.Location = new System.Drawing.Point(109, 220);
-            this.LoadProfile.Name = "LoadProfile";
-            this.LoadProfile.Size = new System.Drawing.Size(75, 42);
-            this.LoadProfile.TabIndex = 15;
-            this.LoadProfile.Text = "Load Profile";
-            this.LoadProfile.UseVisualStyleBackColor = true;
-            this.LoadProfile.Click += new System.EventHandler(this.LoadProfile_Click);
+            this.loadProfileButton.Location = new System.Drawing.Point(109, 220);
+            this.loadProfileButton.Name = "loadProfileButton";
+            this.loadProfileButton.Size = new System.Drawing.Size(75, 42);
+            this.loadProfileButton.TabIndex = 15;
+            this.loadProfileButton.Text = "Load Profile";
+            this.loadProfileButton.UseVisualStyleBackColor = true;
+            this.loadProfileButton.Click += new System.EventHandler(this.LoadProfile_Click);
             // 
-            // SaveProfile
+            // saveProfileButton
             // 
-            this.SaveProfile.Location = new System.Drawing.Point(11, 220);
-            this.SaveProfile.Name = "SaveProfile";
-            this.SaveProfile.Size = new System.Drawing.Size(75, 42);
-            this.SaveProfile.TabIndex = 14;
-            this.SaveProfile.Text = "Save Profile";
-            this.SaveProfile.UseVisualStyleBackColor = true;
-            this.SaveProfile.Click += new System.EventHandler(this.SaveProfile_Click);
+            this.saveProfileButton.Location = new System.Drawing.Point(11, 220);
+            this.saveProfileButton.Name = "saveProfileButton";
+            this.saveProfileButton.Size = new System.Drawing.Size(75, 42);
+            this.saveProfileButton.TabIndex = 14;
+            this.saveProfileButton.Text = "Save Profile";
+            this.saveProfileButton.UseVisualStyleBackColor = true;
+            this.saveProfileButton.Click += new System.EventHandler(this.SaveProfile_Click);
             // 
             // MotdTxtBox
             // 
@@ -1452,6 +1453,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.optionsToolStripMenuItem,
+            this.repositoriesToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -1492,7 +1494,7 @@
             this.desktopShortcutToolStripMenuItem,
             this.compileAsDebugToolStripMenuItem});
             this.madCowToolStripMenuItem.Name = "madCowToolStripMenuItem";
-            this.madCowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.madCowToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.madCowToolStripMenuItem.Text = "Mad&Cow";
             // 
             // enableTrayToolStripMenuItem
@@ -1527,20 +1529,6 @@
             this.desktopShortcutToolStripMenuItem.Text = "Desktop Shortcut";
             this.desktopShortcutToolStripMenuItem.CheckedChanged += new System.EventHandler(this.desktopShortcutToolStripMenuItem_CheckedChanged);
             // 
-            // mooegeToolStripMenuItem
-            // 
-            this.mooegeToolStripMenuItem.Enabled = false;
-            this.mooegeToolStripMenuItem.Name = "mooegeToolStripMenuItem";
-            this.mooegeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.mooegeToolStripMenuItem.Text = "&Mooege";
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.aboutToolStripMenuItem.Text = "&About...";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-            // 
             // compileAsDebugToolStripMenuItem
             // 
             this.compileAsDebugToolStripMenuItem.CheckOnClick = true;
@@ -1548,6 +1536,27 @@
             this.compileAsDebugToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.compileAsDebugToolStripMenuItem.Text = "Compile Mooege as Debug";
             this.compileAsDebugToolStripMenuItem.Click += new System.EventHandler(this.compileAsDebugToolStripMenuItem_Click);
+            // 
+            // mooegeToolStripMenuItem
+            // 
+            this.mooegeToolStripMenuItem.Enabled = false;
+            this.mooegeToolStripMenuItem.Name = "mooegeToolStripMenuItem";
+            this.mooegeToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.mooegeToolStripMenuItem.Text = "&Mooege";
+            // 
+            // repositoriesToolStripMenuItem
+            // 
+            this.repositoriesToolStripMenuItem.Name = "repositoriesToolStripMenuItem";
+            this.repositoriesToolStripMenuItem.Size = new System.Drawing.Size(92, 20);
+            this.repositoriesToolStripMenuItem.Text = "Repositories...";
+            this.repositoriesToolStripMenuItem.Click += new System.EventHandler(this.repositoriesToolStripMenuItem_Click);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.aboutToolStripMenuItem.Text = "&About...";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -1672,8 +1681,8 @@
         private System.Windows.Forms.Label MotdLabel;
         private System.Windows.Forms.TextBox MotdTxtBox;
         private System.ComponentModel.BackgroundWorker VerifyDiablo3Version;
-        private System.Windows.Forms.Button LoadProfile;
-        private System.Windows.Forms.Button SaveProfile;
+        private System.Windows.Forms.Button loadProfileButton;
+        private System.Windows.Forms.Button saveProfileButton;
         private System.Windows.Forms.PictureBox ErrorGameServerPort;
         private System.Windows.Forms.PictureBox ErrorBnetServerPort;
         private System.Windows.Forms.PictureBox ErrorPublicServerIp;
@@ -1749,6 +1758,7 @@
         private System.Windows.Forms.ToolStripMenuItem mooegeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem compileAsDebugToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem repositoriesToolStripMenuItem;
 
     }
 }

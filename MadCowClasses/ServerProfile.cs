@@ -21,10 +21,15 @@ namespace MadCow
             var path = Path.Combine(Program.programPath, "ServerProfiles", name);
             if(!File.Exists(path))
             {
-                File.Create(path);
+                File.WriteAllLines(path, new[]
+                                             {
+                                                 "[MooNet-Server]",
+                                                 "[Game-Server]",
+                                                 "[NAT]"
+                                             });
             }
 
-            _source = new IniConfigSource();
+            _source = new IniConfigSource(path);
         }
 
         #region Properties
@@ -85,7 +90,9 @@ namespace MadCow
         /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
-            return _name;
+// ReSharper disable AssignNullToNotNullAttribute
+            return Path.GetFileNameWithoutExtension(_name);
+// ReSharper restore AssignNullToNotNullAttribute
         }
     }
 }

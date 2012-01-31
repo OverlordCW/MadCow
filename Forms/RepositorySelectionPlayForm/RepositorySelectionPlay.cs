@@ -78,7 +78,7 @@ namespace MadCow
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Diablo.Play();
+            //Diablo.Play();
             Close();
         }
 
@@ -103,14 +103,14 @@ namespace MadCow
         ////////////////////////////////////////////////////////////////////////////////////////
         // Last Played Repository | If its enabled, this function will set a value for currentMooegeExePath which we need to launch Mooege without actually selecting a repository from a list.
         ////////////////////////////////////////////////////////////////////////////////////////
-        public static Boolean LastPlayed()
-        {
-            if (!string.IsNullOrEmpty(Configuration.MadCow.LastRepository))
-            {
-                Compile.CurrentMooegeExePath = Configuration.MadCow.LastRepository;
-                return true;
-            }
-            return false;
-        }
+        //public static Boolean LastPlayed()
+        //{
+        //    if (!string.IsNullOrEmpty(Configuration.MadCow.LastRepository))
+        //    {
+        //        Compile.CurrentMooegeExePath = Configuration.MadCow.LastRepository;
+        //        return true;
+        //    }
+        //    return false;
+        //}
     }
 }

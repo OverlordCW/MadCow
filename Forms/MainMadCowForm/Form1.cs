@@ -96,7 +96,7 @@ namespace MadCow
             RepoCheck(); //Checks for duplicities.
             RepoList(); //Loads Repos from RepoList.txt
             Changelog(); //Loads Changelog comobox values.
-            LoadLastUsedProfile(); //We try to Load the last used profile by the user.
+            LoadProfile(Configuration.MadCow.CurrentProfile); //We try to Load the last used profile by the user.
             Helper.Helpers();//Loads the correct nameplate for shortcut/balloon/LastRepo enabled/disabled
             RetrieveMpqList.getfileList(); //Load MPQ list from Blizz server. Todo: This might slow down a bit MadCow loading, maybe we could place it somewhere else?.
             Helper.KillUpdater(); //This will kill MadCow updater if its running.
@@ -179,9 +179,9 @@ namespace MadCow
             else if (e.Result != null && e.Error == null)
             {
                 ParseRevision.CommitFile = e.Result;
-                var pos2 = ParseRevision.CommitFile.IndexOf("Commit/", StringComparison.Ordinal);
-                var revision = ParseRevision.CommitFile.Substring(pos2 + 7, 7);
-                ParseRevision.LastRevision = ParseRevision.CommitFile.Substring(pos2 + 7, 7);
+                //var pos2 = ParseRevision.CommitFile.IndexOf("Commit/", StringComparison.Ordinal);
+                //var revision = ParseRevision.CommitFile.Substring(pos2 + 7, 7);
+                //ParseRevision.LastRevision = ParseRevision.CommitFile.Substring(pos2 + 7, 7);
             }
 
             try
@@ -365,10 +365,15 @@ namespace MadCow
 
         public void ThreadProc()
         {
-            if (RepositorySelectionPlay.LastPlayed() && Configuration.MadCow.RememberLastRepository)
+            if (!Configuration.MadCow.RememberLastRepository || Compile.SelectedRepository == null)
             {
-                Diablo.Play();
+                if (new RepositorySelection().ShowDialog() != DialogResult.OK || Compile.SelectedRepository == null)
+                {
+                    return;
+                }
             }
+
+            Diablo.Play(Compile.SelectedRepository);
 
             //We add ErrorFinder call here, in order to know if Mooege had issues loading.
             if (!File.Exists(Program.programPath + @"\logs\mooege.log")) return;
@@ -481,7 +486,7 @@ namespace MadCow
 
         public void ThreadProc2()
         {
-            Application.Run(new RepositorySelectionServer());
+            Application.Run(new RepositorySelection());
             if (!File.Exists(Program.programPath + @"\logs\mooege.log")) return;
             if (!ErrorFinder.SearchLogs("Fatal")) return;
             //We delete de Log file HERE. Nowhere else!.
@@ -986,27 +991,21 @@ namespace MadCow
             {
                 Console.WriteLine("You didn't specify a profile name");
             }
-
             else
             {
-                TextWriter tw = new StreamWriter(saveProfile.FileName);
-                //tw.WriteLine("Bnet Server Ip");
-                tw.WriteLine(BnetServerIp.Text);
-                //tw.WriteLine("Game Server Ip");
-                tw.WriteLine(GameServerIp.Text);
-                //tw.WriteLine("Public Server Ip");
-                tw.WriteLine(PublicServerIp.Text);
-                //tw.WriteLine("Bnet Server Port");
-                tw.WriteLine(BnetServerPort.Text);
-                //tw.WriteLine("Game Server Port");
-                tw.WriteLine(GameServerPort.Text);
-                //tw.WriteLine("MOTD");
-                tw.WriteLine(MotdTxtBox.Text);
-                //tw.WriteLine("NAT");
-                tw.WriteLine(NATcheckBox.Checked);
-                tw.Close();
-                Console.WriteLine("Saved profile [" + Path.GetFileName(saveProfile.FileName) + "] succesfully.");
-                Configuration.MadCow.CurrentProfile = saveProfile.FileName;
+                var profile = new ServerProfile(saveProfile.FileName)
+                                  {
+                                      MooNetServerIp = BnetServerIp.Text,
+                                      GameServerIp = GameServerIp.Text,
+                                      NatIp = PublicServerIp.Text,
+                                      MooNetServerPort = BnetServerPort.Text,
+                                      GameServerPort = GameServerPort.Text,
+                                      MooNetServerMotd = MotdTxtBox.Text,
+                                      NatEnabled = NATcheckBox.Checked
+                                  };
+                Console.WriteLine("Saved profile [{0}] succesfully.", profile);
+                profile.Save();
+                Configuration.MadCow.CurrentProfile = profile;
             }
         }
 
@@ -1104,15 +1103,23 @@ namespace MadCow
 
             else
             {
-                TextReader tr = new StreamReader(openProfile.FileName);
-                BnetServerIp.Text = tr.ReadLine();
-                GameServerIp.Text = tr.ReadLine();
-                PublicServerIp.Text = tr.ReadLine();
-                BnetServerPort.Text = tr.ReadLine();
-                GameServerPort.Text = tr.ReadLine();
-                MotdTxtBox.Text = tr.ReadLine();
-                NATcheckBox.Checked = tr.ReadLine().Contains("True");
-                tr.Close();
+                LoadProfile(new ServerProfile(openProfile.FileName));
+            }
+        }
+
+        internal void LoadProfile(ServerProfile profile)
+        {
+            try
+            {
+                if (profile == null) return;
+                BnetServerIp.Text = profile.MooNetServerIp;
+                GameServerIp.Text = profile.GameServerIp;
+                PublicServerIp.Text = profile.NatIp;
+                BnetServerPort.Text = profile.MooNetServerPort;
+                GameServerPort.Text = profile.GameServerPort;
+                MotdTxtBox.Text = profile.MooNetServerMotd;
+                NATcheckBox.Checked = profile.NatEnabled;
+
                 //Loading a profile means it has the correct values for every box, so first we disable every red cross that might be out there.
                 ErrorBnetServerIp.Visible = false;
                 ErrorBnetServerPort.Visible = false;
@@ -1127,46 +1134,10 @@ namespace MadCow
                 TickGameServerPort.Visible = true;
                 TickGameServerPort.Visible = true;
                 TickPublicServerIp.Visible = true;
-                Console.WriteLine("Loaded Profile [{0}] succesfully.", Path.GetFileName(openProfile.FileName));
-                //Proceed to save the profile over our INI file.
-                Configuration.MadCow.CurrentProfile = openProfile.FileName;
+                Console.WriteLine("Loaded server profile [{0}] succesfully.", profile);
+                Configuration.MadCow.CurrentProfile = profile;
             }
-        }
-
-        public void LoadLastUsedProfile()
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(Configuration.MadCow.CurrentProfile))
-                {
-                    TextReader tr = new StreamReader(Configuration.MadCow.CurrentProfile);
-                    BnetServerIp.Text = tr.ReadLine();
-                    GameServerIp.Text = tr.ReadLine();
-                    PublicServerIp.Text = tr.ReadLine();
-                    BnetServerPort.Text = tr.ReadLine();
-                    GameServerPort.Text = tr.ReadLine();
-                    MotdTxtBox.Text = tr.ReadLine();
-                    NATcheckBox.Checked = tr.ReadLine().Contains("True");
-                    tr.Close();
-
-                    //Loading a profile means it has the correct values for every box, so first we disable every red cross that might be out there.
-                    ErrorBnetServerIp.Visible = false;
-                    ErrorBnetServerPort.Visible = false;
-                    ErrorGameServerIp.Visible = false;
-                    ErrorGameServerPort.Visible = false;
-                    ErrorGameServerPort.Visible = false;
-                    ErrorPublicServerIp.Visible = false;
-                    //Loading a profile means it has the correct values for every box, so we change everything to green ticked.
-                    TickBnetServerIP.Visible = true;
-                    TickBnetServerPort.Visible = true;
-                    TickGameServerIp.Visible = true;
-                    TickGameServerPort.Visible = true;
-                    TickGameServerPort.Visible = true;
-                    TickPublicServerIp.Visible = true;
-                    Console.WriteLine("Loaded server profile [{0}] succesfully.", Path.GetFileName(Configuration.MadCow.CurrentProfile));
-                }
-            }
-            catch
+            catch(Exception e)
             {
                 Console.WriteLine("[Error] While loading server profile.");
             }
@@ -1578,7 +1549,7 @@ namespace MadCow
                 //Console.WriteLine("Copied new MPQ to MadCow MPQ home Folder.");
                 //We give the user an announce of success.
                 var response = MessageBox.Show("MadCow Fixer",
-		        "MadCow succesfully fixed:" + ErrorFinder.ErrorFileName + @".MPQ",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                "MadCow succesfully fixed:" + ErrorFinder.ErrorFileName + @".MPQ", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 if (response == DialogResult.OK) //We take this as the OK response.
                 {
@@ -1601,7 +1572,6 @@ namespace MadCow
         //Dynamically Add Repos, but also remove duplicates.
         ////////////////////////////////////////////////////////////////////////
         #region Repositories
-        private int _repoListIndex;
 
         private void RepoList()
         {
@@ -1612,7 +1582,6 @@ namespace MadCow
             {
                 comboBox1.Items.Add(line);
                 line = sr.ReadLine();
-                _repoListIndex++;
             }
             sr.Close();
         }
@@ -1640,7 +1609,6 @@ namespace MadCow
             {
                 comboBox1.Items.Add(line);
                 line = sr.ReadLine();
-                _repoListIndex++;
             }
             sr.Close();
         }
@@ -1878,7 +1846,7 @@ namespace MadCow
                 proxy.Credentials = new NetworkCredential(Proxy.username, Proxy.password);
             }
 
-            BranchComboBox.Invoke(new Action(() => { SelectedBranch = BranchComboBox.SelectedItem.ToString(); }));
+            BranchComboBox.Invoke(new Action(() => SelectedBranch = BranchComboBox.SelectedItem.ToString()));
             var client = new WebClient();
             if (Proxy.proxyStatus)
                 client.Proxy = proxy;
@@ -1889,10 +1857,10 @@ namespace MadCow
 
         private void BranchParse(object sender, DownloadStringCompletedEventArgs e)
         {
-            var result = e.Result;
-            var pos2 = result.IndexOf("Commit/", StringComparison.Ordinal);
-            var revision = result.Substring(pos2 + 7, 7);
-            ParseRevision.LastRevision = result.Substring(pos2 + 7, 7);
+            //var result = e.Result;
+            //var pos2 = result.IndexOf("Commit/", StringComparison.Ordinal);
+            //var revision = result.Substring(pos2 + 7, 7);
+            //ParseRevision.LastRevision = result.Substring(pos2 + 7, 7);
         }
         #endregion
 
@@ -2036,7 +2004,7 @@ namespace MadCow
             {
                 MessageBox.Show("There is a bug with current IRC implementation \nthat i'm not able to takle."
                     + "\nIn order to connect again you need to restart MadCow."
-                    + "\nSorry for the inconvenience. -Wesko","Notice",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    + "\nSorry for the inconvenience. -Wesko", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
@@ -2060,7 +2028,7 @@ namespace MadCow
                 ircThread.Start();
             }
         }
-        
+
 
         private void ThreadFunction()
         {
@@ -2128,6 +2096,11 @@ namespace MadCow
         {
             Client.irc.Disconnect();
             Configuration.Save();
+        }
+
+        private void repositoriesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new RepositorySelection().ShowDialog();
         }
     }
 }

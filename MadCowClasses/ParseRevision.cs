@@ -52,7 +52,15 @@ namespace MadCow
             }
         }
 
-        public static String LastRevision { get; set; }
+        public static String LastRevision
+        {
+            get
+            {
+                var pos2 = CommitFile.IndexOf("Commit/", StringComparison.Ordinal);
+                return CommitFile.Substring(pos2 + 7, 7);
+            }
+        }
+
         public static String CommitFile { get; set; }
     }
 }

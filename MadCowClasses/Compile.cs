@@ -15,7 +15,9 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Build.Evaluation;
@@ -23,19 +25,41 @@ using Microsoft.Build.Logging;
 
 namespace MadCow
 {
-    internal class Compile
+    internal static class Compile
     {
         //This paths may change depending on which repository ur trying to retrieve, they are set over ParseRevision.cs
-        internal static string SelectedRepository { get; set; }
+        internal static readonly ObservableCollection<Repository> Repositories = GetRepositories();
+
+        private static ObservableCollection<Repository> GetRepositories()
+        {
+            Directory.CreateDirectory("Repositories");
+            var rep = new ObservableCollection<Repository>();
+            if(File.Exists(Path.Combine("Tools", "RepoList.txt")))
+            {
+                foreach (var url in File.ReadAllLines(Path.Combine("Tools", "RepoList.txt")).Distinct())
+                {
+                    rep.Add(new Repository(url));
+                }
+            }
+            //foreach (var directory in Directory.GetDirectories("Repositories")
+            //    .SkipWhile(d => !File.Exists(Path.Combine(d, "info.txt"))))
+            //{
+            //    rep.Add(new Repository(File.ReadAllLines(Path.Combine(directory, "info.txt"))[0], "")
+            //    {
+            //        Revision = ParseRevision.LastRevision,
+            //    });
+            //}
+            return rep;
+        }
+
+        internal static Repository SelectedRepository { get { return Repositories.FirstOrDefault(r => r.IsSelected); } }
 
         internal static string CurrentMooegeFolderPath
         {
             get
             {
                 return Path.Combine(
-                    Program.programPath,
-                    "Repositories",
-                    SelectedRepository,
+                    SelectedRepository.RepositoryPath,
                     //string.Format("{0}-{1}-{2}",
                     //              ParseRevision.DeveloperName,
                     //              ParseRevision.BranchName,
@@ -51,8 +75,28 @@ namespace MadCow
 
         internal static void CompileSource()
         {
-            var libmoonetPath = Program.programPath + @"\" + @"Repositories\" + ParseRevision.DeveloperName + "-" + ParseRevision.BranchName + "-" + ParseRevision.LastRevision + @"\src\LibMooNet\LibMooNet.csproj";
-            var mooegePath = Program.programPath + @"\" + @"Repositories\" + ParseRevision.DeveloperName + "-" + ParseRevision.BranchName + "-" + ParseRevision.LastRevision + @"\src\Mooege\Mooege-VS2010.csproj";
+            var libmoonetPath = Path.Combine(new[]
+                                                 {
+                                                     Program.programPath,
+                                                     "Repositories",
+                                                     ParseRevision.DeveloperName + "-" +
+                                                     ParseRevision.BranchName + "-" +
+                                                     ParseRevision.LastRevision,
+                                                     "src",
+                                                     "LibMooNet",
+                                                     "LibMooNet.csproj"
+                                                 });
+            var mooegePath = Path.Combine(new[]
+                                              {
+                                                  Program.programPath,
+                                                  "Repositories",
+                                                  ParseRevision.DeveloperName + "-" +
+                                                  ParseRevision.BranchName + "-" +
+                                                  ParseRevision.LastRevision,
+                                                  "src",
+                                                  "Mooege",
+                                                  "Mooege-VS2010.csproj"
+                                              });
 
             var compileLibMooNetTask = Task<bool>.Factory.StartNew(() => CompileLibMooNet(libmoonetPath));
             var compileMooegeTask = compileLibMooNetTask.ContinueWith(x => CompileMooege(mooegePath, x.Result));
