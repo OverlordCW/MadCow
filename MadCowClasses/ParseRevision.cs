@@ -15,43 +15,45 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Threading;
 
 namespace MadCow
 {
     class ParseRevision
     {
-        public static String revisionUrl = "";
-        public static String developerName = "";
-        public static String branchName = "";
-        public static String lastRevision = "";
-        public static String commitFile = "";
-
-        public static void getDeveloperName()
+        public static String RevisionUrl { get; set; }
+        public static String DeveloperName
         {
-            try
+            get
             {
-                Int32 FirstPointer = revisionUrl.IndexOf(".com/");
-                Int32 LastPointer = revisionUrl.LastIndexOf("/");
-                Int32 BetweenPointers = LastPointer - FirstPointer;
-                developerName = revisionUrl.Substring(FirstPointer + 5, BetweenPointers - 5);
-            }
-            catch (Exception)
-            {
-                commitFile = "Incorrect repository entry";
+                try
+                {
+                    var firstPointer = RevisionUrl.IndexOf(".com/", StringComparison.Ordinal);
+                    var lastPointer = RevisionUrl.LastIndexOf("/", StringComparison.Ordinal);
+                    var betweenPointers = lastPointer - firstPointer;
+                    return RevisionUrl.Substring(firstPointer + 5, betweenPointers - 5);
+                }
+                catch (Exception)
+                {
+                    CommitFile = "Incorrect repository entry";
+                }
+                return null;
             }
         }
 
-        public static void getBranchName() // /D3Sharp /Mooege /Mooege-1 , etc.
+        public static String BranchName
         {
-            Int32 LastPointer = revisionUrl.Length;
-            Int32 FirstPointer = revisionUrl.IndexOf(developerName);
-            Int32 DeveloperNameLength = developerName.Length;
-            Int32 BranchNameLength = LastPointer - (FirstPointer + DeveloperNameLength) - 1; //+1 or -1 are to get rid of "/".
-            branchName = revisionUrl.Substring(FirstPointer + DeveloperNameLength + 1, BranchNameLength);
+            get
+            {
+                var lastPointer = RevisionUrl.Length;
+                var firstPointer = RevisionUrl.IndexOf(DeveloperName, StringComparison.Ordinal);
+                var developerNameLength = DeveloperName.Length;
+                var branchNameLength = lastPointer - (firstPointer + developerNameLength) - 1; //+1 or -1 are to get rid of "/".
+                return RevisionUrl.Substring(firstPointer + developerNameLength + 1, branchNameLength);
+            }
         }
+
+        public static String LastRevision { get; set; }
+        public static String CommitFile { get; set; }
     }
 }
 

@@ -15,7 +15,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 using System;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using Nini.Config;
 
@@ -30,22 +29,24 @@ namespace MadCow
             LaunchDiabloButton.Enabled = false;
         }
 
+        internal string SelectedRepository { get { return listBox1.SelectedItem.ToString(); } }
+
         public void AddAvailableRepositories() //Adds available repos to the list.
         {
-            var foldersArray = Directory.GetDirectories(Program.programPath + @"\" + @"Repositories\");
-            foreach (var info in foldersArray.Select(name => new DirectoryInfo(name)))
+            //var foldersArray = Directory.GetDirectories(Program.programPath + @"\" + @"Repositories\");
+            foreach (var info in Directory.GetDirectories("Repositories"))// foldersArray.Select(name => new DirectoryInfo(name)))
             {
-                checkedListBox1.Items.Add(info.Name);
+                listBox1.Items.Add(info);
             }
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var selected = checkedListBox1.SelectedIndex;
+            var selected = listBox1.SelectedIndex;
             if (selected == -1) return;
 
-            Compile.CurrentMooegeExePath = Program.programPath + @"\" + @"Repositories\" + checkedListBox1.Items[selected] + @"\src\Mooege\bin\Debug\Mooege.exe";
-            var _repoINIpath = Program.programPath + @"\" + @"Repositories\" + checkedListBox1.Items[selected] + @"\src\Mooege\bin\Debug\config.ini";
+            //Compile.CurrentMooegeExePath = Program.programPath + @"\" + @"Repositories\" + checkedListBox1.Items[selected] + @"\src\Mooege\bin\Debug\Mooege.exe";
+            var _repoINIpath = Program.programPath + @"\" + @"Repositories\" + listBox1.Items[selected] + @"\src\Mooege\bin\Debug\config.ini";
             IConfigSource repoINIpath = new IniConfigSource(_repoINIpath);
             //For each selection we set the correct MPQ storage path & PacketLog|ServerLog settings on the config INI, this is the best way I could think to have the paths updated at everytime
             //We CANNOT call variable Compile.mooegeINI because that variable only saves latest compiled ini path for INSTANT writting after compiling a repository.
@@ -70,7 +71,7 @@ namespace MadCow
             #endregion
 
             Console.WriteLine("Set default LAN settings for Mooege config.ini");
-            Console.WriteLine("{0} is ready to go.", checkedListBox1.Items[selected]);
+            Console.WriteLine("{0} is ready to go.", listBox1.Items[selected]);
             repoINIpath.Save();
             LaunchDiabloButton.Enabled = true;
         }
@@ -83,20 +84,20 @@ namespace MadCow
 
         private void checkedListBox1_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (checkedListBox1.CheckedItems.Count != 1) return;
+            //if (checkedListBox1.CheckedItems.Count != 1) return;
 
-            var isCheckedItemBeingUnchecked = (e.CurrentValue == CheckState.Checked);
-            if (isCheckedItemBeingUnchecked)
-            {
-                e.NewValue = CheckState.Checked;
-            }
-            else
-            {
-                var checkedItemIndex = checkedListBox1.CheckedIndices[0];
-                checkedListBox1.ItemCheck -= checkedListBox1_ItemCheck;
-                checkedListBox1.SetItemChecked(checkedItemIndex, false);
-                checkedListBox1.ItemCheck += checkedListBox1_ItemCheck;
-            }
+            //var isCheckedItemBeingUnchecked = (e.CurrentValue == CheckState.Checked);
+            //if (isCheckedItemBeingUnchecked)
+            //{
+            //    e.NewValue = CheckState.Checked;
+            //}
+            //else
+            //{
+            //    var checkedItemIndex = checkedListBox1.CheckedIndices[0];
+            //    checkedListBox1.ItemCheck -= checkedListBox1_ItemCheck;
+            //    checkedListBox1.SetItemChecked(checkedItemIndex, false);
+            //    checkedListBox1.ItemCheck += checkedListBox1_ItemCheck;
+            //}
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////

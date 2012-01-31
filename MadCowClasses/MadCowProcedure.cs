@@ -28,9 +28,17 @@ namespace MadCow
         #region RunProcedure
         public static void RunWholeProcedure()
         {
-            Compile.CurrentMooegeExePath = Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\Mooege.exe";
-            Compile.CurrentMooegeDebugFolderPath = Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\";
-            Compile.MooegeINI = Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\bin\Debug\config.ini";
+            //Compile.CurrentMooegeFolderPath =
+            //       Path.Combine(new[]
+            //                     {
+            //                         Program.programPath,
+            //                         "Repositories",
+            //                         string.Format("{0}-{1}-{2}", ParseRevision.DeveloperName, ParseRevision.BranchName, ParseRevision.LastRevision),
+            //                         "Compiled"
+            //                     });
+            //Compile.CurrentMooegeExePath = Path.Combine(Compile.CurrentMooegeFolderPath, "Mooege.exe");
+
+            //Compile.MooegeINI = Path.Combine(Compile.CurrentMooegeFolderPath, "config.ini");
 
             var events = new FastZipEvents();
 
@@ -41,12 +49,13 @@ namespace MadCow
 
             var z = new FastZip(events);
             Console.WriteLine("Uncompressing zip file...");
-            var stream = new FileStream(Path.Combine(Program.programPath, "Repositories", "Mooege.zip"), FileMode.Open, FileAccess.Read);
-            var zip = new ZipFile(stream);
-            zip.IsStreamOwner = true; //Closes parent stream when ZipFile.Close is called
+            var targetDirectory = Path.Combine(Program.programPath, "Repositories");
+            var zipFileName = Path.Combine(targetDirectory, "Mooege.zip");
+            var stream = new FileStream(zipFileName, FileMode.Open, FileAccess.Read);
+            var zip = new ZipFile(stream) { IsStreamOwner = true };
+            //Closes parent stream when ZipFile.Close is called
             zip.Close();
-
-            var t1 = Task.Factory.StartNew(() => z.ExtractZip(Path.Combine(Program.programPath, "Repositories", "Mooege.zip"), Program.programPath + @"\" + @"Repositories\", null))
+            Task.Factory.StartNew(() => z.ExtractZip(zipFileName, targetDirectory, null))
                 .ContinueWith(delegate
             {
                 //Comenting the lines below because I haven't tested this new way over XP VM or even normal XP.

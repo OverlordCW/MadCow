@@ -15,15 +15,13 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
-using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
-using System.Windows.Forms;
-using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Build.Evaluation;
-using ICSharpCode.SharpZipLib.Core;
+using System.Windows.Forms;
 using ICSharpCode.SharpZipLib.Zip;
-using System.Diagnostics;
+using Microsoft.Build.Evaluation;
+using Microsoft.Build.Logging;
 
 namespace MadCowUpdater
 {
@@ -31,12 +29,11 @@ namespace MadCowUpdater
     {
         public static void Uncompress() //This is actually the whole process MadCow uses after Downloading source.
         {
-            ZipFile zip = null;
             var events = new FastZipEvents();
 
-            FastZip z = new FastZip(events);
+            var z = new FastZip(events);
             var stream = new FileStream(Path.GetTempPath() + @"\MadCow.zip", FileMode.Open, FileAccess.Read);
-            zip = new ZipFile(stream);
+            var zip = new ZipFile(stream);
             zip.IsStreamOwner = true; //Closes parent stream when ZipFile.Close is called
             zip.Close();
 
@@ -46,15 +43,15 @@ namespace MadCowUpdater
             Form1.GlobalAccess.Invoke(new Action(() =>
             {
                 Form1.GlobalAccess.UncompressSuccessDot.Visible = true;
-                Form1.GlobalAccess.UncompressingLabel.ForeColor = System.Drawing.Color.Green;
+                Form1.GlobalAccess.UncompressingLabel.ForeColor = Color.Green;
             }));
         }
 
         public static void CopyFiles()
         {
-            var MadCowPath = Directory.GetParent(Program.path);
-            Task<bool> task = Task<bool>.Factory.StartNew(() => Helper.CopyDirectory(Path.GetTempPath() + @"\MadCow\NewMadCow\bin\MadCowDebug\", MadCowPath.ToString(), true));
-            bool result = task.Result;
+            var madCowPath = Directory.GetParent(Program.path);
+            var task = Task<bool>.Factory.StartNew(() => Helper.CopyDirectory(Path.GetTempPath() + @"\MadCow\NewMadCow\bin\MadCowDebug\", madCowPath.ToString(), true));
+            var result = task.Result;
             task.Wait();
 
             if (result == false)
@@ -66,7 +63,7 @@ namespace MadCowUpdater
                 Form1.GlobalAccess.Invoke(new Action(() =>
                 {
                     Form1.GlobalAccess.CopySuccessDot.Visible = true;
-                    Form1.GlobalAccess.CopyingLabel.ForeColor = System.Drawing.Color.Green;
+                    Form1.GlobalAccess.CopyingLabel.ForeColor = Color.Green;
                 }));
             }
         }
@@ -75,8 +72,8 @@ namespace MadCowUpdater
         {
             var madcowPath = Path.GetTempPath() + @"\MadCow\NewMadCow\MadCow.csproj";
 
-            Task<bool> task = Task<bool>.Factory.StartNew(() => CompileMadcow(madcowPath));
-            bool result = task.Result;
+            var task = Task<bool>.Factory.StartNew(() => CompileMadcow(madcowPath));
+            var result = task.Result;
             task.Wait();
 
             if (result == false)
@@ -88,7 +85,7 @@ namespace MadCowUpdater
                 Form1.GlobalAccess.Invoke(new Action(() =>
                 {
                     Form1.GlobalAccess.CompilingSuccessDot.Visible = true;
-                    Form1.GlobalAccess.CompilingLabel.ForeColor = System.Drawing.Color.Green;
+                    Form1.GlobalAccess.CompilingLabel.ForeColor = Color.Green;
                 }));
             }
         }
@@ -96,7 +93,9 @@ namespace MadCowUpdater
         private static bool CompileMadcow(string madcowPath)
         {
             var madcowProject = new Project(madcowPath);
-            return madcowProject.Build(new Microsoft.Build.Logging.FileLogger());
+            madcowProject.SetProperty("Configuration", "Release");
+            madcowProject.SetProperty("Platform", "AnyCPU");
+            return madcowProject.Build(new FileLogger());
         }
     }
 }

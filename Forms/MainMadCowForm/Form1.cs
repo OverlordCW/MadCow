@@ -122,7 +122,7 @@ namespace MadCow
                 proxy.Address = new Uri(Proxy.proxyUrl);
                 proxy.Credentials = new NetworkCredential(Proxy.username, Proxy.password);
             }
-            comboBox1.Invoke(new Action(() => { ParseRevision.revisionUrl = comboBox1.Text; }));
+            comboBox1.Invoke(new Action(() => { ParseRevision.RevisionUrl = comboBox1.Text; }));
             try
             {
                 var client = new WebClient();
@@ -131,16 +131,16 @@ namespace MadCow
                 client.DownloadStringCompleted += backgroundWorker5_RunWorkerCompleted;
                 try
                 {
-                    var uri = new Uri(ParseRevision.revisionUrl + "/commits/master.atom");
+                    var uri = new Uri(ParseRevision.RevisionUrl + "/commits/master.atom");
                     client.DownloadStringAsync(uri);
                 }
                 catch (UriFormatException)
                 {
                     ActiveForm.Invoke(new Action(() =>
                     {
-                        ParseRevision.commitFile = "Incorrect repository entry";
+                        ParseRevision.CommitFile = "Incorrect repository entry";
                         pictureBox2.Hide();
-                        comboBox1.Text = ParseRevision.commitFile;
+                        comboBox1.Text = ParseRevision.CommitFile;
                         pictureBox1.Show();
                         AutoUpdateValue.Enabled = false; //If validation fails we set Update and Autoupdate
                         EnableAutoUpdateBox.Enabled = false;      //functions disabled!.
@@ -156,15 +156,15 @@ namespace MadCow
                 {
                     if (((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.NotFound)
                     {
-                        ParseRevision.commitFile = "Incorrect repository entry";
+                        ParseRevision.CommitFile = "Incorrect repository entry";
                     }
                 }
                 else if (ex.Status == WebExceptionStatus.ConnectFailure)
                 {
-                    ParseRevision.commitFile = "ConnectionFailure";
+                    ParseRevision.CommitFile = "ConnectionFailure";
                 }
                 else
-                    ParseRevision.commitFile = "Incorrect repository entry";
+                    ParseRevision.CommitFile = "Incorrect repository entry";
             }
         }
 
@@ -173,25 +173,25 @@ namespace MadCow
 
             if (e.Error != null)
             {
-                ParseRevision.commitFile = "Incorrect repository entry";
+                ParseRevision.CommitFile = "Incorrect repository entry";
             }
 
             else if (e.Result != null && e.Error == null)
             {
-                ParseRevision.commitFile = e.Result;
-                var pos2 = ParseRevision.commitFile.IndexOf("Commit/", StringComparison.Ordinal);
-                var revision = ParseRevision.commitFile.Substring(pos2 + 7, 7);
-                ParseRevision.lastRevision = ParseRevision.commitFile.Substring(pos2 + 7, 7);
+                ParseRevision.CommitFile = e.Result;
+                var pos2 = ParseRevision.CommitFile.IndexOf("Commit/", StringComparison.Ordinal);
+                var revision = ParseRevision.CommitFile.Substring(pos2 + 7, 7);
+                ParseRevision.LastRevision = ParseRevision.CommitFile.Substring(pos2 + 7, 7);
             }
 
             try
             {
-                if (ParseRevision.commitFile == "ConnectionFailure")
+                if (ParseRevision.CommitFile == "ConnectionFailure")
                 {
                     ActiveForm.Invoke(new Action(() =>
                     {
                         pictureBox2.Hide();
-                        comboBox1.Text = ParseRevision.commitFile;
+                        comboBox1.Text = ParseRevision.CommitFile;
                         pictureBox1.Show();
                         AutoUpdateValue.Enabled = false; //If validation fails we set Update and Autoupdate
                         EnableAutoUpdateBox.Enabled = false;      //functions disabled!.
@@ -200,12 +200,12 @@ namespace MadCow
                     }));
                 }
 
-                else if (ParseRevision.commitFile == "Incorrect repository entry")
+                else if (ParseRevision.CommitFile == "Incorrect repository entry")
                 {
                     ActiveForm.Invoke(new Action(() =>
                     {
                         pictureBox2.Hide();
-                        comboBox1.Text = ParseRevision.commitFile;
+                        comboBox1.Text = ParseRevision.CommitFile;
                         pictureBox1.Show();
                         AutoUpdateValue.Enabled = false; //If validation fails we set Update and Autoupdate
                         EnableAutoUpdateBox.Enabled = false;      //functions disabled!.
@@ -220,9 +220,7 @@ namespace MadCow
                         pictureBox1.Hide();
                         pictureBox2.Show();
                         comboBox1.ForeColor = Color.Green;
-                        comboBox1.Text = ParseRevision.revisionUrl;
-                        ParseRevision.getDeveloperName();
-                        ParseRevision.getBranchName();
+                        comboBox1.Text = ParseRevision.RevisionUrl;
                         UpdateMooegeButton.Enabled = true;
                         AutoUpdateValue.Enabled = true;
                         EnableAutoUpdateBox.Enabled = true;
@@ -237,13 +235,13 @@ namespace MadCow
                     }));
                 }
             }
-            catch (Exception Ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(Ex);
+                Console.WriteLine(ex);
                 ActiveForm.Invoke(new Action(() =>
                 {
                     pictureBox2.Hide();
-                    comboBox1.Text = ParseRevision.commitFile;
+                    comboBox1.Text = ParseRevision.CommitFile;
                     pictureBox1.Show();
                 }));
             }
@@ -268,23 +266,23 @@ namespace MadCow
                                            {
                                                Program.programPath,
                                                "Repositories",
-                                               ParseRevision.developerName + "-" +
-                                               ParseRevision.branchName + "-" +
-                                               ParseRevision.lastRevision
+                                               ParseRevision.DeveloperName + "-" +
+                                               ParseRevision.BranchName + "-" +
+                                               ParseRevision.LastRevision
                                            });
             if (Directory.Exists(repPath))
             {
                 Console.WriteLine("You have latest [{0}] revision: {1}",
-                                  ParseRevision.developerName,
-                                  ParseRevision.lastRevision);
+                                  ParseRevision.DeveloperName,
+                                  ParseRevision.LastRevision);
 
                 if (Configuration.MadCow.TrayNotificationsEnabled)
                 {
                     MadCowTrayIcon.ShowBalloonTip(1000,
                                                   "MadCow",
                                                   string.Format("You have latest [{0}] revision: {1}",
-                                                                ParseRevision.developerName,
-                                                                ParseRevision.lastRevision),
+                                                                ParseRevision.DeveloperName,
+                                                                ParseRevision.LastRevision),
                                                   ToolTipIcon.Info);
                 }
 
@@ -303,7 +301,7 @@ namespace MadCow
                 }
 
                 Console.WriteLine("Found default MadCow MPQ folder");
-                DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
+                DeleteHelper.DeleteOldRepoVersion(ParseRevision.DeveloperName); //We delete old repo version.
                 UpdateMooegeButton.Enabled = false;
                 Console.WriteLine("Downloading...");
 
@@ -322,7 +320,7 @@ namespace MadCow
                     DownloadSpeedTimer.Stop();
                 }
 
-                DeleteHelper.DeleteOldRepoVersion(ParseRevision.developerName); //We delete old repo version.
+                DeleteHelper.DeleteOldRepoVersion(ParseRevision.DeveloperName); //We delete old repo version.
                 Console.WriteLine("Downloading...");
 
                 if (Configuration.MadCow.TrayNotificationsEnabled)
@@ -347,15 +345,14 @@ namespace MadCow
 
             if (ErrorFinder.hasMpqs()) //We check for MPQ files count before allowing the user to proceed to play.
             {
-                var t = new System.Threading.Thread(ThreadProc);
-                t.Start();
+                new Thread(ThreadProc).Start();
             }
             else if (Diablo3UserPathSelection != null && ErrorFinder.hasMpqs() == false)
             {
-                var ErrorAnswer = MessageBox.Show("You haven't copied MPQ files." + "\nWould you like MadCow to fix this for you?", "Fatal Error!",
+                var errorAnswer = MessageBox.Show("You haven't copied MPQ files." + "\nWould you like MadCow to fix this for you?", "Fatal Error!",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
 
-                if (ErrorAnswer == DialogResult.Yes)
+                if (errorAnswer == DialogResult.Yes)
                 {
                     MpqProcedure.StartCopyProcedure();
                     PlayDiabloButton.Enabled = false;
@@ -373,10 +370,6 @@ namespace MadCow
                 Diablo.Play();
             }
 
-            else
-            {
-                Application.Run(new RepositorySelectionPlay());
-            }
             //We add ErrorFinder call here, in order to know if Mooege had issues loading.
             if (!File.Exists(Program.programPath + @"\logs\mooege.log")) return;
             if (!ErrorFinder.SearchLogs("Fatal")) return;
@@ -384,13 +377,16 @@ namespace MadCow
             DeleteHelper.Delete(0);
             if (ErrorFinder.ErrorFileName.Contains("d3-update-base-")) //This will handle corrupted mpqs and missing mpq files.
             {
-                var errorAnswer = MessageBox.Show(string.Format("Missing or Corrupted file [{0}]" + "\nWould you like MadCow to fix this for you?", ErrorFinder.ErrorFileName), "Found corrupted file!",
+                var errorAnswer = MessageBox.Show(string.Format("Missing or Corrupted file [{0}]" +
+                                                                "\nWould you like MadCow to fix this for you?",
+                                                                ErrorFinder.ErrorFileName),
+                                                  "Found corrupted file!",
                                                   MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
 
                 if (errorAnswer == DialogResult.Yes)
                 {
                     //We move the user to the Help tab so he can see the progress of the download.
-                    Tabs.Invoke(new Action(() => Tabs.SelectTab("tabPage4")));
+                    Tabs.Invoke(new Action(() => Tabs.SelectTab(HelpTab)));
                     //We execute the procedure to start downloading the corrupted file @ FixMpq();
                     FixMpq();
                 }
@@ -402,7 +398,7 @@ namespace MadCow
 
                 if (errorAnswer == DialogResult.Yes)
                 {
-                    Tabs.Invoke(new Action(() => Tabs.SelectTab("tabPage4")));
+                    Tabs.Invoke(new Action(() => Tabs.SelectTab(HelpTab)));
                     FixMpq();
                 }
             }
@@ -413,7 +409,7 @@ namespace MadCow
 
                 if (errorAnswer == DialogResult.Yes)
                 {
-                    Tabs.Invoke(new Action(() => Tabs.SelectTab("tabPage4")));
+                    Tabs.Invoke(new Action(() => Tabs.SelectTab(HelpTab)));
                     FixMpq();
                 }
             }
@@ -480,8 +476,7 @@ namespace MadCow
 
         private void LaunchServer_Click(object sender, EventArgs e)
         {
-            var t = new System.Threading.Thread(ThreadProc2);
-            t.Start();
+            new Thread(ThreadProc2).Start();
         }
 
         public void ThreadProc2()
@@ -499,7 +494,7 @@ namespace MadCow
                 if (errorAnswer == DialogResult.Yes)
                 {
                     //We move the user to the Help tab so he can see the progress of the download.
-                    Tabs.Invoke(new Action(() => Tabs.SelectTab("tabPage4")));
+                    Tabs.Invoke(new Action(() => Tabs.SelectTab(HelpTab)));
                     //We execute the procedure to start downloading the corrupted file @ FixMpq();
                     FixMpq();
                 }
@@ -511,7 +506,7 @@ namespace MadCow
 
                 if (errorAnswer == DialogResult.Yes)
                 {
-                    Tabs.Invoke(new Action(() => Tabs.SelectTab("tabPage4")));
+                    Tabs.Invoke(new Action(() => Tabs.SelectTab(HelpTab)));
                     FixMpq();
                 }
             }
@@ -522,7 +517,7 @@ namespace MadCow
 
                 if (errorAnswer == DialogResult.Yes)
                 {
-                    Tabs.Invoke(new Action(() => Tabs.SelectTab("tabPage4")));
+                    Tabs.Invoke(new Action(() => Tabs.SelectTab(HelpTab)));
                     FixMpq();
                 }
             }
@@ -533,7 +528,7 @@ namespace MadCow
 
                 if (errorAnswer == DialogResult.Yes)
                 {
-                    Tabs.Invoke(new Action(() => Tabs.SelectTab("tabPage4")));
+                    Tabs.Invoke(new Action(() => Tabs.SelectTab(HelpTab)));
                     DownloadSelectedMpqs.RunWorkerAsync();
                 }
             }
@@ -690,7 +685,7 @@ namespace MadCow
             }
             //We get the selected branch first.
             BranchComboBox.Invoke(new Action(() => { SelectedBranch = BranchComboBox.SelectedItem.ToString(); }));
-            var url = new Uri(ParseRevision.revisionUrl + "/zipball/" + SelectedBranch);
+            var url = new Uri(ParseRevision.RevisionUrl + "/zipball/" + SelectedBranch);
             var request = (HttpWebRequest)WebRequest.Create(url);
             if (Proxy.proxyStatus)
                 request.Proxy = proxy;
@@ -708,7 +703,7 @@ namespace MadCow
                 if (Proxy.proxyStatus)
                     client.Proxy = proxy;
                 // Open the file at the remote path.
-                using (var streamRemote = client.OpenRead(new Uri(ParseRevision.revisionUrl + "/zipball/" + SelectedBranch)))
+                using (var streamRemote = client.OpenRead(new Uri(ParseRevision.RevisionUrl + "/zipball/" + SelectedBranch)))
                 {
                     // We write those files into the file system.
                     using (Stream streamLocal = new FileStream(Program.programPath + "/Repositories/Mooege.zip", FileMode.Create, FileAccess.Write, FileShare.None))
@@ -1185,7 +1180,7 @@ namespace MadCow
         #region ErrorColorHandler
         private void comboBox1_TextChanged(object sender, EventArgs e)
         {
-            var currentText = ParseRevision.commitFile;
+            var currentText = ParseRevision.CommitFile;
             BranchComboBox.Visible = false;
             RepositoryHintLabel.Visible = true;
             BranchSelectionLabel.Visible = false;
@@ -1399,7 +1394,7 @@ namespace MadCow
 
                                 //We calculate the download speed.
                                 var ts = speedTimer.Elapsed;
-                                var bytesReceivedSpeed = (iRunningByteTotal / 1024) / ts.TotalSeconds;
+                                var bytesReceivedSpeed = (iRunningByteTotal / 1024d) / ts.TotalSeconds;
                                 DownloadSpeedLabel.Invoke(new Action(() =>
                                 {
                                     DownloadSpeedLabel.Text = string.Format("Downloading Speed: {0}Kbps", Convert.ToInt32(bytesReceivedSpeed));
@@ -1530,7 +1525,7 @@ namespace MadCow
 
                             //We calculate the download speed.
                             var ts = speedTimer.Elapsed;
-                            var bytesReceivedSpeed = (iRunningByteTotal / 1024) / ts.TotalSeconds;
+                            var bytesReceivedSpeed = (iRunningByteTotal / 1024d) / ts.TotalSeconds;
                             DownloadSpeedLabel.Invoke(new Action(() =>
                             {
                                 DownloadSpeedLabel.Text = string.Format("Downloading Speed: {0}Kbps", Convert.ToInt32(bytesReceivedSpeed));
@@ -1582,15 +1577,15 @@ namespace MadCow
                 //File.Copy(downloadSource + @"\base\" + ErrorFinder.errorFileName + @".MPQ", downloadDestination + ErrorFinder.errorFileName + @".MPQ", true);
                 //Console.WriteLine("Copied new MPQ to MadCow MPQ home Folder.");
                 //We give the user an announce of success.
-                DialogResult response = MessageBox.Show("MadCow Fixer",
+                var response = MessageBox.Show("MadCow Fixer",
 		        "MadCow succesfully fixed:" + ErrorFinder.ErrorFileName + @".MPQ",MessageBoxButtons.OK,MessageBoxIcon.Information);
 
                 if (response == DialogResult.OK) //We take this as the OK response.
                 {
                     //Since problem must be fixed, we take the user to the Update tab & execute repo selection form again
                     //We move the user to the Help tab so he can see the progress of the download.
-                    Tabs.Invoke(new Action(() => Tabs.SelectTab("tabPage1")));
-                    var t = new System.Threading.Thread(ThreadProc);
+                    Tabs.Invoke(new Action(() => Tabs.SelectTab(UpdatesTab)));
+                    var t = new Thread(ThreadProc);
                     t.Start();
                 }
             }
@@ -1606,7 +1601,7 @@ namespace MadCow
         //Dynamically Add Repos, but also remove duplicates.
         ////////////////////////////////////////////////////////////////////////
         #region Repositories
-        private Int32 _repoListIndex;
+        private int _repoListIndex;
 
         private void RepoList()
         {
@@ -1623,7 +1618,6 @@ namespace MadCow
         }
         private void RepoCheck()
         {
-            var p = _repoListPath;
             var lines = File.ReadAllLines(_repoListPath);
             File.WriteAllLines(_repoListPath, lines.Distinct().ToArray());
         }
@@ -1707,7 +1701,7 @@ namespace MadCow
                         {
                             var regex = new Regex("<title>(.*)</title>");
                             var match = regex.Match(line);
-                            ChangeLogTxtBox.Invoke(new Action(() => { ChangeLogTxtBox.AppendText(i + @".-" + match.Groups[1].Value + "\n"); }));
+                            ChangeLogTxtBox.Invoke(new Action(() => ChangeLogTxtBox.AppendText(i + @".-" + match.Groups[1].Value + "\n")));
                             i++;
                         }
                         else if (System.Text.RegularExpressions.Regex.IsMatch(line, "<title>") && i == 0)
@@ -1780,7 +1774,7 @@ namespace MadCow
 
             while (line != null)
             {
-                if (System.Text.RegularExpressions.Regex.IsMatch(line, SelectedRepo))
+                if (Regex.IsMatch(line, SelectedRepo))
                 {
                     //Pass the whole URL to selectedRepo string that we will use to create the new Uri.
                     SelectedRepo = line;
@@ -1863,7 +1857,7 @@ namespace MadCow
                 }
             }
         }
-        protected void Show_Click(Object sender, System.EventArgs e)
+        protected void Show_Click(Object sender, EventArgs e)
         {
             Show();
             WindowState = FormWindowState.Normal;
@@ -1898,7 +1892,7 @@ namespace MadCow
             var result = e.Result;
             var pos2 = result.IndexOf("Commit/", StringComparison.Ordinal);
             var revision = result.Substring(pos2 + 7, 7);
-            ParseRevision.lastRevision = result.Substring(pos2 + 7, 7);
+            ParseRevision.LastRevision = result.Substring(pos2 + 7, 7);
         }
         #endregion
 
@@ -1947,6 +1941,11 @@ namespace MadCow
             enableTrayNotificationsToolStripMenuItem.Enabled = enableTrayToolStripMenuItem.Checked;
         }
         #endregion
+
+        private void compileAsDebugToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Configuration.MadCow.CompileAsDebug = compileAsDebugToolStripMenuItem.Checked;
+        }
         #endregion
 
         ////////////////////////////////////////////////////////////////////////
@@ -2002,6 +2001,7 @@ namespace MadCow
             enableTrayNotificationsToolStripMenuItem.Checked = Configuration.MadCow.TrayNotificationsEnabled;
             rememberLastRepositoryToolStripMenuItem.Checked = Configuration.MadCow.RememberLastRepository;
             desktopShortcutToolStripMenuItem.Checked = Configuration.MadCow.ShortcutEnabled;
+            compileAsDebugToolStripMenuItem.Checked = Configuration.MadCow.CompileAsDebug;
         }
         #endregion
 
@@ -2116,8 +2116,7 @@ namespace MadCow
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var ab = new AboutBox();
-            ab.ShowDialog();
+            new AboutBox().ShowDialog();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)

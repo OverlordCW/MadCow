@@ -15,23 +15,44 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Build.Evaluation;
+using Microsoft.Build.Logging;
 
 namespace MadCow
 {
-    class Compile
+    internal class Compile
     {
         //This paths may change depending on which repository ur trying to retrieve, they are set over ParseRevision.cs
-        public static String CurrentMooegeExePath = "";
-        public static String CurrentMooegeDebugFolderPath = "";
-        public static String MooegeINI = "";
+        internal static string SelectedRepository { get; set; }
 
-        public static void CompileSource()
+        internal static string CurrentMooegeFolderPath
         {
-            var libmoonetPath = Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\LibMooNet\LibMooNet.csproj";
-            var mooegePath = Program.programPath + @"\" + @"Repositories\" + ParseRevision.developerName + "-" + ParseRevision.branchName + "-" + ParseRevision.lastRevision + @"\src\Mooege\Mooege-VS2010.csproj";
+            get
+            {
+                return Path.Combine(
+                    Program.programPath,
+                    "Repositories",
+                    SelectedRepository,
+                    //string.Format("{0}-{1}-{2}",
+                    //              ParseRevision.DeveloperName,
+                    //              ParseRevision.BranchName,
+                    //              ParseRevision.LastRevision),
+                    "Compiled"
+                    );
+            }
+        }
+
+        internal static string CurrentMooegeExePath { get { return Path.Combine(CurrentMooegeFolderPath, "Mooege.exe"); } }
+
+        internal static string MooegeINI { get { return Path.Combine(CurrentMooegeFolderPath, "config.ini"); } }
+
+        internal static void CompileSource()
+        {
+            var libmoonetPath = Program.programPath + @"\" + @"Repositories\" + ParseRevision.DeveloperName + "-" + ParseRevision.BranchName + "-" + ParseRevision.LastRevision + @"\src\LibMooNet\LibMooNet.csproj";
+            var mooegePath = Program.programPath + @"\" + @"Repositories\" + ParseRevision.DeveloperName + "-" + ParseRevision.BranchName + "-" + ParseRevision.LastRevision + @"\src\Mooege\Mooege-VS2010.csproj";
 
             var compileLibMooNetTask = Task<bool>.Factory.StartNew(() => CompileLibMooNet(libmoonetPath));
             var compileMooegeTask = compileLibMooNetTask.ContinueWith(x => CompileMooege(mooegePath, x.Result));
@@ -52,18 +73,22 @@ namespace MadCow
 
         private static bool CompileLibMooNet(string libmoonetPath)
         {
-            Console.WriteLine("Compiling LibMoonet...");
-            if (Configuration.MadCow.TrayNotificationsEnabled)
-            {
-                Form1.GlobalAccess.MadCowTrayIcon.ShowBalloonTip(1000, "MadCow", "Compiling LibMoonet...", ToolTipIcon.Info);
-            }
-            var libmoonetProject = new Project(libmoonetPath);
-            return libmoonetProject.Build(new Microsoft.Build.Logging.FileLogger());
+            //Console.WriteLine("Compiling LibMoonet...");
+            //if (Configuration.MadCow.TrayNotificationsEnabled)
+            //{
+            //    Form1.GlobalAccess.MadCowTrayIcon.ShowBalloonTip(1000, "MadCow", "Compiling LibMoonet...", ToolTipIcon.Info);
+            //}
+            //var libmoonetProject = new Project(libmoonetPath);
+            //libmoonetProject.SetProperty("Configuration", Configuration.MadCow.CompileAsDebug ? "Debug" : "Release");
+            //libmoonetProject.SetProperty("Platform", "AnyCPU");
+
+            //return libmoonetProject.Build(new FileLogger());
+            return true;
         }
 
-        private static bool CompileMooege(string mooegePath, bool LibMooNetStatus)
+        private static bool CompileMooege(string mooegePath, bool libMooNetStatus)
         {
-            if (LibMooNetStatus)
+            if (libMooNetStatus)
             {
                 Console.WriteLine("Compiling Mooege...");
                 if (Configuration.MadCow.TrayNotificationsEnabled)
@@ -71,7 +96,10 @@ namespace MadCow
                     Form1.GlobalAccess.MadCowTrayIcon.ShowBalloonTip(1000, "MadCow", "Compiling Mooege......", ToolTipIcon.Info);
                 }
                 var mooegeProject = new Project(mooegePath);
-                return mooegeProject.Build(new Microsoft.Build.Logging.FileLogger());
+                mooegeProject.SetProperty("Configuration", Configuration.MadCow.CompileAsDebug ? "Debug" : "Release");
+                mooegeProject.SetProperty("Platform", "AnyCPU");
+                mooegeProject.SetProperty("OutputPath", CurrentMooegeFolderPath);
+                return mooegeProject.Build(new FileLogger());
             }
             return false;
         }

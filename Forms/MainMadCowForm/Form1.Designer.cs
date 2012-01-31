@@ -158,6 +158,7 @@
             this.desktopShortcutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mooegeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.compileAsDebugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.RemoteServerTab.SuspendLayout();
@@ -1488,16 +1489,17 @@
             this.enableTrayToolStripMenuItem,
             this.enableTrayNotificationsToolStripMenuItem,
             this.rememberLastRepositoryToolStripMenuItem,
-            this.desktopShortcutToolStripMenuItem});
+            this.desktopShortcutToolStripMenuItem,
+            this.compileAsDebugToolStripMenuItem});
             this.madCowToolStripMenuItem.Name = "madCowToolStripMenuItem";
-            this.madCowToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.madCowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.madCowToolStripMenuItem.Text = "Mad&Cow";
             // 
             // enableTrayToolStripMenuItem
             // 
             this.enableTrayToolStripMenuItem.CheckOnClick = true;
             this.enableTrayToolStripMenuItem.Name = "enableTrayToolStripMenuItem";
-            this.enableTrayToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.enableTrayToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.enableTrayToolStripMenuItem.Text = "Enable Tray";
             this.enableTrayToolStripMenuItem.CheckedChanged += new System.EventHandler(this.enableTrayToolStripMenuItem_CheckedChanged);
             // 
@@ -1505,7 +1507,7 @@
             // 
             this.enableTrayNotificationsToolStripMenuItem.CheckOnClick = true;
             this.enableTrayNotificationsToolStripMenuItem.Name = "enableTrayNotificationsToolStripMenuItem";
-            this.enableTrayNotificationsToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.enableTrayNotificationsToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.enableTrayNotificationsToolStripMenuItem.Text = "Enable Tray Notifications";
             this.enableTrayNotificationsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.enableTrayNotificationsToolStripMenuItem_CheckedChanged);
             // 
@@ -1513,7 +1515,7 @@
             // 
             this.rememberLastRepositoryToolStripMenuItem.CheckOnClick = true;
             this.rememberLastRepositoryToolStripMenuItem.Name = "rememberLastRepositoryToolStripMenuItem";
-            this.rememberLastRepositoryToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.rememberLastRepositoryToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.rememberLastRepositoryToolStripMenuItem.Text = "Remember Last Repository";
             this.rememberLastRepositoryToolStripMenuItem.CheckedChanged += new System.EventHandler(this.rememberLastRepositoryToolStripMenuItem_CheckedChanged);
             // 
@@ -1521,7 +1523,7 @@
             // 
             this.desktopShortcutToolStripMenuItem.CheckOnClick = true;
             this.desktopShortcutToolStripMenuItem.Name = "desktopShortcutToolStripMenuItem";
-            this.desktopShortcutToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.desktopShortcutToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.desktopShortcutToolStripMenuItem.Text = "Desktop Shortcut";
             this.desktopShortcutToolStripMenuItem.CheckedChanged += new System.EventHandler(this.desktopShortcutToolStripMenuItem_CheckedChanged);
             // 
@@ -1529,7 +1531,7 @@
             // 
             this.mooegeToolStripMenuItem.Enabled = false;
             this.mooegeToolStripMenuItem.Name = "mooegeToolStripMenuItem";
-            this.mooegeToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.mooegeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.mooegeToolStripMenuItem.Text = "&Mooege";
             // 
             // aboutToolStripMenuItem
@@ -1538,6 +1540,14 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.aboutToolStripMenuItem.Text = "&About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // compileAsDebugToolStripMenuItem
+            // 
+            this.compileAsDebugToolStripMenuItem.CheckOnClick = true;
+            this.compileAsDebugToolStripMenuItem.Name = "compileAsDebugToolStripMenuItem";
+            this.compileAsDebugToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.compileAsDebugToolStripMenuItem.Text = "Compile Mooege as Debug";
+            this.compileAsDebugToolStripMenuItem.Click += new System.EventHandler(this.compileAsDebugToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -1738,6 +1748,7 @@
         private System.Windows.Forms.ToolStripMenuItem desktopShortcutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mooegeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem compileAsDebugToolStripMenuItem;
 
     }
 }

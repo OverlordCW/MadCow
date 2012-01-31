@@ -14,23 +14,22 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace MadCow
 {
     class ProcessFinder
     {
         //Is Process Running Function
-        public static bool FindProcess(string AppName)
+        public static bool FindProcess(string appName)
         {
-            bool bRtn = false;
-            foreach (Process clsProcess in Process.GetProcesses())
+            var bRtn = false;
+            foreach (var clsProcess in Process.GetProcesses())
             {
                 try
                 {
-                    if (clsProcess.ProcessName.StartsWith(AppName))
+                    if (clsProcess.ProcessName.StartsWith(appName))
                     {
                         bRtn = true;
                     }
@@ -40,17 +39,13 @@ namespace MadCow
             return bRtn;
         }
 
-        public static void KillProcess(string AppKillName)
+        public static void KillProcess(string appKillName)
         {
-            foreach (Process clsProcess in Process.GetProcesses())
+            foreach (var clsProcess in Process.GetProcesses().Where(clsProcess => clsProcess.ProcessName.Contains(appKillName)))
             {
-                if (clsProcess.ProcessName.Contains(AppKillName))
-                {
-                    // Kill Kill Kill
-                    clsProcess.Kill();
-                }
+                // Kill Kill Kill
+                clsProcess.Kill();
             }
         }
-
     }
 }

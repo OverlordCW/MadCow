@@ -49,7 +49,7 @@ namespace MadCow
                     {
                         try
                         {
-                            var foldersArray = Directory.GetDirectories(Program.programPath + @"\" + @"Repositories\");
+                            var foldersArray = Directory.GetDirectories(Path.Combine(Program.programPath, "Repositories"));
                             if (foldersArray.Length > 0)
                             {
                                 Console.WriteLine("Deleting Saved Repositories...");
