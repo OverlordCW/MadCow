@@ -15,21 +15,21 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 using System;
 using System.Globalization;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace MadCow
 {
-    public partial class RepositorySelection : Form
+    internal partial class RepositorySelection : Form
     {
-        public RepositorySelection()
+        internal RepositorySelection()
         {
             InitializeComponent();
-            AddAvailableRepositories();
+            RefreshAvailableRepositories();
         }
 
-        public void AddAvailableRepositories() //Adds available repos to the list.
+        internal void RefreshAvailableRepositories() //Adds available repos to the list.
         {
+            listView1.Items.Clear();
             foreach (var repository in Compile.Repositories)
             {
                 var item = new ListViewItem(repository.Url);
@@ -48,7 +48,7 @@ namespace MadCow
             }
         }
 
-        private void closeButton_Click_1(object sender, EventArgs e)
+        private void closeButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
             Close();
@@ -67,6 +67,40 @@ namespace MadCow
                 Compile.Repositories[listView1.SelectedIndices[0]].Delete();
             }
             listView1.Items.Remove(listView1.SelectedItems[0]);
+            RefreshAvailableRepositories();
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            downloadButton.Enabled = listView1.SelectedIndices.Count > 0;
+            compileButton.Enabled = listView1.SelectedIndices.Count > 0 &&
+                                    Compile.Repositories[listView1.SelectedIndices[0]].IsDownloaded;
+            deleteButton.Enabled = listView1.SelectedIndices.Count > 0 &&
+                                   Compile.Repositories[listView1.SelectedIndices[0]].IsDownloaded;
+        }
+
+        private void downloadButton_Click(object sender, EventArgs e)
+        {
+            if(Compile.Repositories[listView1.SelectedIndices[0]].Download())
+            {
+                RefreshAvailableRepositories();
+            }
+            else
+            {
+                MessageBox.Show("Something went wrong!");
+            }
+        }
+
+        private void compileButton_Click(object sender, EventArgs e)
+        {
+            if (Compile.Repositories[listView1.SelectedIndices[0]].Compile())
+            {
+                RefreshAvailableRepositories();
+            }
+            else
+            {
+                MessageBox.Show("Something went wrong!");
+            }
         }
 
         //private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)

@@ -74,34 +74,25 @@
             this.BnetServerPort = new System.Windows.Forms.TextBox();
             this.BnetServerIp = new System.Windows.Forms.TextBox();
             this.UpdatesTab = new System.Windows.Forms.TabPage();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.BrowseMPQPathButton = new System.Windows.Forms.Button();
+            this.MPQDestTextBox = new System.Windows.Forms.TextBox();
+            this.mpqDestinationDisableLabel = new System.Windows.Forms.Label();
             this.LastPlayedRepoReminderLabel = new System.Windows.Forms.Label();
             this.AutoUpdateTimerLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.BranchSelectionLabel = new System.Windows.Forms.Label();
             this.BranchComboBox = new System.Windows.Forms.ComboBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.repoComboBox = new System.Windows.Forms.ComboBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.RepositoryHintLabel = new System.Windows.Forms.Label();
             this.FindDiabloButton = new System.Windows.Forms.Button();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.DownloadRepoBar = new System.Windows.Forms.ProgressBar();
             this.ValidateRepoButton = new System.Windows.Forms.Button();
             this.Diablo3UserPathSelection = new System.Windows.Forms.TextBox();
             this.UpdateMooegeButton = new System.Windows.Forms.Button();
             this.CopyMPQButton = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.generalProgressBar = new System.Windows.Forms.ProgressBar();
             this.Tabs = new System.Windows.Forms.TabControl();
-            this.MooegeTab = new System.Windows.Forms.TabPage();
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.SettingsCheckedListBox = new System.Windows.Forms.CheckedListBox();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.BrowseMPQPathButton = new System.Windows.Forms.Button();
-            this.MPQDestTextBox = new System.Windows.Forms.TextBox();
-            this.mpqDestinationDisableLabel = new System.Windows.Forms.Label();
             this.HelpTab = new System.Windows.Forms.TabPage();
             this.DownloadNetLabel = new System.Windows.Forms.LinkLabel();
             this.ProblemsCompilingLabel = new System.Windows.Forms.Label();
@@ -158,8 +149,17 @@
             this.desktopShortcutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.compileAsDebugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mooegeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enableFileLoggingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enablePacketLoggingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enableTasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enableLazyLoadingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enableNoPasswordCheckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.repositoriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.RemoteServerTab.SuspendLayout();
@@ -177,17 +177,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.ErrorGameServerIp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ErrorBnetServerIp)).BeginInit();
             this.UpdatesTab.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.groupBox6.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.Tabs.SuspendLayout();
-            this.MooegeTab.SuspendLayout();
-            this.groupBox9.SuspendLayout();
-            this.groupBox8.SuspendLayout();
             this.HelpTab.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.OutPutTab.SuspendLayout();
@@ -196,6 +190,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.Advertencia)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BotonAlerta)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // EnableAutoUpdateBox
@@ -661,18 +657,17 @@
             // UpdatesTab
             // 
             this.UpdatesTab.BackColor = System.Drawing.Color.White;
+            this.UpdatesTab.Controls.Add(this.groupBox8);
             this.UpdatesTab.Controls.Add(this.LastPlayedRepoReminderLabel);
             this.UpdatesTab.Controls.Add(this.AutoUpdateTimerLabel);
             this.UpdatesTab.Controls.Add(this.groupBox1);
             this.UpdatesTab.Controls.Add(this.FindDiabloButton);
-            this.UpdatesTab.Controls.Add(this.groupBox6);
             this.UpdatesTab.Controls.Add(this.PlayDiabloButton);
             this.UpdatesTab.Controls.Add(this.groupBox2);
             this.UpdatesTab.Controls.Add(this.ValidateRepoButton);
             this.UpdatesTab.Controls.Add(this.Diablo3UserPathSelection);
             this.UpdatesTab.Controls.Add(this.UpdateMooegeButton);
             this.UpdatesTab.Controls.Add(this.CopyMPQButton);
-            this.UpdatesTab.Controls.Add(this.groupBox3);
             this.UpdatesTab.Cursor = System.Windows.Forms.Cursors.Hand;
             this.UpdatesTab.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UpdatesTab.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -682,6 +677,49 @@
             this.UpdatesTab.Size = new System.Drawing.Size(345, 334);
             this.UpdatesTab.TabIndex = 1;
             this.UpdatesTab.Text = "Updates";
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.BrowseMPQPathButton);
+            this.groupBox8.Controls.Add(this.MPQDestTextBox);
+            this.groupBox8.Controls.Add(this.mpqDestinationDisableLabel);
+            this.groupBox8.Location = new System.Drawing.Point(6, 80);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(333, 54);
+            this.groupBox8.TabIndex = 20;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "MPQ Destination";
+            // 
+            // BrowseMPQPathButton
+            // 
+            this.BrowseMPQPathButton.Location = new System.Drawing.Point(303, 17);
+            this.BrowseMPQPathButton.Name = "BrowseMPQPathButton";
+            this.BrowseMPQPathButton.Size = new System.Drawing.Size(24, 23);
+            this.BrowseMPQPathButton.TabIndex = 1;
+            this.BrowseMPQPathButton.Text = "...";
+            this.BrowseMPQPathButton.UseVisualStyleBackColor = true;
+            this.BrowseMPQPathButton.Click += new System.EventHandler(this.BrowseMPQPathButton_Click);
+            // 
+            // MPQDestTextBox
+            // 
+            this.MPQDestTextBox.Location = new System.Drawing.Point(6, 19);
+            this.MPQDestTextBox.Name = "MPQDestTextBox";
+            this.MPQDestTextBox.ReadOnly = true;
+            this.MPQDestTextBox.Size = new System.Drawing.Size(291, 20);
+            this.MPQDestTextBox.TabIndex = 0;
+            // 
+            // mpqDestinationDisableLabel
+            // 
+            this.mpqDestinationDisableLabel.AutoSize = true;
+            this.mpqDestinationDisableLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mpqDestinationDisableLabel.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.mpqDestinationDisableLabel.Location = new System.Drawing.Point(15, 38);
+            this.mpqDestinationDisableLabel.Name = "mpqDestinationDisableLabel";
+            this.mpqDestinationDisableLabel.Size = new System.Drawing.Size(301, 13);
+            this.mpqDestinationDisableLabel.TabIndex = 20;
+            this.mpqDestinationDisableLabel.Text = "Disable \"Remember Last Repository\" to enable this.";
+            this.ToolTips.SetToolTip(this.mpqDestinationDisableLabel, "Help Tab -> Remember Last Repository");
+            this.mpqDestinationDisableLabel.Visible = false;
             // 
             // LastPlayedRepoReminderLabel
             // 
@@ -708,7 +746,7 @@
             // 
             this.groupBox1.Controls.Add(this.BranchSelectionLabel);
             this.groupBox1.Controls.Add(this.BranchComboBox);
-            this.groupBox1.Controls.Add(this.comboBox1);
+            this.groupBox1.Controls.Add(this.repoComboBox);
             this.groupBox1.Controls.Add(this.pictureBox2);
             this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Controls.Add(this.RepositoryHintLabel);
@@ -742,15 +780,15 @@
             this.BranchComboBox.SelectedIndexChanged += new System.EventHandler(this.BranchComboBox_SelectedIndexChanged);
             this.BranchComboBox.SelectionChangeCommitted += new System.EventHandler(this.BranchComboBox_SelectedIndexChanged);
             // 
-            // comboBox1
+            // repoComboBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(6, 18);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(201, 21);
-            this.comboBox1.TabIndex = 17;
-            this.comboBox1.Text = "Type or Select a Repository.";
-            this.comboBox1.TextChanged += new System.EventHandler(this.comboBox1_TextChanged);
+            this.repoComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.repoComboBox.Location = new System.Drawing.Point(6, 18);
+            this.repoComboBox.Name = "repoComboBox";
+            this.repoComboBox.Size = new System.Drawing.Size(201, 21);
+            this.repoComboBox.TabIndex = 17;
+            this.repoComboBox.TextChanged += new System.EventHandler(this.repoComboBox_TextChanged);
+            this.repoComboBox.Click += new System.EventHandler(this.repoComboBox_Click);
             // 
             // pictureBox2
             // 
@@ -795,31 +833,6 @@
             this.FindDiabloButton.UseVisualStyleBackColor = true;
             this.FindDiabloButton.Click += new System.EventHandler(this.FindDiablo_Click);
             // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.panel1);
-            this.groupBox6.Location = new System.Drawing.Point(5, 80);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(333, 42);
-            this.groupBox6.TabIndex = 18;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Download Bar";
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.DownloadRepoBar);
-            this.panel1.Location = new System.Drawing.Point(9, 16);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(316, 17);
-            this.panel1.TabIndex = 17;
-            // 
-            // DownloadRepoBar
-            // 
-            this.DownloadRepoBar.Location = new System.Drawing.Point(5, 4);
-            this.DownloadRepoBar.Name = "DownloadRepoBar";
-            this.DownloadRepoBar.Size = new System.Drawing.Size(308, 10);
-            this.DownloadRepoBar.TabIndex = 0;
-            // 
             // ValidateRepoButton
             // 
             this.ValidateRepoButton.Location = new System.Drawing.Point(9, 221);
@@ -860,131 +873,19 @@
             this.CopyMPQButton.UseVisualStyleBackColor = true;
             this.CopyMPQButton.Click += new System.EventHandler(this.CopyMPQs_Click);
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.panel2);
-            this.groupBox3.Location = new System.Drawing.Point(6, 128);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(332, 45);
-            this.groupBox3.TabIndex = 17;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "General Progress";
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.generalProgressBar);
-            this.panel2.Location = new System.Drawing.Point(9, 19);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(316, 17);
-            this.panel2.TabIndex = 17;
-            // 
-            // generalProgressBar
-            // 
-            this.generalProgressBar.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.generalProgressBar.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.generalProgressBar.Location = new System.Drawing.Point(5, 3);
-            this.generalProgressBar.Name = "generalProgressBar";
-            this.generalProgressBar.Size = new System.Drawing.Size(308, 11);
-            this.generalProgressBar.Step = 25;
-            this.generalProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.generalProgressBar.TabIndex = 0;
-            // 
             // Tabs
             // 
             this.Tabs.Controls.Add(this.UpdatesTab);
             this.Tabs.Controls.Add(this.ServerControlTab);
             this.Tabs.Controls.Add(this.RemoteServerTab);
-            this.Tabs.Controls.Add(this.MooegeTab);
             this.Tabs.Controls.Add(this.HelpTab);
             this.Tabs.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Tabs.HotTrack = true;
-            this.Tabs.Location = new System.Drawing.Point(3, 27);
+            this.Tabs.Location = new System.Drawing.Point(3, 3);
             this.Tabs.Name = "Tabs";
             this.Tabs.SelectedIndex = 0;
             this.Tabs.Size = new System.Drawing.Size(353, 360);
             this.Tabs.TabIndex = 13;
-            // 
-            // MooegeTab
-            // 
-            this.MooegeTab.BackColor = System.Drawing.Color.White;
-            this.MooegeTab.Controls.Add(this.groupBox9);
-            this.MooegeTab.Controls.Add(this.groupBox8);
-            this.MooegeTab.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.MooegeTab.Location = new System.Drawing.Point(4, 22);
-            this.MooegeTab.Name = "MooegeTab";
-            this.MooegeTab.Padding = new System.Windows.Forms.Padding(3);
-            this.MooegeTab.Size = new System.Drawing.Size(345, 334);
-            this.MooegeTab.TabIndex = 6;
-            this.MooegeTab.Text = "Mooege";
-            // 
-            // groupBox9
-            // 
-            this.groupBox9.Controls.Add(this.SettingsCheckedListBox);
-            this.groupBox9.Location = new System.Drawing.Point(6, 66);
-            this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(333, 262);
-            this.groupBox9.TabIndex = 1;
-            this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "Mooege Settings";
-            // 
-            // SettingsCheckedListBox
-            // 
-            this.SettingsCheckedListBox.CheckOnClick = true;
-            this.SettingsCheckedListBox.FormattingEnabled = true;
-            this.SettingsCheckedListBox.Items.AddRange(new object[] {
-            "Enable File Logging",
-            "Enable Packet Logging",
-            "Enable Tasks",
-            "Enable LazyLoading",
-            "Enable No Password Check"});
-            this.SettingsCheckedListBox.Location = new System.Drawing.Point(6, 19);
-            this.SettingsCheckedListBox.Name = "SettingsCheckedListBox";
-            this.SettingsCheckedListBox.Size = new System.Drawing.Size(321, 79);
-            this.SettingsCheckedListBox.TabIndex = 0;
-            this.SettingsCheckedListBox.SelectedIndexChanged += new System.EventHandler(this.SettingsCheckedListBox_SelectedIndexChanged);
-            // 
-            // groupBox8
-            // 
-            this.groupBox8.Controls.Add(this.BrowseMPQPathButton);
-            this.groupBox8.Controls.Add(this.MPQDestTextBox);
-            this.groupBox8.Controls.Add(this.mpqDestinationDisableLabel);
-            this.groupBox8.Location = new System.Drawing.Point(6, 6);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(333, 54);
-            this.groupBox8.TabIndex = 0;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "MPQ Destination";
-            // 
-            // BrowseMPQPathButton
-            // 
-            this.BrowseMPQPathButton.Location = new System.Drawing.Point(303, 17);
-            this.BrowseMPQPathButton.Name = "BrowseMPQPathButton";
-            this.BrowseMPQPathButton.Size = new System.Drawing.Size(24, 23);
-            this.BrowseMPQPathButton.TabIndex = 1;
-            this.BrowseMPQPathButton.Text = "...";
-            this.BrowseMPQPathButton.UseVisualStyleBackColor = true;
-            this.BrowseMPQPathButton.Click += new System.EventHandler(this.BrowseMPQPathButton_Click);
-            // 
-            // MPQDestTextBox
-            // 
-            this.MPQDestTextBox.Location = new System.Drawing.Point(6, 19);
-            this.MPQDestTextBox.Name = "MPQDestTextBox";
-            this.MPQDestTextBox.ReadOnly = true;
-            this.MPQDestTextBox.Size = new System.Drawing.Size(291, 20);
-            this.MPQDestTextBox.TabIndex = 0;
-            // 
-            // mpqDestinationDisableLabel
-            // 
-            this.mpqDestinationDisableLabel.AutoSize = true;
-            this.mpqDestinationDisableLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mpqDestinationDisableLabel.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.mpqDestinationDisableLabel.Location = new System.Drawing.Point(15, 38);
-            this.mpqDestinationDisableLabel.Name = "mpqDestinationDisableLabel";
-            this.mpqDestinationDisableLabel.Size = new System.Drawing.Size(301, 13);
-            this.mpqDestinationDisableLabel.TabIndex = 20;
-            this.mpqDestinationDisableLabel.Text = "Disable \"Remember Last Repository\" to enable this.";
-            this.ToolTips.SetToolTip(this.mpqDestinationDisableLabel, "Help Tab -> Remember Last Repository");
-            this.mpqDestinationDisableLabel.Visible = false;
             // 
             // HelpTab
             // 
@@ -1182,7 +1083,7 @@
             this.tabControl2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.tabControl2.HotTrack = true;
             this.tabControl2.ItemSize = new System.Drawing.Size(96, 18);
-            this.tabControl2.Location = new System.Drawing.Point(358, 27);
+            this.tabControl2.Location = new System.Drawing.Point(362, 3);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.tabControl2.SelectedIndex = 0;
@@ -1539,10 +1440,55 @@
             // 
             // mooegeToolStripMenuItem
             // 
-            this.mooegeToolStripMenuItem.Enabled = false;
+            this.mooegeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.enableFileLoggingToolStripMenuItem,
+            this.enablePacketLoggingToolStripMenuItem,
+            this.enableTasksToolStripMenuItem,
+            this.enableLazyLoadingToolStripMenuItem,
+            this.enableNoPasswordCheckToolStripMenuItem});
             this.mooegeToolStripMenuItem.Name = "mooegeToolStripMenuItem";
             this.mooegeToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.mooegeToolStripMenuItem.Text = "&Mooege";
+            // 
+            // enableFileLoggingToolStripMenuItem
+            // 
+            this.enableFileLoggingToolStripMenuItem.CheckOnClick = true;
+            this.enableFileLoggingToolStripMenuItem.Name = "enableFileLoggingToolStripMenuItem";
+            this.enableFileLoggingToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.enableFileLoggingToolStripMenuItem.Text = "Enable File Logging";
+            this.enableFileLoggingToolStripMenuItem.Click += new System.EventHandler(this.enableFileLoggingToolStripMenuItem_Click);
+            // 
+            // enablePacketLoggingToolStripMenuItem
+            // 
+            this.enablePacketLoggingToolStripMenuItem.CheckOnClick = true;
+            this.enablePacketLoggingToolStripMenuItem.Name = "enablePacketLoggingToolStripMenuItem";
+            this.enablePacketLoggingToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.enablePacketLoggingToolStripMenuItem.Text = "Enable Packet Logging";
+            this.enablePacketLoggingToolStripMenuItem.Click += new System.EventHandler(this.enablePacketLoggingToolStripMenuItem_Click);
+            // 
+            // enableTasksToolStripMenuItem
+            // 
+            this.enableTasksToolStripMenuItem.CheckOnClick = true;
+            this.enableTasksToolStripMenuItem.Name = "enableTasksToolStripMenuItem";
+            this.enableTasksToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.enableTasksToolStripMenuItem.Text = "Enable Tasks";
+            this.enableTasksToolStripMenuItem.Click += new System.EventHandler(this.enableTasksToolStripMenuItem_Click);
+            // 
+            // enableLazyLoadingToolStripMenuItem
+            // 
+            this.enableLazyLoadingToolStripMenuItem.CheckOnClick = true;
+            this.enableLazyLoadingToolStripMenuItem.Name = "enableLazyLoadingToolStripMenuItem";
+            this.enableLazyLoadingToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.enableLazyLoadingToolStripMenuItem.Text = "Enable Lazy Loading";
+            this.enableLazyLoadingToolStripMenuItem.Click += new System.EventHandler(this.enableLazyLoadingToolStripMenuItem_Click);
+            // 
+            // enableNoPasswordCheckToolStripMenuItem
+            // 
+            this.enableNoPasswordCheckToolStripMenuItem.CheckOnClick = true;
+            this.enableNoPasswordCheckToolStripMenuItem.Name = "enableNoPasswordCheckToolStripMenuItem";
+            this.enableNoPasswordCheckToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.enableNoPasswordCheckToolStripMenuItem.Text = "Enable No Password Check";
+            this.enableNoPasswordCheckToolStripMenuItem.Click += new System.EventHandler(this.enableNoPasswordCheckToolStripMenuItem_Click);
             // 
             // repositoriesToolStripMenuItem
             // 
@@ -1558,14 +1504,53 @@
             this.aboutToolStripMenuItem.Text = "&About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.Controls.Add(this.Tabs, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tabControl2, 1, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(736, 367);
+            this.tableLayoutPanel1.TabIndex = 19;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusStripStatusLabel,
+            this.statusStripProgressBar});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 393);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(736, 22);
+            this.statusStrip1.TabIndex = 20;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // statusStripStatusLabel
+            // 
+            this.statusStripStatusLabel.Name = "statusStripStatusLabel";
+            this.statusStripStatusLabel.Size = new System.Drawing.Size(619, 17);
+            this.statusStripStatusLabel.Spring = true;
+            this.statusStripStatusLabel.Text = "Ready..";
+            this.statusStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // statusStripProgressBar
+            // 
+            this.statusStripProgressBar.Name = "statusStripProgressBar";
+            this.statusStripProgressBar.Size = new System.Drawing.Size(100, 16);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(736, 389);
+            this.ClientSize = new System.Drawing.Size(736, 415);
+            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.tabControl2);
-            this.Controls.Add(this.Tabs);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -1597,19 +1582,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.ErrorBnetServerIp)).EndInit();
             this.UpdatesTab.ResumeLayout(false);
             this.UpdatesTab.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.groupBox6.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
             this.Tabs.ResumeLayout(false);
-            this.MooegeTab.ResumeLayout(false);
-            this.groupBox9.ResumeLayout(false);
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
             this.HelpTab.ResumeLayout(false);
             this.HelpTab.PerformLayout();
             this.tabControl2.ResumeLayout(false);
@@ -1623,6 +1602,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.BotonAlerta)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1668,13 +1650,8 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button UpdateMooegeButton;
         private System.ComponentModel.BackgroundWorker DownloadRepository;
-        private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.ProgressBar DownloadRepoBar;
         private System.Windows.Forms.ToolTip ToolTips;
         private System.Windows.Forms.Label AutoUpdateTimerLabel;
-        public System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button ResetRepoFolder;
         private System.Windows.Forms.Label ResetMooegeReposLabel;
         private System.Windows.Forms.Label RemoteServerTip;
@@ -1695,13 +1672,12 @@
         private System.Windows.Forms.PictureBox TickGameServerIp;
         private System.Windows.Forms.Label DownloadMpqLabel;
         private System.Windows.Forms.Button DownloadMPQSButton;
-        public System.Windows.Forms.ProgressBar DownloadMPQSprogressBar;
+        internal System.Windows.Forms.ProgressBar DownloadMPQSprogressBar;
         private System.Windows.Forms.Label DownloadFileNameLabel;
         private System.Windows.Forms.Label DownloadSpeedLabel;
         private System.ComponentModel.BackgroundWorker ErrorFilesDownloaders;
         private System.ComponentModel.BackgroundWorker ValidateRepository;
-        public System.Windows.Forms.TextBox ConsoleOutputTxtBox;
-        public System.Windows.Forms.ProgressBar generalProgressBar;
+        internal System.Windows.Forms.TextBox ConsoleOutputTxtBox;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage OutPutTab;
         private System.Windows.Forms.TabPage ChaneglogTab;
@@ -1709,43 +1685,35 @@
         private System.Windows.Forms.Label SelectRepositoryChngLogLabel;
         private System.Windows.Forms.ComboBox SelectRepoChngLogComboBox;
         private System.ComponentModel.BackgroundWorker ChangelogDownloader;
-        public System.Windows.Forms.NotifyIcon MadCowTrayIcon;
-        public System.Windows.Forms.Button PlayDiabloButton;
-        public System.Windows.Forms.Button CopyMPQButton;
-        public System.Windows.Forms.ComboBox BranchComboBox;
-        public System.Windows.Forms.ComboBox comboBox1;
-        public System.ComponentModel.BackgroundWorker DownloadSelectedMpqs;
+        internal System.Windows.Forms.NotifyIcon MadCowTrayIcon;
+        internal System.Windows.Forms.Button PlayDiabloButton;
+        internal System.Windows.Forms.Button CopyMPQButton;
+        internal System.Windows.Forms.ComboBox BranchComboBox;
+        internal System.ComponentModel.BackgroundWorker DownloadSelectedMpqs;
         private System.Windows.Forms.Label BranchSelectionLabel;
-        public System.Windows.Forms.Label LastPlayedRepoReminderLabel;
-        public System.Windows.Forms.TabControl Tabs;
+        internal System.Windows.Forms.Label LastPlayedRepoReminderLabel;
+        internal System.Windows.Forms.TabControl Tabs;
         private System.Windows.Forms.TabPage UpdatesTab;
         private System.Windows.Forms.Button UpdateMadcowButton;
         private System.Windows.Forms.Label AutoUpdateMadcowLabel;
         private System.Windows.Forms.FolderBrowserDialog MpqPathBrowserDialog;
-        private System.Windows.Forms.TabPage MooegeTab;
-        private System.Windows.Forms.GroupBox groupBox9;
-        internal System.Windows.Forms.CheckedListBox SettingsCheckedListBox;
-        private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.Button BrowseMPQPathButton;
-        public System.Windows.Forms.TextBox MPQDestTextBox;
-        public System.Windows.Forms.Label mpqDestinationDisableLabel;
         private System.Windows.Forms.LinkLabel DownloadNetLabel;
         private System.Windows.Forms.Label ProblemsCompilingLabel;
         private System.Windows.Forms.TabPage LiveHelpTab;
-        public System.Windows.Forms.TextBox ChatDisplayBox;
-        public System.Windows.Forms.TextBox ChatUsersBox;
-        public System.Windows.Forms.TextBox ChatMessageBox;
-        public System.Windows.Forms.Label PleaseWaitLabel;
-        public System.Windows.Forms.Label TypeHereLabel;
-        public System.Windows.Forms.Button ConnectButton;
-        public System.Windows.Forms.PictureBox BotonAlerta;
-        public System.Windows.Forms.Label label1;
-        public System.Windows.Forms.Label label3;
-        public System.Windows.Forms.Label label2;
-        public System.Windows.Forms.Label label4;
-        public System.Windows.Forms.TextBox Rules;
-        public System.Windows.Forms.PictureBox Advertencia;
-        public System.Windows.Forms.Button DisconnectButton;
+        internal System.Windows.Forms.TextBox ChatDisplayBox;
+        internal System.Windows.Forms.TextBox ChatUsersBox;
+        internal System.Windows.Forms.TextBox ChatMessageBox;
+        internal System.Windows.Forms.Label PleaseWaitLabel;
+        internal System.Windows.Forms.Label TypeHereLabel;
+        internal System.Windows.Forms.Button ConnectButton;
+        internal System.Windows.Forms.PictureBox BotonAlerta;
+        internal System.Windows.Forms.Label label1;
+        internal System.Windows.Forms.Label label3;
+        internal System.Windows.Forms.Label label2;
+        internal System.Windows.Forms.Label label4;
+        internal System.Windows.Forms.TextBox Rules;
+        internal System.Windows.Forms.PictureBox Advertencia;
+        internal System.Windows.Forms.Button DisconnectButton;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
@@ -1759,6 +1727,20 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem compileAsDebugToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem repositoriesToolStripMenuItem;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        internal System.Windows.Forms.ToolStripStatusLabel statusStripStatusLabel;
+        internal System.Windows.Forms.ToolStripProgressBar statusStripProgressBar;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.Button BrowseMPQPathButton;
+        internal System.Windows.Forms.TextBox MPQDestTextBox;
+        internal System.Windows.Forms.Label mpqDestinationDisableLabel;
+        private System.Windows.Forms.ToolStripMenuItem enableFileLoggingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem enablePacketLoggingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem enableTasksToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem enableLazyLoadingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem enableNoPasswordCheckToolStripMenuItem;
+        internal System.Windows.Forms.ComboBox repoComboBox;
 
     }
 }

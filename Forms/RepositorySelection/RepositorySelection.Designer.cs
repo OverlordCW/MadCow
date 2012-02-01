@@ -1,6 +1,6 @@
 ﻿namespace MadCow
 {
-    partial class RepositorySelection
+    internal partial class RepositorySelection
     {
         /// <summary>
         /// Required designer variable.
@@ -39,6 +39,9 @@
             this.closeButton = new System.Windows.Forms.Button();
             this.addButton = new System.Windows.Forms.Button();
             this.deleteButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.compileButton = new System.Windows.Forms.Button();
+            this.downloadButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,9 +51,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.listView1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(12, 36);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(544, 237);
+            this.groupBox1.Size = new System.Drawing.Size(544, 213);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Available Repositories";
@@ -68,10 +71,11 @@
             this.listView1.Location = new System.Drawing.Point(3, 16);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(538, 218);
+            this.listView1.Size = new System.Drawing.Size(538, 194);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             // 
             // repositoryColumnHeader
             // 
@@ -106,7 +110,7 @@
             this.closeButton.TabIndex = 3;
             this.closeButton.Text = "Close";
             this.closeButton.UseVisualStyleBackColor = true;
-            this.closeButton.Click += new System.EventHandler(this.closeButton_Click_1);
+            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
             // 
             // addButton
             // 
@@ -119,6 +123,7 @@
             // 
             // deleteButton
             // 
+            this.deleteButton.Enabled = false;
             this.deleteButton.Location = new System.Drawing.Point(96, 255);
             this.deleteButton.Name = "deleteButton";
             this.deleteButton.Size = new System.Drawing.Size(75, 23);
@@ -127,6 +132,36 @@
             this.deleteButton.UseVisualStyleBackColor = true;
             this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
             // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(279, 24);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Select a repository and then click Download and Compile.";
+            // 
+            // compileButton
+            // 
+            this.compileButton.Enabled = false;
+            this.compileButton.Location = new System.Drawing.Point(400, 255);
+            this.compileButton.Name = "compileButton";
+            this.compileButton.Size = new System.Drawing.Size(75, 23);
+            this.compileButton.TabIndex = 7;
+            this.compileButton.Text = "Compile";
+            this.compileButton.UseVisualStyleBackColor = true;
+            this.compileButton.Click += new System.EventHandler(this.compileButton_Click);
+            // 
+            // downloadButton
+            // 
+            this.downloadButton.Enabled = false;
+            this.downloadButton.Location = new System.Drawing.Point(319, 255);
+            this.downloadButton.Name = "downloadButton";
+            this.downloadButton.Size = new System.Drawing.Size(75, 23);
+            this.downloadButton.TabIndex = 8;
+            this.downloadButton.Text = "Download";
+            this.downloadButton.UseVisualStyleBackColor = true;
+            this.downloadButton.Click += new System.EventHandler(this.downloadButton_Click);
+            // 
             // RepositorySelection
             // 
             this.AcceptButton = this.closeButton;
@@ -134,6 +169,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.closeButton;
             this.ClientSize = new System.Drawing.Size(568, 290);
+            this.Controls.Add(this.downloadButton);
+            this.Controls.Add(this.compileButton);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.deleteButton);
             this.Controls.Add(this.addButton);
             this.Controls.Add(this.closeButton);
@@ -162,5 +200,8 @@
         private System.Windows.Forms.ColumnHeader selectedColumnHeader;
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.Button deleteButton;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button compileButton;
+        private System.Windows.Forms.Button downloadButton;
     }
 }

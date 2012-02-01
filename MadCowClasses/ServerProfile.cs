@@ -90,9 +90,7 @@ namespace MadCow
         /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
-// ReSharper disable AssignNullToNotNullAttribute
             return Path.GetFileNameWithoutExtension(_name);
-// ReSharper restore AssignNullToNotNullAttribute
         }
     }
 }

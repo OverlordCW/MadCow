@@ -19,7 +19,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Microsoft.Build.Evaluation;
 using Microsoft.Build.Logging;
 
@@ -75,13 +74,14 @@ namespace MadCow
 
         internal static void CompileSource()
         {
+            //var revisionParser = new RevisionParser()
             var libmoonetPath = Path.Combine(new[]
                                                  {
                                                      Program.programPath,
                                                      "Repositories",
-                                                     ParseRevision.DeveloperName + "-" +
-                                                     ParseRevision.BranchName + "-" +
-                                                     ParseRevision.LastRevision,
+                                                     //RevisionParser.DeveloperName + "-" +
+                                                     //RevisionParser.BranchName + "-" +
+                                                     //RevisionParser.LastRevision,
                                                      "src",
                                                      "LibMooNet",
                                                      "LibMooNet.csproj"
@@ -90,9 +90,9 @@ namespace MadCow
                                               {
                                                   Program.programPath,
                                                   "Repositories",
-                                                  ParseRevision.DeveloperName + "-" +
-                                                  ParseRevision.BranchName + "-" +
-                                                  ParseRevision.LastRevision,
+                                                  //RevisionParser.DeveloperName + "-" +
+                                                  //RevisionParser.BranchName + "-" +
+                                                  //RevisionParser.LastRevision,
                                                   "src",
                                                   "Mooege",
                                                   "Mooege-VS2010.csproj"
@@ -108,10 +108,7 @@ namespace MadCow
             else
             {
                 Console.WriteLine("Compiling Complete.");
-                if (Configuration.MadCow.TrayNotificationsEnabled)
-                {
-                    Form1.GlobalAccess.MadCowTrayIcon.ShowBalloonTip(1000, "MadCow", "Compiling Complete!", ToolTipIcon.Info);
-                }
+                Tray.ShowBalloonTip("Compiling Complete!");
             }
         }
 
@@ -135,10 +132,7 @@ namespace MadCow
             if (libMooNetStatus)
             {
                 Console.WriteLine("Compiling Mooege...");
-                if (Configuration.MadCow.TrayNotificationsEnabled)
-                {
-                    Form1.GlobalAccess.MadCowTrayIcon.ShowBalloonTip(1000, "MadCow", "Compiling Mooege......", ToolTipIcon.Info);
-                }
+                Tray.ShowBalloonTip("Compiling Mooege......");
                 var mooegeProject = new Project(mooegePath);
                 mooegeProject.SetProperty("Configuration", Configuration.MadCow.CompileAsDebug ? "Debug" : "Release");
                 mooegeProject.SetProperty("Platform", "AnyCPU");

@@ -18,10 +18,17 @@ using System;
 
 namespace MadCow
 {
-    class ParseRevision
+    internal class RevisionParser
     {
-        public static String RevisionUrl { get; set; }
-        public static String DeveloperName
+        internal RevisionParser(string url)
+        {
+            RevisionUrl = url;
+        }
+
+        #region Properties
+        internal string RevisionUrl { get; private set; }
+
+        internal string DeveloperName
         {
             get
             {
@@ -40,7 +47,7 @@ namespace MadCow
             }
         }
 
-        public static String BranchName
+        internal string BranchName
         {
             get
             {
@@ -52,7 +59,7 @@ namespace MadCow
             }
         }
 
-        public static String LastRevision
+        internal string LastRevision
         {
             get
             {
@@ -61,7 +68,13 @@ namespace MadCow
             }
         }
 
-        public static String CommitFile { get; set; }
+        internal static string CommitFile { get; set; } 
+        #endregion
+
+        internal string GetPath()
+        {
+            return string.Format("{0}-{1}-{2}", DeveloperName, BranchName, LastRevision);
+        }
     }
 }
 

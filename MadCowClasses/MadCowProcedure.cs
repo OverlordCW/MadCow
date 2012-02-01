@@ -63,20 +63,16 @@ namespace MadCow
                 //Thread.Sleep(2000); //<-This and ^this is needed for madcow to work on VM XP, you need to wait for Windows Explorer to refresh folders or compiling wont find the new mooege folder just uncompressed.
                 Console.WriteLine("Uncompress Complete.");
 
-                if (Configuration.MadCow.TrayNotificationsEnabled)
-                {
-                    Form1.GlobalAccess.MadCowTrayIcon.ShowBalloonTip(1000, "MadCow", "Uncompress Complete!", ToolTipIcon.Info);
-                }
-                Form1.GlobalAccess.Invoke((MethodInvoker)(() => Form1.GlobalAccess.generalProgressBar.PerformStep()));
+                Tray.ShowBalloonTip("Uncompress Complete!");
+
+                Form1.GlobalAccess.Invoke((MethodInvoker)(() => Form1.GlobalAccess.statusStripProgressBar.PerformStep()));
                 Compile.CompileSource(); //Compile solution projects.
-                Form1.GlobalAccess.Invoke((MethodInvoker)(() => Form1.GlobalAccess.generalProgressBar.PerformStep()));
-                Form1.GlobalAccess.Invoke((MethodInvoker)(() => Form1.GlobalAccess.generalProgressBar.PerformStep()));
+                Form1.GlobalAccess.Invoke((MethodInvoker)(() => Form1.GlobalAccess.statusStripProgressBar.PerformStep()));
+                Form1.GlobalAccess.Invoke((MethodInvoker)(() => Form1.GlobalAccess.statusStripProgressBar.PerformStep()));
                 Console.WriteLine("[Process Complete!]");
 
-                if (Configuration.MadCow.TrayNotificationsEnabled)
-                {
-                    Form1.GlobalAccess.MadCowTrayIcon.ShowBalloonTip(1000, "MadCow", "Process Complete!", ToolTipIcon.Info);
-                }
+                Tray.ShowBalloonTip("Process Complete!");
+
             });
         }
         #endregion
