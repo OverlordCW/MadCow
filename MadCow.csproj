@@ -128,6 +128,7 @@
     </Compile>
     <Compile Include="MadCowClasses\Configuration.cs" />
     <Compile Include="MadCowClasses\Irc.cs" />
+    <Compile Include="MadCowClasses\Paths.cs" />
     <Compile Include="MadCowClasses\Proxy.cs" />
     <Compile Include="MadCowClasses\Repository.cs" />
     <Compile Include="MadCowClasses\ServerProfile.cs" />

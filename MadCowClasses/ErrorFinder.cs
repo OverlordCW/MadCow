@@ -27,7 +27,7 @@ namespace MadCow
         //change searchText to FATAL
         public static Boolean SearchLogs(String searchText)
         {
-            using (var fileStream = new FileStream(Path.Combine(Program.programPath, "logs", "mooege.log"), FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var fileStream = new FileStream(Path.Combine(Environment.CurrentDirectory, "logs", "mooege.log"), FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 using (TextReader reader = new StreamReader(fileStream))
                 {

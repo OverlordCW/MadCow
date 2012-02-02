@@ -5,7 +5,7 @@ using Nini.Config;
 
 namespace MadCow
 {
-    public static class Configuration
+    internal static class Configuration
     {
         #region Fields
         private static readonly IniConfigSource Source;
@@ -15,11 +15,11 @@ namespace MadCow
 
         static Configuration()
         {
-            if (!File.Exists(Program.madcowINI))
+            if (!File.Exists(Paths.MadcowIni))
             {
-                File.Create(Program.madcowINI);
+                File.Create(Paths.MadcowIni);
             }
-            Source = new IniConfigSource(Program.madcowINI) { AutoSave = true };
+            Source = new IniConfigSource(Paths.MadcowIni) { AutoSave = true };
             MadCowConfig = Source.Configs["MadCow"];
             MooegeConfig = Source.Configs["Mooege"];
 
@@ -87,13 +87,13 @@ namespace MadCow
 
             internal static string MpqServer
             {
-                get { return MadCowConfig.Get("MpqServer", Path.Combine(Program.programPath, "MPQ")); }
+                get { return MadCowConfig.Get("MpqServer", Path.Combine(Environment.CurrentDirectory, "MPQ")); }
                 set { MadCowConfig.Set("MpqServer", value); }
             }
 
             internal static ServerProfile CurrentProfile
             {
-                get { return new ServerProfile(MadCowConfig.Get("Profile", Path.Combine(Program.programPath, "ServerProfiles", "Default.mdc"))); }
+                get { return new ServerProfile(MadCowConfig.Get("Profile", Path.Combine(Environment.CurrentDirectory, "ServerProfiles", "Default.mdc"))); }
                 set { MadCowConfig.Set("Profile", value); }
             }
         }
@@ -136,10 +136,47 @@ namespace MadCow
         #endregion
 
         #region Methods
-        public static void Save()
+
+        internal static void Save()
         {
             Source.Save();
         }
+
+        internal static void UpdateMooegeIni(Repository repository)
+        {
+            var repoIniPath = new IniConfigSource(Paths.GetMooegeIniPath(repository));
+            //For each selection we set the correct MPQ storage path & PacketLog|ServerLog settings on the config INI, this is the best way I could think to have the paths updated at everytime
+            //We CANNOT call variable Compile.mooegeINI because that variable only saves latest compiled ini path for INSTANT writting after compiling a repository.
+            //WE do not need to write different IPS / PORTS for this since its LOCAL function, We do that over RepositorySelectionSERVER.
+            #region SetSettings
+            repoIniPath.Configs["Storage"].Set("MPQRoot", MadCow.MpqServer);
+            repoIniPath.Configs["ServerLog"].Set("Enabled", Mooege.FileLogging);
+            repoIniPath.Configs["PacketLog"].Set("Enabled", Mooege.PacketLogging);
+            repoIniPath.Configs["Storage"].Set("EnableTasks", Mooege.Tasks);
+            repoIniPath.Configs["Storage"].Set("LazyLoading", Mooege.LazyLoading);
+            repoIniPath.Configs["Authentication"].Set("DisablePasswordChecks", Mooege.PasswordCheck);
+            //We set the server variables:
+            //MooNet-Server IP
+            repoIniPath.Configs["MooNet-Server"].Set("BindIP", MadCow.CurrentProfile.MooNetServerIp);
+            //Game-Server IP
+            repoIniPath.Configs["Game-Server"].Set("BindIP", MadCow.CurrentProfile.GameServerIp);
+            //Public IP
+            repoIniPath.Configs["NAT"].Set("PublicIP", MadCow.CurrentProfile.NatIp);
+            //MooNet-Server Port
+            repoIniPath.Configs["MooNet-Server"].Set("Port", MadCow.CurrentProfile.MooNetServerPort);
+            //Game-Server Port
+            repoIniPath.Configs["Game-Server"].Set("Port", MadCow.CurrentProfile.GameServerPort);
+            //MOTD
+            repoIniPath.Configs["MooNet-Server"].Set("MOTD", MadCow.CurrentProfile.MooNetServerMotd);
+            //NAT
+            repoIniPath.Configs["NAT"].Set("Enabled", MadCow.CurrentProfile.NatEnabled);
+            repoIniPath.Save();
+            #endregion
+            Console.WriteLine("Current Profile: " + MadCow.CurrentProfile);
+            Console.WriteLine("Set Mooege config.ini according to your profile " + MadCow.CurrentProfile);
+            Console.WriteLine(repository + " is ready to go.");
+        }
+
         #endregion
     }
 }

@@ -14,6 +14,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Forms;
 
@@ -21,6 +22,8 @@ namespace MadCow
 {
     internal partial class RepositorySelection : Form
     {
+        private Repository _selectedRepository;
+
         internal RepositorySelection()
         {
             InitializeComponent();
@@ -30,19 +33,21 @@ namespace MadCow
         internal void RefreshAvailableRepositories() //Adds available repos to the list.
         {
             listView1.Items.Clear();
-            foreach (var repository in Compile.Repositories)
+            foreach (var repository in Repository.Repositories)
             {
-                var item = new ListViewItem(repository.Url);
+                var item = new ListViewItem(repository.Url.AbsoluteUri);
                 item.SubItems.AddRange(new[]
                                            {
                                                repository.Branch,
-                                               string.IsNullOrEmpty(repository.Revision)
+                                               string.IsNullOrEmpty(repository.LocalRevision)
                                                    ? " "
-                                                   : repository.Revision,
-                                               string.IsNullOrEmpty(repository.RepositoryPath)
-                                                   ? "Never"
-                                                   : repository.Date.ToShortDateString(),
-                                               repository.IsSelected.ToString(CultureInfo.InvariantCulture)
+                                                   : repository.LocalRevision,
+                                                   string.IsNullOrEmpty(repository.LastRevision)
+                                                   ? " "
+                                                   : repository.LastRevision,
+                                               repository.IsDownloaded
+                                                   ? repository.Date.ToShortDateString()
+                                                   : "Never"
                                            });
                 listView1.Items.Add(item);
             }
@@ -62,9 +67,9 @@ namespace MadCow
                                                "Confirmation",
                                                MessageBoxButtons.YesNo,
                                                MessageBoxIcon.Question);
-            if(dialogResult == DialogResult.Yes)
+            if (dialogResult == DialogResult.Yes)
             {
-                Compile.Repositories[listView1.SelectedIndices[0]].Delete();
+                Repository.Repositories[listView1.SelectedIndices[0]].Delete();
             }
             listView1.Items.Remove(listView1.SelectedItems[0]);
             RefreshAvailableRepositories();
@@ -72,34 +77,40 @@ namespace MadCow
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            downloadButton.Enabled = listView1.SelectedIndices.Count > 0;
-            compileButton.Enabled = listView1.SelectedIndices.Count > 0 &&
-                                    Compile.Repositories[listView1.SelectedIndices[0]].IsDownloaded;
+            updateButton.Enabled = listView1.SelectedIndices.Count > 0;
             deleteButton.Enabled = listView1.SelectedIndices.Count > 0 &&
-                                   Compile.Repositories[listView1.SelectedIndices[0]].IsDownloaded;
+                                   Repository.Repositories[listView1.SelectedIndices[0]].IsDownloaded;
         }
 
-        private void downloadButton_Click(object sender, EventArgs e)
+        private void UpdateButton_Click(object sender, EventArgs e)
         {
-            if(Compile.Repositories[listView1.SelectedIndices[0]].Download())
-            {
-                RefreshAvailableRepositories();
-            }
-            else
-            {
-                MessageBox.Show("Something went wrong!");
-            }
+            Enabled = false;
+            //listView1.Enabled = false;
+            //updateButton.Enabled = false;
+            _selectedRepository = Repository.Repositories[listView1.SelectedIndices[0]];
+            _selectedRepository.RunWorkerCompleted += Download_RunWorkerCompleted;
+            _selectedRepository.Update();
         }
 
-        private void compileButton_Click(object sender, EventArgs e)
+        private void Download_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (Compile.Repositories[listView1.SelectedIndices[0]].Compile())
+            Form1.GlobalAccess.statusStripProgressBar.Value = 0;
+            Form1.GlobalAccess.statusStripProgressBar.Visible = false;
+            Console.WriteLine("Update Complete!");
+            Tray.ShowBalloonTip("Update Complete!");
+            Form1.GlobalAccess.statusStripStatusLabel.Text = "Update Complete!";
+            _selectedRepository.RunWorkerCompleted -= Download_RunWorkerCompleted;
+            RefreshAvailableRepositories();
+            Enabled = true;
+            //updateButton.Enabled = true;
+            //listView1.Enabled = true;
+        }
+
+        private void checkUpdatesButton_Click(object sender, EventArgs e)
+        {
+            foreach (var repository in Repository.Repositories)
             {
-                RefreshAvailableRepositories();
-            }
-            else
-            {
-                MessageBox.Show("Something went wrong!");
+                repository.UpdateRevision();
             }
         }
 

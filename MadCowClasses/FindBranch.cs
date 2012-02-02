@@ -39,14 +39,14 @@ namespace MadCow
             WebClient client = new WebClient();
             if (Proxy.proxyStatus)
                 client.Proxy = proxy;
-            client.DownloadFile(new Uri(Url + "/branches"), Program.programPath + @"\RuntimeDownloads\Branch.txt");
+            client.DownloadFile(new Uri(Url + "/branches"), Environment.CurrentDirectory + @"\RuntimeDownloads\Branch.txt");
             searchBranch();
         }
         public static void searchBranch()
         {
             Form1.GlobalAccess.BranchComboBox.Items.Clear();
             Form1.GlobalAccess.BranchComboBox.Items.Add("master");
-            using (FileStream fileStream = new FileStream(Program.programPath + @"\RuntimeDownloads\Branch.txt", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (FileStream fileStream = new FileStream(Environment.CurrentDirectory + @"\RuntimeDownloads\Branch.txt", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 using (TextReader reader = new StreamReader(fileStream))
                 {

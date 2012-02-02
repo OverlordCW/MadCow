@@ -29,7 +29,7 @@ namespace MadCow
         {
             get 
             {
-                IConfigSource source = new IniConfigSource(Program.madcowINI);
+                IConfigSource source = new IniConfigSource(Paths.MadcowIni);
                 return source.Configs["Proxy"].Get("Username");
             }
         }
@@ -38,7 +38,7 @@ namespace MadCow
         {
             get
             {
-                IConfigSource source = new IniConfigSource(Program.madcowINI);
+                IConfigSource source = new IniConfigSource(Paths.MadcowIni);
                 return source.Configs["Proxy"].Get("Password");
             }
         }
@@ -47,7 +47,7 @@ namespace MadCow
         {
             get
             {
-                IConfigSource source = new IniConfigSource(Program.madcowINI);
+                IConfigSource source = new IniConfigSource(Paths.MadcowIni);
                 return source.Configs["Proxy"].Get("ProxyUrl");
             }
         }
@@ -56,7 +56,7 @@ namespace MadCow
         {
             get
             {
-                IConfigSource source = new IniConfigSource(Program.madcowINI);
+                IConfigSource source = new IniConfigSource(Paths.MadcowIni);
                 var _status = source.Configs["Proxy"].Get("Enabled");
                 if (_status == "1")
                     return true;

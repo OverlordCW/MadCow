@@ -102,14 +102,14 @@ namespace MadCow
             }
             rdr.Close();
 
-            System.IO.File.WriteAllText(Program.programPath + "\\RuntimeDownloads\\Diablo III.mfil", wc.DownloadString(mfil));
+            System.IO.File.WriteAllText(Environment.CurrentDirectory + "\\RuntimeDownloads\\Diablo III.mfil", wc.DownloadString(mfil));
             parseFiles();
         }
 
         public static List<String> mpqList = new List<String>();
         public static void parseFiles()
         {
-            using (FileStream fileStream = new FileStream(Program.programPath + @"\RuntimeDownloads\Diablo III.mfil", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (FileStream fileStream = new FileStream(Environment.CurrentDirectory + @"\RuntimeDownloads\Diablo III.mfil", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 using (TextReader reader = new StreamReader(fileStream))
                 {

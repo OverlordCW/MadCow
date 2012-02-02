@@ -28,14 +28,15 @@ namespace MadCow
             try
             {
                 var src = Configuration.MadCow.DiabloPath;
-
+                Configuration.UpdateMooegeIni(repository);
                 if (ProcessFinder.FindProcess("Mooege") == false)
                 {
-                    if (File.Exists(Compile.CurrentMooegeExePath))
+                    if (File.Exists(Paths.GetMooegeExePath(repository)))
                     {
+
                         Console.WriteLine("Starting Mooege..");
                         var mooege = new Process();
-                        mooege.StartInfo = new ProcessStartInfo(Compile.CurrentMooegeExePath);
+                        mooege.StartInfo = new ProcessStartInfo(Paths.GetMooegeExePath(repository));
                         mooege.Start();
                         Thread.Sleep(3000); //We sleep so our ErrorFinder has time to parse Mooege logs.
                         if (ErrorFinder.SearchLogs("Fatal"))
@@ -51,7 +52,7 @@ namespace MadCow
                             Diablo3.StartInfo.Arguments = " -launch -auroraaddress localhost:1345";
                             Diablo3.Start();
                             //We save this repository for LastPlayed function.
-                            Configuration.MadCow.LastRepository = Compile.CurrentMooegeExePath;
+                            Configuration.MadCow.LastRepository = Paths.GetMooegeExePath(repository);
                         }
                     }
                     else
@@ -66,7 +67,7 @@ namespace MadCow
                     ProcessFinder.KillProcess("Mooege");
                     Console.WriteLine("Starting Mooege..");
                     var mooege = new Process();
-                    mooege.StartInfo = new ProcessStartInfo(Compile.CurrentMooegeExePath);
+                    mooege.StartInfo = new ProcessStartInfo(Paths.GetMooegeExePath(repository));
                     mooege.Start();
                     Thread.Sleep(3000);
                     if (ErrorFinder.SearchLogs("Fatal"))
@@ -90,5 +91,7 @@ namespace MadCow
                                   "\nPlease report this error in the forum.");
             }
         }
+
+
     }
 }

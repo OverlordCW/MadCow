@@ -18,7 +18,7 @@ namespace MadCow
             if (!name.EndsWith(".mdc")) name += ".mdc";
             _name = name;
 
-            var path = Path.Combine(Program.programPath, "ServerProfiles", name);
+            var path = Path.Combine("ServerProfiles", name);
             if(!File.Exists(path))
             {
                 File.WriteAllLines(path, new[]

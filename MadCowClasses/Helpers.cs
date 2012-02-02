@@ -155,23 +155,24 @@ namespace MadCow
         //Create default need folders.
         public static void DefaultFolderCreator()
         {
-            if (Directory.Exists(Program.programPath + @"\MPQ\base") == false)
+            var programPath = Environment.CurrentDirectory;
+            if (Directory.Exists(programPath + @"\MPQ\base") == false)
             {
-                Directory.CreateDirectory(Program.programPath + @"\MPQ\base");
+                Directory.CreateDirectory(programPath + @"\MPQ\base");
             }
-            if (Directory.Exists(Program.programPath + @"\Repositories") == false)
+            if (Directory.Exists(programPath + @"\Repositories") == false)
             {
-                Directory.CreateDirectory(Program.programPath + @"\Repositories");
+                Directory.CreateDirectory(programPath + @"\Repositories");
             }
-            if (Directory.Exists(Program.programPath + @"\RuntimeDownloads") == false)
+            if (Directory.Exists(programPath + @"\RuntimeDownloads") == false)
             {
-                Directory.CreateDirectory(Program.programPath + @"\RuntimeDownloads");
+                Directory.CreateDirectory(programPath + @"\RuntimeDownloads");
             }
             //Apart from creating ServerProfiles folder, we write the Defualt profile.
-            if (Directory.Exists(Program.programPath + @"\ServerProfiles") == false)
+            if (Directory.Exists(programPath + @"\ServerProfiles") == false)
             {
-                Directory.CreateDirectory(Program.programPath + @"\ServerProfiles");
-                TextWriter tw = new StreamWriter(Program.programPath + @"\ServerProfiles\Default.mdc");
+                Directory.CreateDirectory(programPath + @"\ServerProfiles");
+                TextWriter tw = new StreamWriter(programPath + @"\ServerProfiles\Default.mdc");
                 //tw.WriteLine("Bnet Server Ip");
                 tw.WriteLine("0.0.0.0");
                 //tw.WriteLine("Game Server Ip");

@@ -15,65 +15,43 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 using System;
+using System.IO;
+using System.Linq;
 
 namespace MadCow
 {
     internal class RevisionParser
     {
-        internal RevisionParser(string url)
+        internal RevisionParser(Uri url)
         {
             RevisionUrl = url;
         }
 
         #region Properties
-        internal string RevisionUrl { get; private set; }
+        internal Uri RevisionUrl { get; private set; }
 
-        internal string DeveloperName
-        {
-            get
-            {
-                try
-                {
-                    var firstPointer = RevisionUrl.IndexOf(".com/", StringComparison.Ordinal);
-                    var lastPointer = RevisionUrl.LastIndexOf("/", StringComparison.Ordinal);
-                    var betweenPointers = lastPointer - firstPointer;
-                    return RevisionUrl.Substring(firstPointer + 5, betweenPointers - 5);
-                }
-                catch (Exception)
-                {
-                    CommitFile = "Incorrect repository entry";
-                }
-                return null;
-            }
-        }
+        internal string DeveloperName { get { return RevisionUrl.AbsolutePath.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries)[0]; } }
 
-        internal string BranchName
-        {
-            get
-            {
-                var lastPointer = RevisionUrl.Length;
-                var firstPointer = RevisionUrl.IndexOf(DeveloperName, StringComparison.Ordinal);
-                var developerNameLength = DeveloperName.Length;
-                var branchNameLength = lastPointer - (firstPointer + developerNameLength) - 1; //+1 or -1 are to get rid of "/".
-                return RevisionUrl.Substring(firstPointer + developerNameLength + 1, branchNameLength);
-            }
-        }
+        internal string ForkName { get { return RevisionUrl.AbsolutePath.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries)[1]; } }
 
         internal string LastRevision
         {
             get
             {
-                var pos2 = CommitFile.IndexOf("Commit/", StringComparison.Ordinal);
-                return CommitFile.Substring(pos2 + 7, 7);
+                return string.IsNullOrEmpty(CommitFile)
+                           ? null
+                           : CommitFile.Substring(CommitFile.IndexOf("Commit/", StringComparison.Ordinal) + 7, 7);
             }
         }
 
-        internal static string CommitFile { get; set; } 
+        internal string CommitFile { get; set; }
         #endregion
 
         internal string GetPath()
         {
-            return string.Format("{0}-{1}-{2}", DeveloperName, BranchName, LastRevision);
+            return string.IsNullOrEmpty(LastRevision)
+                       ? null
+                       : string.Format("{0}-{1}-{2}", DeveloperName, ForkName, LastRevision);
         }
     }
 }

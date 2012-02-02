@@ -24,17 +24,18 @@ namespace MadCow
     {
         public static void Delete(int selection)
         {
+            var programPath = Environment.CurrentDirectory;
             switch (selection)
             {
                 case 0:
                     // Delelete/Recreate Logs Folder
-                    if (Directory.Exists(Program.programPath + @"/logs"))
+                    if (Directory.Exists(programPath + @"/logs"))
                     {
                         try
                         {
-                            Directory.Delete(Program.programPath + @"/logs", true);
+                            Directory.Delete(programPath + @"/logs", true);
                             Console.WriteLine("Deleted Logs Folder");
-                            Directory.CreateDirectory(Program.programPath + @"/logs");
+                            Directory.CreateDirectory(programPath + @"/logs");
                         }
                         catch
                         {
@@ -45,11 +46,11 @@ namespace MadCow
                     break;
 
                 case 1: //Delete \Repositories\ subfolders.
-                    if (Directory.Exists(Program.programPath + @"/Repositories"))
+                    if (Directory.Exists(programPath + @"/Repositories"))
                     {
                         try
                         {
-                            var foldersArray = Directory.GetDirectories(Path.Combine(Program.programPath, "Repositories"));
+                            var foldersArray = Directory.GetDirectories(Path.Combine(programPath, "Repositories"));
                             if (foldersArray.Length > 0)
                             {
                                 Console.WriteLine("Deleting Saved Repositories...");
@@ -90,12 +91,13 @@ namespace MadCow
 
         public static void DeleteOldRepoVersion(string developerName)
         {
-            if (Directory.Exists(Path.Combine(Program.programPath, "Repositories")))
+            var programPath = Environment.CurrentDirectory;
+            if (Directory.Exists(Path.Combine(programPath, "Repositories")))
             {
                 try
                 {
                     Console.WriteLine("Looking for [{0}] existing repository.", developerName);
-                    var directoryString = Path.Combine(Program.programPath, "Repositories");
+                    var directoryString = Path.Combine(programPath, "Repositories");
                     var i = directoryString.LastIndexOf('\\');
                     directoryString = directoryString.Remove(i, directoryString.Length - i);
                     var directories = Directory.GetDirectories(directoryString);

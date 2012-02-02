@@ -32,7 +32,7 @@ namespace MadCow
 
             MyShortcut = (IWshRuntimeLibrary.IWshShortcut)WshShell.CreateShortcut(@Environment.GetEnvironmentVariable("USERPROFILE") + "\\Desktop\\MadCow.lnk");
             MyShortcut.TargetPath = Application.ExecutablePath;
-            MyShortcut.WorkingDirectory = Program.programPath;
+            MyShortcut.WorkingDirectory = Environment.CurrentDirectory;
             MyShortcut.Description = "MadCow";
             MyShortcut.Save();
 

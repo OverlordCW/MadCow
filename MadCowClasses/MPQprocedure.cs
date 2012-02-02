@@ -31,7 +31,7 @@ namespace MadCow
         public static void MpqTransfer()
         {
             //Takes Diablo Path from Ini, which gets it from finding diablo3.exe 
-            if (File.Exists(Program.madcowINI))
+            if (File.Exists(Paths.MadcowIni))
             {
                 var src = Configuration.MadCow.MpqDiablo;
                 var dst = Configuration.MadCow.MpqServer;

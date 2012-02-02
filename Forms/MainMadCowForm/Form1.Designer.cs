@@ -77,8 +77,6 @@
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.BrowseMPQPathButton = new System.Windows.Forms.Button();
             this.MPQDestTextBox = new System.Windows.Forms.TextBox();
-            this.mpqDestinationDisableLabel = new System.Windows.Forms.Label();
-            this.LastPlayedRepoReminderLabel = new System.Windows.Forms.Label();
             this.AutoUpdateTimerLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.BranchSelectionLabel = new System.Windows.Forms.Label();
@@ -88,7 +86,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.RepositoryHintLabel = new System.Windows.Forms.Label();
             this.FindDiabloButton = new System.Windows.Forms.Button();
-            this.ValidateRepoButton = new System.Windows.Forms.Button();
             this.Diablo3UserPathSelection = new System.Windows.Forms.TextBox();
             this.UpdateMooegeButton = new System.Windows.Forms.Button();
             this.CopyMPQButton = new System.Windows.Forms.Button();
@@ -241,6 +238,7 @@
             // 
             // LaunchServerButton
             // 
+            this.LaunchServerButton.Enabled = false;
             this.LaunchServerButton.Location = new System.Drawing.Point(6, 279);
             this.LaunchServerButton.Name = "LaunchServerButton";
             this.LaunchServerButton.Size = new System.Drawing.Size(327, 43);
@@ -658,13 +656,11 @@
             // 
             this.UpdatesTab.BackColor = System.Drawing.Color.White;
             this.UpdatesTab.Controls.Add(this.groupBox8);
-            this.UpdatesTab.Controls.Add(this.LastPlayedRepoReminderLabel);
             this.UpdatesTab.Controls.Add(this.AutoUpdateTimerLabel);
             this.UpdatesTab.Controls.Add(this.groupBox1);
             this.UpdatesTab.Controls.Add(this.FindDiabloButton);
             this.UpdatesTab.Controls.Add(this.PlayDiabloButton);
             this.UpdatesTab.Controls.Add(this.groupBox2);
-            this.UpdatesTab.Controls.Add(this.ValidateRepoButton);
             this.UpdatesTab.Controls.Add(this.Diablo3UserPathSelection);
             this.UpdatesTab.Controls.Add(this.UpdateMooegeButton);
             this.UpdatesTab.Controls.Add(this.CopyMPQButton);
@@ -682,7 +678,6 @@
             // 
             this.groupBox8.Controls.Add(this.BrowseMPQPathButton);
             this.groupBox8.Controls.Add(this.MPQDestTextBox);
-            this.groupBox8.Controls.Add(this.mpqDestinationDisableLabel);
             this.groupBox8.Location = new System.Drawing.Point(6, 80);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(333, 54);
@@ -707,31 +702,6 @@
             this.MPQDestTextBox.ReadOnly = true;
             this.MPQDestTextBox.Size = new System.Drawing.Size(291, 20);
             this.MPQDestTextBox.TabIndex = 0;
-            // 
-            // mpqDestinationDisableLabel
-            // 
-            this.mpqDestinationDisableLabel.AutoSize = true;
-            this.mpqDestinationDisableLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mpqDestinationDisableLabel.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.mpqDestinationDisableLabel.Location = new System.Drawing.Point(15, 38);
-            this.mpqDestinationDisableLabel.Name = "mpqDestinationDisableLabel";
-            this.mpqDestinationDisableLabel.Size = new System.Drawing.Size(301, 13);
-            this.mpqDestinationDisableLabel.TabIndex = 20;
-            this.mpqDestinationDisableLabel.Text = "Disable \"Remember Last Repository\" to enable this.";
-            this.ToolTips.SetToolTip(this.mpqDestinationDisableLabel, "Help Tab -> Remember Last Repository");
-            this.mpqDestinationDisableLabel.Visible = false;
-            // 
-            // LastPlayedRepoReminderLabel
-            // 
-            this.LastPlayedRepoReminderLabel.AutoSize = true;
-            this.LastPlayedRepoReminderLabel.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.LastPlayedRepoReminderLabel.Location = new System.Drawing.Point(4, 270);
-            this.LastPlayedRepoReminderLabel.Name = "LastPlayedRepoReminderLabel";
-            this.LastPlayedRepoReminderLabel.Size = new System.Drawing.Size(335, 13);
-            this.LastPlayedRepoReminderLabel.TabIndex = 19;
-            this.LastPlayedRepoReminderLabel.Text = "Disable \"Remember Last Repository\" to view repo selection list again.";
-            this.ToolTips.SetToolTip(this.LastPlayedRepoReminderLabel, "Help Tab -> Remember Last Repository");
-            this.LastPlayedRepoReminderLabel.Visible = false;
             // 
             // AutoUpdateTimerLabel
             // 
@@ -787,7 +757,7 @@
             this.repoComboBox.Name = "repoComboBox";
             this.repoComboBox.Size = new System.Drawing.Size(201, 21);
             this.repoComboBox.TabIndex = 17;
-            this.repoComboBox.TextChanged += new System.EventHandler(this.repoComboBox_TextChanged);
+            this.repoComboBox.SelectedIndexChanged += new System.EventHandler(this.repoComboBox_SelectedIndexChanged);
             this.repoComboBox.Click += new System.EventHandler(this.repoComboBox_Click);
             // 
             // pictureBox2
@@ -818,9 +788,9 @@
             this.RepositoryHintLabel.ForeColor = System.Drawing.SystemColors.AppWorkspace;
             this.RepositoryHintLabel.Location = new System.Drawing.Point(5, 42);
             this.RepositoryHintLabel.Name = "RepositoryHintLabel";
-            this.RepositoryHintLabel.Size = new System.Drawing.Size(199, 13);
+            this.RepositoryHintLabel.Size = new System.Drawing.Size(205, 13);
             this.RepositoryHintLabel.TabIndex = 13;
-            this.RepositoryHintLabel.Text = "e.g https://github.com/mooege/mooege";
+            this.RepositoryHintLabel.Text = "Download more with the button at the top.";
             this.RepositoryHintLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // FindDiabloButton
@@ -833,16 +803,6 @@
             this.FindDiabloButton.UseVisualStyleBackColor = true;
             this.FindDiabloButton.Click += new System.EventHandler(this.FindDiablo_Click);
             // 
-            // ValidateRepoButton
-            // 
-            this.ValidateRepoButton.Location = new System.Drawing.Point(9, 221);
-            this.ValidateRepoButton.Name = "ValidateRepoButton";
-            this.ValidateRepoButton.Size = new System.Drawing.Size(94, 44);
-            this.ValidateRepoButton.TabIndex = 0;
-            this.ValidateRepoButton.Text = "Validate Repository";
-            this.ValidateRepoButton.UseVisualStyleBackColor = true;
-            this.ValidateRepoButton.Click += new System.EventHandler(this.Validate_Repository_Click);
-            // 
             // Diablo3UserPathSelection
             // 
             this.Diablo3UserPathSelection.Location = new System.Drawing.Point(9, 184);
@@ -854,7 +814,7 @@
             // UpdateMooegeButton
             // 
             this.UpdateMooegeButton.Enabled = false;
-            this.UpdateMooegeButton.Location = new System.Drawing.Point(123, 221);
+            this.UpdateMooegeButton.Location = new System.Drawing.Point(42, 221);
             this.UpdateMooegeButton.Name = "UpdateMooegeButton";
             this.UpdateMooegeButton.Size = new System.Drawing.Size(100, 44);
             this.UpdateMooegeButton.TabIndex = 17;
@@ -865,7 +825,7 @@
             // CopyMPQButton
             // 
             this.CopyMPQButton.Enabled = false;
-            this.CopyMPQButton.Location = new System.Drawing.Point(245, 221);
+            this.CopyMPQButton.Location = new System.Drawing.Point(191, 221);
             this.CopyMPQButton.Name = "CopyMPQButton";
             this.CopyMPQButton.Size = new System.Drawing.Size(93, 44);
             this.CopyMPQButton.TabIndex = 18;
@@ -1527,21 +1487,23 @@
             this.statusStrip1.Location = new System.Drawing.Point(0, 393);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(736, 22);
+            this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 20;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // statusStripStatusLabel
             // 
             this.statusStripStatusLabel.Name = "statusStripStatusLabel";
-            this.statusStripStatusLabel.Size = new System.Drawing.Size(619, 17);
+            this.statusStripStatusLabel.Size = new System.Drawing.Size(721, 17);
             this.statusStripStatusLabel.Spring = true;
-            this.statusStripStatusLabel.Text = "Ready..";
+            this.statusStripStatusLabel.Text = "Ready";
             this.statusStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // statusStripProgressBar
             // 
             this.statusStripProgressBar.Name = "statusStripProgressBar";
             this.statusStripProgressBar.Size = new System.Drawing.Size(100, 16);
+            this.statusStripProgressBar.Visible = false;
             // 
             // Form1
             // 
@@ -1642,7 +1604,6 @@
         private System.Windows.Forms.TabPage HelpTab;
         private System.Windows.Forms.Button FindDiabloButton;
         private System.Windows.Forms.TextBox Diablo3UserPathSelection;
-        private System.Windows.Forms.Button ValidateRepoButton;
         private System.Windows.Forms.OpenFileDialog DiabloPathFileDialog;
         private System.Windows.Forms.Label RepositoryHintLabel;
         private System.Windows.Forms.PictureBox pictureBox1;
@@ -1691,7 +1652,6 @@
         internal System.Windows.Forms.ComboBox BranchComboBox;
         internal System.ComponentModel.BackgroundWorker DownloadSelectedMpqs;
         private System.Windows.Forms.Label BranchSelectionLabel;
-        internal System.Windows.Forms.Label LastPlayedRepoReminderLabel;
         internal System.Windows.Forms.TabControl Tabs;
         private System.Windows.Forms.TabPage UpdatesTab;
         private System.Windows.Forms.Button UpdateMadcowButton;
@@ -1734,7 +1694,6 @@
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.Button BrowseMPQPathButton;
         internal System.Windows.Forms.TextBox MPQDestTextBox;
-        internal System.Windows.Forms.Label mpqDestinationDisableLabel;
         private System.Windows.Forms.ToolStripMenuItem enableFileLoggingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enablePacketLoggingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enableTasksToolStripMenuItem;

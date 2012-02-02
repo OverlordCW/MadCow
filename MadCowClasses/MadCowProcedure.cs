@@ -22,11 +22,11 @@ using ICSharpCode.SharpZipLib.Zip;
 
 namespace MadCow
 {
-    class MadCowProcedure
+    internal static class MadCowProcedure
     {
         //This is actually the whole process MadCow uses after Downloading source.
         #region RunProcedure
-        public static void RunWholeProcedure()
+        public static void RunWholeProcedure(string repositoryPath)
         {
             //Compile.CurrentMooegeFolderPath =
             //       Path.Combine(new[]
@@ -49,7 +49,8 @@ namespace MadCow
 
             var z = new FastZip(events);
             Console.WriteLine("Uncompressing zip file...");
-            var targetDirectory = Path.Combine(Program.programPath, "Repositories");
+            Form1.GlobalAccess.statusStripStatusLabel.Text = "Uncompressing zip file...";
+            var targetDirectory = Path.Combine(Environment.CurrentDirectory, "Repositories");
             var zipFileName = Path.Combine(targetDirectory, "Mooege.zip");
             var stream = new FileStream(zipFileName, FileMode.Open, FileAccess.Read);
             var zip = new ZipFile(stream) { IsStreamOwner = true };
@@ -64,15 +65,15 @@ namespace MadCow
                 Console.WriteLine("Uncompress Complete.");
 
                 Tray.ShowBalloonTip("Uncompress Complete!");
+                Form1.GlobalAccess.Invoke((MethodInvoker)(() => Form1.GlobalAccess.statusStripStatusLabel.Text = "Uncompress Complete."));
 
                 Form1.GlobalAccess.Invoke((MethodInvoker)(() => Form1.GlobalAccess.statusStripProgressBar.PerformStep()));
-                Compile.CompileSource(); //Compile solution projects.
+                Compile.CompileSource(repositoryPath); //Compile solution projects.
                 Form1.GlobalAccess.Invoke((MethodInvoker)(() => Form1.GlobalAccess.statusStripProgressBar.PerformStep()));
                 Form1.GlobalAccess.Invoke((MethodInvoker)(() => Form1.GlobalAccess.statusStripProgressBar.PerformStep()));
-                Console.WriteLine("[Process Complete!]");
-
-                Tray.ShowBalloonTip("Process Complete!");
-
+                Console.WriteLine("[Update Complete!]");
+                Form1.GlobalAccess.Invoke((MethodInvoker)(() => Form1.GlobalAccess.statusStripStatusLabel.Text = "Update Complete."));
+                Tray.ShowBalloonTip("Update Complete!");
             });
         }
         #endregion
