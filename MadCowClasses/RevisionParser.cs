@@ -28,7 +28,7 @@ namespace MadCow
         }
 
         #region Properties
-        internal Uri RevisionUrl { get; private set; }
+        internal Uri RevisionUrl { get; set; }
 
         internal string DeveloperName { get { return RevisionUrl.AbsolutePath.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries)[0]; } }
 

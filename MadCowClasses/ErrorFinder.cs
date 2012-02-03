@@ -95,7 +95,7 @@ namespace MadCow
             }
         }
 
-        public static Boolean hasMpqs()
+        public static bool HasMpqs()
         {
             //Here we compare onle base mpqs from Diablo Client & our destinations MPQ Path.
             try
@@ -104,7 +104,7 @@ namespace MadCow
                 var files2 = Directory.GetFiles(destination, "*.mpq", SearchOption.TopDirectoryOnly);
 
                 //-1 For people using previous supported version.
-                return files2.Length >= RetrieveMpqList.mpqList.Count - 1;
+                return files2.Length >= RetrieveMpqList.MpqList.Count - 1;
             }
             catch
             {

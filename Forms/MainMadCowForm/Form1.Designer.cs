@@ -79,11 +79,7 @@
             this.MPQDestTextBox = new System.Windows.Forms.TextBox();
             this.AutoUpdateTimerLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.BranchSelectionLabel = new System.Windows.Forms.Label();
-            this.BranchComboBox = new System.Windows.Forms.ComboBox();
             this.repoComboBox = new System.Windows.Forms.ComboBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.RepositoryHintLabel = new System.Windows.Forms.Label();
             this.FindDiabloButton = new System.Windows.Forms.Button();
             this.Diablo3UserPathSelection = new System.Windows.Forms.TextBox();
@@ -142,7 +138,6 @@
             this.madCowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enableTrayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enableTrayNotificationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rememberLastRepositoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.desktopShortcutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.compileAsDebugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mooegeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -176,8 +171,6 @@
             this.UpdatesTab.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.Tabs.SuspendLayout();
             this.HelpTab.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -238,7 +231,6 @@
             // 
             // LaunchServerButton
             // 
-            this.LaunchServerButton.Enabled = false;
             this.LaunchServerButton.Location = new System.Drawing.Point(6, 279);
             this.LaunchServerButton.Name = "LaunchServerButton";
             this.LaunchServerButton.Size = new System.Drawing.Size(327, 43);
@@ -714,11 +706,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.BranchSelectionLabel);
-            this.groupBox1.Controls.Add(this.BranchComboBox);
             this.groupBox1.Controls.Add(this.repoComboBox);
-            this.groupBox1.Controls.Add(this.pictureBox2);
-            this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Controls.Add(this.RepositoryHintLabel);
             this.groupBox1.Location = new System.Drawing.Point(6, 6);
             this.groupBox1.Name = "groupBox1";
@@ -727,29 +715,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Repository";
             // 
-            // BranchSelectionLabel
-            // 
-            this.BranchSelectionLabel.AutoSize = true;
-            this.BranchSelectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BranchSelectionLabel.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.BranchSelectionLabel.Location = new System.Drawing.Point(103, 47);
-            this.BranchSelectionLabel.Name = "BranchSelectionLabel";
-            this.BranchSelectionLabel.Size = new System.Drawing.Size(104, 13);
-            this.BranchSelectionLabel.TabIndex = 19;
-            this.BranchSelectionLabel.Text = "Branch Selection";
-            this.BranchSelectionLabel.Visible = false;
-            // 
-            // BranchComboBox
-            // 
-            this.BranchComboBox.FormattingEnabled = true;
-            this.BranchComboBox.Location = new System.Drawing.Point(7, 43);
-            this.BranchComboBox.Name = "BranchComboBox";
-            this.BranchComboBox.Size = new System.Drawing.Size(90, 21);
-            this.BranchComboBox.TabIndex = 18;
-            this.BranchComboBox.Visible = false;
-            this.BranchComboBox.SelectedIndexChanged += new System.EventHandler(this.BranchComboBox_SelectedIndexChanged);
-            this.BranchComboBox.SelectionChangeCommitted += new System.EventHandler(this.BranchComboBox_SelectedIndexChanged);
-            // 
             // repoComboBox
             // 
             this.repoComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -757,30 +722,8 @@
             this.repoComboBox.Name = "repoComboBox";
             this.repoComboBox.Size = new System.Drawing.Size(201, 21);
             this.repoComboBox.TabIndex = 17;
+            this.repoComboBox.DropDown += new System.EventHandler(this.repoComboBox_DropDown);
             this.repoComboBox.SelectedIndexChanged += new System.EventHandler(this.repoComboBox_SelectedIndexChanged);
-            this.repoComboBox.Click += new System.EventHandler(this.repoComboBox_Click);
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(209, 18);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(17, 20);
-            this.pictureBox2.TabIndex = 15;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Visible = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(209, 18);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(17, 20);
-            this.pictureBox1.TabIndex = 14;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Visible = false;
             // 
             // RepositoryHintLabel
             // 
@@ -1351,7 +1294,6 @@
             this.madCowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.enableTrayToolStripMenuItem,
             this.enableTrayNotificationsToolStripMenuItem,
-            this.rememberLastRepositoryToolStripMenuItem,
             this.desktopShortcutToolStripMenuItem,
             this.compileAsDebugToolStripMenuItem});
             this.madCowToolStripMenuItem.Name = "madCowToolStripMenuItem";
@@ -1373,14 +1315,6 @@
             this.enableTrayNotificationsToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.enableTrayNotificationsToolStripMenuItem.Text = "Enable Tray Notifications";
             this.enableTrayNotificationsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.enableTrayNotificationsToolStripMenuItem_CheckedChanged);
-            // 
-            // rememberLastRepositoryToolStripMenuItem
-            // 
-            this.rememberLastRepositoryToolStripMenuItem.CheckOnClick = true;
-            this.rememberLastRepositoryToolStripMenuItem.Name = "rememberLastRepositoryToolStripMenuItem";
-            this.rememberLastRepositoryToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
-            this.rememberLastRepositoryToolStripMenuItem.Text = "Remember Last Repository";
-            this.rememberLastRepositoryToolStripMenuItem.CheckedChanged += new System.EventHandler(this.rememberLastRepositoryToolStripMenuItem_CheckedChanged);
             // 
             // desktopShortcutToolStripMenuItem
             // 
@@ -1548,8 +1482,6 @@
             this.groupBox8.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.Tabs.ResumeLayout(false);
             this.HelpTab.ResumeLayout(false);
             this.HelpTab.PerformLayout();
@@ -1606,8 +1538,6 @@
         private System.Windows.Forms.TextBox Diablo3UserPathSelection;
         private System.Windows.Forms.OpenFileDialog DiabloPathFileDialog;
         private System.Windows.Forms.Label RepositoryHintLabel;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button UpdateMooegeButton;
         private System.ComponentModel.BackgroundWorker DownloadRepository;
@@ -1649,9 +1579,7 @@
         internal System.Windows.Forms.NotifyIcon MadCowTrayIcon;
         internal System.Windows.Forms.Button PlayDiabloButton;
         internal System.Windows.Forms.Button CopyMPQButton;
-        internal System.Windows.Forms.ComboBox BranchComboBox;
         internal System.ComponentModel.BackgroundWorker DownloadSelectedMpqs;
-        private System.Windows.Forms.Label BranchSelectionLabel;
         internal System.Windows.Forms.TabControl Tabs;
         private System.Windows.Forms.TabPage UpdatesTab;
         private System.Windows.Forms.Button UpdateMadcowButton;
@@ -1681,7 +1609,6 @@
         private System.Windows.Forms.ToolStripMenuItem madCowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enableTrayToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enableTrayNotificationsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem rememberLastRepositoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem desktopShortcutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mooegeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;

@@ -42,6 +42,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.updateButton = new System.Windows.Forms.Button();
             this.checkUpdatesButton = new System.Windows.Forms.Button();
+            this.changeButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -115,15 +116,18 @@
             // 
             // addButton
             // 
+            this.addButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.addButton.Location = new System.Drawing.Point(15, 255);
             this.addButton.Name = "addButton";
             this.addButton.Size = new System.Drawing.Size(75, 23);
             this.addButton.TabIndex = 4;
             this.addButton.Text = "Add";
             this.addButton.UseVisualStyleBackColor = true;
+            this.addButton.Click += new System.EventHandler(this.addButton_Click);
             // 
             // deleteButton
             // 
+            this.deleteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.deleteButton.Enabled = false;
             this.deleteButton.Location = new System.Drawing.Point(96, 255);
             this.deleteButton.Name = "deleteButton";
@@ -164,6 +168,17 @@
             this.checkUpdatesButton.UseVisualStyleBackColor = true;
             this.checkUpdatesButton.Click += new System.EventHandler(this.checkUpdatesButton_Click);
             // 
+            // changeButton
+            // 
+            this.changeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.changeButton.Location = new System.Drawing.Point(177, 255);
+            this.changeButton.Name = "changeButton";
+            this.changeButton.Size = new System.Drawing.Size(75, 23);
+            this.changeButton.TabIndex = 10;
+            this.changeButton.Text = "Change";
+            this.changeButton.UseVisualStyleBackColor = true;
+            this.changeButton.Click += new System.EventHandler(this.changeButton_Click);
+            // 
             // RepositorySelection
             // 
             this.AcceptButton = this.closeButton;
@@ -171,6 +186,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.closeButton;
             this.ClientSize = new System.Drawing.Size(587, 290);
+            this.Controls.Add(this.changeButton);
             this.Controls.Add(this.checkUpdatesButton);
             this.Controls.Add(this.updateButton);
             this.Controls.Add(this.label1);
@@ -183,6 +199,8 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "RepositorySelection";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Select a Repository";
             this.groupBox1.ResumeLayout(false);
@@ -205,5 +223,6 @@
         private System.Windows.Forms.Button updateButton;
         private System.Windows.Forms.ColumnHeader lastRevisionColumnHeader;
         private System.Windows.Forms.Button checkUpdatesButton;
+        private System.Windows.Forms.Button changeButton;
     }
 }

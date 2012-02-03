@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -20,25 +21,27 @@ namespace MadCow
 
         private readonly BackgroundWorker _updateBackgroundWorker;
 
-        internal static readonly ObservableCollection<Repository> Repositories = GetRepositories();
+        private Uri _url;
+
+        internal static readonly List<Repository> Repositories = GetRepositories();
         #endregion
 
         #region Constructor
         internal Repository(Uri url, string branch = "master")
         {
-            Url = url;
+            _url = url;
             Branch = branch;
             _revisionParser = new RevisionParser(url);
             _updateBackgroundWorker = new BackgroundWorker();
             _updateBackgroundWorker.DoWork += DownloadBackgroundWorker_DoWork;
             _updateBackgroundWorker.ProgressChanged += UpdateBackgroundWorker_ProgressChanged;
-            //_updateBackgroundWorker.RunWorkerCompleted += UpdateBackgroundWorker_RunWorkerCompleted;
             _updateBackgroundWorker.WorkerReportsProgress = true;
 
-            foreach (var directory in Directory.GetDirectories(Paths.RepositoriesPath)
-                .Where(directory => Path.GetFileName(directory).StartsWith(Developer, StringComparison.InvariantCultureIgnoreCase)))
+            foreach (var dir in Directory.GetDirectories(Paths.RepositoriesPath)
+                .Select(Path.GetFileName)
+                .Where(dir => dir.StartsWith(Developer, StringComparison.InvariantCultureIgnoreCase)))
             {
-                LocalRevision = directory.Split('-')[2];
+                LocalRevision = dir.Split('-')[2];
             }
         }
         #endregion
@@ -46,13 +49,22 @@ namespace MadCow
         #region Properties
         internal string Name { get { return String.Format("{0}-{1}-{2}", Developer, Fork, LocalRevision); } }
 
-        internal Uri Url { get; private set; }
+        internal Uri Url
+        {
+            get { return _url; }
+            set
+            {
+                if (value == null || value == _url) return;
+                _url = value;
+                _revisionParser.RevisionUrl = value;
+            }
+        }
 
         internal string Developer { get { return _revisionParser.DeveloperName; } }
 
         internal string Fork { get { return _revisionParser.ForkName; } }
 
-        internal string Branch { get; private set; }
+        internal string Branch { get; set; }
 
         internal string LocalRevision { get; private set; }
 
@@ -74,16 +86,17 @@ namespace MadCow
         #region Methods
         internal void Delete()
         {
-            if (!String.IsNullOrEmpty(Name))
+            if (IsDownloaded)
             {
                 Directory.Delete(Path.Combine(Paths.RepositoriesPath, Name), true);
                 LocalRevision = null;
             }
+            Repositories.Remove(this);
         }
 
         internal void UpdateRevision()
         {
-            //TODO
+            GetCommitFile();
         }
 
         internal void Update()
@@ -137,6 +150,7 @@ namespace MadCow
             Form1.GlobalAccess.Invoke(
                 (MethodInvoker)(() => Form1.GlobalAccess.statusStripStatusLabel.Text = "Uncompressing zip file..."));
             Unzip();
+            //UnzipShell();
 
             _updateBackgroundWorker.ReportProgress(50);
             Console.WriteLine("Compiling Mooege...");
@@ -242,6 +256,15 @@ namespace MadCow
             new FastZip(new FastZipEvents()).ExtractZip(Paths.MooegeDownloadPath, Paths.RepositoriesPath, null);
         }
 
+        //private void UnzipShell()
+        //{
+        //    var shell = new Shell();
+        //    var srcFlder = shell.NameSpace(Paths.MooegeDownloadPath);
+        //    var destFlder = shell.NameSpace(Paths.RepositoriesPath);
+        //    var items = srcFlder.Items();
+        //    destFlder.CopyHere(items, 20);
+        //}
+
         private bool Compile()
         {
             LocalRevision = LastRevision;
@@ -308,15 +331,25 @@ namespace MadCow
             return true;
         }
 
-        private static ObservableCollection<Repository> GetRepositories()
+        private static List<Repository> GetRepositories()
         {
             Directory.CreateDirectory(Paths.RepositoriesPath);
-            var rep = new ObservableCollection<Repository>();
+            var rep = new List<Repository>();
             if (File.Exists(Paths.RepositoriesListPath))
             {
-                foreach (var url in File.ReadAllLines(Paths.RepositoriesListPath).Distinct().Select(s => new Uri(s)))
+                foreach (var s in File.ReadAllLines(Paths.RepositoriesListPath)
+                    .Distinct()
+                    .Select(url => url.Split(new[] { '@' }, StringSplitOptions.RemoveEmptyEntries)))
                 {
-                    rep.Add(new Repository(url));
+                    switch (s.Length)
+                    {
+                        case 2:
+                            rep.Add(new Repository(new Uri(s[0]), s[1]));
+                            break;
+                        case 1:
+                            rep.Add(new Repository(new Uri(s[0])));
+                            break;
+                    }
                 }
             }
             return rep;

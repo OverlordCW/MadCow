@@ -14,7 +14,6 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-using System;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
@@ -23,7 +22,7 @@ namespace MadCow
 {
     public class TextBoxStreamWriter : TextWriter
     {
-        TextBox _output = null;
+        readonly TextBox _output;
 
         public TextBoxStreamWriter(TextBox output)
         {
@@ -32,13 +31,13 @@ namespace MadCow
 
         public override void Write(char value)
         {
-            MethodInvoker action = delegate { _output.AppendText(value.ToString()); };
+            MethodInvoker action = () => _output.AppendText(value.ToString());
             _output.BeginInvoke(action);
         }
 
         public override Encoding Encoding
         {
-            get { return System.Text.Encoding.UTF8; }
+            get { return Encoding.UTF8; }
         }
     }
 }

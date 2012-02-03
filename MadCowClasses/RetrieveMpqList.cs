@@ -19,16 +19,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Xml;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
+using System.Xml;
 
 namespace MadCow
 {
-    class RetrieveMpqList
+    internal static class RetrieveMpqList
     {
         //This function will ask and retrieve latest file list from Blizzard server.
-        public static void getfileList()
+        internal static void GetfileList()
         {
             var proxy = new WebProxy();
             if (Proxy.proxyStatus)
@@ -38,7 +37,7 @@ namespace MadCow
             }
 
             //WebRequest request = WebRequest.Create("http://enus.patch.battle.net:1119/patch"); //Up to 8101.
-            WebRequest request = WebRequest.Create("http://public-test.patch.battle.net:1119");
+            var request = WebRequest.Create("http://public-test.patch.battle.net:1119");
             if (Proxy.proxyStatus)
                 request.Proxy = proxy;
 
@@ -47,22 +46,22 @@ namespace MadCow
             request.ContentType = "text/html";
 
             //var postData = "<version program=\"D3\"><record program=\"Bnet\" component=\"Win\" version=\"1\" /><record program=\"D3\" component=\"enUS\" version=\"1\" /></version>";//Up to 8101
-            var postData = "<version program=\"D3B\"><record program=\"Bnet\" component=\"Win\" version=\"1\" /><record program=\"D3B\" component=\"enUS\" version=\"3\"/></version>";
-            var byteArray = ASCIIEncoding.UTF8.GetBytes(postData);
+            const string postData = "<version program=\"D3B\"><record program=\"Bnet\" component=\"Win\" version=\"1\" /><record program=\"D3B\" component=\"enUS\" version=\"3\"/></version>";
+            var byteArray = Encoding.UTF8.GetBytes(postData);
             request.ContentLength = byteArray.Length;
 
             var dataStream = request.GetRequestStream();
             dataStream.Write(byteArray, 0, byteArray.Length);
             dataStream.Close();
 
-            WebResponse response = request.GetResponse();
+            var response = request.GetResponse();
 
-            Stream ReceiveStream = response.GetResponseStream();
+            var receiveStream = response.GetResponseStream();
             
-            StreamReader readStream = new StreamReader(ReceiveStream, Encoding.GetEncoding("utf-8"));         
+            var readStream = new StreamReader(receiveStream, Encoding.GetEncoding("utf-8"));         
             
             var xml = new XmlTextReader(readStream);
-            string[] D3Data = new string[0];
+            var D3Data = new string[0];
 
             while (xml.Read())
             {
@@ -89,7 +88,7 @@ namespace MadCow
             var mfil = "d3b-" + D3Data[3] + "-" + D3Data[2] + ".mfil";
 
             var config = wc.DownloadString(D3Data[0]);
-            var rdr = System.Xml.XmlReader.Create(new StringReader(config));
+            var rdr = XmlReader.Create(new StringReader(config));
             while (rdr.Read())
             {
                 switch (rdr.Name)
@@ -102,33 +101,35 @@ namespace MadCow
             }
             rdr.Close();
 
-            System.IO.File.WriteAllText(Environment.CurrentDirectory + "\\RuntimeDownloads\\Diablo III.mfil", wc.DownloadString(mfil));
-            parseFiles();
+            Directory.CreateDirectory(Environment.CurrentDirectory + "\\RuntimeDownloads\\");
+            File.WriteAllText(Environment.CurrentDirectory + "\\RuntimeDownloads\\Diablo III.mfil", wc.DownloadString(mfil));
+            ParseFiles();
         }
 
-        public static List<String> mpqList = new List<String>();
-        public static void parseFiles()
+        internal static List<String> MpqList = new List<String>();
+
+        internal static void ParseFiles()
         {
-            using (FileStream fileStream = new FileStream(Environment.CurrentDirectory + @"\RuntimeDownloads\Diablo III.mfil", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var fileStream = new FileStream(Environment.CurrentDirectory + @"\RuntimeDownloads\Diablo III.mfil", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 using (TextReader reader = new StreamReader(fileStream))
                 {
                     string oldline = null;
                     string line;
-                    Int16 i = 0;
+                    var i = 0;
                     while ((line = reader.ReadLine()) != null)
                     {
                         if (line != oldline)
                         {
-                            if (System.Text.RegularExpressions.Regex.IsMatch(line, "name"))
+                            if (Regex.IsMatch(line, "name"))
                             {
-                                var pattern = @"=(?<name>.*)";
+                                const string pattern = @"=(?<name>.*)";
                                 var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
                                 var match = regex.Match(line);
 
-                                if (match.Groups["name"].Value.ToString().Contains("d3-update-base-"))
+                                if (match.Groups["name"].Value.Contains("d3-update-base-"))
                                 {
-                                    mpqList.Add(match.Groups["name"].Value);
+                                    MpqList.Add(match.Groups["name"].Value);
                                     i++;
                                 }
                             }

@@ -16,13 +16,7 @@
 
 // Used code from http://www.dreamincode.net/code/snippet1568.htm.
 
-using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
-using System.IO;
-using Nini.Config;
-using System.Text.RegularExpressions;
 using System.Net.NetworkInformation;
 
 namespace MadCow
@@ -107,88 +101,80 @@ namespace MadCow
         }
 
         //Check for internet Connection.
-        public static bool isConnectionAvailable()
+        public static bool IsConnectionAvailable()
         {
-            bool _success;
-            //We use google... ff google is down, probably we got hit by a meteor.
+            bool success;
+            //We use google... if google is down, probably we got hit by a meteor.
             string[] sitesList = { "www.google.com" };
-            Ping ping = new Ping();
-            PingReply reply;
-            int notReturned = 0;
+            var ping = new Ping();
+            var notReturned = 0;
 
             try
             {
-                reply = ping.Send(sitesList[0], 10);
+                var reply = ping.Send(sitesList[0], 10);
                 if (reply.Status != IPStatus.Success)
                 {
                     notReturned += 1;
                 }
-                if (notReturned == sitesList.Length)
-                {
-                    _success = false;
-                }
-                else
-                {
-                    _success = true;
-                }
+                success = notReturned != sitesList.Length;
             }
             catch
             {
-                _success = false;
+                success = false;
             }
-            return _success;
+            return success;
         }
 
         //Check for internet Connection.
         public static void CheckForInternet()
         {
             //If we were unable to ping the server, we warn the user about repercutions!.
-            if (!isConnectionAvailable())
+            if (!IsConnectionAvailable())
             {
                 MessageBox.Show("There is no Internet connection, MadCow will NOT be able to perform correctly."
                     + "\n\nBe aware: Fatal errors might happen:"
                     + "\nMadCow has an strong Internet dependency.",
-                    "Warning - No Internet Connection was found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    "Warning - No Internet Connection was found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         //Create default need folders.
-        public static void DefaultFolderCreator()
-        {
-            var programPath = Environment.CurrentDirectory;
-            if (Directory.Exists(programPath + @"\MPQ\base") == false)
-            {
-                Directory.CreateDirectory(programPath + @"\MPQ\base");
-            }
-            if (Directory.Exists(programPath + @"\Repositories") == false)
-            {
-                Directory.CreateDirectory(programPath + @"\Repositories");
-            }
-            if (Directory.Exists(programPath + @"\RuntimeDownloads") == false)
-            {
-                Directory.CreateDirectory(programPath + @"\RuntimeDownloads");
-            }
-            //Apart from creating ServerProfiles folder, we write the Defualt profile.
-            if (Directory.Exists(programPath + @"\ServerProfiles") == false)
-            {
-                Directory.CreateDirectory(programPath + @"\ServerProfiles");
-                TextWriter tw = new StreamWriter(programPath + @"\ServerProfiles\Default.mdc");
-                //tw.WriteLine("Bnet Server Ip");
-                tw.WriteLine("0.0.0.0");
-                //tw.WriteLine("Game Server Ip");
-                tw.WriteLine("0.0.0.0");
-                //tw.WriteLine("Public Server Ip");
-                tw.WriteLine("0.0.0.0");
-                //tw.WriteLine("Bnet Server Port");
-                tw.WriteLine("1345");
-                //tw.WriteLine("Game Server Port");
-                tw.WriteLine("1999");
-                //tw.WriteLine("MOTD");
-                tw.WriteLine("Welcome to mooege development server!");
-                //tw.WriteLine("NAT");
-                tw.WriteLine("False");
-                tw.Close();
-            }
-        }
+        //public static void DefaultFolderCreator()
+        //{
+        //    var programPath = Environment.CurrentDirectory;
+        //    if (Directory.Exists(programPath + @"\MPQ\base") == false)
+        //    {
+        //        Directory.CreateDirectory(programPath + @"\MPQ\base");
+        //    }
+        //    if (Directory.Exists(programPath + @"\Repositories") == false)
+        //    {
+        //        Directory.CreateDirectory(programPath + @"\Repositories");
+        //    }
+        //    if (Directory.Exists(programPath + @"\RuntimeDownloads") == false)
+        //    {
+        //        Directory.CreateDirectory(programPath + @"\RuntimeDownloads");
+        //    }
+        //    //Apart from creating ServerProfiles folder, we write the Defualt profile.
+        //    if (Directory.Exists(programPath + @"\ServerProfiles") == false)
+        //    {
+        //        Directory.CreateDirectory(programPath + @"\ServerProfiles");
+        //        TextWriter tw = new StreamWriter(programPath + @"\ServerProfiles\Default.mdc");
+        //        //tw.WriteLine("Bnet Server Ip");
+        //        tw.WriteLine("0.0.0.0");
+        //        //tw.WriteLine("Game Server Ip");
+        //        tw.WriteLine("0.0.0.0");
+        //        //tw.WriteLine("Public Server Ip");
+        //        tw.WriteLine("0.0.0.0");
+        //        //tw.WriteLine("Bnet Server Port");
+        //        tw.WriteLine("1345");
+        //        //tw.WriteLine("Game Server Port");
+        //        tw.WriteLine("1999");
+        //        //tw.WriteLine("MOTD");
+        //        tw.WriteLine("Welcome to mooege development server!");
+        //        //tw.WriteLine("NAT");
+        //        tw.WriteLine("False");
+        //        tw.Close();
+        //    }
+        //}
     }
 }

@@ -10,6 +10,8 @@ namespace MadCow
 
         internal static readonly string ToolsPath = Path.Combine(Environment.CurrentDirectory, "Tools");
 
+        internal static readonly string ServerProfilesPath = Path.Combine(Environment.CurrentDirectory, "ServerProfiles");
+
         internal static readonly string RepositoriesListPath = Path.Combine(ToolsPath, "RepoList.txt");
 
         internal static readonly string MooegeDownloadPath = Path.Combine(RepositoriesPath, "Mooege.zip");

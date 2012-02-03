@@ -61,12 +61,6 @@ namespace MadCow
                 set { MadCowConfig.Set("CompileAsDebug", value); }
             }
 
-            internal static bool RememberLastRepository
-            {
-                get { return Convert.ToBoolean(MadCowConfig.Get("RememberLastRepository", "True")); }
-                set { MadCowConfig.Set("RememberLastRepository", value); }
-            }
-
             internal static string LastRepository
             {
                 get { return MadCowConfig.Get("LastRepository"); }

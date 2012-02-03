@@ -59,7 +59,6 @@ namespace MadCow
             splash.Update();
             ChatDisplayBox.MaxLength = 250; //Chat lenght
             Helper.CheckForInternet();//We check for Internet connection at start!.
-            Helper.DefaultFolderCreator(); //We create default MadCow needed folders.
             _writer = new TextBoxStreamWriter(ConsoleOutputTxtBox);
             Console.SetOut(_writer);
             Console.WriteLine("Welcome to MadCow!");
@@ -87,8 +86,7 @@ namespace MadCow
             RepoList(); //Loads Repos from RepoList.txt
             Changelog(); //Loads Changelog comobox values.
             LoadProfile(Configuration.MadCow.CurrentProfile); //We try to Load the last used profile by the user.
-            Helper.Helpers();//Loads the correct nameplate for shortcut/balloon/LastRepo enabled/disabled
-            RetrieveMpqList.getfileList(); //Load MPQ list from Blizz server. Todo: This might slow down a bit MadCow loading, maybe we could place it somewhere else?.
+            RetrieveMpqList.GetfileList(); //Load MPQ list from Blizz server. Todo: This might slow down a bit MadCow loading, maybe we could place it somewhere else?.
             Helper.KillUpdater(); //This will kill MadCow updater if its running.
             ApplySettings(); //This loads Mooege settings over Mooege tab.
             splash.Hide();
@@ -244,7 +242,7 @@ namespace MadCow
         #region UpdateMooege
         private void Update_Mooege_Click(object sender, EventArgs e)
         {
-            UpdateMooege();
+            ((Repository)repoComboBox.SelectedItem).Update();
         }
 
         private void UpdateMooege()
@@ -312,11 +310,11 @@ namespace MadCow
         #region PlayDiablo
         private void PlayDiablo_Click(object sender, EventArgs e)
         {
-            if (ErrorFinder.hasMpqs()) //We check for MPQ files count before allowing the user to proceed to play.
+            if (ErrorFinder.HasMpqs()) //We check for MPQ files count before allowing the user to proceed to play.
             {
                 new Thread(ThreadProc).Start();
             }
-            else if (Diablo3UserPathSelection != null && !ErrorFinder.hasMpqs())
+            else if (Diablo3UserPathSelection != null && !ErrorFinder.HasMpqs())
             {
                 var errorAnswer = MessageBox.Show("You haven't copied MPQ files." + "\nWould you like MadCow to fix this for you?", "Fatal Error!",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
@@ -334,7 +332,16 @@ namespace MadCow
 
         public void ThreadProc()
         {
-            Diablo.Play((Repository) repoComboBox.SelectedItem);
+            if (repoComboBox.SelectedItem is Repository)
+            {
+                Diablo.Play((Repository)repoComboBox.SelectedItem);
+            }
+            else
+            {
+                MessageBox.Show("Please select a repository first!");
+                repoComboBox.DroppedDown = true;
+            }
+            
 
             //We add ErrorFinder call here, in order to know if Mooege had issues loading.
             if (!File.Exists(Environment.CurrentDirectory + @"\logs\mooege.log")) return;
@@ -442,12 +449,24 @@ namespace MadCow
 
         private void LaunchServer_Click(object sender, EventArgs e)
         {
-            new Thread(ThreadProc2).Start();
+            if (repoComboBox.SelectedItem is Repository)
+            {
+                new Thread(ThreadProc2).Start();
+            }
+            else
+            {
+                MessageBox.Show("Please select a repository first!");
+                Tabs.SelectTab(UpdatesTab);
+                repoComboBox.DroppedDown = true;
+            }
         }
 
         public void ThreadProc2()
         {
-            Application.Run(new RepositorySelection());
+            Console.WriteLine("Starting Mooege..");
+            var mooege = new Process();
+            mooege.StartInfo = new ProcessStartInfo(Paths.GetMooegeExePath((Repository)repoComboBox.SelectedItem));
+            mooege.Start();
             if (!File.Exists(Environment.CurrentDirectory + @"\logs\mooege.log")) return;
             if (!ErrorFinder.SearchLogs("Fatal")) return;
             //We delete de Log file HERE. Nowhere else!.
@@ -518,7 +537,6 @@ namespace MadCow
             {
                 AutoUpdateTimerLabel.Text = "Update in " + _tick + " minutes.";
                 DownloadSpeedTimer.Start();
-                BranchComboBox.Enabled = false;
                 AutoUpdateValue.Enabled = false;
                 repoComboBox.Enabled = false;
                 UpdateMooegeButton.Visible = false;
@@ -529,7 +547,6 @@ namespace MadCow
             {
                 DownloadSpeedTimer.Stop();
                 AutoUpdateTimerLabel.Text = " ";
-                BranchComboBox.Enabled = true;
                 AutoUpdateValue.Enabled = true;
                 repoComboBox.Enabled = true;
                 UpdateMooegeButton.Visible = true;
@@ -867,7 +884,7 @@ namespace MadCow
                 {
                     for (var lp = 0; lp < 999; lp++)
                     {
-                        var ipAddress = String.Format("{0}.{0}.{0}.{0}", lp);
+                        var ipAddress = string.Format("{0}.{0}.{0}.{0}", lp);
 
                         if (Regex.Match(ipFields[i], pattern).Success)
                         {
@@ -901,7 +918,7 @@ namespace MadCow
 
             foreach (var value in portFields)
             {
-                isNumber = Int32.TryParse(portFields[j], out Number);
+                isNumber = int.TryParse(portFields[j], out Number);
 
                 if (!isNumber || portFields[j].Length > 4 || portFields[j].Length < 4)
                 {
@@ -938,7 +955,7 @@ namespace MadCow
                                       Title = "Save Server Profile",
                                       DefaultExt = ".mdc",
                                       Filter = "MadCow Profile|*.mdc",
-                                      InitialDirectory = Path.Combine(Environment.CurrentDirectory, "ServerProfiles")
+                                      InitialDirectory = Paths.ServerProfilesPath
                                   };
             saveProfile.ShowDialog();
 
@@ -1048,7 +1065,7 @@ namespace MadCow
                                   {
                                       Title = "Save Server Profile",
                                       Filter = "MadCow Profile|*.mdc",
-                                      InitialDirectory = Path.Combine(Environment.CurrentDirectory, "ServerProfiles")
+                                      InitialDirectory = Paths.ServerProfilesPath
                                   };
             openProfile.ShowDialog();
             if (openProfile.FileName == "")
@@ -1269,7 +1286,7 @@ namespace MadCow
                                           Configuration.MadCow.MpqServer
                                       };
             var speedTimer = new Stopwatch();
-            foreach (var value in MPQDownloader.mpqSelection)
+            foreach (var value in MPQDownloader.MpqSelection)
             {
                 var url = new Uri(value);
                 var request = (HttpWebRequest)WebRequest.Create(url);
@@ -1347,7 +1364,7 @@ namespace MadCow
         {
             DownloadFileNameLabel.Visible = false;
             DownloadSpeedLabel.Visible = false;
-            MPQDownloader.mpqSelection.Clear();//Reset the Array values after downloading.
+            MPQDownloader.MpqSelection.Clear();//Reset the Array values after downloading.
             Console.WriteLine("Download complete.");
         }
         #endregion
@@ -1532,7 +1549,7 @@ namespace MadCow
         {
             repoComboBox.Items.Clear();
             repoComboBox.Items.AddRange(Repository.Repositories.Where(r => r.IsDownloaded).ToArray());
-            repoComboBox.SelectedItem = Repository.Repositories.First(r => r.Name == Configuration.MadCow.LastRepository);
+            repoComboBox.SelectedItem = Repository.Repositories.FirstOrDefault(r => r.Name == Configuration.MadCow.LastRepository);
         }
 
         //private void RepoCheck()
@@ -1680,7 +1697,7 @@ namespace MadCow
             }
         }
 
-        public String SelectedRepo = "";
+        public string SelectedRepo = "";
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             //We first parse the repo name selected by the user.
@@ -1780,20 +1797,20 @@ namespace MadCow
         #region Branches
         private void BranchComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var proxy = new WebProxy();
-            if (Proxy.proxyStatus)
-            {
-                proxy.Address = new Uri(Proxy.proxyUrl);
-                proxy.Credentials = new NetworkCredential(Proxy.username, Proxy.password);
-            }
+            //var proxy = new WebProxy();
+            //if (Proxy.proxyStatus)
+            //{
+            //    proxy.Address = new Uri(Proxy.proxyUrl);
+            //    proxy.Credentials = new NetworkCredential(Proxy.username, Proxy.password);
+            //}
 
-            BranchComboBox.Invoke(new Action(() => SelectedBranch = BranchComboBox.SelectedItem.ToString()));
-            var client = new WebClient();
-            if (Proxy.proxyStatus)
-                client.Proxy = proxy;
-            client.DownloadStringCompleted += BranchParse;
-            var uri = new Uri(repoComboBox.Text + "/commits/" + SelectedBranch + ".atom");
-            client.DownloadStringAsync(uri);
+            //BranchComboBox.Invoke(new Action(() => SelectedBranch = BranchComboBox.SelectedItem.ToString()));
+            //var client = new WebClient();
+            //if (Proxy.proxyStatus)
+            //    client.Proxy = proxy;
+            //client.DownloadStringCompleted += BranchParse;
+            //var uri = new Uri(repoComboBox.Text + "/commits/" + SelectedBranch + ".atom");
+            //client.DownloadStringAsync(uri);
         }
 
         private void BranchParse(object sender, DownloadStringCompletedEventArgs e)
@@ -1826,16 +1843,6 @@ namespace MadCow
         private void enableTrayNotificationsToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             Configuration.MadCow.TrayNotificationsEnabled = enableTrayNotificationsToolStripMenuItem.Checked;
-        }
-        #endregion
-        ////////////////////////////////////////////////////////////////////////////////////////
-        // Remember LastRepository Disabler
-        ////////////////////////////////////////////////////////////////////////////////////////
-        #region RememberLastRepository
-        private void rememberLastRepositoryToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
-        {
-            Configuration.MadCow.RememberLastRepository = rememberLastRepositoryToolStripMenuItem.Checked;
-            BrowseMPQPathButton.Enabled = !rememberLastRepositoryToolStripMenuItem.Checked;
         }
         #endregion
         ////////////////////////////////////////////////////////////////////////////////////////
@@ -1913,7 +1920,6 @@ namespace MadCow
 
             enableTrayToolStripMenuItem.Checked = Configuration.MadCow.TrayEnabled;
             enableTrayNotificationsToolStripMenuItem.Checked = Configuration.MadCow.TrayNotificationsEnabled;
-            rememberLastRepositoryToolStripMenuItem.Checked = Configuration.MadCow.RememberLastRepository;
             desktopShortcutToolStripMenuItem.Checked = Configuration.MadCow.ShortcutEnabled;
             compileAsDebugToolStripMenuItem.Checked = Configuration.MadCow.CompileAsDebug;
         }
@@ -2065,8 +2071,12 @@ namespace MadCow
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            //Crashes on exit
             //if (Client.irc != null) Client.irc.Disconnect();
             Configuration.Save();
+            File.WriteAllLines(Paths.RepositoriesListPath,
+                               Repository.Repositories.Select(
+                                   repo => string.Format("{0}@{1}", repo.Url.AbsoluteUri, repo.Branch)).ToList());
         }
 
         private void repositoriesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2074,18 +2084,22 @@ namespace MadCow
             new RepositorySelection().ShowDialog();
         }
 
-        private void repoComboBox_Click(object sender, EventArgs e)
+        private void repoComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Configuration.MadCow.LastRepository = repoComboBox.SelectedItem.ToString();
+            UpdateMooegeButton.Enabled = repoComboBox.SelectedItem is Repository;
+            PlayDiabloButton.Enabled = repoComboBox.SelectedItem is Repository &&
+                                       !string.IsNullOrEmpty(Configuration.MadCow.DiabloPath);
+        }
+
+        private void repoComboBox_DropDown(object sender, EventArgs e)
         {
             RepoList();
             if (repoComboBox.Items.Count == 0)
             {
                 new RepositorySelection().ShowDialog();
+                RepoList();
             }
-        }
-
-        private void repoComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Configuration.MadCow.LastRepository = repoComboBox.SelectedItem.ToString();
         }
     }
 }

@@ -126,6 +126,12 @@
     <Compile Include="Forms\AboutForm\AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\EditRepositoryForm\EditRepository.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EditRepositoryForm\EditRepository.Designer.cs">
+      <DependentUpon>EditRepository.cs</DependentUpon>
+    </Compile>
     <Compile Include="MadCowClasses\Configuration.cs" />
     <Compile Include="MadCowClasses\Irc.cs" />
     <Compile Include="MadCowClasses\Paths.cs" />
@@ -141,10 +147,8 @@
     <Compile Include="MadCowClasses\TextBoxStreamWriter.cs" />
     <Compile Include="MadCowClasses\ProcessFinder.cs" />
     <Compile Include="MadCowClasses\Delete.cs" />
-    <Compile Include="MadCowClasses\MadCowProcedure.cs" />
     <Compile Include="MadCowClasses\MPQprocedure.cs" />
     <Compile Include="MadCowClasses\RevisionParser.cs" />
-    <Compile Include="MadCowClasses\Compile.cs" />
     <Compile Include="MadCowClasses\PreRequeriments.cs" />
     <Compile Include="MadCowClasses\RefreshDesktop.cs" />
     <Compile Include="Forms\MainMadCowForm\Form1.cs">
@@ -254,6 +258,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\AboutForm\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EditRepositoryForm\EditRepository.resx">
+      <DependentUpon>EditRepository.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainMadCowForm\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
