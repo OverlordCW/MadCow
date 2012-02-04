@@ -90,7 +90,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\Tools\ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>..\Libraries\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Build" />
     <Reference Include="Microsoft.Build.Framework" />
