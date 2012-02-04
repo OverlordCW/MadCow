@@ -14,7 +14,6 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
@@ -1552,7 +1551,6 @@ namespace MadCow
             desktopShortcutToolStripMenuItem.Checked = Configuration.MadCow.ShortcutEnabled;
             compileAsDebugToolStripMenuItem.Checked = Configuration.MadCow.CompileAsDebug;
             checkUpdatesToolStripMenuItem.Checked = Configuration.MadCow.CheckMooegeUpdates;
-            PopulateRepositories();
         }
 
         private void enableFileLoggingToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1746,6 +1744,11 @@ namespace MadCow
 
             repoComboBox.SelectedItem = Repository.Repositories.FirstOrDefault(r => r.Name == Configuration.MadCow.LastRepository);
 
+        }
+
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            PopulateRepositories();
         }
     }
 }
