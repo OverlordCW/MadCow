@@ -96,6 +96,12 @@ namespace MadCow
                 get { return new ServerProfile(MadCowConfig.Get("Profile", Path.Combine(Environment.CurrentDirectory, "ServerProfiles", "Default.mdc"))); }
                 set { MadCowConfig.Set("Profile", value); }
             }
+
+            internal static string IrcNickname
+            {
+                get { return MadCowConfig.Get("IrcNickname"); }
+                set { MadCowConfig.Set("IrcNickname", value); }
+            }
         }
 
         /// <summary>

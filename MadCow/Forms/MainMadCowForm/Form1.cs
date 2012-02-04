@@ -40,6 +40,8 @@ namespace MadCow
 
         private Repository _selectedRepo;
 
+        private Client _ircClient;
+
         public Form1()
         {
             InitializeComponent();
@@ -1489,6 +1491,11 @@ namespace MadCow
         {
             Configuration.MadCow.CheckMooegeUpdates = checkUpdatesToolStripMenuItem.Checked;
         }
+
+        private void ircNicknameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            Configuration.MadCow.IrcNickname = ircNicknameTextBox.Text;
+        }
         #endregion
 
         ////////////////////////////////////////////////////////////////////////
@@ -1552,6 +1559,7 @@ namespace MadCow
             desktopShortcutToolStripMenuItem.Checked = Configuration.MadCow.ShortcutEnabled;
             compileAsDebugToolStripMenuItem.Checked = Configuration.MadCow.CompileAsDebug;
             checkUpdatesToolStripMenuItem.Checked = Configuration.MadCow.CheckMooegeUpdates;
+            ircNicknameTextBox.Text = Configuration.MadCow.IrcNickname;
         }
 
         private void enableFileLoggingToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1603,35 +1611,31 @@ namespace MadCow
         //MadCow Live Help
         ///////////////////////////////////////////////////////////
         #region MadCow Live Help
-        public static Thread ircThread;
+
+        //private static Thread ircThread;
 
         private void ConnectButton_Click(object sender, EventArgs e)
         {
-            if (ircThread != null) //This is temporary to prevent connecting again and IRC malfunctioning.
+            if (string.IsNullOrEmpty(Configuration.MadCow.IrcNickname))
             {
-                MessageBox.Show("There is a bug with current IRC implementation \nthat i'm not able to takle."
-                    + "\nIn order to connect again you need to restart MadCow."
-                    + "\nSorry for the inconvenience. -Wesko", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Please enter a nickname!", "MadCow", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
                 //We hide the current tab contents.
-                Rules.Visible = false;
-                label1.Visible = false;
-                label2.Visible = false;
-                label3.Visible = false;
-                label4.Visible = false;
-                BotonAlerta.Visible = false;
-                Advertencia.Visible = false;
+                ircIntroLabel.Visible = false;
                 ConnectButton.Visible = false;
+                ircNicknameTextBox.Visible = false;
+                ircNicknameLabel.Visible = false;
+                ircRulesLabel.Visible = false;
 
                 //Show the chat content.
                 ChatDisplayBox.Visible = true;
                 ChatUsersBox.Visible = true;
-                PleaseWaitLabel.Visible = true;
+                statusStripStatusLabel.Text = "Connecting to IRC server...";
 
                 //Start our IRC client in a new thread.
-                ircThread = new Thread(ThreadFunction);
+                var ircThread = new Thread(ThreadFunction);
                 ircThread.Start();
             }
         }
@@ -1639,7 +1643,8 @@ namespace MadCow
 
         private void ThreadFunction()
         {
-            Client.Run();
+            _ircClient = new Client();
+            _ircClient.Run();
         }
 
         private void textBox3_MouseMove(object sender, MouseEventArgs e)
@@ -1652,7 +1657,7 @@ namespace MadCow
             if (e.KeyChar == (char)13)
             {
                 e.Handled = true; //Disable annoying beep sound!
-                Client.SendMessage(ChatMessageBox.Text);
+                _ircClient.SendMessage(ChatMessageBox.Text);
                 ChatDisplayBox.SelectionStart = ChatDisplayBox.Text.Length;
                 ChatDisplayBox.ScrollToCaret();
                 ChatMessageBox.Clear();
@@ -1668,7 +1673,7 @@ namespace MadCow
             if (e.KeyValue == (char)13 && ChatMessageBox.TextLength > 250)
             {
                 e.Handled = true;
-                Client.SendMessage(ChatMessageBox.Text);
+                _ircClient.SendMessage(ChatMessageBox.Text);
                 ChatDisplayBox.SelectionStart = ChatDisplayBox.Text.Length;
                 ChatDisplayBox.ScrollToCaret();
                 ChatMessageBox.Clear();
@@ -1685,7 +1690,7 @@ namespace MadCow
             ChatUsersBox.Clear();
             ChatDisplayBox.Clear();
             ChatMessageBox.Clear();
-            Client.irc.Disconnect();
+            _ircClient.Disconnect();
         }
         #endregion
 

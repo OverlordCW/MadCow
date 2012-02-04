@@ -110,14 +110,7 @@
             this.SelectRepoChngLogComboBox = new System.Windows.Forms.ComboBox();
             this.LiveHelpTab = new System.Windows.Forms.TabPage();
             this.DisconnectButton = new System.Windows.Forms.Button();
-            this.PleaseWaitLabel = new System.Windows.Forms.Label();
-            this.Advertencia = new System.Windows.Forms.PictureBox();
-            this.Rules = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.BotonAlerta = new System.Windows.Forms.PictureBox();
+            this.ircIntroLabel = new System.Windows.Forms.Label();
             this.ConnectButton = new System.Windows.Forms.Button();
             this.TypeHereLabel = new System.Windows.Forms.Label();
             this.ChatMessageBox = new System.Windows.Forms.TextBox();
@@ -147,6 +140,9 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.ircNicknameTextBox = new System.Windows.Forms.TextBox();
+            this.ircNicknameLabel = new System.Windows.Forms.Label();
+            this.ircRulesLabel = new System.Windows.Forms.Label();
             this.RemoteServerTab.SuspendLayout();
             this.RemoteServerGrpBox.SuspendLayout();
             this.ServerControlTab.SuspendLayout();
@@ -170,8 +166,6 @@
             this.OutPutTab.SuspendLayout();
             this.ChaneglogTab.SuspendLayout();
             this.LiveHelpTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Advertencia)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BotonAlerta)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -600,9 +594,9 @@
             this.UpdatesTab.Controls.Add(this.groupBox1);
             this.UpdatesTab.Controls.Add(this.FindDiabloButton);
             this.UpdatesTab.Controls.Add(this.PlayDiabloButton);
-            this.UpdatesTab.Controls.Add(this.Diablo3UserPathSelection);
             this.UpdatesTab.Controls.Add(this.UpdateMooegeButton);
             this.UpdatesTab.Controls.Add(this.CopyMPQButton);
+            this.UpdatesTab.Controls.Add(this.Diablo3UserPathSelection);
             this.UpdatesTab.Cursor = System.Windows.Forms.Cursors.Hand;
             this.UpdatesTab.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UpdatesTab.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -982,15 +976,11 @@
             // 
             // LiveHelpTab
             // 
+            this.LiveHelpTab.Controls.Add(this.ircRulesLabel);
+            this.LiveHelpTab.Controls.Add(this.ircNicknameLabel);
+            this.LiveHelpTab.Controls.Add(this.ircNicknameTextBox);
             this.LiveHelpTab.Controls.Add(this.DisconnectButton);
-            this.LiveHelpTab.Controls.Add(this.PleaseWaitLabel);
-            this.LiveHelpTab.Controls.Add(this.Advertencia);
-            this.LiveHelpTab.Controls.Add(this.Rules);
-            this.LiveHelpTab.Controls.Add(this.label4);
-            this.LiveHelpTab.Controls.Add(this.label3);
-            this.LiveHelpTab.Controls.Add(this.label2);
-            this.LiveHelpTab.Controls.Add(this.label1);
-            this.LiveHelpTab.Controls.Add(this.BotonAlerta);
+            this.LiveHelpTab.Controls.Add(this.ircIntroLabel);
             this.LiveHelpTab.Controls.Add(this.ConnectButton);
             this.LiveHelpTab.Controls.Add(this.TypeHereLabel);
             this.LiveHelpTab.Controls.Add(this.ChatMessageBox);
@@ -1016,91 +1006,20 @@
             this.DisconnectButton.Visible = false;
             this.DisconnectButton.Click += new System.EventHandler(this.DisconnectButton_Click);
             // 
-            // PleaseWaitLabel
+            // ircIntroLabel
             // 
-            this.PleaseWaitLabel.AutoSize = true;
-            this.PleaseWaitLabel.BackColor = System.Drawing.Color.Transparent;
-            this.PleaseWaitLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.PleaseWaitLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PleaseWaitLabel.ForeColor = System.Drawing.Color.Orange;
-            this.PleaseWaitLabel.Location = new System.Drawing.Point(234, 304);
-            this.PleaseWaitLabel.Name = "PleaseWaitLabel";
-            this.PleaseWaitLabel.Size = new System.Drawing.Size(119, 24);
-            this.PleaseWaitLabel.TabIndex = 7;
-            this.PleaseWaitLabel.Text = "Please wait...";
-            this.PleaseWaitLabel.Visible = false;
-            // 
-            // Advertencia
-            // 
-            this.Advertencia.Image = global::MadCow.Properties.Resources.warning;
-            this.Advertencia.Location = new System.Drawing.Point(271, 170);
-            this.Advertencia.Name = "Advertencia";
-            this.Advertencia.Size = new System.Drawing.Size(51, 49);
-            this.Advertencia.TabIndex = 16;
-            this.Advertencia.TabStop = false;
-            // 
-            // Rules
-            // 
-            this.Rules.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Rules.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Rules.Location = new System.Drawing.Point(11, 122);
-            this.Rules.Multiline = true;
-            this.Rules.Name = "Rules";
-            this.Rules.Size = new System.Drawing.Size(335, 122);
-            this.Rules.TabIndex = 15;
-            this.Rules.Text = "Rules:\r\nRead before asking; http://goo.gl/zyIKu\r\nFAQ/wiki: http://goo.gl/K5tDU\r\nN" +
-    "o Spam\r\nNo Racism\r\nNo Stupid questions\r\nNo  Public servers posting\r\nAsking for a" +
-    " \'crack\' == BAN.";
-            this.Rules.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(105, 68);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(241, 13);
-            this.label4.TabIndex = 14;
-            this.label4.Text = "Someone might be able to resolve your questions.\r\n";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(107, 55);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(239, 13);
-            this.label3.TabIndex = 13;
-            this.label3.Text = "clic Connect to proceed to IRC Mooege channel.";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(107, 42);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(215, 13);
-            this.label2.TabIndex = 12;
-            this.label2.Text = "or your getting errors in Mooege or Madcow,";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(106, 29);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(240, 13);
-            this.label1.TabIndex = 11;
-            this.label1.Text = "If you still haven\'t figured out how MadCow works";
-            // 
-            // BotonAlerta
-            // 
-            this.BotonAlerta.Image = global::MadCow.Properties.Resources.help_button2;
-            this.BotonAlerta.Location = new System.Drawing.Point(14, 15);
-            this.BotonAlerta.Name = "BotonAlerta";
-            this.BotonAlerta.Size = new System.Drawing.Size(77, 77);
-            this.BotonAlerta.TabIndex = 10;
-            this.BotonAlerta.TabStop = false;
+            this.ircIntroLabel.AutoSize = true;
+            this.ircIntroLabel.Location = new System.Drawing.Point(57, 22);
+            this.ircIntroLabel.Name = "ircIntroLabel";
+            this.ircIntroLabel.Size = new System.Drawing.Size(245, 52);
+            this.ircIntroLabel.TabIndex = 11;
+            this.ircIntroLabel.Text = "If you still haven\'t figured out how MadCow works\r\nor your getting errors in Mooe" +
+    "ge or Madcow,\r\nclick Connect to proceed to IRC Mooege channel.\r\nSomeone might be" +
+    " able to resolve your questions.";
+            this.ircIntroLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ConnectButton
             // 
-            this.ConnectButton.Enabled = false;
             this.ConnectButton.Location = new System.Drawing.Point(14, 286);
             this.ConnectButton.Name = "ConnectButton";
             this.ConnectButton.Size = new System.Drawing.Size(339, 42);
@@ -1116,9 +1035,9 @@
             this.TypeHereLabel.ForeColor = System.Drawing.Color.DimGray;
             this.TypeHereLabel.Location = new System.Drawing.Point(11, 252);
             this.TypeHereLabel.Name = "TypeHereLabel";
-            this.TypeHereLabel.Size = new System.Drawing.Size(70, 13);
+            this.TypeHereLabel.Size = new System.Drawing.Size(161, 13);
             this.TypeHereLabel.TabIndex = 8;
-            this.TypeHereLabel.Text = "Type Here;";
+            this.TypeHereLabel.Text = "Type here and press Enter:";
             this.TypeHereLabel.Visible = false;
             // 
             // ChatMessageBox
@@ -1375,6 +1294,37 @@
             this.statusStripProgressBar.Size = new System.Drawing.Size(100, 16);
             this.statusStripProgressBar.Visible = false;
             // 
+            // ircNicknameTextBox
+            // 
+            this.ircNicknameTextBox.Location = new System.Drawing.Point(87, 260);
+            this.ircNicknameTextBox.Name = "ircNicknameTextBox";
+            this.ircNicknameTextBox.Size = new System.Drawing.Size(175, 20);
+            this.ircNicknameTextBox.TabIndex = 18;
+            this.ircNicknameTextBox.TextChanged += new System.EventHandler(this.ircNicknameTextBox_TextChanged);
+            // 
+            // ircNicknameLabel
+            // 
+            this.ircNicknameLabel.AutoSize = true;
+            this.ircNicknameLabel.Location = new System.Drawing.Point(23, 263);
+            this.ircNicknameLabel.Name = "ircNicknameLabel";
+            this.ircNicknameLabel.Size = new System.Drawing.Size(58, 13);
+            this.ircNicknameLabel.TabIndex = 19;
+            this.ircNicknameLabel.Text = "Nickname:";
+            // 
+            // ircRulesLabel
+            // 
+            this.ircRulesLabel.AutoSize = true;
+            this.ircRulesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ircRulesLabel.ForeColor = System.Drawing.Color.Red;
+            this.ircRulesLabel.Location = new System.Drawing.Point(66, 100);
+            this.ircRulesLabel.Name = "ircRulesLabel";
+            this.ircRulesLabel.Size = new System.Drawing.Size(236, 104);
+            this.ircRulesLabel.TabIndex = 20;
+            this.ircRulesLabel.Text = "Rules:\r\nRead before asking; http://goo.gl/zyIKu\r\nFAQ/wiki: http://goo.gl/K5tDU\r\nN" +
+    "o Spam\r\nNo Racism\r\nNo Stupid questions\r\nNo  Public servers posting\r\nAsking for a" +
+    " \'crack\' == BAN.";
+            this.ircRulesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1426,8 +1376,6 @@
             this.ChaneglogTab.PerformLayout();
             this.LiveHelpTab.ResumeLayout(false);
             this.LiveHelpTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Advertencia)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BotonAlerta)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -1518,16 +1466,9 @@
         internal System.Windows.Forms.TextBox ChatDisplayBox;
         internal System.Windows.Forms.TextBox ChatUsersBox;
         internal System.Windows.Forms.TextBox ChatMessageBox;
-        internal System.Windows.Forms.Label PleaseWaitLabel;
         internal System.Windows.Forms.Label TypeHereLabel;
         internal System.Windows.Forms.Button ConnectButton;
-        internal System.Windows.Forms.PictureBox BotonAlerta;
-        internal System.Windows.Forms.Label label1;
-        internal System.Windows.Forms.Label label3;
-        internal System.Windows.Forms.Label label2;
-        internal System.Windows.Forms.Label label4;
-        internal System.Windows.Forms.TextBox Rules;
-        internal System.Windows.Forms.PictureBox Advertencia;
+        internal System.Windows.Forms.Label ircIntroLabel;
         internal System.Windows.Forms.Button DisconnectButton;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
@@ -1556,6 +1497,9 @@
         internal System.Windows.Forms.ComboBox repoComboBox;
         private System.Windows.Forms.TreeView changeLogTreeView;
         private System.Windows.Forms.ToolStripMenuItem checkUpdatesToolStripMenuItem;
+        internal System.Windows.Forms.TextBox ircNicknameTextBox;
+        internal System.Windows.Forms.Label ircNicknameLabel;
+        internal System.Windows.Forms.Label ircRulesLabel;
 
     }
 }

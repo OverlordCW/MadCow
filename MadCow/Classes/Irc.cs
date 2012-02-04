@@ -15,52 +15,51 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // Using API : http://www.meebey.net/projects/smartirc4net/
 
-using Meebey.SmartIrc4net;
-using Meebey.SmartIrc4net.Delegates;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using System.Collections;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
+using Meebey.SmartIrc4net;
 
 namespace MadCow
 {
-    public class Client
+    public class Client : IrcClient
     {
-        public static IrcClient irc = new IrcClient();
-        public static String fixedNickname;
-        public static String channel = "#mooege.chat";
-        public static String server = "downtown.tx.us.synirc.net";
-        public static Int32 port = 6667;
+#if DEBUG
+        private const string Channel = "#mooege.irctest";
+#else
+        private const string Channel = "#mooege.chat";
+#endif
+        private const string Server = "downtown.tx.us.synirc.net";
+        //private const int Port = 6667;
 
-        public static void Run()
+        internal void Run()
         {
-            nickname();
-            irc.SendDelay = 200;
-            irc.AutoRetry = true;
-            irc.ChannelSyncing = true;
-            irc.OnQueryMessage += new MessageEventHandler(OnQueryMessage);
-            irc.OnChannelMessage += new MessageEventHandler(OnChannelMessage);
-            irc.OnJoin += new JoinEventHandler(OnJoin);
-            irc.OnNameReply += new NameReplyEventHandler(OnNames);
-            irc.OnNickChange += new NickChangeEventHandler(OnNickChange);
-            irc.OnDisconnected += new SimpleEventHandler(OnDisconnected);
+            SendDelay = 200;
+            AutoRetry = true;
+            ChannelSyncing = true;
+            base.OnQueryMessage += OnQueryMessage;
+            base.OnChannelMessage += OnChannelMessage;
+            base.OnJoin += OnJoin;
+            base.OnNameReply += OnNameReply;
+            base.OnNickChange += OnNickChange;
+            base.OnDisconnected += OnDisconnected;
 
-            Task<bool> task = Task<bool>.Factory.StartNew(() => irc.Connect(server, port));
+            var task = Task<bool>.Factory.StartNew(() => Connect(Server, 6667));
             task.Wait();
-            bool result = task.Result;
+            var result = task.Result;
 
-             if (result == true)
+            if (result)
             {
                 try
                 {
-                    irc.Login(fixedNickname, "MadCow Live Help Client");
-                    irc.Join(channel);
+                    Login(Configuration.MadCow.IrcNickname, "MadCow Live Help Client");
+                    Join(Channel);
                     Connected();
-                    irc.Listen();
+                    Listen();
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    //ignore
                 }
                 catch (Exception ircex)
                 {
@@ -72,10 +71,10 @@ namespace MadCow
                 Console.WriteLine("[ERROR] Irc Client could not connect.");
             }
         }
-        
-        public static void OnDisconnected()
+
+        public new void OnDisconnected()
         {
-            Form1.GlobalAccess.Invoke(new Action(() => 
+            Form1.GlobalAccess.Invoke(new Action(() =>
             {
                 //Hide Chat Window
                 Form1.GlobalAccess.ChatDisplayBox.Clear();
@@ -86,41 +85,33 @@ namespace MadCow
                 Form1.GlobalAccess.TypeHereLabel.Visible = false;
                 Form1.GlobalAccess.DisconnectButton.Visible = false;
                 //Show Default help tab.
-                Form1.GlobalAccess.Rules.Visible = true;
-                Form1.GlobalAccess.label1.Visible = true;
-                Form1.GlobalAccess.label2.Visible = true;
-                Form1.GlobalAccess.label3.Visible = true;
-                Form1.GlobalAccess.label4.Visible = true;
-                Form1.GlobalAccess.BotonAlerta.Visible = true;
-                Form1.GlobalAccess.Advertencia.Visible = true;
+                Form1.GlobalAccess.ircIntroLabel.Visible = true;
                 Form1.GlobalAccess.ConnectButton.Visible = true;
+                Form1.GlobalAccess.ircNicknameTextBox.Visible = true;
+                Form1.GlobalAccess.ircNicknameLabel.Visible = true;
+                Form1.GlobalAccess.ircRulesLabel.Visible = true;
                 //Kill Thread.
                 //Form1.ircThread.Abort();
             }));
         }
 
-        public static void OnNickChange(string oldnickname, string newnickname, Data ircdata)
+        public new void OnNickChange(string oldnickname, string newnickname, Data ircdata)
         {
             //Todo: Update User List on ChatUsersBox OnNickChange.
         }
 
         //Todo: Fix userlist loading.
-        public static void OnNames(string channel, string[] userlist, Meebey.SmartIrc4net.Data ircdata)
+        public new void OnNameReply(string channel, string[] userlist, Data ircdata)
         {
             Array.Sort(userlist);
-            foreach (string user in userlist)
+            foreach (var user in userlist.Where(user => user.Length > 0))
             {
-                Form1.GlobalAccess.Invoke(new Action(() =>
-                {
-                    if (user.Length > 0)
-                    {
-                        Form1.GlobalAccess.ChatUsersBox.Text += user + Environment.NewLine;
-                    }
-                }));
+                Form1.GlobalAccess.Invoke(
+                    new Action(() => Form1.GlobalAccess.ChatUsersBox.Text += user + Environment.NewLine));
             }
         }
 
-        public static void OnJoin(string x, string y, Data ircdata)
+        public new void OnJoin(string x, string y, Data ircdata)
         {
             Form1.GlobalAccess.Invoke(new Action(() =>
             {
@@ -128,21 +119,21 @@ namespace MadCow
                 Form1.GlobalAccess.DisconnectButton.Visible = true;
                 Form1.GlobalAccess.ChatMessageBox.Visible = true;
                 Form1.GlobalAccess.TypeHereLabel.Visible = true;
-                Form1.GlobalAccess.PleaseWaitLabel.Visible = false;
+                Form1.GlobalAccess.statusStripStatusLabel.Text = "Ready";
             }));
         }
 
-        public static void OnQueryMessage(Data ircdata)
+        public new void OnQueryMessage(Data ircdata)
         {
             switch (ircdata.MessageEx[0])
             {
                 case "die":
-                    irc.Disconnect();
+                    Disconnect();
                     break;
             }
         }
 
-        public static void OnChannelMessage(Data ircdata)
+        public new void OnChannelMessage(Data ircdata)
         {
             Form1.GlobalAccess.Invoke(new Action(() =>
             {
@@ -152,26 +143,18 @@ namespace MadCow
             }));
         }
 
-        public static void Connected()
+        public new void Connected()
         {
             Form1.GlobalAccess.Invoke(new Action(() => { Form1.GlobalAccess.ChatDisplayBox.Text += "Connected" + Environment.NewLine; }));
         }
 
-        public static void nickname()
-        {
-            Random r = new Random(DateTime.Now.Millisecond);
-            Int32 hash = r.Next(0, 999);
-            var nickname = "madcow" + hash.ToString();
-            fixedNickname = nickname;
-        }
-
         //This function sends the message to the irc channel, string message come from Form1.
-        public static void SendMessage(string message)
+        public void SendMessage(string message)
         {
             Form1.GlobalAccess.Invoke(new Action(() =>
             {
-                Form1.GlobalAccess.ChatDisplayBox.Text += "<" + fixedNickname + "> " + message + Environment.NewLine;
-                irc.WriteLine(Rfc2812.Privmsg(channel, message), Priority.Critical);
+                Form1.GlobalAccess.ChatDisplayBox.Text += "<" + Configuration.MadCow.IrcNickname + "> " + message + Environment.NewLine;
+                WriteLine(Rfc2812.Privmsg(Channel, message), Priority.Critical);
             }));
         }
     }
