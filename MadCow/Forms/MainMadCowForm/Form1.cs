@@ -121,6 +121,7 @@ namespace MadCow
                             new Thread(ThreadProc).Start();
                         }
                     }
+                    new Thread(ThreadProc).Start();
 
                 }
                 else
@@ -273,7 +274,7 @@ namespace MadCow
                         new Thread(ThreadProc2).Start();
                     }
                 }
-
+                new Thread(ThreadProc2).Start();
             }
             else
             {
