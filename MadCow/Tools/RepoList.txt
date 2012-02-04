@@ -1,0 +1,7 @@
+https://github.com/mooege/mooege@master
+https://github.com/wetwlly/mooege@master
+https://github.com/Egris/mooege@master
+https://github.com/DarkLotus/mooege@master
+https://github.com/angerwin/d3sharp@master
+https://github.com/Farmy/mooege@master
+https://github.com/mdz444/mooege@master
