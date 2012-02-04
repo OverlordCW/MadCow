@@ -22,7 +22,7 @@ namespace MadCow
 
 
 
-        internal static readonly string CommitsPath = Path.Combine(RuntimeDownloadsPath, "Commits.atom");
+        internal static readonly string CommitsFilePath = Path.Combine(RuntimeDownloadsPath, "Commits.atom");
 
         internal static string GetMooegeFolderPath(Repository repository)
         {

@@ -110,7 +110,7 @@
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.OutPutTab = new System.Windows.Forms.TabPage();
             this.ChaneglogTab = new System.Windows.Forms.TabPage();
-            this.ChangeLogTxtBox = new System.Windows.Forms.TextBox();
+            this.changeLogTreeView = new System.Windows.Forms.TreeView();
             this.SelectRepositoryChngLogLabel = new System.Windows.Forms.Label();
             this.SelectRepoChngLogComboBox = new System.Windows.Forms.ComboBox();
             this.LiveHelpTab = new System.Windows.Forms.TabPage();
@@ -1006,7 +1006,7 @@
             // ChaneglogTab
             // 
             this.ChaneglogTab.BackColor = System.Drawing.Color.Transparent;
-            this.ChaneglogTab.Controls.Add(this.ChangeLogTxtBox);
+            this.ChaneglogTab.Controls.Add(this.changeLogTreeView);
             this.ChaneglogTab.Controls.Add(this.SelectRepositoryChngLogLabel);
             this.ChaneglogTab.Controls.Add(this.SelectRepoChngLogComboBox);
             this.ChaneglogTab.Location = new System.Drawing.Point(4, 22);
@@ -1016,19 +1016,14 @@
             this.ChaneglogTab.TabIndex = 1;
             this.ChaneglogTab.Text = "Changelog";
             // 
-            // ChangeLogTxtBox
+            // changeLogTreeView
             // 
-            this.ChangeLogTxtBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ChangeLogTxtBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ChangeLogTxtBox.Font = new System.Drawing.Font("Lucida Console", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ChangeLogTxtBox.ForeColor = System.Drawing.Color.White;
-            this.ChangeLogTxtBox.Location = new System.Drawing.Point(8, 37);
-            this.ChangeLogTxtBox.Multiline = true;
-            this.ChangeLogTxtBox.Name = "ChangeLogTxtBox";
-            this.ChangeLogTxtBox.ReadOnly = true;
-            this.ChangeLogTxtBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.ChangeLogTxtBox.Size = new System.Drawing.Size(351, 291);
-            this.ChangeLogTxtBox.TabIndex = 2;
+            this.changeLogTreeView.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.changeLogTreeView.Location = new System.Drawing.Point(3, 37);
+            this.changeLogTreeView.Name = "changeLogTreeView";
+            this.changeLogTreeView.ShowNodeToolTips = true;
+            this.changeLogTreeView.Size = new System.Drawing.Size(359, 294);
+            this.changeLogTreeView.TabIndex = 2;
             // 
             // SelectRepositoryChngLogLabel
             // 
@@ -1424,7 +1419,7 @@
             // statusStripStatusLabel
             // 
             this.statusStripStatusLabel.Name = "statusStripStatusLabel";
-            this.statusStripStatusLabel.Size = new System.Drawing.Size(588, 17);
+            this.statusStripStatusLabel.Size = new System.Drawing.Size(721, 17);
             this.statusStripStatusLabel.Spring = true;
             this.statusStripStatusLabel.Text = "Ready";
             this.statusStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1568,7 +1563,6 @@
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage OutPutTab;
         private System.Windows.Forms.TabPage ChaneglogTab;
-        private System.Windows.Forms.TextBox ChangeLogTxtBox;
         private System.Windows.Forms.Label SelectRepositoryChngLogLabel;
         private System.Windows.Forms.ComboBox SelectRepoChngLogComboBox;
         internal System.Windows.Forms.NotifyIcon MadCowTrayIcon;
@@ -1622,6 +1616,7 @@
         private System.Windows.Forms.ToolStripMenuItem enableLazyLoadingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enableNoPasswordCheckToolStripMenuItem;
         internal System.Windows.Forms.ComboBox repoComboBox;
+        private System.Windows.Forms.TreeView changeLogTreeView;
 
     }
 }

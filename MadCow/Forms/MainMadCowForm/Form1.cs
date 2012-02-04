@@ -14,6 +14,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
@@ -40,7 +41,7 @@ namespace MadCow
         //For tray icon
         private ContextMenu m_menu;
 
-        private string _selectedRepo = "";
+        private Repository _selectedRepo;
 
         public Form1()
         {
@@ -1552,7 +1553,7 @@ namespace MadCow
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             SelectRepoChngLogComboBox.Enabled = false;
-            _selectedRepo = ((Repository)SelectRepoChngLogComboBox.SelectedItem).Url.AbsoluteUri;
+            _selectedRepo = (Repository)SelectRepoChngLogComboBox.SelectedItem;
             var bgWorker = new BackgroundWorker();
             bgWorker.DoWork += ChangeLogDownloader_DoWork;
             //bgWorker.RunWorkerCompleted += (s, ea) => Invoke(new Action(() => SelectRepoChngLogComboBox.Enabled = true));
@@ -1575,8 +1576,8 @@ namespace MadCow
                 var client = new WebClient();
                 if (Proxy.proxyStatus)
                     client.Proxy = proxy;
-                client.DownloadFileAsync(new Uri(_selectedRepo + "/commits/master.atom"),
-                                         Paths.CommitsPath);
+                client.DownloadFileAsync(new Uri(_selectedRepo.Url.AbsoluteUri + "/commits/master.atom"),
+                                         Paths.CommitsFilePath);
                 client.DownloadFileCompleted += DisplayChangelog;
             }
             catch
@@ -1588,57 +1589,70 @@ namespace MadCow
         //Parse commit file and display into the textbox.
         private void DisplayChangelog(object sender, AsyncCompletedEventArgs e)
         {
-            ChangeLogTxtBox.Invoke(new Action(() => ChangeLogTxtBox.Clear()));
-            using (var fileStream = new FileStream(Paths.CommitsPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            changeLogTreeView.Invoke(new Action(() => changeLogTreeView.Nodes.Clear()));
+
+            var newNode = new TreeNode();
+            var oldNode = new TreeNode();
+            var comment = string.Empty;
+            var date = default(DateTime);
+            var developer = string.Empty;
+            var revision = string.Empty;
+
+            foreach (var line in File.ReadAllLines(Paths.CommitsFilePath).Skip(7))
             {
-                using (TextReader reader = new StreamReader(fileStream))
+                //For revision.
+                if (Regex.IsMatch(line, "<id>"))
                 {
-                    string line;
-                    var i = 0; //This is to get rid of the first <title> tag.
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        //For commits comment.
-                        if (Regex.IsMatch(line, "<title>") && i > 0)
-                        {
-                            var regex = new Regex("<title>(.*)</title>");
-                            var match = regex.Match(line);
-                            ChangeLogTxtBox.Invoke(new Action(() => ChangeLogTxtBox.AppendText(i + @".-" + match.Groups[1].Value + "\n")));
-                            i++;
-                        }
-                        else if (Regex.IsMatch(line, "<title>") && i == 0)
-                        {
-                            i++;
-                        }
-
-                        //For update date/time.
-                        if (Regex.IsMatch(line, "<updated>") && i > 1)
-                        {
-                            var regex = new Regex("<updated>(.*)</updated>");
-                            var match = regex.Match(line);
-                            ChangeLogTxtBox.Invoke(new Action(() => ChangeLogTxtBox.AppendText(@"Updated: " + match.Groups[1].Value + "\n")));
-                        }
-
-                        //For developer that pushed.
-                        if (Regex.IsMatch(line, "<name>") && i > 0)
-                        {
-                            var regex = new Regex("<name>(.*)</name>");
-                            var match = regex.Match(line);
-                            ChangeLogTxtBox.Invoke(new Action(() =>
-                            {
-                                ChangeLogTxtBox.AppendText(@"Author: " + match.Groups[1].Value + "\n");
-                                ChangeLogTxtBox.AppendText(Environment.NewLine);
-                            }));
-                        }
-                    }
+                    revision = new Regex("Commit/(.*)</id>").Match(line).Groups[1].Value.Substring(7, 7);
                 }
+
+                //For commits comment.
+                if (Regex.IsMatch(line, "<title>"))
+                {
+                    comment = new Regex("<title>(.*)</title>").Match(line).Groups[1].Value;
+                }
+
+                //For update date/time.
+                if (Regex.IsMatch(line, "<updated>"))
+                {
+                    date = Convert.ToDateTime(new Regex("<updated>(.*)</updated>").Match(line).Groups[1].Value);
+                }
+
+                //For developer that pushed.
+                if (Regex.IsMatch(line, "<name>"))
+                {
+                    developer = new Regex("<name>(.*)</name>").Match(line).Groups[1].Value;
+                }
+
+
+                if (Regex.IsMatch(line, "</entry>"))
+                {
+
+                    var node = new TreeNode(string.Format("{0} at {1} by {2}", revision.ToUpper(), date, developer), new[] { new TreeNode(comment) });
+
+                    if (date.CompareTo(_selectedRepo.Date) == 1)
+                    {
+                        newNode.Nodes.Add(node);
+                    }
+                    else
+                    {
+                        oldNode.Nodes.Add(node);
+                    }
+
+                    comment = string.Empty;
+                    date = default(DateTime);
+                    developer = string.Empty;
+                }
+                newNode.Text = string.Format("New Revisions ({0})", newNode.Nodes.Count);
+                oldNode.Text = string.Format("Old Revisions ({0})", oldNode.Nodes.Count);
             }
-            //We scroll the content up to show latest commits first.
+
             Invoke(new Action(() =>
-            {
-                ChangeLogTxtBox.SelectionStart = 0;
-                ChangeLogTxtBox.ScrollToCaret();
-                SelectRepoChngLogComboBox.Enabled = true;
-            }));
+                                  {
+                                      changeLogTreeView.Nodes.AddRange(new[] { newNode, oldNode });
+                                      changeLogTreeView.Nodes[0].Expand();
+                                      SelectRepoChngLogComboBox.Enabled = true;
+                                  }));
         }
         #endregion
 
