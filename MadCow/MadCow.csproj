@@ -132,25 +132,25 @@
     <Compile Include="Forms\EditRepositoryForm\EditRepository.Designer.cs">
       <DependentUpon>EditRepository.cs</DependentUpon>
     </Compile>
-    <Compile Include="MadCowClasses\Configuration.cs" />
-    <Compile Include="MadCowClasses\Irc.cs" />
-    <Compile Include="MadCowClasses\Paths.cs" />
-    <Compile Include="MadCowClasses\Proxy.cs" />
-    <Compile Include="MadCowClasses\Repository.cs" />
-    <Compile Include="MadCowClasses\ServerProfile.cs" />
-    <Compile Include="MadCowClasses\ShortCutCreator.cs" />
-    <Compile Include="MadCowClasses\Helpers.cs" />
-    <Compile Include="MadCowClasses\ErrorFinder.cs" />
-    <Compile Include="MadCowClasses\Diablo.cs" />
-    <Compile Include="MadCowClasses\FindBranch.cs" />
-    <Compile Include="MadCowClasses\RetrieveMpqList.cs" />
-    <Compile Include="MadCowClasses\TextBoxStreamWriter.cs" />
-    <Compile Include="MadCowClasses\ProcessFinder.cs" />
-    <Compile Include="MadCowClasses\Delete.cs" />
-    <Compile Include="MadCowClasses\MPQprocedure.cs" />
-    <Compile Include="MadCowClasses\RevisionParser.cs" />
-    <Compile Include="MadCowClasses\PreRequeriments.cs" />
-    <Compile Include="MadCowClasses\RefreshDesktop.cs" />
+    <Compile Include="Classes\Configuration.cs" />
+    <Compile Include="Classes\Irc.cs" />
+    <Compile Include="Classes\Paths.cs" />
+    <Compile Include="Classes\Proxy.cs" />
+    <Compile Include="Classes\Repository.cs" />
+    <Compile Include="Classes\ServerProfile.cs" />
+    <Compile Include="Classes\ShortCutCreator.cs" />
+    <Compile Include="Classes\Helpers.cs" />
+    <Compile Include="Classes\ErrorFinder.cs" />
+    <Compile Include="Classes\Diablo.cs" />
+    <Compile Include="Classes\FindBranch.cs" />
+    <Compile Include="Classes\RetrieveMpqList.cs" />
+    <Compile Include="Classes\TextBoxStreamWriter.cs" />
+    <Compile Include="Classes\ProcessFinder.cs" />
+    <Compile Include="Classes\Delete.cs" />
+    <Compile Include="Classes\MPQprocedure.cs" />
+    <Compile Include="Classes\RevisionParser.cs" />
+    <Compile Include="Classes\PreRequeriments.cs" />
+    <Compile Include="Classes\RefreshDesktop.cs" />
     <Compile Include="Forms\MainMadCowForm\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -163,7 +163,7 @@
     <Compile Include="Forms\MPQDownloaderForm\MPQDownloader.Designer.cs">
       <DependentUpon>MPQDownloader.cs</DependentUpon>
     </Compile>
-    <Compile Include="MadCowClasses\Tray.cs" />
+    <Compile Include="Classes\Tray.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
