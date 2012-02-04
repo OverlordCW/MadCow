@@ -30,7 +30,7 @@ namespace MadCow
     public partial class Form1 : Form
     {
         //We update this variable with the current supported D3 client after parsing the required version.
-        public static String MooegeSupportedVersion;
+        private static string _mooegeSupportedVersion;
         //Timing for autoupdate
         private int _tick;
         //Parsing Console into a textbox
@@ -40,7 +40,7 @@ namespace MadCow
         //For tray icon
         private ContextMenu m_menu;
 
-        public static String SelectedBranch;
+        private string _selectedRepo = "";
 
         public Form1()
         {
@@ -83,8 +83,6 @@ namespace MadCow
             toolTip1.SetToolTip(RestoreDefaultsLabel, "Resets Server Control settings");
             toolTip1.SetToolTip(PlayDiabloButton, "Time to play Diablo 3 through Mooege!");
             InitializeFindPath(); //Search if a Diablo client path already exist.
-            RepoList(); //Loads Repos from RepoList.txt
-            Changelog(); //Loads Changelog comobox values.
             LoadProfile(Configuration.MadCow.CurrentProfile); //We try to Load the last used profile by the user.
             RetrieveMpqList.GetfileList(); //Load MPQ list from Blizz server. Todo: This might slow down a bit MadCow loading, maybe we could place it somewhere else?.
             Helper.KillUpdater(); //This will kill MadCow updater if its running.
@@ -312,7 +310,16 @@ namespace MadCow
         {
             if (ErrorFinder.HasMpqs()) //We check for MPQ files count before allowing the user to proceed to play.
             {
-                new Thread(ThreadProc).Start();
+                if (repoComboBox.SelectedItem is Repository)
+                {
+                    new Thread(ThreadProc).Start();
+                }
+                else
+                {
+                    MessageBox.Show("Please select a repository first!");
+                    repoComboBox.DroppedDown = true;
+                }
+
             }
             else if (Diablo3UserPathSelection != null && !ErrorFinder.HasMpqs())
             {
@@ -332,16 +339,7 @@ namespace MadCow
 
         public void ThreadProc()
         {
-            if (repoComboBox.SelectedItem is Repository)
-            {
-                Diablo.Play((Repository)repoComboBox.SelectedItem);
-            }
-            else
-            {
-                MessageBox.Show("Please select a repository first!");
-                repoComboBox.DroppedDown = true;
-            }
-            
+            Diablo.Play((Repository)repoComboBox.SelectedItem);
 
             //We add ErrorFinder call here, in order to know if Mooege had issues loading.
             if (!File.Exists(Environment.CurrentDirectory + @"\logs\mooege.log")) return;
@@ -794,7 +792,7 @@ namespace MadCow
                     var d3Version = FileVersionInfo.GetVersionInfo(Diablo3UserPathSelection.Text);
                     var parsePointer = parseVersion.IndexOf("RequiredPatchVersion = ", StringComparison.Ordinal);
                     var mooegeVersion = parseVersion.Substring(parsePointer + 23, 4); //Gets required version by Mooege
-                    MooegeSupportedVersion = mooegeVersion; //Public String to display over D3 path validation.
+                    _mooegeSupportedVersion = mooegeVersion; //Public String to display over D3 path validation.
                     var currentD3VersionSupported = Convert.ToInt32(mooegeVersion);
                     var localD3Version = d3Version.FilePrivatePart;
 
@@ -1541,140 +1539,29 @@ namespace MadCow
         #endregion
 
         ////////////////////////////////////////////////////////////////////////
-        //Dynamically Add Repos, but also remove duplicates.
-        ////////////////////////////////////////////////////////////////////////
-        #region Repositories
-
-        private void RepoList()
-        {
-            repoComboBox.Items.Clear();
-            repoComboBox.Items.AddRange(Repository.Repositories.Where(r => r.IsDownloaded).ToArray());
-            repoComboBox.SelectedItem = Repository.Repositories.FirstOrDefault(r => r.Name == Configuration.MadCow.LastRepository);
-        }
-
-        //private void RepoCheck()
-        //{
-        //    var lines = File.ReadAllLines(Paths.RepositoriesListPath);
-        //    File.WriteAllLines(Paths.RepositoriesListPath, lines.Distinct().ToArray());
-        //}
-
-        //private void RepoListAdd()
-        //{
-        //    var str = File.AppendText(Paths.RepositoriesListPath);
-        //    str.WriteLine(repoComboBox.Text);
-        //    str.Close();
-        //}
-
-        //private void RepoListUpdate()
-        //{
-        //    RepoCheck();
-        //    repoComboBox.Items.Clear();
-        //    var sr = new StreamReader(Paths.RepositoriesListPath);
-        //    var line = sr.ReadLine();
-
-        //    while (line != null)
-        //    {
-        //        repoComboBox.Items.Add(line);
-        //        line = sr.ReadLine();
-        //    }
-        //    sr.Close();
-        //}
-        #endregion
-
-        ////////////////////////////////////////////////////////////////////////
         //Changelog.
         ////////////////////////////////////////////////////////////////////////
         #region Changelog
-        //Fill Changelog Repository ComboBox.
-        private void Changelog()
-        {
-            var sr = new StreamReader(Paths.RepositoriesListPath);
-            var line = sr.ReadLine();
-
-            while (line != null)
-            {
-                var s = line.Replace(@"https://github.com/", "");
-                var d = s.Replace(@"/mooege", "");
-                var e = d.Replace(@"/d3sharp", "");
-                SelectRepoChngLogComboBox.Items.Add(e);
-                line = sr.ReadLine();
-            }
-            sr.Close();
-        }
-
-        //Update Changelog repository list in real time.
-        private void ChangelogListUpdate()
+        private void SelectRepoChngLogComboBox_DropDown(object sender, EventArgs e)
         {
             SelectRepoChngLogComboBox.Items.Clear();
-            var sr = new StreamReader(Paths.RepositoriesListPath);
-            var line = sr.ReadLine();
-            while (line != null)
-            {
-                var s = line.Replace(@"https://github.com/", "");
-                var d = s.Replace(@"/mooege", "");
-                var e = d.Replace(@"/d3sharp", "");
-                SelectRepoChngLogComboBox.Items.Add(e);
-                line = sr.ReadLine();
-            }
-            sr.Close();
+            SelectRepoChngLogComboBox.DisplayMember = "Developer";
+            SelectRepoChngLogComboBox.Items.AddRange(Repository.Repositories.ToArray());
         }
 
-        //Parse commit file and display into the textbox.
-        private void DisplayChangelog(object sender, AsyncCompletedEventArgs e)
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ChangeLogTxtBox.Invoke(new Action(() => ChangeLogTxtBox.Clear()));
-            using (var fileStream = new FileStream(Path.Combine(Environment.CurrentDirectory, "RunTimeDownloads", "Commits.ATOM"), FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            {
-                using (TextReader reader = new StreamReader(fileStream))
-                {
-                    string line;
-                    var i = 0; //This is to get rid of the first <title> tag.
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        //For commits comment.
-                        if (System.Text.RegularExpressions.Regex.IsMatch(line, "<title>") && i > 0)
-                        {
-                            var regex = new Regex("<title>(.*)</title>");
-                            var match = regex.Match(line);
-                            ChangeLogTxtBox.Invoke(new Action(() => ChangeLogTxtBox.AppendText(i + @".-" + match.Groups[1].Value + "\n")));
-                            i++;
-                        }
-                        else if (System.Text.RegularExpressions.Regex.IsMatch(line, "<title>") && i == 0)
-                        {
-                            i++;
-                        }
+            SelectRepoChngLogComboBox.Enabled = false;
+            _selectedRepo = ((Repository)SelectRepoChngLogComboBox.SelectedItem).Url.AbsoluteUri;
+            var bgWorker = new BackgroundWorker();
+            bgWorker.DoWork += ChangeLogDownloader_DoWork;
+            //bgWorker.RunWorkerCompleted += (s, ea) => Invoke(new Action(() => SelectRepoChngLogComboBox.Enabled = true));
 
-                        //For update date/time.
-                        if (System.Text.RegularExpressions.Regex.IsMatch(line, "<updated>") && i > 1)
-                        {
-                            var regex = new Regex("<updated>(.*)</updated>");
-                            var match = regex.Match(line);
-                            ChangeLogTxtBox.Invoke(new Action(() => ChangeLogTxtBox.AppendText(@"Updated: " + match.Groups[1].Value + "\n")));
-                        }
-
-                        //For developer that pushed.
-                        if (System.Text.RegularExpressions.Regex.IsMatch(line, "<name>") && i > 0)
-                        {
-                            var regex = new Regex("<name>(.*)</name>");
-                            var match = regex.Match(line);
-                            ChangeLogTxtBox.Invoke(new Action(() =>
-                            {
-                                ChangeLogTxtBox.AppendText(@"Author: " + match.Groups[1].Value + "\n");
-                                ChangeLogTxtBox.AppendText(Environment.NewLine);
-                            }));
-                        }
-                    }
-                }
-            }
-            //We scroll the content up to show latest commits first.
-            ChangeLogTxtBox.Invoke(new Action(() =>
-            {
-                ChangeLogTxtBox.SelectionStart = 0;
-                ChangeLogTxtBox.ScrollToCaret();
-            }));
+            //Proceed to download the commit file and parse.
+            bgWorker.RunWorkerAsync();
         }
 
-        private void backgroundWorker6_DoWork(object sender, DoWorkEventArgs e)
+        private void ChangeLogDownloader_DoWork(object sender, DoWorkEventArgs e)
         {
             var proxy = new WebProxy();
             if (Proxy.proxyStatus)
@@ -1688,7 +1575,8 @@ namespace MadCow
                 var client = new WebClient();
                 if (Proxy.proxyStatus)
                     client.Proxy = proxy;
-                client.DownloadFileAsync(new Uri(SelectedRepo + @"/commits/master.atom"), Environment.CurrentDirectory + @"\RuntimeDownloads\Commits.atom");
+                client.DownloadFileAsync(new Uri(_selectedRepo + "/commits/master.atom"),
+                                         Paths.CommitsPath);
                 client.DownloadFileCompleted += DisplayChangelog;
             }
             catch
@@ -1697,28 +1585,60 @@ namespace MadCow
             }
         }
 
-        public string SelectedRepo = "";
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        //Parse commit file and display into the textbox.
+        private void DisplayChangelog(object sender, AsyncCompletedEventArgs e)
         {
-            //We first parse the repo name selected by the user.
-            SelectedRepo = SelectRepoChngLogComboBox.Text;
-
-            //We search for that repo URL over RepoList.txt
-            var sr = new StreamReader(Paths.RepositoriesListPath);
-            var line = sr.ReadLine();
-
-            while (line != null)
+            ChangeLogTxtBox.Invoke(new Action(() => ChangeLogTxtBox.Clear()));
+            using (var fileStream = new FileStream(Paths.CommitsPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                if (Regex.IsMatch(line, SelectedRepo))
+                using (TextReader reader = new StreamReader(fileStream))
                 {
-                    //Pass the whole URL to selectedRepo string that we will use to create the new Uri.
-                    SelectedRepo = line;
+                    string line;
+                    var i = 0; //This is to get rid of the first <title> tag.
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        //For commits comment.
+                        if (Regex.IsMatch(line, "<title>") && i > 0)
+                        {
+                            var regex = new Regex("<title>(.*)</title>");
+                            var match = regex.Match(line);
+                            ChangeLogTxtBox.Invoke(new Action(() => ChangeLogTxtBox.AppendText(i + @".-" + match.Groups[1].Value + "\n")));
+                            i++;
+                        }
+                        else if (Regex.IsMatch(line, "<title>") && i == 0)
+                        {
+                            i++;
+                        }
+
+                        //For update date/time.
+                        if (Regex.IsMatch(line, "<updated>") && i > 1)
+                        {
+                            var regex = new Regex("<updated>(.*)</updated>");
+                            var match = regex.Match(line);
+                            ChangeLogTxtBox.Invoke(new Action(() => ChangeLogTxtBox.AppendText(@"Updated: " + match.Groups[1].Value + "\n")));
+                        }
+
+                        //For developer that pushed.
+                        if (Regex.IsMatch(line, "<name>") && i > 0)
+                        {
+                            var regex = new Regex("<name>(.*)</name>");
+                            var match = regex.Match(line);
+                            ChangeLogTxtBox.Invoke(new Action(() =>
+                            {
+                                ChangeLogTxtBox.AppendText(@"Author: " + match.Groups[1].Value + "\n");
+                                ChangeLogTxtBox.AppendText(Environment.NewLine);
+                            }));
+                        }
+                    }
                 }
-                line = sr.ReadLine();
             }
-            sr.Close();
-            //Proceed to download the commit file and parse.
-            ChangelogDownloader.RunWorkerAsync();
+            //We scroll the content up to show latest commits first.
+            Invoke(new Action(() =>
+            {
+                ChangeLogTxtBox.SelectionStart = 0;
+                ChangeLogTxtBox.ScrollToCaret();
+                SelectRepoChngLogComboBox.Enabled = true;
+            }));
         }
         #endregion
 
@@ -2094,12 +2014,15 @@ namespace MadCow
 
         private void repoComboBox_DropDown(object sender, EventArgs e)
         {
-            RepoList();
+            repoComboBox.Items.Clear();
+            repoComboBox.Items.AddRange(Repository.Repositories.Where(r => r.IsDownloaded).ToArray());
             if (repoComboBox.Items.Count == 0)
             {
                 new RepositorySelection().ShowDialog();
-                RepoList();
+                repoComboBox.Items.AddRange(Repository.Repositories.Where(r => r.IsDownloaded).ToArray());
             }
+
+            repoComboBox.SelectedItem = Repository.Repositories.FirstOrDefault(r => r.Name == Configuration.MadCow.LastRepository);
         }
     }
 }

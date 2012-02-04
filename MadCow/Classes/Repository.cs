@@ -60,7 +60,7 @@ namespace MadCow
             }
         }
 
-        internal string Developer { get { return _revisionParser.DeveloperName; } }
+        public string Developer { get { return _revisionParser.DeveloperName; } }
 
         internal string Fork { get { return _revisionParser.ForkName; } }
 

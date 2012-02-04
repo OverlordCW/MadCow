@@ -128,7 +128,6 @@
             this.ChatMessageBox = new System.Windows.Forms.TextBox();
             this.ChatUsersBox = new System.Windows.Forms.TextBox();
             this.ChatDisplayBox = new System.Windows.Forms.TextBox();
-            this.ChangelogDownloader = new System.ComponentModel.BackgroundWorker();
             this.MadCowTrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.MpqPathBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -1047,6 +1046,7 @@
             this.SelectRepoChngLogComboBox.Name = "SelectRepoChngLogComboBox";
             this.SelectRepoChngLogComboBox.Size = new System.Drawing.Size(121, 21);
             this.SelectRepoChngLogComboBox.TabIndex = 0;
+            this.SelectRepoChngLogComboBox.DropDown += new System.EventHandler(this.SelectRepoChngLogComboBox_DropDown);
             this.SelectRepoChngLogComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
             // LiveHelpTab
@@ -1237,10 +1237,6 @@
             this.ChatDisplayBox.TabIndex = 1;
             this.ChatDisplayBox.Visible = false;
             // 
-            // ChangelogDownloader
-            // 
-            this.ChangelogDownloader.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker6_DoWork);
-            // 
             // MadCowTrayIcon
             // 
             this.MadCowTrayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("MadCowTrayIcon.Icon")));
@@ -1428,7 +1424,7 @@
             // statusStripStatusLabel
             // 
             this.statusStripStatusLabel.Name = "statusStripStatusLabel";
-            this.statusStripStatusLabel.Size = new System.Drawing.Size(721, 17);
+            this.statusStripStatusLabel.Size = new System.Drawing.Size(588, 17);
             this.statusStripStatusLabel.Spring = true;
             this.statusStripStatusLabel.Text = "Ready";
             this.statusStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1575,7 +1571,6 @@
         private System.Windows.Forms.TextBox ChangeLogTxtBox;
         private System.Windows.Forms.Label SelectRepositoryChngLogLabel;
         private System.Windows.Forms.ComboBox SelectRepoChngLogComboBox;
-        private System.ComponentModel.BackgroundWorker ChangelogDownloader;
         internal System.Windows.Forms.NotifyIcon MadCowTrayIcon;
         internal System.Windows.Forms.Button PlayDiabloButton;
         internal System.Windows.Forms.Button CopyMPQButton;
