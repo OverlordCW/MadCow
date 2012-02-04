@@ -32,8 +32,6 @@ namespace MadCow
     {
         //We update this variable with the current supported D3 client after parsing the required version.
         private static string _mooegeSupportedVersion;
-        //Timing for autoupdate
-        private int _tick;
         //Parsing Console into a textbox
         private TextWriter _writer;
         //TO access controls from outside classes
@@ -71,13 +69,10 @@ namespace MadCow
             // Force the ToolTip text to be displayed whether or not the form is active.
             toolTip1.ShowAlways = true;
             // Default buttons status. 
-            AutoUpdateValue.Enabled = false;
-            EnableAutoUpdateBox.Enabled = false;
             // Set up the ToolTip text for the Buttons.
             toolTip1.SetToolTip(UpdateMooegeButton, "Update mooege from GitHub to latest version");
             toolTip1.SetToolTip(CopyMPQButton, "Copy MPQ's if you have D3 installed");
             toolTip1.SetToolTip(FindDiabloButton, "Find Diablo.exe so MadCow can work properly");
-            toolTip1.SetToolTip(EnableAutoUpdateBox, "Enable updates to a repository every 'X' minutes");
             toolTip1.SetToolTip(RemoteServerLaunchButton, "Connects to public server you have entered in");
             toolTip1.SetToolTip(ResetRepoFolder, "Resets Repository folder in case of errors");
             toolTip1.SetToolTip(DownloadMPQSButton, "Downloads ALL MPQs needed to run Mooege");
@@ -91,215 +86,13 @@ namespace MadCow
             splash.Hide();
         }
         #endregion
-
-        ///////////////////////////////////////////////////////////
-        //Validate Repository
-        ///////////////////////////////////////////////////////////
-        #region ValidateRepository
-        private void Validate_Repository_Click(object sender, EventArgs e)
-        {
-            ValidateRepository.RunWorkerAsync();
-        }
-
-        private void backgroundWorker5_DoWork(object sender, DoWorkEventArgs e)
-        {
-            //var proxy = new WebProxy();
-            //if (Proxy.proxyStatus)
-            //{
-            //    proxy.Address = new Uri(Proxy.proxyUrl);
-            //    proxy.Credentials = new NetworkCredential(Proxy.username, Proxy.password);
-            //}
-            ////repoComboBox.Invoke(new Action(() => { RevisionParser.RevisionUrl = repoComboBox.Text; }));
-            //try
-            //{
-            //    var client = new WebClient();
-            //    if (Proxy.proxyStatus)
-            //        client.Proxy = proxy;
-            //    client.DownloadStringCompleted += backgroundWorker5_RunWorkerCompleted;
-            //    try
-            //    {
-            //        //var uri = new Uri(RevisionParser.RevisionUrl + "/commits/master.atom");
-            //        //client.DownloadStringAsync(uri);
-            //    }
-            //    catch (UriFormatException)
-            //    {
-            //        ActiveForm.Invoke(new Action(() =>
-            //        {
-            //            RevisionParser.CommitFile = "Incorrect repository entry";
-            //            pictureBox2.Hide();
-            //            repoComboBox.Text = RevisionParser.CommitFile;
-            //            pictureBox1.Show();
-            //            AutoUpdateValue.Enabled = false; //If validation fails we set Update and Autoupdate
-            //            EnableAutoUpdateBox.Enabled = false;      //functions disabled!.
-            //            UpdateMooegeButton.Enabled = false;
-            //            Console.WriteLine("Please try a different Repository.");
-            //        }));
-            //    }
-
-            //}
-            //catch (WebException ex)
-            //{
-            //    if (ex.Status == WebExceptionStatus.ProtocolError)
-            //    {
-            //        if (((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.NotFound)
-            //        {
-            //            RevisionParser.CommitFile = "Incorrect repository entry";
-            //        }
-            //    }
-            //    else if (ex.Status == WebExceptionStatus.ConnectFailure)
-            //    {
-            //        RevisionParser.CommitFile = "ConnectionFailure";
-            //    }
-            //    else
-            //        RevisionParser.CommitFile = "Incorrect repository entry";
-            //}
-        }
-
-        private void backgroundWorker5_RunWorkerCompleted(object sender, DownloadStringCompletedEventArgs e)
-        {
-
-            //if (e.Error != null)
-            //{
-            //    RevisionParser.CommitFile = "Incorrect repository entry";
-            //}
-
-            //else if (e.Result != null && e.Error == null)
-            //{
-            //    RevisionParser.CommitFile = e.Result;
-            //    //var pos2 = ParseRevision.CommitFile.IndexOf("Commit/", StringComparison.Ordinal);
-            //    //var revision = ParseRevision.CommitFile.Substring(pos2 + 7, 7);
-            //    //ParseRevision.LastRevision = ParseRevision.CommitFile.Substring(pos2 + 7, 7);
-            //}
-
-            //try
-            //{
-            //    if (RevisionParser.CommitFile == "ConnectionFailure")
-            //    {
-            //        ActiveForm.Invoke(new Action(() =>
-            //        {
-            //            pictureBox2.Hide();
-            //            repoComboBox.Text = RevisionParser.CommitFile;
-            //            pictureBox1.Show();
-            //            AutoUpdateValue.Enabled = false; //If validation fails we set Update and Autoupdate
-            //            EnableAutoUpdateBox.Enabled = false;      //functions disabled!.
-            //            UpdateMooegeButton.Enabled = false;
-            //            Console.WriteLine("Internet Problems.");
-            //        }));
-            //    }
-
-            //    else if (RevisionParser.CommitFile == "Incorrect repository entry")
-            //    {
-            //        ActiveForm.Invoke(new Action(() =>
-            //        {
-            //            pictureBox2.Hide();
-            //            repoComboBox.Text = RevisionParser.CommitFile;
-            //            pictureBox1.Show();
-            //            AutoUpdateValue.Enabled = false; //If validation fails we set Update and Autoupdate
-            //            EnableAutoUpdateBox.Enabled = false;      //functions disabled!.
-            //            UpdateMooegeButton.Enabled = false;
-            //            Console.WriteLine("Please try a different Repository.");
-            //        }));
-            //    }
-            //    else
-            //    {
-            //        ActiveForm.Invoke(new Action(() =>
-            //        {
-            //            pictureBox1.Hide();
-            //            pictureBox2.Show();
-            //            repoComboBox.ForeColor = Color.Green;
-            //            //repoComboBox.Text = RevisionParser.RevisionUrl;
-            //            UpdateMooegeButton.Enabled = true;
-            //            AutoUpdateValue.Enabled = true;
-            //            EnableAutoUpdateBox.Enabled = true;
-            //            Console.WriteLine("Repository Validated!");
-            //            RepoListAdd();
-            //            RepoListUpdate();
-            //            ChangelogListUpdate();
-            //            FindBranch.findBrach(repoComboBox.Text);
-            //            RepositoryHintLabel.Visible = false;
-            //            BranchComboBox.Visible = true;
-            //            BranchSelectionLabel.Visible = true;
-            //        }));
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex);
-            //    ActiveForm.Invoke(new Action(() =>
-            //    {
-            //        pictureBox2.Hide();
-            //        repoComboBox.Text = RevisionParser.CommitFile;
-            //        pictureBox1.Show();
-            //    }));
-            //}
-        }
-        #endregion
-
         /////////////////////////////
-        //UPDATE MOOEGE: This will compare ur current revision, if outdated proceed to download calling ->backgroundWorker1.RunWorkerAsync()->backgroundWorker1_RunWorkerCompleted.
+        //UPDATE MOOEGE: This will compare ur current revision, if outdated proceed to download
         /////////////////////////////
         #region UpdateMooege
         private void Update_Mooege_Click(object sender, EventArgs e)
         {
             ((Repository)repoComboBox.SelectedItem).Update();
-        }
-
-        private void UpdateMooege()
-        {
-            ////We set or "reset" progressbar value to zero.
-            //statusStripStatusLabel.Text = "Updating...";
-            //statusStripProgressBar.Value = 0;
-            //if (Directory.Exists(Paths.RepositoriesPath))
-            //{
-            //    //Console.WriteLine("You have latest [{0}] revision: {1}",
-            //    //                  RevisionParser.DeveloperName,
-            //    //                  RevisionParser.LastRevision);
-
-            //    //Tray.ShowBalloonTip(string.Format("You have latest [{0}] revision: {1}",
-            //    //                                            RevisionParser.DeveloperName,
-            //    //                                            RevisionParser.LastRevision));
-
-
-            //    if (EnableAutoUpdateBox.Checked) //Using AutoUpdate:
-            //    {
-            //        _tick = (int)AutoUpdateValue.Value;
-            //        AutoUpdateTimerLabel.Text = string.Format("Update in {0} minutes.", _tick);
-            //    }
-            //}
-
-            //else if (Directory.Exists(Path.Combine(programPath, "MPQ"))) //Checks for MPQ Folder
-            //{
-            //    if (EnableAutoUpdateBox.Checked) //Using AutoUpdate:
-            //    {
-            //        DownloadSpeedTimer.Stop();
-            //    }
-
-            //    Console.WriteLine("Found default MadCow MPQ folder");
-            //    //DeleteHelper.DeleteOldRepoVersion(RevisionParser.DeveloperName); //We delete old repo version.
-            //    UpdateMooegeButton.Enabled = false;
-            //    Console.WriteLine("Downloading...");
-
-            //    Tray.ShowBalloonTip("Downloading...");
-
-            //    DownloadRepository.RunWorkerAsync();
-            //}
-
-            //else
-            //{
-            //    if (EnableAutoUpdateBox.Checked) //Using AutoUpdate:
-            //    {
-            //        DownloadSpeedTimer.Stop();
-            //    }
-
-            //    //DeleteHelper.DeleteOldRepoVersion(RevisionParser.DeveloperName); //We delete old repo version.
-            //    Console.WriteLine("Downloading...");
-
-            //    Tray.ShowBalloonTip("Downloading...");
-
-            //    Directory.CreateDirectory(Path.Combine(programPath, "MPQ"));
-            //    UpdateMooegeButton.Enabled = false;
-            //    DownloadRepository.RunWorkerAsync();
-            //}
         }
         #endregion
 
@@ -311,9 +104,25 @@ namespace MadCow
         {
             if (ErrorFinder.HasMpqs()) //We check for MPQ files count before allowing the user to proceed to play.
             {
-                if (repoComboBox.SelectedItem is Repository)
+                var repo = repoComboBox.SelectedItem as Repository;
+                if (repo != null)
                 {
-                    new Thread(ThreadProc).Start();
+                    if (!string.IsNullOrEmpty(repo.LastRevision) && repo.LastRevision != repo.LocalRevision)
+                    {
+                        var result = MessageBox.Show(this, "A new Mooege version is available. Should it be downloaded?",
+                                                     "Update available",
+                                                     MessageBoxButtons.YesNoCancel,
+                                                     MessageBoxIcon.Question);
+                        if (result == DialogResult.Yes)
+                        {
+                            repo.Update();
+                        }
+                        else if (result == DialogResult.No)
+                        {
+                            new Thread(ThreadProc).Start();
+                        }
+                    }
+
                 }
                 else
                 {
@@ -429,7 +238,6 @@ namespace MadCow
             Console.WriteLine("Starting Diablo...");
         }
         #endregion
-
         ///////////////////////////////////////////////////////////
         //Server Control Settings
         ///////////////////////////////////////////////////////////
@@ -448,9 +256,25 @@ namespace MadCow
 
         private void LaunchServer_Click(object sender, EventArgs e)
         {
-            if (repoComboBox.SelectedItem is Repository)
+            var repo = repoComboBox.SelectedItem as Repository;
+            if (repo != null)
             {
-                new Thread(ThreadProc2).Start();
+                if (!string.IsNullOrEmpty(repo.LastRevision) && repo.LastRevision != repo.LocalRevision)
+                {
+                    var result = MessageBox.Show(this, "A new Mooege version is available. Should it be downloaded?",
+                                                 "Update available",
+                                                 MessageBoxButtons.YesNoCancel,
+                                                 MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        repo.Update();
+                    }
+                    else if (result == DialogResult.No)
+                    {
+                        new Thread(ThreadProc2).Start();
+                    }
+                }
+
             }
             else
             {
@@ -523,49 +347,6 @@ namespace MadCow
             }
         }
         #endregion
-
-        ///////////////////////////////////////////////////////////
-        //Timer stuff for AutoUpdate
-        ///////////////////////////////////////////////////////////
-        #region TimerStuff
-        private void AutoUpdate_CheckedChanged(object sender, EventArgs e)
-        {
-            _tick = (int)AutoUpdateValue.Value;
-
-            if (EnableAutoUpdateBox.Checked)
-            {
-                AutoUpdateTimerLabel.Text = "Update in " + _tick + " minutes.";
-                DownloadSpeedTimer.Start();
-                AutoUpdateValue.Enabled = false;
-                repoComboBox.Enabled = false;
-                UpdateMooegeButton.Visible = false;
-                AutoUpdateTimerLabel.Visible = true;
-            }
-
-            else if (EnableAutoUpdateBox.Checked == false)
-            {
-                DownloadSpeedTimer.Stop();
-                AutoUpdateTimerLabel.Text = " ";
-                AutoUpdateValue.Enabled = true;
-                repoComboBox.Enabled = true;
-                UpdateMooegeButton.Visible = true;
-                AutoUpdateTimerLabel.Visible = false;
-            }
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            _tick--;
-            if (_tick == 0)
-            {
-                UpdateMooege(); //Runs Update //This was changed in the previous commit.
-                _tick = (int)AutoUpdateValue.Value;
-            }
-            else
-                AutoUpdateTimerLabel.Text = "Update in " + _tick + " minutes.";
-        }
-        #endregion
-
         ///////////////////////////////////////////////////////////
         //Diablo Path Stuff
         ///////////////////////////////////////////////////////////
@@ -650,101 +431,6 @@ namespace MadCow
             }
         }
         #endregion
-
-        /////////////////////////////////
-        //DOWNLOAD SOURCE FROM REPOSITORY
-        /////////////////////////////////
-        #region DownloadRepository
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-            //var proxy = new WebProxy();
-            //if (Proxy.proxyStatus)
-            //{
-            //    proxy.Address = new Uri(Proxy.proxyUrl);
-            //    proxy.Credentials = new NetworkCredential(Proxy.username, Proxy.password);
-            //}
-            ////We get the selected branch first.
-            //BranchComboBox.Invoke(new Action(() => { SelectedBranch = BranchComboBox.SelectedItem.ToString(); }));
-            //var url = new Uri(RevisionParser.RevisionUrl + "/zipball/" + SelectedBranch);
-            //var request = (HttpWebRequest)WebRequest.Create(url);
-            //if (Proxy.proxyStatus)
-            //    request.Proxy = proxy;
-            //var response = (HttpWebResponse)request.GetResponse();
-            //response.Close();
-            //// Gets bytes.
-            //var iSize = response.ContentLength;
-
-            //// Keeping track of downloaded bytes.
-            //long iRunningByteTotal = 0;
-
-            //// Open Webclient.
-            //using (var client = new WebClient())
-            //{
-            //    if (Proxy.proxyStatus)
-            //        client.Proxy = proxy;
-            //    // Open the file at the remote path.
-            //    using (var streamRemote = client.OpenRead(new Uri(RevisionParser.RevisionUrl + "/zipball/" + SelectedBranch)))
-            //    {
-            //        // We write those files into the file system.
-            //        using (Stream streamLocal = new FileStream(Program.programPath + "/Repositories/Mooege.zip", FileMode.Create, FileAccess.Write, FileShare.None))
-            //        {
-            //            // Loop the stream and get the file into the byte buffer
-            //            int iByteSize;
-            //            var byteBuffer = new byte[iSize];
-            //            while ((iByteSize = streamRemote.Read(byteBuffer, 0, byteBuffer.Length)) > 0)
-            //            {
-            //                // Write the bytes to the file system at the file path specified
-            //                streamLocal.Write(byteBuffer, 0, iByteSize);
-            //                iRunningByteTotal += iByteSize;
-
-            //                // Calculate the progress out of a base "100"
-            //                var dIndex = (double)(iRunningByteTotal);
-            //                var dTotal = (double)byteBuffer.Length;
-            //                var dProgressPercentage = (dIndex / dTotal);
-            //                var iProgressPercentage = (int)(dProgressPercentage * 100);
-
-            //                // Update the progress bar
-            //                DownloadRepository.ReportProgress(iProgressPercentage);
-            //            }
-
-            //            // Clean up the file stream
-            //            streamLocal.Close();
-            //        }
-
-            //        // Close the connection to the remote server
-            //        streamRemote.Close();
-            //    }
-            //}
-
-        }
-
-        //UPDATE PROGRESS BAR
-        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            statusStripProgressBar.Value = e.ProgressPercentage;
-        }
-
-        //PROCEED WITH THE PROCESS ONCE THE DOWNLOAD ITS COMPLETE
-        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            //We reset progressbar value after finishing.
-            Console.WriteLine("Download Complete!");
-
-            Tray.ShowBalloonTip("Download Complete!");
-
-            statusStripProgressBar.Value = 0;
-            statusStripProgressBar.PerformStep();
-            //MadCowProcedure.RunWholeProcedure();
-            UpdateMooegeButton.Enabled = true;
-            if (EnableAutoUpdateBox.Checked)
-            {
-                _tick = (int)AutoUpdateValue.Value;
-                DownloadSpeedTimer.Start();
-                AutoUpdateTimerLabel.Text = "Update in " + _tick + " minutes.";
-            }
-        }
-        #endregion
-
         ///////////////////////////////////////////////////////////////////////
         //ResetRepoFolder
         ///////////////////////////////////////////////////////////////////////
@@ -1676,7 +1362,11 @@ namespace MadCow
         {
             if (UpdateMooegeButton.Enabled)
             {
-                UpdateMooege();
+                var repo = (Repository)repoComboBox.SelectedItem;
+                if (repo != null)
+                {
+                    repo.Update();
+                }
             }
             else
             {
@@ -1794,6 +1484,11 @@ namespace MadCow
         {
             Configuration.MadCow.CompileAsDebug = compileAsDebugToolStripMenuItem.Checked;
         }
+
+        private void checkUpdatesToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            Configuration.MadCow.CheckMooegeUpdates = checkUpdatesToolStripMenuItem.Checked;
+        }
         #endregion
 
         ////////////////////////////////////////////////////////////////////////
@@ -1856,6 +1551,8 @@ namespace MadCow
             enableTrayNotificationsToolStripMenuItem.Checked = Configuration.MadCow.TrayNotificationsEnabled;
             desktopShortcutToolStripMenuItem.Checked = Configuration.MadCow.ShortcutEnabled;
             compileAsDebugToolStripMenuItem.Checked = Configuration.MadCow.CompileAsDebug;
+            checkUpdatesToolStripMenuItem.Checked = Configuration.MadCow.CheckMooegeUpdates;
+            PopulateRepositories();
         }
 
         private void enableFileLoggingToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2024,9 +1721,20 @@ namespace MadCow
             UpdateMooegeButton.Enabled = repoComboBox.SelectedItem is Repository;
             PlayDiabloButton.Enabled = repoComboBox.SelectedItem is Repository &&
                                        !string.IsNullOrEmpty(Configuration.MadCow.DiabloPath);
+
+            var repository = repoComboBox.SelectedItem as Repository;
+            if (repository != null && Configuration.MadCow.CheckMooegeUpdates)
+            {
+                repository.UpdateRevision();
+            }
         }
 
         private void repoComboBox_DropDown(object sender, EventArgs e)
+        {
+            PopulateRepositories();
+        }
+
+        private void PopulateRepositories()
         {
             repoComboBox.Items.Clear();
             repoComboBox.Items.AddRange(Repository.Repositories.Where(r => r.IsDownloaded).ToArray());
@@ -2037,6 +1745,7 @@ namespace MadCow
             }
 
             repoComboBox.SelectedItem = Repository.Repositories.FirstOrDefault(r => r.Name == Configuration.MadCow.LastRepository);
+
         }
     }
 }

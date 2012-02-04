@@ -61,6 +61,12 @@ namespace MadCow
                 set { MadCowConfig.Set("CompileAsDebug", value); }
             }
 
+            internal static bool CheckMooegeUpdates
+            {
+                get { return Convert.ToBoolean(MadCowConfig.Get("CheckMooegeUpdates", "True")); }
+                set { MadCowConfig.Set("CheckMooegeUpdates", value); }
+            }
+
             internal static string LastRepository
             {
                 get { return MadCowConfig.Get("LastRepository"); }

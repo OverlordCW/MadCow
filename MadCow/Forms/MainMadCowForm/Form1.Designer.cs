@@ -31,11 +31,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.EnableAutoUpdateBox = new System.Windows.Forms.CheckBox();
-            this.AutoUpdateValue = new System.Windows.Forms.NumericUpDown();
             this.PlayDiabloButton = new System.Windows.Forms.Button();
             this.LaunchServerButton = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.RemoteServerLaunchButton = new System.Windows.Forms.Button();
             this.RemoteServerTab = new System.Windows.Forms.TabPage();
             this.RemoteServerTip = new System.Windows.Forms.Label();
@@ -100,13 +97,11 @@
             this.ResetRepoFolder = new System.Windows.Forms.Button();
             this.DownloadSpeedTimer = new System.Windows.Forms.Timer(this.components);
             this.DiabloPathFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.DownloadRepository = new System.ComponentModel.BackgroundWorker();
             this.ToolTips = new System.Windows.Forms.ToolTip(this.components);
             this.ConsoleOutputTxtBox = new System.Windows.Forms.TextBox();
             this.VerifyDiablo3Version = new System.ComponentModel.BackgroundWorker();
             this.DownloadSelectedMpqs = new System.ComponentModel.BackgroundWorker();
             this.ErrorFilesDownloaders = new System.ComponentModel.BackgroundWorker();
-            this.ValidateRepository = new System.ComponentModel.BackgroundWorker();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.OutPutTab = new System.Windows.Forms.TabPage();
             this.ChaneglogTab = new System.Windows.Forms.TabPage();
@@ -139,6 +134,7 @@
             this.enableTrayNotificationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.desktopShortcutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.compileAsDebugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mooegeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enableFileLoggingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enablePacketLoggingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -151,8 +147,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
-            ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).BeginInit();
-            this.groupBox2.SuspendLayout();
             this.RemoteServerTab.SuspendLayout();
             this.RemoteServerGrpBox.SuspendLayout();
             this.ServerControlTab.SuspendLayout();
@@ -183,39 +177,6 @@
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // EnableAutoUpdateBox
-            // 
-            this.EnableAutoUpdateBox.AutoSize = true;
-            this.EnableAutoUpdateBox.Location = new System.Drawing.Point(5, 45);
-            this.EnableAutoUpdateBox.Name = "EnableAutoUpdateBox";
-            this.EnableAutoUpdateBox.Size = new System.Drawing.Size(64, 17);
-            this.EnableAutoUpdateBox.TabIndex = 3;
-            this.EnableAutoUpdateBox.Text = "Enable";
-            this.EnableAutoUpdateBox.UseVisualStyleBackColor = true;
-            this.EnableAutoUpdateBox.CheckedChanged += new System.EventHandler(this.AutoUpdate_CheckedChanged);
-            // 
-            // AutoUpdateValue
-            // 
-            this.AutoUpdateValue.Location = new System.Drawing.Point(5, 18);
-            this.AutoUpdateValue.Maximum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            0});
-            this.AutoUpdateValue.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.AutoUpdateValue.Name = "AutoUpdateValue";
-            this.AutoUpdateValue.Size = new System.Drawing.Size(81, 21);
-            this.AutoUpdateValue.TabIndex = 4;
-            this.AutoUpdateValue.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
             // PlayDiabloButton
             // 
             this.PlayDiabloButton.BackColor = System.Drawing.Color.Transparent;
@@ -237,18 +198,6 @@
             this.LaunchServerButton.Text = "Launch Server Only";
             this.LaunchServerButton.UseVisualStyleBackColor = true;
             this.LaunchServerButton.Click += new System.EventHandler(this.LaunchServer_Click);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.AutoUpdateValue);
-            this.groupBox2.Controls.Add(this.EnableAutoUpdateBox);
-            this.groupBox2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(245, 6);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(91, 68);
-            this.groupBox2.TabIndex = 12;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Auto Update";
             // 
             // RemoteServerLaunchButton
             // 
@@ -651,7 +600,6 @@
             this.UpdatesTab.Controls.Add(this.groupBox1);
             this.UpdatesTab.Controls.Add(this.FindDiabloButton);
             this.UpdatesTab.Controls.Add(this.PlayDiabloButton);
-            this.UpdatesTab.Controls.Add(this.groupBox2);
             this.UpdatesTab.Controls.Add(this.Diablo3UserPathSelection);
             this.UpdatesTab.Controls.Add(this.UpdateMooegeButton);
             this.UpdatesTab.Controls.Add(this.CopyMPQButton);
@@ -769,7 +717,7 @@
             this.CopyMPQButton.Enabled = false;
             this.CopyMPQButton.Location = new System.Drawing.Point(191, 221);
             this.CopyMPQButton.Name = "CopyMPQButton";
-            this.CopyMPQButton.Size = new System.Drawing.Size(93, 44);
+            this.CopyMPQButton.Size = new System.Drawing.Size(100, 44);
             this.CopyMPQButton.TabIndex = 18;
             this.CopyMPQButton.Text = "Copy MPQ\'s";
             this.CopyMPQButton.UseVisualStyleBackColor = true;
@@ -924,19 +872,11 @@
             // DownloadSpeedTimer
             // 
             this.DownloadSpeedTimer.Interval = 60000;
-            this.DownloadSpeedTimer.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // DiabloPathFileDialog
             // 
             this.DiabloPathFileDialog.DefaultExt = "exe";
             this.DiabloPathFileDialog.FileName = "openFileDialog1";
-            // 
-            // DownloadRepository
-            // 
-            this.DownloadRepository.WorkerReportsProgress = true;
-            this.DownloadRepository.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            this.DownloadRepository.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
-            this.DownloadRepository.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
             // ConsoleOutputTxtBox
             // 
@@ -972,10 +912,6 @@
             this.ErrorFilesDownloaders.DoWork += new System.ComponentModel.DoWorkEventHandler(this.DownloadSpecificMPQS);
             this.ErrorFilesDownloaders.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.downloader_ProgressChanged2);
             this.ErrorFilesDownloaders.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.downloader_DownloadedComplete2);
-            // 
-            // ValidateRepository
-            // 
-            this.ValidateRepository.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker5_DoWork);
             // 
             // tabControl2
             // 
@@ -1286,7 +1222,8 @@
             this.enableTrayToolStripMenuItem,
             this.enableTrayNotificationsToolStripMenuItem,
             this.desktopShortcutToolStripMenuItem,
-            this.compileAsDebugToolStripMenuItem});
+            this.compileAsDebugToolStripMenuItem,
+            this.checkUpdatesToolStripMenuItem});
             this.madCowToolStripMenuItem.Name = "madCowToolStripMenuItem";
             this.madCowToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.madCowToolStripMenuItem.Text = "Mad&Cow";
@@ -1322,6 +1259,14 @@
             this.compileAsDebugToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.compileAsDebugToolStripMenuItem.Text = "Compile Mooege as Debug";
             this.compileAsDebugToolStripMenuItem.Click += new System.EventHandler(this.compileAsDebugToolStripMenuItem_Click);
+            // 
+            // checkUpdatesToolStripMenuItem
+            // 
+            this.checkUpdatesToolStripMenuItem.CheckOnClick = true;
+            this.checkUpdatesToolStripMenuItem.Name = "checkUpdatesToolStripMenuItem";
+            this.checkUpdatesToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.checkUpdatesToolStripMenuItem.Text = "Check for Mooege Updates";
+            this.checkUpdatesToolStripMenuItem.CheckedChanged += new System.EventHandler(this.checkUpdatesToolStripMenuItem_CheckedChanged);
             // 
             // mooegeToolStripMenuItem
             // 
@@ -1447,9 +1392,6 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Resize += new System.EventHandler(this.Form1_Resize);
-            ((System.ComponentModel.ISupportInitialize)(this.AutoUpdateValue)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.RemoteServerTab.ResumeLayout(false);
             this.RemoteServerTab.PerformLayout();
             this.RemoteServerGrpBox.ResumeLayout(false);
@@ -1497,10 +1439,7 @@
 
         #endregion
 
-        private System.Windows.Forms.CheckBox EnableAutoUpdateBox;
-        private System.Windows.Forms.NumericUpDown AutoUpdateValue;
         private System.Windows.Forms.Button LaunchServerButton;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button RemoteServerLaunchButton;
         private System.Windows.Forms.TabPage RemoteServerTab;
         private System.Windows.Forms.TabPage ServerControlTab;
@@ -1531,7 +1470,6 @@
         private System.Windows.Forms.Label RepositoryHintLabel;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button UpdateMooegeButton;
-        private System.ComponentModel.BackgroundWorker DownloadRepository;
         private System.Windows.Forms.ToolTip ToolTips;
         private System.Windows.Forms.Label AutoUpdateTimerLabel;
         private System.Windows.Forms.Button ResetRepoFolder;
@@ -1558,7 +1496,6 @@
         private System.Windows.Forms.Label DownloadFileNameLabel;
         private System.Windows.Forms.Label DownloadSpeedLabel;
         private System.ComponentModel.BackgroundWorker ErrorFilesDownloaders;
-        private System.ComponentModel.BackgroundWorker ValidateRepository;
         internal System.Windows.Forms.TextBox ConsoleOutputTxtBox;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage OutPutTab;
@@ -1617,6 +1554,7 @@
         private System.Windows.Forms.ToolStripMenuItem enableNoPasswordCheckToolStripMenuItem;
         internal System.Windows.Forms.ComboBox repoComboBox;
         private System.Windows.Forms.TreeView changeLogTreeView;
+        private System.Windows.Forms.ToolStripMenuItem checkUpdatesToolStripMenuItem;
 
     }
 }
