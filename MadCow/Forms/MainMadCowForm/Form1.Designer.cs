@@ -79,9 +79,9 @@
             this.repoComboBox = new System.Windows.Forms.ComboBox();
             this.RepositoryHintLabel = new System.Windows.Forms.Label();
             this.FindDiabloButton = new System.Windows.Forms.Button();
-            this.Diablo3UserPathSelection = new System.Windows.Forms.TextBox();
             this.UpdateMooegeButton = new System.Windows.Forms.Button();
             this.CopyMPQButton = new System.Windows.Forms.Button();
+            this.Diablo3UserPathSelection = new System.Windows.Forms.TextBox();
             this.Tabs = new System.Windows.Forms.TabControl();
             this.HelpTab = new System.Windows.Forms.TabPage();
             this.DownloadNetLabel = new System.Windows.Forms.LinkLabel();
@@ -109,6 +109,9 @@
             this.SelectRepositoryChngLogLabel = new System.Windows.Forms.Label();
             this.SelectRepoChngLogComboBox = new System.Windows.Forms.ComboBox();
             this.LiveHelpTab = new System.Windows.Forms.TabPage();
+            this.ircRulesLabel = new System.Windows.Forms.Label();
+            this.ircNicknameLabel = new System.Windows.Forms.Label();
+            this.ircNicknameTextBox = new System.Windows.Forms.TextBox();
             this.DisconnectButton = new System.Windows.Forms.Button();
             this.ircIntroLabel = new System.Windows.Forms.Label();
             this.ConnectButton = new System.Windows.Forms.Button();
@@ -140,9 +143,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
-            this.ircNicknameTextBox = new System.Windows.Forms.TextBox();
-            this.ircNicknameLabel = new System.Windows.Forms.Label();
-            this.ircRulesLabel = new System.Windows.Forms.Label();
             this.RemoteServerTab.SuspendLayout();
             this.RemoteServerGrpBox.SuspendLayout();
             this.ServerControlTab.SuspendLayout();
@@ -687,14 +687,6 @@
             this.FindDiabloButton.UseVisualStyleBackColor = true;
             this.FindDiabloButton.Click += new System.EventHandler(this.FindDiablo_Click);
             // 
-            // Diablo3UserPathSelection
-            // 
-            this.Diablo3UserPathSelection.Location = new System.Drawing.Point(9, 184);
-            this.Diablo3UserPathSelection.Name = "Diablo3UserPathSelection";
-            this.Diablo3UserPathSelection.ReadOnly = true;
-            this.Diablo3UserPathSelection.Size = new System.Drawing.Size(248, 20);
-            this.Diablo3UserPathSelection.TabIndex = 3;
-            // 
             // UpdateMooegeButton
             // 
             this.UpdateMooegeButton.Enabled = false;
@@ -716,6 +708,14 @@
             this.CopyMPQButton.Text = "Copy MPQ\'s";
             this.CopyMPQButton.UseVisualStyleBackColor = true;
             this.CopyMPQButton.Click += new System.EventHandler(this.CopyMPQs_Click);
+            // 
+            // Diablo3UserPathSelection
+            // 
+            this.Diablo3UserPathSelection.Location = new System.Drawing.Point(9, 184);
+            this.Diablo3UserPathSelection.Name = "Diablo3UserPathSelection";
+            this.Diablo3UserPathSelection.ReadOnly = true;
+            this.Diablo3UserPathSelection.Size = new System.Drawing.Size(248, 20);
+            this.Diablo3UserPathSelection.TabIndex = 3;
             // 
             // Tabs
             // 
@@ -992,6 +992,37 @@
             this.LiveHelpTab.TabIndex = 2;
             this.LiveHelpTab.Text = "Live Help";
             this.LiveHelpTab.UseVisualStyleBackColor = true;
+            // 
+            // ircRulesLabel
+            // 
+            this.ircRulesLabel.AutoSize = true;
+            this.ircRulesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ircRulesLabel.ForeColor = System.Drawing.Color.Red;
+            this.ircRulesLabel.Location = new System.Drawing.Point(66, 100);
+            this.ircRulesLabel.Name = "ircRulesLabel";
+            this.ircRulesLabel.Size = new System.Drawing.Size(236, 104);
+            this.ircRulesLabel.TabIndex = 20;
+            this.ircRulesLabel.Text = "Rules:\r\nRead before asking; http://goo.gl/zyIKu\r\nFAQ/wiki: http://goo.gl/K5tDU\r\nN" +
+    "o Spam\r\nNo Racism\r\nNo Stupid questions\r\nNo  Public servers posting\r\nAsking for a" +
+    " \'crack\' == BAN.";
+            this.ircRulesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ircNicknameLabel
+            // 
+            this.ircNicknameLabel.AutoSize = true;
+            this.ircNicknameLabel.Location = new System.Drawing.Point(23, 263);
+            this.ircNicknameLabel.Name = "ircNicknameLabel";
+            this.ircNicknameLabel.Size = new System.Drawing.Size(58, 13);
+            this.ircNicknameLabel.TabIndex = 19;
+            this.ircNicknameLabel.Text = "Nickname:";
+            // 
+            // ircNicknameTextBox
+            // 
+            this.ircNicknameTextBox.Location = new System.Drawing.Point(87, 260);
+            this.ircNicknameTextBox.Name = "ircNicknameTextBox";
+            this.ircNicknameTextBox.Size = new System.Drawing.Size(175, 20);
+            this.ircNicknameTextBox.TabIndex = 18;
+            this.ircNicknameTextBox.TextChanged += new System.EventHandler(this.ircNicknameTextBox_TextChanged);
             // 
             // DisconnectButton
             // 
@@ -1293,37 +1324,6 @@
             this.statusStripProgressBar.Name = "statusStripProgressBar";
             this.statusStripProgressBar.Size = new System.Drawing.Size(100, 16);
             this.statusStripProgressBar.Visible = false;
-            // 
-            // ircNicknameTextBox
-            // 
-            this.ircNicknameTextBox.Location = new System.Drawing.Point(87, 260);
-            this.ircNicknameTextBox.Name = "ircNicknameTextBox";
-            this.ircNicknameTextBox.Size = new System.Drawing.Size(175, 20);
-            this.ircNicknameTextBox.TabIndex = 18;
-            this.ircNicknameTextBox.TextChanged += new System.EventHandler(this.ircNicknameTextBox_TextChanged);
-            // 
-            // ircNicknameLabel
-            // 
-            this.ircNicknameLabel.AutoSize = true;
-            this.ircNicknameLabel.Location = new System.Drawing.Point(23, 263);
-            this.ircNicknameLabel.Name = "ircNicknameLabel";
-            this.ircNicknameLabel.Size = new System.Drawing.Size(58, 13);
-            this.ircNicknameLabel.TabIndex = 19;
-            this.ircNicknameLabel.Text = "Nickname:";
-            // 
-            // ircRulesLabel
-            // 
-            this.ircRulesLabel.AutoSize = true;
-            this.ircRulesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ircRulesLabel.ForeColor = System.Drawing.Color.Red;
-            this.ircRulesLabel.Location = new System.Drawing.Point(66, 100);
-            this.ircRulesLabel.Name = "ircRulesLabel";
-            this.ircRulesLabel.Size = new System.Drawing.Size(236, 104);
-            this.ircRulesLabel.TabIndex = 20;
-            this.ircRulesLabel.Text = "Rules:\r\nRead before asking; http://goo.gl/zyIKu\r\nFAQ/wiki: http://goo.gl/K5tDU\r\nN" +
-    "o Spam\r\nNo Racism\r\nNo Stupid questions\r\nNo  Public servers posting\r\nAsking for a" +
-    " \'crack\' == BAN.";
-            this.ircRulesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Form1
             // 

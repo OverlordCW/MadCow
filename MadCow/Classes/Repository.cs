@@ -84,14 +84,17 @@ namespace MadCow
         #endregion
 
         #region Methods
-        internal void Delete()
+        internal void Delete(bool completeDeletion)
         {
             if (IsDownloaded)
             {
                 Directory.Delete(Path.Combine(Paths.RepositoriesPath, Name), true);
                 LocalRevision = null;
             }
-            Repositories.Remove(this);
+            if (completeDeletion)
+            {
+                Repositories.Remove(this);
+            }
         }
 
         internal void UpdateRevision()

@@ -21,8 +21,6 @@ namespace MadCow
 {
     internal partial class RepositorySelection : Form
     {
-        private Repository _selectedRepository;
-
         internal RepositorySelection()
         {
             InitializeComponent();
@@ -52,59 +50,46 @@ namespace MadCow
             }
         }
 
-        private void closeButton_Click(object sender, EventArgs e)
+        private void addButton_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.OK;
-            Close();
+            var editRepo = new EditRepository();
+            if (editRepo.ShowDialog() == DialogResult.OK)
+            {
+                Repository.Repositories.Add(editRepo.SelectedRepository);
+                RefreshAvailableRepositories();
+            }
         }
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count != 1) return;
             var dialogResult = MessageBox.Show(this,
-                                               "Are you sure?",
+                                               "Do you want to remove the repository from the list?" + Environment.NewLine +
+                                               "If you press 'no' it will only delete the repository folder.",
                                                "Confirmation",
-                                               MessageBoxButtons.YesNo,
+                                               MessageBoxButtons.YesNoCancel,
                                                MessageBoxIcon.Question);
             if (dialogResult == DialogResult.Yes)
             {
-                Repository.Repositories[listView1.SelectedIndices[0]].Delete();
+                Repository.Repositories[listView1.SelectedIndices[0]].Delete(true);
             }
-            //listView1.Items.Remove(listView1.SelectedItems[0]);
+            else if(dialogResult == DialogResult.No)
+            {
+                Repository.Repositories[listView1.SelectedIndices[0]].Delete(false);
+            }
             RefreshAvailableRepositories();
         }
 
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        private void changeButton_Click(object sender, EventArgs e)
         {
-            //var b = false;
-            //foreach (var repo in from ListViewItem item in listView1.SelectedItems
-            //                     select (Repository)item.Tag)
-            //{
-            //    b = repo.IsUpdating;
-            //}
-            updateButton.Enabled = listView1.SelectedIndices.Count > 0 &&
-                                   !Repository.Repositories[listView1.SelectedIndices[0]].IsUpdating;
-            deleteButton.Enabled = listView1.SelectedIndices.Count > 0;
-        }
-
-        private void UpdateButton_Click(object sender, EventArgs e)
-        {
-            Enabled = false;
-            _selectedRepository = Repository.Repositories[listView1.SelectedIndices[0]];
-            _selectedRepository.RunWorkerCompleted += Download_RunWorkerCompleted;
-            _selectedRepository.Update();
-        }
-
-        private void Download_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            Form1.GlobalAccess.statusStripProgressBar.Value = 0;
-            Form1.GlobalAccess.statusStripProgressBar.Visible = false;
-            Console.WriteLine("Update Complete!");
-            Tray.ShowBalloonTip("Update Complete!");
-            Form1.GlobalAccess.statusStripStatusLabel.Text = "Update Complete!";
-            _selectedRepository.RunWorkerCompleted -= Download_RunWorkerCompleted;
-            RefreshAvailableRepositories();
-            Enabled = true;
+            var selectedRepository = Repository.Repositories[listView1.SelectedIndices[0]];
+            var editRepo = new EditRepository(selectedRepository);
+            if (editRepo.ShowDialog() == DialogResult.OK)
+            {
+                selectedRepository.Url = editRepo.SelectedRepository.Url;
+                selectedRepository.Branch = editRepo.SelectedRepository.Branch;
+                RefreshAvailableRepositories();
+            }
         }
 
         private void checkUpdatesButton_Click(object sender, EventArgs e)
@@ -136,25 +121,37 @@ namespace MadCow
             bgWorker.RunWorkerAsync();
         }
 
-        private void addButton_Click(object sender, EventArgs e)
+        private void closeButton_Click(object sender, EventArgs e)
         {
-            var editRepo = new EditRepository();
-            if (editRepo.ShowDialog() == DialogResult.OK)
-            {
-                Repository.Repositories.Add(editRepo.SelectedRepository);
-                RefreshAvailableRepositories();
-            }
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
-        private void changeButton_Click(object sender, EventArgs e)
+        private void UpdateButton_Click(object sender, EventArgs e)
         {
-            var editRepo = new EditRepository();
-            if (editRepo.ShowDialog() == DialogResult.OK)
-            {
-                _selectedRepository.Url = editRepo.SelectedRepository.Url;
-                _selectedRepository.Branch = editRepo.SelectedRepository.Branch;
-                RefreshAvailableRepositories();
-            }
+            Enabled = false;
+            var selectedRepository = Repository.Repositories[listView1.SelectedIndices[0]];
+            selectedRepository.RunWorkerCompleted += Download_RunWorkerCompleted;
+            selectedRepository.Update();
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            updateButton.Enabled = listView1.SelectedIndices.Count > 0 &&
+                                   !Repository.Repositories[listView1.SelectedIndices[0]].IsUpdating;
+            deleteButton.Enabled = listView1.SelectedIndices.Count > 0;
+        }
+
+        private void Download_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            Form1.GlobalAccess.statusStripProgressBar.Value = 0;
+            Form1.GlobalAccess.statusStripProgressBar.Visible = false;
+            Console.WriteLine("Update Complete!");
+            Tray.ShowBalloonTip("Update Complete!");
+            Form1.GlobalAccess.statusStripStatusLabel.Text = "Update Complete!";
+            Repository.Repositories[listView1.SelectedIndices[0]].RunWorkerCompleted -= Download_RunWorkerCompleted;
+            RefreshAvailableRepositories();
+            Enabled = true;
         }
     }
 }

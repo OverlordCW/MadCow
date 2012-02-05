@@ -20,7 +20,7 @@ namespace MadCow
 
         internal static readonly string MadcowIni = Path.Combine(ToolsPath, "madcow.ini");
 
-
+        internal static readonly string LogFilePath = Path.Combine(Environment.CurrentDirectory, "logs", "mooege.log");
 
         internal static readonly string CommitsFilePath = Path.Combine(RuntimeDownloadsPath, "Commits.atom");
 

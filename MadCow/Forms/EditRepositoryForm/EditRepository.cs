@@ -3,13 +3,32 @@ using System.Windows.Forms;
 
 namespace MadCow
 {
-    public partial class EditRepository : Form
+    internal partial class EditRepository : Form
     {
+        private readonly Repository _suppliedRepository;
+
+        internal EditRepository(Repository repository = null)
+        {
+            _suppliedRepository = repository;
+            InitializeComponent();
+            ApplyRepository();
+        }
+
         internal Repository SelectedRepository { get; private set; }
 
-        public EditRepository()
+        private void ApplyRepository()
         {
-            InitializeComponent();
+            if(_suppliedRepository != null)
+            {
+                repositoryTextBox.Text = _suppliedRepository.Url.AbsoluteUri;
+                var branches = FindBranch.FindBrach(_suppliedRepository.Url.AbsoluteUri);
+                if(branches != null)
+                {
+                    branchComboBox.Items.AddRange(branches);
+                    branchComboBox.SelectedIndex = 0;
+                    okButton.Enabled = !string.IsNullOrEmpty(branchComboBox.SelectedItem.ToString());
+                }
+            }
         }
 
         private void okButton_Click(object sender, EventArgs e)
@@ -20,6 +39,7 @@ namespace MadCow
 
         private void checkButton_Click(object sender, EventArgs e)
         {
+            branchComboBox.Items.Clear();
             var branches = FindBranch.FindBrach(repositoryTextBox.Text);
             if (branches != null)
             {

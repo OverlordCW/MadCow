@@ -1,6 +1,6 @@
 ﻿namespace MadCow
 {
-    partial class EditRepository
+    internal partial class EditRepository
     {
         /// <summary>
         /// Required designer variable.

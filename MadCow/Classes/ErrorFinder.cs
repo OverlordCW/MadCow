@@ -20,79 +20,73 @@ using System.Text.RegularExpressions;
 
 namespace MadCow
 {
-    class ErrorFinder
+    internal static class ErrorFinder
     {
         //TODO: Add other errors, they are similar. and all require downloading all MPQs(my guess).
-        public static String ErrorFileName = "";
+        internal static string ErrorFileName = "";
         //change searchText to FATAL
-        public static Boolean SearchLogs(String searchText)
+        internal static Boolean SearchLogs(string searchText)
         {
-            using (var fileStream = new FileStream(Path.Combine(Environment.CurrentDirectory, "logs", "mooege.log"), FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            string oldline = null;
+            foreach (var line in File.ReadAllLines(Paths.LogFilePath))
             {
-                using (TextReader reader = new StreamReader(fileStream))
+                if (oldline != line)
                 {
-                    string oldline = null;
-                    string line;
-                    while ((line = reader.ReadLine()) != null)
+                    if (Regex.IsMatch(line, searchText))
                     {
-                        if (line != oldline)
+                        //This one is for Parsing Errors
+                        if (Regex.IsMatch(oldline, "Applying file:"))
                         {
-                            if (Regex.IsMatch(line, searchText))
-                            {
-                                //This one is for Parsing Errors
-                                if (Regex.IsMatch(oldline, "Applying file:"))
-                                {
-                                    const string pattern = "Applying file: (?<filename>.*?).mpq";
-                                    var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                                    var match = regex.Match(oldline);
-                                    ErrorFileName = match.Groups["filename"].Value;
-                                    return true;
-                                }
-                                //This one is for Missing CoreData // ClientData
-                                if (Regex.IsMatch(oldline, "Cannot find base MPQ file:"))
-                                {
-                                    const string pattern = "Cannot find base MPQ file: (?<filename>.*?).mpq";
-                                    var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                                    var match = regex.Match(oldline);
-                                    ErrorFileName = match.Groups["filename"].Value;
-                                    return true;
-                                }
-                                //Missing a base file/folder
-                                if (Regex.IsMatch(oldline, "Required patch-chain version"))
-                                {
-                                    const string pattern = "Required patch-chain version (?<Version>\\d+)";
-                                    var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                                    var match = regex.Match(oldline);
-                                    ErrorFileName = "d3-update-base-" + match.Groups["Version"].Value;
-                                    return true;
-                                }
-                                //Need to pretty much redownload all MPQs
-                                if (Regex.IsMatch(line, "Mooege.Core.GS.Items.ItemGenerator"))
-                                {
-                                    const string pattern = "Mooege.Core.GS.Items.ItemGenerator";
-                                    var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                                    var match = regex.Match(line);
-                                    ErrorFileName = "MajorFailure";
-                                    return true;
-                                }
-                                //Need to pretty much redownload all MPQs
-                                if (Regex.IsMatch(line, "Mooege.Common.MPQ.MPQStorage"))
-                                {
-                                    const string pattern = "Mooege.Common.MPQ.MPQStorage";
-                                    var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                                    var match = regex.Match(line);
-                                    ErrorFileName = "MajorFailure";
-                                    return true;
-                                }
-                                ErrorFileName = line;
-                                return true;
-                            }
-                            oldline = line;
+                            const string pattern = "Applying file: (?<filename>.*?).mpq";
+                            var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                            var match = regex.Match(oldline);
+                            ErrorFileName = match.Groups["filename"].Value;
+                            return true;
                         }
+                        //This one is for Missing CoreData // ClientData
+                        if (Regex.IsMatch(oldline, "Cannot find base MPQ file:"))
+                        {
+                            const string pattern = "Cannot find base MPQ file: (?<filename>.*?).mpq";
+                            var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                            var match = regex.Match(oldline);
+                            ErrorFileName = match.Groups["filename"].Value;
+                            return true;
+                        }
+                        //Missing a base file/folder
+                        if (Regex.IsMatch(oldline, "Required patch-chain version"))
+                        {
+                            const string pattern = "Required patch-chain version (?<Version>\\d+)";
+                            var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                            var match = regex.Match(oldline);
+                            ErrorFileName = "d3-update-base-" + match.Groups["Version"].Value;
+                            return true;
+                        }
+                        //Need to pretty much redownload all MPQs
+                        if (Regex.IsMatch(line, "Mooege.Core.GS.Items.ItemGenerator"))
+                        {
+                            const string pattern = "Mooege.Core.GS.Items.ItemGenerator";
+                            var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                            var match = regex.Match(line);
+                            ErrorFileName = "MajorFailure";
+                            return true;
+                        }
+                        //Need to pretty much redownload all MPQs
+                        if (Regex.IsMatch(line, "Mooege.Common.MPQ.MPQStorage"))
+                        {
+                            const string pattern = "Mooege.Common.MPQ.MPQStorage";
+                            var regex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                            var match = regex.Match(line);
+                            ErrorFileName = "MajorFailure";
+                            return true;
+                        }
+                        ErrorFileName = line;
+                        return true;
                     }
-                    return false;
+                    oldline = line;
                 }
             }
+
+            return false;
         }
 
         public static bool HasMpqs()
